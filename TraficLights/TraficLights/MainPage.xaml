@@ -39,7 +39,7 @@
 
         </Grid>
         <Button x:Name="btnAuto" Grid.Column="0" Background="White" Height ="200"  Foreground="Black"
-                FontSize="60" Content="auto"  FontStyle="Italic" FontWeight="Bold" CornerRadius="20"
+                FontSize="60" Content="auto"  FontStyle="Italic" FontWeight="Bold"
                 HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="7"
                 BorderBrush="RoyalBlue" CornerRadius="50">
         </Button>
