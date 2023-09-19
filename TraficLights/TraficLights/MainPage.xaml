@@ -13,18 +13,14 @@
         Margin="50" 
         BorderBrush="White"
         BorderThickness="7">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="271*"/>
-            <RowDefinition Height="179*"/>
-        </Grid.RowDefinitions>
-
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid Background="Black" Grid.Column="1" CornerRadius="50" Grid.ColumnSpan="2" Margin="7,7,455,7" Grid.RowSpan="2">
+        <Grid Background="Black" Grid.Column="1" CornerRadius="50">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -45,18 +41,18 @@
         <Button x:Name="btnAuto" Grid.Column="0" Background="White" Height ="200"  Foreground="Black"
                 FontSize="60" Content="auto"  FontStyle="Italic" FontWeight="Bold"
                 HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="7"
-                BorderBrush="RoyalBlue" CornerRadius="50" Grid.ColumnSpan="2" Margin="7,7,455,0">
+                BorderBrush="RoyalBlue" CornerRadius="50" Click="btnAuto_Click">
         </Button>
         <Button x:Name="btnManual" Grid.Column="2" Background="White" Height ="200"  Foreground="Black"
                 FontSize="30" Content="Manual"  FontStyle="Italic" FontWeight="Bold"
                 HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="7"
-                BorderBrush="RoyalBlue" CornerRadius="50" Margin="7,7,-7,0">
+                BorderBrush="RoyalBlue" CornerRadius="50" Click="btnManual_Click">
         </Button>
-        <Image x:Name="imgSanta" Width="500" Height="500" Grid.Column="0"
-           Source="Assets\Character\Santa\santa_idle.gif" Grid.ColumnSpan="2" Margin="7,200,417,200" Grid.RowSpan="2">
-        </Image>
-        <Image x:Name="imgDino" Width="500" Height="500" Grid.Column="2" 
-           Source="Assets\Character\Dino\dino_idle.gif" Margin="7,200,-45,200" Grid.RowSpan="2">
-        </Image>
+        <Image x:Name="imgSanta" Width="500" Height="500" Grid.Column="0" 
+           Source="Assets\Character\Santa\santa_idle.gif">
+        </Image>    
+        <Image x:Name="imgDino" Width="500" Height="500" Grid.Column="2"
+           Source="Assets\Character\Dino\dino_idle.gif">
+        </Image>    
     </Grid>
 </Page>
