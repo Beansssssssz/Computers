@@ -9,8 +9,8 @@
     Background="CornflowerBlue">
 
     <Grid
-        Background="Coral"
-        Margin="200" 
+        Background="LightGoldenrodYellow"
+        Margin="50" 
         BorderBrush="White"
         BorderThickness="7">
         
@@ -18,7 +18,41 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-
         </Grid.ColumnDefinitions>
+
+        <Grid Background="Black" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Ellipse x:Name="RedElp" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                     Fill="Red" StrokeThickness="7" Grid.Row="0">
+            </Ellipse>
+            <Ellipse x:Name="YellowElp" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                     Fill="Gray" StrokeThickness="7" Grid.Row="1">
+            </Ellipse>
+            <Ellipse x:Name="GreenElp" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                     Fill="Gray" StrokeThickness="7" Grid.Row="2">
+            </Ellipse>
+
+        </Grid>
+        <Button x:Name="btnAuto" Grid.Column="0" Background="White" Height ="200"  Foreground="Black"
+                FontSize="60" Content="auto"  FontStyle="Italic" FontWeight="Bold" CornerRadius="20"
+                HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="7"
+                BorderBrush="RoyalBlue" CornerRadius="50">
+        </Button>
+        <Button x:Name="btnManual" Grid.Column="2" Background="White" Height ="200"  Foreground="Black"
+                FontSize="30" Content="Manual"  FontStyle="Italic" FontWeight="Bold"
+                HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="7"
+                BorderBrush="RoyalBlue" CornerRadius="50">
+        </Button>
+        <Image x:Name="imgSanta" Width="200" Height="200" Grid.Column="0"
+           Source="Assets\Character\Santa\santa_idle.gif">
+        </Image>    
+        <Image x:Name="imgDino" Width="200" Height="200" Grid.Column="2"
+           Source="Assets\Character\Dino\dino_idle.gif">
+        </Image>    
     </Grid>
 </Page>

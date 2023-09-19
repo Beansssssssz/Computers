@@ -180,12 +180,12 @@
     <Content Include="Assets\App\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\App\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\App\Wide310x150Logo.scale-400.png" />
-    <Content Include="Assets\Charcter\Dino\dino_idle.gif" />
-    <Content Include="Assets\Charcter\Dino\dino_jump.gif" />
-    <Content Include="Assets\Charcter\Dino\dino_run.gif" />
-    <Content Include="Assets\Charcter\Santa\santa_idle.gif" />
-    <Content Include="Assets\Charcter\Santa\santa_jump.gif" />
-    <Content Include="Assets\Charcter\Santa\santa_run.gif" />
+    <Content Include="Assets\Character\Dino\dino_idle.gif" />
+    <Content Include="Assets\Character\Dino\dino_jump.gif" />
+    <Content Include="Assets\Character\Dino\dino_run.gif" />
+    <Content Include="Assets\Character\Santa\santa_idle.gif" />
+    <Content Include="Assets\Character\Santa\santa_jump.gif" />
+    <Content Include="Assets\Character\Santa\santa_run.gif" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
