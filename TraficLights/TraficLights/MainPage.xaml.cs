@@ -26,15 +26,5 @@ namespace TraficLights
         {
             this.InitializeComponent();
         }
-
-        private void btnManual_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnAuto_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
