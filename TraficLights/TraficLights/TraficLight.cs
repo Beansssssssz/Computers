@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
 namespace TraficLights
 {
-    class TraficLight
+    public class TraficLight
     {
         public enum TraficLightState
         {
@@ -25,12 +26,27 @@ namespace TraficLights
 
         private bool _isAuto;
 
-        public TraficLight(Ellipse elpRed ,Ellipse elpGreen, Ellipse elpYellow)
+        public DispatcherTimer _timer;
+
+        public TraficLight(Ellipse elpRed ,Ellipse elpYellow, Ellipse elpGreen)
         {
             _elpRed = elpRed;
             _elpGreen = elpGreen;
             _elpYellow = elpYellow;
+
+            _isAuto = false;
+
+            _timer = new DispatcherTimer();
+            _timer.Start();
+            _timer.Interval = TimeSpan.FromSeconds(2.5);
+            _timer.Tick += _timer_Tick;
+
             _state = TraficLightState.Red;
+        }
+
+        private void _timer_Tick(object sender, object e)
+        {
+            SetState();
         }
 
         /// <summary>
@@ -61,9 +77,9 @@ namespace TraficLights
         /// </summary>
         private void Reset()
         {
-            _elpRed.Fill = new SolidColorBrush(Colors.Gray);
-            _elpGreen.Fill = new SolidColorBrush(Colors.Gray);
-            _elpYellow.Fill = new SolidColorBrush(Colors.Gray);
+            _elpRed.Fill = new SolidColorBrush(Colors.Transparent);
+            _elpGreen.Fill = new SolidColorBrush(Colors.Transparent);
+            _elpYellow.Fill = new SolidColorBrush(Colors.Transparent);
         }
     }
 }

@@ -6,16 +6,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="CornflowerBlue">
+    Background="CornflowerBlue" Loaded="Page_Loaded">
 
     <Grid
-        Background="LightGoldenrodYellow"
-        Margin="50" 
+        Background="OldLace" 
+        Margin="20" 
         BorderBrush="White"
         BorderThickness="7">
         <Grid.RowDefinitions>
-            <RowDefinition Height="271*"/>
-            <RowDefinition Height="179*"/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -24,7 +24,8 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid Background="Black" Grid.Column="1" CornerRadius="50" Grid.ColumnSpan="2" Margin="7,7,455,7" Grid.RowSpan="2">
+        <Grid Background="Black" Grid.Column="1" CornerRadius="50" 
+              Grid.ColumnSpan="2" Margin="7,7,455,7" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -35,10 +36,10 @@
                      Fill="Red" StrokeThickness="7" Grid.Row="0">
             </Ellipse>
             <Ellipse x:Name="YellowElp" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                     Fill="Gray" StrokeThickness="7" Grid.Row="1">
+                     Fill="Transparent" StrokeThickness="7" Grid.Row="1">
             </Ellipse>
             <Ellipse x:Name="GreenElp" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                     Fill="Gray" StrokeThickness="7" Grid.Row="2">
+                     Fill="Transparent" StrokeThickness="7" Grid.Row="2">
             </Ellipse>
 
         </Grid>
@@ -52,12 +53,12 @@
                 HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="7"
                 BorderBrush="RoyalBlue" CornerRadius="50" Click="btnManual_Click">
         </Button>
-        <Image x:Name="imgSanta" Width="500" Height="500" Grid.Column="0" Grid.RowSpan="2"
-               VerticalAlignment="Stretch" Margin="0,214,0,172"
+        <Image x:Name="imgSanta" Width="300" Height="300" Grid.Column="0" Grid.RowSpan="2"
+               HorizontalAlignment="Stretch" Margin="0,214,0,172"
                Source="Assets\Character\Santa\santa_idle.gif"/>
-        
-        <Image x:Name="imgDino" Width="500" Height="500" Grid.Column="2" Grid.RowSpan="2"
-                VerticalAlignment="Stretch" Margin="68,214,0,172"
+
+        <Image x:Name="imgDino" Width="300" Height="300" Grid.Column="2" Grid.RowSpan="2"
+                HorizontalAlignment="Stretch" Margin="68,214,0,172"
                Source="Assets\Character\Dino\dino_idle.gif">
         </Image>
     </Grid>

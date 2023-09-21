@@ -22,6 +22,8 @@ namespace TraficLights
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public TraficLight _traficLight;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -29,12 +31,17 @@ namespace TraficLights
 
         private void btnManual_Click(object sender, RoutedEventArgs e)
         {
-
+            _traficLight.SetState();
         }
 
         private void btnAuto_Click(object sender, RoutedEventArgs e)
         {
+         
+        }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            _traficLight = new TraficLight(RedElp, YellowElp, GreenElp);
         }
     }
 }
