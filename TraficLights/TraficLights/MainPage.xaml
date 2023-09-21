@@ -42,7 +42,7 @@
             </Ellipse>
 
         </Grid>
-    <Button x:Name="btnAuto" Grid.Column="0" Background="AntiqueWhite" Height ="200"  Foreground="Black"
+        <Button x:Name="btnAuto" Grid.Column="0" Background="AntiqueWhite" Height ="200"  Foreground="Black"
                 FontSize="40" Content="auto"  FontStyle="Italic" FontWeight="Bold"
                 HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="7"
                 BorderBrush="RoyalBlue" CornerRadius="50" Click="btnAuto_Click">
@@ -50,14 +50,15 @@
         <Button x:Name="btnManual" Grid.Column="2" Background="AntiqueWhite" Height ="200"  Foreground="Black"
                 FontSize="40" Content="Manual"  FontStyle="Italic" FontWeight="Bold"
                 HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="7"
-                BorderBrush="RoyalBlue" Click="btnManual_Click"
-                >
+                BorderBrush="RoyalBlue" CornerRadius="50" Click="btnManual_Click">
         </Button>
-        <Image x:Name="imgSanta" Width="500" Height="500" Grid.Column="0"
-           Source="Assets\Character\Santa\santa_idle.gif" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10,202,414,184">
-        </Image>
-        <Image x:Name="imgDino" Width="500" Height="500" Grid.Column="2" 
-           Source="Assets\Character\Dino\dino_idle.gif" Grid.RowSpan="2" Margin="56,207,-94,179">
+        <Image x:Name="imgSanta" Width="500" Height="500" Grid.Column="0" Grid.RowSpan="2"
+               VerticalAlignment="Stretch" Margin="0,214,0,172"
+               Source="Assets\Character\Santa\santa_idle.gif"/>
+        
+        <Image x:Name="imgDino" Width="500" Height="500" Grid.Column="2" Grid.RowSpan="2"
+                VerticalAlignment="Stretch" Margin="68,214,0,172"
+               Source="Assets\Character\Dino\dino_idle.gif">
         </Image>
     </Grid>
 </Page>
