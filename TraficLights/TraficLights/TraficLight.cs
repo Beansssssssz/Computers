@@ -38,21 +38,32 @@ namespace TraficLights
         /// </summary>
         public void SetState()
         {
+            Reset();
             switch (_state)
             {
-                case TraficLightState.Green:
+                case TraficLightState.Red:
+                    _state = TraficLightState.Yellow;
+                    _elpYellow.Fill = new SolidColorBrush(Colors.Yellow);
+                    break;
+                case TraficLightState.Yellow:
+                    _state = TraficLightState.Green;
+                    _elpGreen.Fill = new SolidColorBrush(Colors.Green);
+                    break;
+                default:
                     _state = TraficLightState.Red;
                     _elpRed.Fill = new SolidColorBrush(Colors.Red);
                     break;
-                case TraficLightState.Red:
-                    _state = TraficLightState.Yellow;
-                    _elpRed.Fill = new SolidColorBrush(Colors.Yellow);
-                    break;
-                default:
-                    _state = TraficLightState.Green;
-                    _elpRed.Fill = new SolidColorBrush(Colors.Green);
-                    break;
             }
+        }
+
+        /// <summary>
+        /// the functions resets the traficlight colors.
+        /// </summary>
+        private void Reset()
+        {
+            _elpRed.Fill = new SolidColorBrush(Colors.Gray);
+            _elpGreen.Fill = new SolidColorBrush(Colors.Gray);
+            _elpYellow.Fill = new SolidColorBrush(Colors.Gray);
         }
     }
 }
