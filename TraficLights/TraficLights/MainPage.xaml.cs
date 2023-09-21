@@ -36,7 +36,12 @@ namespace TraficLights
 
         private void btnAuto_Click(object sender, RoutedEventArgs e)
         {
-         
+            _traficLight.IsAuto =! _traficLight.IsAuto;
+            if (_traficLight.IsAuto)
+                btnAuto.Content = "Stop";
+            else
+                btnAuto.Content = "Auto";
+            btnManual.IsEnabled =! _traficLight.IsAuto;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

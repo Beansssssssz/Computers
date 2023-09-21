@@ -26,6 +26,19 @@ namespace TraficLights
 
         private bool _isAuto;
 
+        public bool IsAuto
+        {
+            get { return _isAuto;}
+
+            set {
+                _isAuto = value;
+                if (IsAuto)
+                    _timer.Start();
+                else
+                    _timer.Stop();
+            }
+        }
+
         public DispatcherTimer _timer;
 
         public TraficLight(Ellipse elpRed ,Ellipse elpYellow, Ellipse elpGreen)
@@ -37,7 +50,7 @@ namespace TraficLights
             _isAuto = false;
 
             _timer = new DispatcherTimer();
-            _timer.Start();
+            _timer.Stop();
             _timer.Interval = TimeSpan.FromSeconds(2.5);
             _timer.Tick += _timer_Tick;
 
@@ -48,6 +61,8 @@ namespace TraficLights
         {
             SetState();
         }
+
+
 
         /// <summary>
         /// the function movest the traffic light to its necct state in a infinite loop
