@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="TraficLights.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -42,22 +42,22 @@
             </Ellipse>
 
         </Grid>
-        <Button x:Name="btnAuto" Grid.Column="0" Background="White" Height ="200"  Foreground="Black"
-                FontSize="60" Content="auto"  FontStyle="Italic" FontWeight="Bold"
+    <Button x:Name="btnAuto" Grid.Column="0" Background="AntiqueWhite" Height ="200"  Foreground="Black"
+                FontSize="40" Content="auto"  FontStyle="Italic" FontWeight="Bold"
                 HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="7"
                 BorderBrush="RoyalBlue" CornerRadius="50" Click="btnAuto_Click">
         </Button>
-        <Button x:Name="btnManual" Grid.Column="2" Background="White" Height ="200"  Foreground="Black"
-                FontSize="30" Content="Manual"  FontStyle="Italic" FontWeight="Bold"
+        <Button x:Name="btnManual" Grid.Column="2" Background="AntiqueWhite" Height ="200"  Foreground="Black"
+                FontSize="40" Content="Manual"  FontStyle="Italic" FontWeight="Bold"
                 HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="7"
                 BorderBrush="RoyalBlue" Click="btnManual_Click"
                 >
         </Button>
         <Image x:Name="imgSanta" Width="500" Height="500" Grid.Column="0"
-           Source="Assets\Character\Santa\santa_idle.gif" Grid.ColumnSpan="2" Margin="7,200,417,200" Grid.RowSpan="2">
+           Source="Assets\Character\Santa\santa_idle.gif" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10,202,414,184">
         </Image>
         <Image x:Name="imgDino" Width="500" Height="500" Grid.Column="2" 
-           Source="Assets\Character\Dino\dino_idle.gif" Margin="7,200,-45,200" Grid.RowSpan="2">
+           Source="Assets\Character\Dino\dino_idle.gif" Grid.RowSpan="2" Margin="56,207,-94,179">
         </Image>
     </Grid>
 </Page>
