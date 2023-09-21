@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TraficLights
 {
-    class Dino
+    public class Dino : Characters
     {
+
     }
 }

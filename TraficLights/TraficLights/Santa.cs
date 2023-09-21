@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TraficLights
 {
-    class Santa
+    public class Santa : Characters
     {
+
     }
 }

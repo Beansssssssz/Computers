@@ -32,7 +32,7 @@ namespace TraficLights
 
             set {
                 _isAuto = value;
-                if (IsAuto)
+                if (_isAuto)
                     _timer.Start();
                 else
                     _timer.Stop();

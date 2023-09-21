@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TraficLights
 {
-    class Animals
+    public abstract class Characters
     {
+
     }
 }
