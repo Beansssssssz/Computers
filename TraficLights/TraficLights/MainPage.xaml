@@ -9,7 +9,7 @@
     Background="CornflowerBlue" Loaded="Page_Loaded">
 
     <Grid
-        Background="OldLace" 
+        Background="DarkSalmon" 
         Margin="20" 
         BorderBrush="White"
         BorderThickness="7">
@@ -54,12 +54,10 @@
                 BorderBrush="RoyalBlue" CornerRadius="50" Click="btnManual_Click" Margin="31,0,-4,0">
         </Button>
         <Image x:Name="imgSanta" Width="300" Height="300" Grid.Column="0" Grid.RowSpan="2"
-               HorizontalAlignment="Stretch" Margin="0,214,0,172"
-               Source="Assets\Character\Santa\santa_idle.gif"/>
+               HorizontalAlignment="Stretch" Margin="0,214,0,172"/>
 
         <Image x:Name="imgDino" Width="300" Height="300" Grid.Column="2" Grid.RowSpan="2"
-                HorizontalAlignment="Stretch" Margin="68,214,0,172"
-               Source="Assets\Character\Dino\dino_idle.gif">
+                HorizontalAlignment="Stretch" Margin="68,214,0,172">
         </Image>
     </Grid>
 </Page>

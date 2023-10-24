@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,7 +22,9 @@ namespace TraficLights
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public TraficLight _traficLight;
+        private TraficLight _traficLight;
+        private Dino _dino;
+        private Santa _santa;
 
         public MainPage()
         {
@@ -47,6 +49,8 @@ namespace TraficLights
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             _traficLight = new TraficLight(RedElp, YellowElp, GreenElp);
+            _santa = new Santa(imgSanta);
+            _dino = new Dino(imgDino);
         }
     }
 }
