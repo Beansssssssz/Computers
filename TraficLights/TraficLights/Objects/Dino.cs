@@ -12,7 +12,7 @@ namespace TraficLights
     public Dino(Image ImageAnimal) : base(ImageAnimal)
     {
 
-    }
+    } 
 
     protected override void MatchGifToState()
     {
