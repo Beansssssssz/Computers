@@ -27,7 +27,29 @@ namespace TraficLights
       _bitmapImage = new BitmapImage();
       _imageAnimal.Source = _bitmapImage;
       MatchGifToState();
+      Events.StateChanged += SetState;//
     }
+
+    /// <summary>
+    /// //the animals changings gifs
+    /// </summary>
+    /// <param name="state"></param>  
+    private void SetState(TraficLight.TraficLightState state)
+    {
+      switch(state)
+      {
+        case TraficLight.TraficLightState.Red:
+          _state = StateType.standing;
+          break;
+        case TraficLight.TraficLightState.Yellow:
+          _state = StateType.ready;
+          break;
+        case TraficLight.TraficLightState.Green:
+          _state = StateType.going;
+          break;
+      }
+      MatchGifToState();
+    } 
 
     protected virtual void MatchGifToState()
     {

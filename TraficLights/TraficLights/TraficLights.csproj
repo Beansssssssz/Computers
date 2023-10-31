@@ -116,17 +116,18 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Characters.cs" />
+    <Compile Include="Objects\Characters.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dino.cs" />
+    <Compile Include="Objects\Dino.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Santa.cs" />
-    <Compile Include="TraficLight.cs" />
+    <Compile Include="Objects\Santa.cs" />
+    <Compile Include="Objects\TraficLight.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
