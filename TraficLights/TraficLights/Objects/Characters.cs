@@ -27,7 +27,7 @@ namespace TraficLights
       _bitmapImage = new BitmapImage();
       _imageAnimal.Source = _bitmapImage;
       MatchGifToState();
-      Events.StateChanged += SetState;//
+      Events.StateChanged += SetState;
     }
 
     /// <summary>

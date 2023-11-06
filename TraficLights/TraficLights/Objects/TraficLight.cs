@@ -61,10 +61,8 @@ namespace TraficLights
       SetState();
     }
 
-
-
     /// <summary>
-    /// the function movest the traffic light to its necct state in a infinite loop
+    /// the function movest the traffic light to its next state in a infinite loop
     /// </summary>
     public void SetState()
     {
@@ -84,8 +82,8 @@ namespace TraficLights
           _elpRed.Fill = new SolidColorBrush(Colors.Red);
           break;
       }
-      if (Events.StateChanged != null)
-        Events.StateChanged(_state);
+        if (Events.StateChanged != null)
+          Events.StateChanged(_state);
     }
 
     /// <summary>

@@ -25,7 +25,7 @@ namespace TraficLights
           _bitmapImage.UriSource = new Uri("ms-appx:///Assets/Character/Dino/dino_jump.gif");
           break;
         default:
-          _bitmapImage.UriSource = new Uri("ms-appx:///Assets/Character/Dino/dino_run.gif");
+          _bitmapImage.UriSource = new Uri("ms-appx:///Assets/Character/Dino/dino_run.gif");  
           break;
       }
     }
