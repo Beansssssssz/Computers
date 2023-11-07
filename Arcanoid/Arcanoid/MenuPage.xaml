@@ -9,6 +9,55 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition/>
+      <RowDefinition/>
+      <RowDefinition/>
+      <RowDefinition/>
+      <RowDefinition/>
+      <RowDefinition/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition></ColumnDefinition>
+      <ColumnDefinition></ColumnDefinition>
+      <ColumnDefinition></ColumnDefinition>
+      <ColumnDefinition></ColumnDefinition>
+      <ColumnDefinition></ColumnDefinition>
+      <ColumnDefinition></ColumnDefinition>
+      <ColumnDefinition></ColumnDefinition>
+      <ColumnDefinition></ColumnDefinition>
+      <ColumnDefinition></ColumnDefinition>
+      <ColumnDefinition></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+    <Grid.Background>
+      <ImageBrush ImageSource = "Assets\GUI\backround_pic.png"></ImageBrush>
+    </Grid.Background>
 
-    </Grid>
+    <Button
+      x:Name="Play">
+      <Image x:Name="PlayBtn" Source="//">
+      </Image>
+    </Button>
+      
+    <Button
+      x:Name="Settings">
+      <Image x:Name="SettingsBtn" Source="//">
+      </Image>
+    </Button>
+
+    <Button
+      x:Name="Shop">
+      <Image x:Name="ShopBtn" Source="//">
+      </Image>
+    </Button>
+      
+    <Button
+      x:Name="Exit">
+      <Image x:Name="ExitBtn" Source="//">
+      </Image>
+    </Button>
+    
+  </Grid>
 </Page>
