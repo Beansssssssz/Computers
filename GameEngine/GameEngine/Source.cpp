@@ -2,7 +2,7 @@
 #include <SDL_image.h>
 #include <iostream>
 
-
+#include "RenderWindow.hpp"
 
 int main(int argc, char* argv[]) {
   if (SDL_Init(SDL_INIT_VIDEO) > 0) //if sdl_init return somthing greater than 0 then a prob has occured
@@ -11,6 +11,19 @@ int main(int argc, char* argv[]) {
   if(!(IMG_Init(IMG_INIT_PNG)))
     std::cout << "IMG Init failed. IMG ERROR: " << IMG_GetError() << std::endl;
 
+  RenderWindow window("game", 600, 400);
 
+  bool running = true;
+  SDL_Event event; //the window event(like close,minize,keypress)
+
+  while (running) {
+    while (SDL_PollEvent(&event))
+    {
+      if (event.type == SDL_QUIT)
+        running = false;
+    }
+  }
+
+  SDL_Quit();
   return 0;
 }
