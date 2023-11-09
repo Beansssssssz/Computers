@@ -13,6 +13,8 @@ int main(int argc, char* argv[]) {
 
   RenderWindow window("game", 600, 400);
 
+  SDL_Texture* grassTexture = window.LoadTexture("ground_grass1.png");
+
   bool running = true;
   SDL_Event event; //the window event(like close,minize,keypress)
 

@@ -16,6 +16,20 @@ RenderWindow::RenderWindow(const char* p_title, int p_width, int p_height)
   if(renderer == NULL)
     std::cout << "window failed to render. Error: " << SDL_GetError() << std::endl;
 };
+
+SDL_Texture* RenderWindow::LoadTexture(const char* p_filepath) {
+
+  SDL_Texture* texture = NULL;
+  texture = IMG_LoadTexture(renderer, p_filepath);
+
+  if (texture == NULL)
+    std::cout << "Texture faild to load. Error: " << SDL_GetError() << std::endl;
+
+  return texture;
+}
+
+
+
 RenderWindow::~RenderWindow() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
