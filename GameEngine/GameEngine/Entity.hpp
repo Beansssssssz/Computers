@@ -3,7 +3,6 @@
 #include <SDL_image.h>
 
 #include "Math.hpp"
-#include "Square.hpp"
 
 class Entity {
 public:

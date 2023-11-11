@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
   bool running = true;
   SDL_Event event; //the window event(like close,minize,keypress)
 
-  const float maxFPS = 60;
+  const float maxFPS = 120;
   int counter = 0;
 
 
@@ -50,13 +50,13 @@ int main(int argc, char* argv[]) {
     }
     window.Clear();
 
-    for (int i = 0; i < platforms.size(); i++)
+    for (int i = 0; i < platforms.size(); i++) 
       window.Render(platforms[i]);
 
     window.Display();
 
-    utils::CapFPS(start, maxFPS);
-    //utils::GetFPS(start);
+    //utils::CapFPS(start, maxFPS);
+    utils::GetFPS(start);
   }
 
   SDL_Quit();

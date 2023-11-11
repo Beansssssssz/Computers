@@ -4,12 +4,9 @@
 
 #include "Square.hpp"
 
-Square::Square(Vector2f vec, SDL_Texture* tex, SDL_Rect& rect)
+Square::Square(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect)
   :pos(pos), tex(tex), CurrentFrame(rect)
-{
-  std::cout << rect.w << std::endl;
-  std::cout << rect.h << std::endl;
-}
+{}
 
 Square::~Square()
 {}
