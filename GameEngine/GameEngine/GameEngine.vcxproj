@@ -153,14 +153,18 @@
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Platforms.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Square.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Math.hpp" />
+    <ClInclude Include="Platforms.hpp" />
     <ClInclude Include="RenderWindow.hpp" />
+    <ClInclude Include="Square.hpp" />
     <ClInclude Include="Utils.hpp" />
   </ItemGroup>
   <ItemGroup>

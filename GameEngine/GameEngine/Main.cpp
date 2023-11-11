@@ -4,9 +4,10 @@
 #include <vector>
 
 #include "RenderWindow.hpp"
-#include "Entity.hpp"
+//#include "Entity.hpp"
 #include "Math.hpp"
 #include "Utils.hpp"
+#include "Square.hpp"
 
 int main(int argc, char* argv[]) {
   if (SDL_Init(SDL_INIT_VIDEO) > 0) //if sdl_init return somthing greater than 0 then a prob has occured
@@ -21,20 +22,23 @@ int main(int argc, char* argv[]) {
     
   SDL_Texture* grassTexture = window.LoadTexture("Assets/ground_grass1.png");
 
-  std::vector<Entity> platforms;
-
+  std::vector<Square> platforms;
+    
   //the i-1 is there because the window isnt always perfect and sometimes there are still platforms missing
   //so the -1 is addign another platform so it would all be there.
   for (float i = 0; i - 1 < width / 128; i++) {
     Vector2f pos(i* 128, height - 128);
-    platforms.push_back(Entity(pos, grassTexture));
+    SDL_Rect rect;
+    rect.x = 0; rect.y = 0, rect.w = 128; rect.h = 128;
+    platforms.push_back(Square(pos, grassTexture, rect));
   }
 
   bool running = true;
   SDL_Event event; //the window event(like close,minize,keypress)
 
-  const float maxFPS = 10;
+  const float maxFPS = 60;
   int counter = 0;
+
 
   while (running) {
     float start = SDL_GetPerformanceCounter();
@@ -52,7 +56,7 @@ int main(int argc, char* argv[]) {
     window.Display();
 
     utils::CapFPS(start, maxFPS);
-    utils::GetFPS(start);
+    //utils::GetFPS(start);
   }
 
   SDL_Quit();
