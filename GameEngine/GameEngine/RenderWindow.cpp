@@ -56,5 +56,4 @@ void RenderWindow::Clear() {
 RenderWindow::~RenderWindow() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
-  std::cout << "worked :)" << std::endl;
 };
