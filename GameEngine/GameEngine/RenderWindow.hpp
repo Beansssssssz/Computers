@@ -2,10 +2,16 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "Entity.hpp"
+
+
 class RenderWindow {
 public:
-  RenderWindow(const char* p_title, int p_width,int p_height);
-  SDL_Texture* LoadTexture(const char* p_filepath);
+  RenderWindow(const char* title, int width,int height);
+  SDL_Texture* LoadTexture(const char* filepath);
+  void Display();
+  void Render(Entity& entity);
+  void Clear();
   ~RenderWindow();
 private:
   SDL_Window* window; //the window "tab" it self(is a pointer)
