@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "RenderWindow.hpp"
-#include "Entity.hpp"
+#include "Square.hpp"
 
 RenderWindow::RenderWindow(const char* title, int width, int height)
   :window(NULL), renderer(NULL)//sets the 2 vars to null
@@ -33,7 +33,7 @@ void RenderWindow::Display() {
   SDL_RenderPresent(renderer);
 };
 
-void RenderWindow::Render(Entity& entity) {
+void RenderWindow::Render(Square& entity) {
 
   SDL_Rect src;//src = SDL rect
   src.x = entity.GetCurrentFrame().x;
@@ -44,8 +44,8 @@ void RenderWindow::Render(Entity& entity) {
   SDL_Rect dst;//src = SDL rect
   dst.x = entity.GetPos().x;
   dst.y = entity.GetPos().y;
-  dst.w = entity.GetCurrentFrame().w * 4;
-  dst.h = entity.GetCurrentFrame().h * 4;
+  dst.w = entity.GetCurrentFrame().w;
+  dst.h = entity.GetCurrentFrame().h;
   SDL_RenderCopy(renderer, entity.GetTexture(), &src, &dst);
 };
 

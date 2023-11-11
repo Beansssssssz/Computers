@@ -9,7 +9,7 @@ namespace utils {
   /// Evaluates how long the program is running.
   /// </summary>
   /// <returns>A float represting the amount of time that passed.</returns>
-  inline float TimeRunning() {//inline means you can write the code in an header file
+  inline float TimeRunning() {//inline means you can write the code in an header file.
     float t = SDL_GetTicks64();
     t *= 0.001f;
 
@@ -17,30 +17,34 @@ namespace utils {
   }
 
   /// <summary>
-  /// Returns the current numbers of frams per sec
+  /// Returns the current numbers of frams per sec by calc the number
+  /// of times the cpu has ticked in nanosec.
   /// </summary>
-  /// <param name="start"></param>
-  /// <returns>The current number of FPS</returns>
+  /// <param name="start">the amount of times the cpu ticked since the start of the game loop current loop.</param>
+  /// <returns>The current number of FPS.</returns>
   inline float GetFPS(float start) {
-    Uint64 end = SDL_GetPerformanceCounter();//get the timer inside the cpu in nanosecond
+    Uint64 end = SDL_GetPerformanceCounter();//get the timer inside the cpu in nanosecond.
 
     float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
     std::cout << "Current FPS: " << 1.0f / elapsed << std::endl;
+
     return 1.0f / elapsed;
   }
 
   /// <summary>
-  /// Caps the FPS at the number you choose
+  /// Caps the FPS at the number you choose by using SDL_Delay and
+  /// the cpu ticks.
   /// </summary>
-  /// <param name="start"></param>
-  /// <param name="maxFPS">The maximum amount of fps the programs runs at </param>
+  /// <param name="start">the amount of times the cpu ticked since the start of the game loop current loop</param>
+  /// <param name="maxFPS">The maximum amount of fps the programs runs at.</param>
   inline void CapFPS(float start, int maxFPS) {
     Uint64 end = SDL_GetPerformanceCounter();
 
     float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
 
-    // Cap to 60 FPS
-    SDL_Delay(floor(16.666f - elapsedMS));
-  }
+    float delay = 1000.0f / maxFPS;
 
+    //delay-elapsedMS is there incase of losing frames due to loading times in the pc.
+    SDL_Delay(floor(delay - elapsedMS));
+  }
 }

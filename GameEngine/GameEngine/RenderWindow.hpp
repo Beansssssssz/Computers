@@ -2,7 +2,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include "Entity.hpp"
+//#include "Entity.hpp"
+#include "Square.hpp"
 
 
 class RenderWindow {
@@ -10,7 +11,7 @@ public:
   RenderWindow(const char* title, int width,int height);
   SDL_Texture* LoadTexture(const char* filepath);
   void Display();
-  void Render(Entity& entity);
+  void Render(Square& entity);
   void Clear();
   ~RenderWindow();
 private:
