@@ -13,7 +13,7 @@ Button::~Button()
 {
 }
 
-void Button::Update(Mouse& mouse)
+void Button::Update(Mouse& mouse, ButtonPressed btn = ButtonPressed::mbl)
 {
   isPressed = false;
   isSelected = false;
@@ -21,15 +21,15 @@ void Button::Update(Mouse& mouse)
   bool IsY = pos.y < mouse.GetPos().y && (pos.y + rect.h > mouse.GetPos().y);
   if (IsX && IsY) {
     isSelected = true;
-    if (mouse.GetPressed() == ButtonPressed::mbl)
+    if (mouse.GetPressed() == btn)
       isPressed = true;
   }
 
   if (isSelected)
-    ChangeState();
+    ChangeState(mouse);
 }
 
-void Button::ChangeState() {
+void Button::ChangeState(Mouse& mouse) {
 
 }
 

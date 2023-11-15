@@ -12,8 +12,8 @@ class Button : public Square
 public:
   Button(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect);
   ~Button();
-  void Update(Mouse& mouse);
-  void ChangeState();
+  void Update(Mouse& mouse, ButtonPressed btn);
+  void ChangeState(Mouse& mouse);
   bool GetIsSelected();
   bool GetIsPressed();
 

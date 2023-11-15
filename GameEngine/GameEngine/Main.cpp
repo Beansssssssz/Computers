@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
 
   Vector2i pos(0, 0);
   Mouse mouse(pos);
-
+  
   tex = window.LoadTexture("Assets/button_UI.png");
   Button button = CreateButton(tex, 160, 160);
 
@@ -50,11 +50,12 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < platforms.size(); i++) 
       window.Render(platforms[i].GetPos(), platforms[i].GetRect(), platforms[i].GetTexture());
 
+
     mouse.UpdatePos();
 
     window.Render(button.GetPos(), button.GetRect(), button.GetTexture());
 
-    button.Update(mouse);
+    button.Update(mouse, ButtonPressed::mbl);
     if (button.GetIsPressed())
       running = false;
 
