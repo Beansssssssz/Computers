@@ -1,0 +1,28 @@
+#include <SDL.h>
+#include <SDL_image.h>
+#include <iostream>
+
+#include "Square.hpp"
+
+Square::Square(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect)
+  :pos(pos), tex(tex), rect(rect)
+{}
+
+Square::~Square()
+{
+}
+
+Vector2f& Square::GetPos()
+{
+  return pos;
+}
+
+SDL_Texture* Square::GetTexture()
+{
+  return tex;
+}
+
+SDL_Rect Square::GetRect()
+{
+  return rect;
+}
