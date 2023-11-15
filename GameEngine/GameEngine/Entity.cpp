@@ -3,29 +3,26 @@
 
 #include "Entity.hpp"
 
-
-Entity::Entity(Vector2f pos, SDL_Texture* tex)
-  :pos(pos), tex(tex)
+Entity::Entity(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect)
+  :Entity::Square(pos, tex, rect)
 {
-  CurrentFrame.x = 0;
-  CurrentFrame.y = 0;
-  CurrentFrame.w = 32;
-  CurrentFrame.h = 32;
-};
-
-Vector2f& Entity::GetPos() {
-  return pos;
-};
-
-SDL_Texture* Entity::GetTexture()
-{
-  return tex;
-};
-
-SDL_Rect Entity::GetCurrentFrame()
-{
-  return CurrentFrame;
-};
+}
 
 Entity::~Entity()
-{};
+{
+}
+
+bool Entity::GetIsRight()
+{
+  return IsRight;
+}
+
+void Entity::SetIsRight(bool isRight)
+{
+  IsRight = isRight;
+}
+
+bool Entity::IsColliding(SDL_Rect& rect)
+{
+  return false;
+}

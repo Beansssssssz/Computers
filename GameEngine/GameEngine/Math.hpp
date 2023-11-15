@@ -3,16 +3,23 @@
 struct Vector2f
 {
   Vector2f()
-    :x(0), y(0), velocityX(0), velocityY(0)
+    :x(0), y(0)
   {}
   Vector2f(float x, float y)
-    :x(x), y(y), velocityX(0), velocityY(0)
+    :x(x), y(y)
   {}
-  Vector2f(float x, float y, float Xv, float Yv)
-    :x(x), y(y), velocityX(Xv), velocityY(Yv)
-  {}
-
   float x, y;
-  float velocityX, velocityY;
 };
+
+struct Vector2i
+{
+  Vector2i()
+    :x(0), y(0)
+  {}
+  Vector2i(int x, int y)
+    :x(x), y(y)
+  {}
+  int x, y;
+};
+
 

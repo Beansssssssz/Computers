@@ -26,9 +26,9 @@ namespace utils {
     Uint64 end = SDL_GetPerformanceCounter();//get the timer inside the cpu in nanosecond.
 
     float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
-    std::cout << "Current FPS: " << 1.0f / elapsed << std::endl;
+    std::cout << "Current FPS: " << int(1.0f / elapsed) << std::endl;
 
-    return 1.0f / elapsed;
+    return int(1.0f / elapsed);
   }
 
   /// <summary>

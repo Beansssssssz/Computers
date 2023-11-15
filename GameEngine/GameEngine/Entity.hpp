@@ -2,18 +2,19 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include "Math.hpp"
+#include "Square.hpp"
 
-class Entity {
+class Entity :Square
+{
 public:
-  Entity(Vector2f vec, SDL_Texture* tex);
+  Entity(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect);
   ~Entity();
-  Vector2f& GetPos();
-  SDL_Texture* GetTexture();
-  SDL_Rect GetCurrentFrame();
-
+  bool GetIsRight();
+  void SetIsRight(bool isRight);
+  bool IsColliding(SDL_Rect& rect);
+  
 private:
-  Vector2f pos;
-  SDL_Rect CurrentFrame;
-  SDL_Texture* tex;
+  bool IsRight;
+
+
 };

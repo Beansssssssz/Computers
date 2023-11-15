@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "RenderWindow.hpp"
-#include "Square.hpp"
 
 RenderWindow::RenderWindow(const char* title, int width, int height)
   :window(NULL), renderer(NULL)//sets the 2 vars to null
@@ -33,20 +32,23 @@ void RenderWindow::Display() {
   SDL_RenderPresent(renderer);
 };
 
-void RenderWindow::Render(Square& entity) {
+void RenderWindow::Render(Vector2f pos, SDL_Rect rect, SDL_Texture* tex) {
 
+  //the src rect means how many pixels to tale from the texture
   SDL_Rect src;//src = SDL rect
-  src.x = entity.GetCurrentFrame().x;
-  src.y = entity.GetCurrentFrame().y;
-  src.w = entity.GetCurrentFrame().w;
-  src.h = entity.GetCurrentFrame().h;
+  src.x = rect.x;
+  src.y = rect.y;
+  src.w = rect.w;
+  src.h = rect.h;
 
+  //the dst means where to put the texture on the window
   SDL_Rect dst;//src = SDL rect
-  dst.x = entity.GetPos().x;
-  dst.y = entity.GetPos().y;
-  dst.w = entity.GetCurrentFrame().w;
-  dst.h = entity.GetCurrentFrame().h;
-  SDL_RenderCopy(renderer, entity.GetTexture(), &src, &dst);
+  dst.x = pos.x;
+  dst.y = pos.y;
+  dst.w = rect.w;
+  dst.h = rect.h;
+  if(!(SDL_RenderCopy(renderer, tex, &src, &dst) == 0))
+    std::cout << "Texture faild to be copied. Error: " << SDL_GetError() << std::endl;
 };
 
 void RenderWindow::Clear() {
@@ -56,4 +58,13 @@ void RenderWindow::Clear() {
 RenderWindow::~RenderWindow() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
-};
+}
+SDL_Window* RenderWindow::GetWindow()
+{
+  return window;
+}
+SDL_Renderer* RenderWindow::GetRenderer()
+{
+  return renderer;
+}
+;

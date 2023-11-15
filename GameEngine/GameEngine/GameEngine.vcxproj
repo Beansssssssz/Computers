@@ -151,23 +151,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Math.cpp" />
-    <ClCompile Include="Platforms.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Square.cpp" />
-    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Math.hpp" />
-    <ClInclude Include="Platforms.hpp" />
+    <ClInclude Include="Mouse.hpp" />
     <ClInclude Include="RenderWindow.hpp" />
     <ClInclude Include="Square.hpp" />
     <ClInclude Include="Utils.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\button_UI.png" />
     <Image Include="Assets\ground_grass1.png" />
     <Image Include="Assets\hulking_knight.png" />
   </ItemGroup>
