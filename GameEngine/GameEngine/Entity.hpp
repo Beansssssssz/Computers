@@ -4,10 +4,10 @@
 
 #include "Square.hpp"
 
-class Entity :Square
+class Entity :public Square
 {
 public:
-  Entity(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect);
+  Entity(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect);
   ~Entity();
   bool GetIsRight();
   void SetIsRight(bool isRight);
@@ -15,6 +15,4 @@ public:
   
 private:
   bool IsRight;
-
-
 };

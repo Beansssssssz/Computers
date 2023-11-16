@@ -3,8 +3,8 @@
 
 #include "Entity.hpp"
 
-Entity::Entity(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect)
-  :Entity::Square(pos, tex, rect)
+Entity::Entity(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect)
+  :Entity::Square(tex, srcrect, dstrect), IsRight(false)
 {
 }
 

@@ -8,11 +8,12 @@
 class RenderWindow {
 public:
   RenderWindow(const char* title, int width,int height);
+  ~RenderWindow();
   SDL_Texture* LoadTexture(const char* filepath);
   void Display();
-  void Render(Vector2f pos, SDL_Rect rect, SDL_Texture* tex);
+  void Render(SDL_Texture* tex, SDL_Rect dstrect, SDL_Rect srcrect);
   void Clear();
-  ~RenderWindow();
+  void ToggleFullScreen();
   SDL_Window* GetWindow();
   SDL_Renderer* GetRenderer();
 private:

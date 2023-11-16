@@ -10,13 +10,12 @@
 class Button : public Square
 {
 public:
-  Button(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect);
+  Button(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect);
   ~Button();
   void Update(Mouse& mouse, ButtonPressed btn);
   void ChangeState(Mouse& mouse);
   bool GetIsSelected();
   bool GetIsPressed();
-
 private:
   bool isSelected;
   bool isPressed;

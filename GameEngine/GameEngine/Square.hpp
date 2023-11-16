@@ -4,16 +4,17 @@
 
 #include "Math.hpp"
 
-class Square
-{
+class Square {
 public:
-  Square(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect);
+  Square(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect);
   ~Square();
   Vector2f& GetPos();
   SDL_Texture* GetTexture();
-  SDL_Rect GetRect();
+  SDL_Rect GetSrcRect();
+  SDL_Rect GetDstRect();
+
 protected:
   SDL_Texture* tex;
-  SDL_Rect rect;
-  Vector2f pos;
+  SDL_Rect srcRect;
+  SDL_Rect dstRect;
 };

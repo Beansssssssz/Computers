@@ -4,8 +4,8 @@
 
 #include "Square.hpp"
 
-Square::Square(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect)
-  :pos(pos), tex(tex), rect(rect)
+Square::Square(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect)
+  :tex(tex), srcRect(srcrect), dstRect(dstrect)
 {}
 
 Square::~Square()
@@ -14,6 +14,7 @@ Square::~Square()
 
 Vector2f& Square::GetPos()
 {
+  Vector2f pos(dstRect.x, dstRect.y);
   return pos;
 }
 
@@ -22,7 +23,12 @@ SDL_Texture* Square::GetTexture()
   return tex;
 }
 
-SDL_Rect Square::GetRect()
+SDL_Rect Square::GetDstRect()
 {
-  return rect;
+  return dstRect;
+}
+
+SDL_Rect Square::GetSrcRect()
+{
+  return srcRect;
 }

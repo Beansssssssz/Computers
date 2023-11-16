@@ -11,7 +11,6 @@
 #include "Utils.hpp"
 
 std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex);
-Button CreateButton(SDL_Texture* tex, int w, int h);
 
 int main(int argc, char* argv[]) {
 
@@ -32,7 +31,11 @@ int main(int argc, char* argv[]) {
   Mouse mouse(pos);
   
   tex = window.LoadTexture("Assets/button_UI.png");
-  Button button = CreateButton(tex, 160, 160);
+  SDL_Rect srcRect, dstRect;
+  dstRect.x = 0; dstRect.y = 0, dstRect.w = 160; dstRect.h = 160;
+  srcRect.x = 160 * 4; srcRect.y = 160, srcRect.w = 160; srcRect.h = 160;
+  
+  Button button(tex, srcRect, dstRect);
 
   bool running = true;
   SDL_Event event; //the window event(like close, minize, keypress)
@@ -47,13 +50,16 @@ int main(int argc, char* argv[]) {
     }
     window.Clear();
 
-    for (int i = 0; i < platforms.size(); i++) 
-      window.Render(platforms[i].GetPos(), platforms[i].GetRect(), platforms[i].GetTexture());
-
-
     mouse.UpdatePos();
 
-    window.Render(button.GetPos(), button.GetRect(), button.GetTexture());
+    //start of layer 1
+    for (int i = 0; i < platforms.size(); i++)  
+      window.Render(platforms[i].GetTexture(), platforms[i].GetDstRect(), platforms[i].GetSrcRect());
+    //end of layer 1
+
+    //start of layer 2
+    window.Render(button.GetTexture(), button.GetDstRect(), button.GetSrcRect());
+    //end of layer 2
 
     button.Update(mouse, ButtonPressed::mbl);
     if (button.GetIsPressed())
@@ -69,27 +75,16 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 
-Button CreateButton(SDL_Texture* tex, int w, int h) {
-  //just a rand button for testing
-  Vector2f pos1(1920 / 2, 1080 / 2);
-  SDL_Rect rect;
-  rect.x = 160; rect.y = 0, rect.w = w; rect.h = h;
-  Button button(pos1, tex, rect);
-
-  return button;
-}
-
-
-
-std::vector<Square> CreatePlatforms(int w,int h, SDL_Texture* tex) {
+std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex) {
   //the i-1 is there because the window isnt always perfect and sometimes there are still platforms missing
   //so the -1 is addign another platform so it would all be there.
   std::vector<Square> platforms;
-  SDL_Rect rect;
-  rect.x = 0; rect.y = 0, rect.w = 128; rect.h = 128;
+  SDL_Rect dstRect , srcRect;
+  srcRect.x = 0; srcRect.y = 0, srcRect.w = 128; srcRect.h = 128;
+  dstRect.w = 128, dstRect.h = 128;
   for (float i = 0; i - 1 < w / 128; i++) {
-    Vector2f pos(i * 128, h - 128);
-    platforms.push_back(Square(pos, tex, rect));
+    dstRect.x = i * dstRect.w; dstRect.y = h - dstRect.w;
+    platforms.push_back(Square(tex, srcRect, dstRect));
   }
 
   return platforms;

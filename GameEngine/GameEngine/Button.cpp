@@ -3,8 +3,8 @@
 
 #include "Button.hpp"
 
-Button::Button(Vector2f pos, SDL_Texture* tex, SDL_Rect& rect)
-  :Button::Square(pos, tex, rect), isPressed(false), isSelected(false)
+Button::Button(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect)
+  :Button::Square(tex, srcrect, dstrect), isPressed(false), isSelected(false)
 {
   isSelected = false;
 }
@@ -17,8 +17,8 @@ void Button::Update(Mouse& mouse, ButtonPressed btn = ButtonPressed::mbl)
 {
   isPressed = false;
   isSelected = false;
-  bool IsX = pos.x < mouse.GetPos().x && (pos.x + rect.w > mouse.GetPos().x);
-  bool IsY = pos.y < mouse.GetPos().y && (pos.y + rect.h > mouse.GetPos().y);
+  bool IsX = dstRect.x < mouse.GetPos().x && (dstRect.x + dstRect.w > mouse.GetPos().x);
+  bool IsY = dstRect.y < mouse.GetPos().y && (dstRect.y + dstRect.h > mouse.GetPos().y);
   if (IsX && IsY) {
     isSelected = true;
     if (mouse.GetPressed() == btn)
@@ -42,4 +42,3 @@ bool Button::GetIsPressed()
 {
   return isPressed;
 }
-
