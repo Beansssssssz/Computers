@@ -7,16 +7,16 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="04f10ed3-2e78-433d-8999-2b7f8bfdade7"
+    Name="6d2c0a4b-d811-4551-b665-0a24c95a9a11"
     Publisher="CN=יעל חי"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="04f10ed3-2e78-433d-8999-2b7f8bfdade7" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="6d2c0a4b-d811-4551-b665-0a24c95a9a11" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>TraficLights</DisplayName>
     <PublisherDisplayName>יעל חי</PublisherDisplayName>
-    <Logo>Assets\StoreLogo.png</Logo>
+    <Logo>Assets\App\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -33,12 +33,12 @@
       EntryPoint="TraficLights.App">
       <uap:VisualElements
         DisplayName="TraficLights"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png"
+        Square150x150Logo="Assets\App\Square150x150Logo.png"
+        Square44x44Logo="Assets\App\Square44x44Logo.png"
         Description="TraficLights"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:DefaultTile Wide310x150Logo="Assets\App\Wide310x150Logo.png" Square71x71Logo="Assets\App\SmallTile.png" Square310x310Logo="Assets\App\LargeTile.png"/>
+        <uap:SplashScreen Image="Assets\App\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
