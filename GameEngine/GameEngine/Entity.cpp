@@ -21,8 +21,3 @@ void Entity::SetIsRight(bool isRight)
 {
   IsRight = isRight;
 }
-
-bool Entity::IsColliding(SDL_Rect& rect)
-{
-  return false;
-}

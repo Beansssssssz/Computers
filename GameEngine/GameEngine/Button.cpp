@@ -13,7 +13,7 @@ Button::~Button()
 {
 }
 
-void Button::Update(Mouse& mouse, ButtonPressed btn = ButtonPressed::mbl)
+void Button::Update(Mouse& mouse, MouseButtons btn = MouseButtons::mbl)
 {
   isPressed = false;
   isSelected = false;

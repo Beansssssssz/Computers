@@ -24,13 +24,13 @@ Vector2i Mouse::GetPos()
   return pos;
 };
 
-ButtonPressed Mouse::GetPressed()
+MouseButtons Mouse::GetPressed()
 {
   return bt;
 };
 
 void Mouse::UpdatePos()
 {
-  bt = ButtonPressed(SDL_GetMouseState(&pos.x, &pos.y));
+  bt = MouseButtons(SDL_GetMouseState(&pos.x, &pos.y));
 };
 

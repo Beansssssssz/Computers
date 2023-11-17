@@ -9,6 +9,7 @@
 #include "Button.hpp"
 #include "Math.hpp"
 #include "Utils.hpp"
+#include "Keyboard.hpp"
 
 std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex);
 Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos);
@@ -30,15 +31,17 @@ int main(int argc, char* argv[]) {
 
   Vector2i pos(0, 0);
   Mouse mouse(pos);
+
+  Keyboard keyboard;
   
   tex = window.LoadTexture("Assets/button_UI.png");
   Button button = CreateButton(tex, 160, 160, Vector2i(4, 1));
 
-  bool running = true;
-  SDL_Event event; //the window event(like close, minize, keypress)
-
   SDL_Rect rect;
   rect.x = width - 300; rect.y = 0, rect.w = 300; rect.h = 300;
+
+  bool running = true;
+  SDL_Event event; //the window event(like close, minize, keypress)
 
   while (running) {
     float start = SDL_GetPerformanceCounter();
@@ -51,6 +54,7 @@ int main(int argc, char* argv[]) {
     window.Clear();
 
     mouse.UpdatePos();
+    keyboard.Update();
 
     for (int i = 0; i < platforms.size(); i++)  
       window.Render(platforms[i].GetTexture(), platforms[i].GetDstRect(), platforms[i].GetSrcRect());
@@ -60,13 +64,29 @@ int main(int argc, char* argv[]) {
     RGBA color(40, 100, 100, 0);
     window.CreateRect(&rect, color);
 
-    button.Update(mouse, ButtonPressed::mbl);
+    if(keyboard.GetKeyArray()[SDL_SCANCODE_S])
+    for (int i = 0; i < platforms.size(); i++)
+      if (rect.y < height && !platforms[i].IsColliding(rect)) {
+        rect.y++;
+        break;
+      }
+
+
+
+    if (keyboard.GetKeyArray()[SDL_SCANCODE_W])
+      rect.y--;
+    if (keyboard.GetKeyArray()[SDL_SCANCODE_A])
+      rect.x--;
+    if (keyboard.GetKeyArray()[SDL_SCANCODE_D])
+      rect.x++;
+
+    button.Update(mouse, MouseButtons::mbl);
     if (button.GetIsPressed())
       running = false;
 
     window.Display();
 
-    //utils::CapFPS(start, maxFPS);
+    //utils::CapFPS(start, 60);
     //utils::GetFPS(start);
   }
 
@@ -92,7 +112,7 @@ std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex) {
   dstRect.w = 128, dstRect.h = 128;
   for (float i = 0; i - 1 < w / 128; i++) {
     dstRect.x = i * dstRect.w; dstRect.y = h - dstRect.w;
-    platforms.push_back(Square(tex, srcRect, dstRect));
+    platforms.push_back(Square(tex, srcRect, dstRect, true));//we need the platforms to have collision
   }
 
   return platforms;

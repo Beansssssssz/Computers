@@ -5,7 +5,7 @@
 #include "Square.hpp"
 #include "Math.hpp"
 
-enum class ButtonPressed {
+enum class MouseButtons {
   none = 0,
   mbl = 1,
   mbm = 2,
@@ -20,11 +20,11 @@ public:
   Mouse(Vector2i pos);
   ~Mouse();
   Vector2i GetPos();
-  ButtonPressed GetPressed();
+  MouseButtons GetPressed();
   void UpdatePos();
 
 private:
-  ButtonPressed bt = ButtonPressed::none;
+  MouseButtons bt = MouseButtons::none;
   Vector2i pos;
   SDL_Cursor* cursor;
 };

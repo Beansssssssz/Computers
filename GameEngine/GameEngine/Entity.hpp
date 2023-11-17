@@ -11,7 +11,6 @@ public:
   ~Entity();
   bool GetIsRight();
   void SetIsRight(bool isRight);
-  bool IsColliding(SDL_Rect& rect);
   
 private:
   bool IsRight;
