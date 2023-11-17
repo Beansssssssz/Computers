@@ -11,6 +11,7 @@
 #include "Utils.hpp"
 
 std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex);
+Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos);
 
 int main(int argc, char* argv[]) {
 
@@ -20,7 +21,7 @@ int main(int argc, char* argv[]) {
   if(!(IMG_Init(IMG_INIT_PNG)))
     std::cout << "IMG Init failed. IMG ERROR: " << IMG_GetError() << std::endl;
 
-  const int width = 1920, height = 1080;
+  const int width = 1920, height = 1080, gravity = 10;
   RenderWindow window("game", width, height);
     
   SDL_Texture* tex = window.LoadTexture("Assets/ground_grass1.png");
@@ -31,14 +32,13 @@ int main(int argc, char* argv[]) {
   Mouse mouse(pos);
   
   tex = window.LoadTexture("Assets/button_UI.png");
-  SDL_Rect srcRect, dstRect;
-  dstRect.x = 0; dstRect.y = 0, dstRect.w = 160; dstRect.h = 160;
-  srcRect.x = 160 * 4; srcRect.y = 160, srcRect.w = 160; srcRect.h = 160;
-  
-  Button button(tex, srcRect, dstRect);
+  Button button = CreateButton(tex, 160, 160, Vector2i(4, 1));
 
   bool running = true;
   SDL_Event event; //the window event(like close, minize, keypress)
+
+  SDL_Rect rect;
+  rect.x = width - 300; rect.y = 0, rect.w = 300; rect.h = 300;
 
   while (running) {
     float start = SDL_GetPerformanceCounter();
@@ -52,14 +52,13 @@ int main(int argc, char* argv[]) {
 
     mouse.UpdatePos();
 
-    //start of layer 1
     for (int i = 0; i < platforms.size(); i++)  
       window.Render(platforms[i].GetTexture(), platforms[i].GetDstRect(), platforms[i].GetSrcRect());
-    //end of layer 1
 
-    //start of layer 2
     window.Render(button.GetTexture(), button.GetDstRect(), button.GetSrcRect());
-    //end of layer 2
+
+    RGBA color(40, 100, 100, 0);
+    window.CreateRect(&rect, color);
 
     button.Update(mouse, ButtonPressed::mbl);
     if (button.GetIsPressed())
@@ -73,6 +72,15 @@ int main(int argc, char* argv[]) {
 
   SDL_Quit();
   return 0;
+}
+
+Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos) {
+  SDL_Rect srcRect, dstRect;
+  dstRect.x = 0; dstRect.y = 0, dstRect.w = w; dstRect.h = h;
+  srcRect.x = w * pos.x; srcRect.y = h * pos.y, srcRect.w = w; srcRect.h = h;
+  Button button(tex, srcRect, dstRect);
+
+  return button;
 }
 
 std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex) {

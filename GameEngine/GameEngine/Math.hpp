@@ -22,4 +22,15 @@ struct Vector2i
   int x, y;
 };
 
+struct RGBA
+{
+  RGBA()
+    :r(0), g(0), b(0), a(0)
+  {};
+  RGBA(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+    :r(r), g(g), b(b), a(a)
+  {};
+  Uint8 r, g, b, a;
+};
+
 

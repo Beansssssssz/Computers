@@ -82,4 +82,17 @@ SDL_Window* RenderWindow::GetWindow()
 SDL_Renderer* RenderWindow::GetRenderer()
 {
   return renderer;
+}
+void RenderWindow::CreateRect(SDL_Rect* rect, RGBA color)
+{
+  RGBA oldColor;
+  SDL_GetRenderDrawColor(renderer, &oldColor.r, &oldColor.g, &oldColor.b, &oldColor.a);
+
+  //outline rect
+  SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+  SDL_RenderDrawRect(renderer, rect);
+  //fill up rectangle with color
+  SDL_RenderFillRect(renderer, rect);
+  SDL_SetRenderDrawColor(renderer, oldColor.r, oldColor.g, oldColor.b, oldColor.a);
+
 };
