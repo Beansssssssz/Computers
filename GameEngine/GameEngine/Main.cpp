@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 
     window.Render(button.GetTexture(), button.GetDstRect(), button.GetSrcRect());
 
-    RGBA color(40, 100, 100, 0);
+    RGBA color(40, 100, 100, 255);
     window.CreateRect(&rect, color);
 
     if(keyboard.GetKeyArray()[SDL_SCANCODE_S])

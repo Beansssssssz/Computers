@@ -15,6 +15,8 @@ RenderWindow::RenderWindow(const char* title, int width, int height)
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED && SDL_RENDERER_PRESENTVSYNC);                                                            
   if(renderer == NULL)
     std::cout << "Renderer failed to render. Error: " << SDL_GetError() << std::endl;
+
+  SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);//sets it so that you can blend colors
   ToggleFullScreen();
 };
 
