@@ -25,13 +25,12 @@ void Button::Update(Mouse& mouse, MouseButtons btn = MouseButtons::mbl)
       isPressed = true;
   }
 
-  if (isSelected)
-    ChangeState(mouse);
+  mouse.ChangeCursorType(isSelected);
 }
 
-void Button::ChangeState(Mouse& mouse) {
-
-}
+//void Button::ChangeState(Mouse& mouse) {
+//  mouse.ChangeCursorType(isSelected);
+//}
 
 bool Button::GetIsSelected()
 {

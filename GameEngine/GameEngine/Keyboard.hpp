@@ -4,13 +4,6 @@
 
 #include "Math.hpp"
 
-enum class KeyboardButtons {
-  moveLeft = SDLK_d,
-  moveRight = SDLK_a,
-  moveDown = SDLK_s,
-  jump = SDLK_SPACE,
-};
-
 class Keyboard
 {
 public:
@@ -18,7 +11,6 @@ public:
   ~Keyboard();
   Uint8* GetKeyArray();
   void Update();
-  //void Update();
 
 private:
   Uint8* keysArray;

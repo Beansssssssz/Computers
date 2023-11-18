@@ -4,13 +4,11 @@
 #include "Entity.hpp"
 
 Entity::Entity(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect)
-  :Entity::Square(tex, srcrect, dstrect), IsRight(false)
-{
-}
+  :Entity::Square(tex, srcrect, dstrect), IsRight(true)
+{};
 
 Entity::~Entity()
-{
-}
+{};
 
 bool Entity::GetIsRight()
 {

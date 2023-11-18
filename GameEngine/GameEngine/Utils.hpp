@@ -22,13 +22,13 @@ namespace utils {
   /// </summary>
   /// <param name="start">the amount of times the cpu ticked since the start of the game loop current loop.</param>
   /// <returns>The current number of FPS.</returns>
-  inline int GetFPS(float start) {
+  inline float GetFPS(float start) {
     Uint64 end = SDL_GetPerformanceCounter();//get the timer inside the cpu in nanosecond.
 
     float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
-    std::cout << "Current FPS: " << int(1.0f / elapsed) << std::endl;
+    std::cout << "Current FPS: " << 1.0f / elapsed << std::endl;
 
-    return int(1.0f / elapsed);
+    return 1.0f / elapsed;
   }
 
   /// <summary>

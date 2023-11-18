@@ -22,9 +22,11 @@ public:
   Vector2i GetPos();
   MouseButtons GetPressed();
   void UpdatePos();
+  void ChangeCursorType(bool isSelecting);
 
 private:
   MouseButtons bt = MouseButtons::none;
   Vector2i pos;
   SDL_Cursor* cursor;
+  SDL_SystemCursor current;
 };
