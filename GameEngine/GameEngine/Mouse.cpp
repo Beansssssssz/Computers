@@ -37,15 +37,18 @@ void Mouse::UpdatePos()
 
 void Mouse::ChangeCursorType(bool isSelecting)
 {
-  SDL_FreeCursor(cursor);
+  SDL_SystemCursor old = current;
 
   if (isSelecting)
     current = SDL_SYSTEM_CURSOR_HAND;
   else
     current = SDL_SYSTEM_CURSOR_ARROW;
 
-  cursor = SDL_CreateSystemCursor(current);
-  SDL_SetCursor(cursor);
+  if (current != old) {
+    SDL_FreeCursor(cursor);
+    cursor = SDL_CreateSystemCursor(current);
+    SDL_SetCursor(cursor);
+  }
 };
 
 

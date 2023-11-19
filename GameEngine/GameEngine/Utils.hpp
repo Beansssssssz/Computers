@@ -37,7 +37,7 @@ namespace utils {
   /// </summary>
   /// <param name="start">the amount of times the cpu ticked since the start of the game loop current loop</param>
   /// <param name="maxFPS">The maximum amount of fps the programs runs at.</param>
-  inline void CapFPS(float start, int maxFPS) {
+  inline void CapFPS(Uint64 start, int maxFPS) {
     
     Uint64 end = SDL_GetPerformanceCounter();
 

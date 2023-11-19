@@ -17,25 +17,20 @@ bool Square::IsColliding(SDL_Rect& rect)
 {
   if (!collisionEnabled)
     return false;
-  bool top, bottom, left, right;
+  bool TopTobottom, BottomToTop, LeftToright, RightToleft;
 
-  top = dstRect.y <= rect.h + rect.y;
+  TopTobottom = dstRect.y <= rect.y + rect.h;//
 
-  //left = dstRect.x + dstRect.w >= rect.x;
-  //bottom = dstRect.y + rect.h >= rect.y;
-  //right = dstRect.y <= rect.y + rect.h;
+  LeftToright = dstRect.x < rect.x + rect.h;//
 
-  //if (top)
-  //  return false;
-  //else
-  //{
-  //std::cout << dstRect.y << std::endl;
-  //std::cout << rect.y + rect.h << std::endl;
-  //std::cout << "-----------------" << std::endl;
-  //}
-  //
+  BottomToTop = dstRect.y + dstRect.h > rect.y;
 
-  return top;
+  RightToleft = dstRect.x + dstRect.w > rect.x;
+
+  //std::cout << dstRect.x << ", " << rect.x + rect.h << "\n";
+  //std::cout << LeftToright << std::endl;
+
+  return TopTobottom && BottomToTop && LeftToright && RightToleft;
 }
 
 Vector2f& Square::GetPos()

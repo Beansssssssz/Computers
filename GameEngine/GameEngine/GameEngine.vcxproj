@@ -156,7 +156,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Test.cpp" />
     <ClCompile Include="Square.cpp" />
   </ItemGroup>
   <ItemGroup>

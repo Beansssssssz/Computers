@@ -17,8 +17,8 @@ void Button::Update(Mouse& mouse, MouseButtons btn = MouseButtons::mbl)
 {
   isPressed = false;
   isSelected = false;
-  bool IsX = dstRect.x < mouse.GetPos().x && (dstRect.x + dstRect.w > mouse.GetPos().x);
-  bool IsY = dstRect.y < mouse.GetPos().y && (dstRect.y + dstRect.h > mouse.GetPos().y);
+  bool IsX = dstRect.x <= mouse.GetPos().x && (dstRect.x + dstRect.w >= mouse.GetPos().x);
+  bool IsY = dstRect.y <= mouse.GetPos().y && (dstRect.y + dstRect.h >= mouse.GetPos().y);
   if (IsX && IsY) {
     isSelected = true;
     if (mouse.GetPressed() == btn)
