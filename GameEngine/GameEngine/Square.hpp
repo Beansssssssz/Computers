@@ -10,7 +10,7 @@ public:
   ~Square();
   Vector2f& GetPos();
   SDL_Texture* GetTexture();
-  SDL_Rect GetSrcRect();
+  SDL_Rect* GetSrcRect();
   SDL_Rect GetDstRect();
   bool IsColliding(SDL_Rect& rect);
 

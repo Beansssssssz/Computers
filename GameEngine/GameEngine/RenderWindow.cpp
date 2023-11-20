@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 
 #include "RenderWindow.hpp"
@@ -49,8 +50,8 @@ void RenderWindow::Display() {
 /// <param name="pos">where to put the texture on the screen</param>
 /// <param name="rect">the width height and location of the</param>
 /// <param name="tex">an sdl_texture</param>
-void RenderWindow::Render(SDL_Texture* tex, SDL_Rect dstrect, SDL_Rect srcrect) {
-  if(!(SDL_RenderCopy(renderer, tex, &srcrect, &dstrect) == 0))
+void RenderWindow::Render(SDL_Texture* tex, SDL_Rect* srcrect, SDL_Rect dstrect) {
+  if(!(SDL_RenderCopy(renderer, tex, srcrect, &dstrect) == 0))
     std::cout << "Texture faild to be copied. Error: " << SDL_GetError() << std::endl;
 };
 
@@ -97,4 +98,4 @@ void RenderWindow::CreateRect(SDL_Rect* rect, RGBA color)
   SDL_RenderFillRect(renderer, rect);
   SDL_SetRenderDrawColor(renderer, oldColor.r, oldColor.g, oldColor.b, oldColor.a);
 
-};
+}

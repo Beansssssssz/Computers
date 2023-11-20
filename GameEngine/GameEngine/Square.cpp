@@ -49,7 +49,7 @@ SDL_Rect Square::GetDstRect()
   return dstRect;
 }
 
-SDL_Rect Square::GetSrcRect()
+SDL_Rect* Square::GetSrcRect()
 {
-  return srcRect;
+  return &srcRect;
 }

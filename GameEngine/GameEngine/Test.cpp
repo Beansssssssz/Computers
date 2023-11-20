@@ -11,6 +11,7 @@
 #include "Math.hpp"
 #include "Utils.hpp"
 #include "Keyboard.hpp"
+#include "WindowText.hpp"
 
 std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex);
 Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos);
@@ -22,6 +23,9 @@ int main(int argc, char* argv[]) {
 
   if (!(IMG_Init(IMG_INIT_PNG)))
     std::cout << "IMG Init failed. IMG ERROR: " << IMG_GetError() << std::endl;
+
+  if (TTF_Init() < 0) 
+    std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
 
   const int width = 1920, height = 1080, gravity = 10;
   RenderWindow window("game", width, height);
@@ -43,13 +47,14 @@ int main(int argc, char* argv[]) {
   tex = window.LoadTexture("Assets/button_UI.png");
   Button button = CreateButton(tex, 160, 160, Vector2i(4, 1));
 
+  WindowText winText("Assets/Fonts/Sans.ttf", 24, "aaaaaaaaaa");
+
   rect.x = 700; rect.y = 500, rect.w = 20; rect.h = 20;
+
+  bool listen = false;
 
   bool running = true;
   SDL_Event event; //the window event(like close, minize, keypress)
-  std::string in;
-
-  bool listen = false;
 
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
@@ -65,12 +70,12 @@ int main(int argc, char* argv[]) {
     mouse.UpdatePos();
     keyboard.Update();
 
-    window.Render(backround.GetTexture(), backround.GetDstRect(), backround.GetSrcRect());
+    window.Render(backround.GetTexture(), backround.GetSrcRect(), backround.GetDstRect());
 
     for (int i = 0; i < platforms.size(); i++)
-      window.Render(platforms[i].GetTexture(), platforms[i].GetDstRect(), platforms[i].GetSrcRect());
+      window.Render(platforms[i].GetTexture(), platforms[i].GetSrcRect(), platforms[i].GetDstRect());
 
-    window.Render(button.GetTexture(), button.GetDstRect(), button.GetSrcRect());
+    window.Render(button.GetTexture(), button.GetSrcRect(), button.GetDstRect());
 
     //Creating the rect(or testing player)
     {
@@ -128,7 +133,7 @@ int main(int argc, char* argv[]) {
         listen = false;
         keyboard.StopBuildText(false);
       }
-      if (listen) 
+      if (listen)
         std::cout << keyboard.GetText() << std::endl;
     }
 
@@ -136,15 +141,19 @@ int main(int argc, char* argv[]) {
     if (button.GetIsPressed())
       running = false;
 
+
+    winText.DisplayText(&window, Vector2i(100, 100), RGBA(0,0,0,0));
+
     window.Display();
 
     //utils::CapFPS(start, 60);
     //utils::GetFPS(start);
 
-  }
+  };
 
-  SDL_StopTextInput();
   SDL_Quit();
+  IMG_Quit();
+  TTF_Quit();
   return 0;
 };
 
