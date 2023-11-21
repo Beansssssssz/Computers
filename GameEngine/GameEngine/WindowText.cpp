@@ -5,12 +5,13 @@
 
 #include "RenderWindow.hpp"
 #include "WindowText.hpp"
-#include "Math.hpp"
+#include "Utils.hpp"
 
 
-WindowText::WindowText(const char* fontPath, int size, std::string str) {
-  font = TTF_OpenFont(fontPath, size);
-  text = str;
+WindowText::WindowText(const char* fontPath, int size, std::string str, int Maxsize)
+  :text(str), lengthMaxSize(Maxsize), characterSize(size)
+{
+  font = TTF_OpenFont(fontPath, characterSize);
 }
 
 WindowText:: ~WindowText() {
@@ -22,8 +23,8 @@ void  WindowText::DisplayText(RenderWindow* window, Vector2i pos, RGBA color) {
     return;
   const char* ch = text.c_str();
 
-  SDL_Color sdlColor;
-  sdlColor.a = color.a; sdlColor.r = color.r; sdlColor.b = color.b; sdlColor.g = color.g;
+  SDL_Color sdlColor = utils::ChangeRgbaToSdlColor(color);
+
 
   SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, ch, sdlColor);
 
@@ -33,22 +34,29 @@ void  WindowText::DisplayText(RenderWindow* window, Vector2i pos, RGBA color) {
   SDL_Rect rect;
   rect.x = pos.x; rect.y = pos.y; rect.w = surfaceMessage->w; rect.h = surfaceMessage->h;
 
+  CreateSquare(window, rect, RGBA(255, 255, 255, 255));
+
   SDL_Texture* tex = SDL_CreateTextureFromSurface(window->GetRenderer(), surfaceMessage);
 
   window->Render(tex, NULL, rect);
 }
+
+void WindowText::CreateSquare(RenderWindow* window, SDL_Rect rect, RGBA color)
+{
+  rect.w = 9 * characterSize;
+  window->CreateRect(&rect, color);
+};
 
 std::string WindowText:: GetText() {
   return text;
 }
 
 void WindowText::SetText(std::string str) {
-  if (str.size() > 30)
+  if (str.size() > lengthMaxSize)
     return;
   text = str;
-  return;
-}
+};
 
 void WindowText::ClearText() {
   text.clear();
-}
+};

@@ -4,6 +4,10 @@
 
 #include "Audio.hpp"
 
+
+//channel 0 is for backround music/boss fights
+//channel 1 is for pop effect(npc or such)
+//channel 2 is cause for future 
 Audio::Audio(const char* path, int channels)
 {
   Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, channels, 1024);

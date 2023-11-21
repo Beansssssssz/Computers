@@ -29,7 +29,7 @@ namespace utils {
     std::cout << "Current FPS: " << 1.0f / elapsed << std::endl;
 
     return 1.0f / elapsed;
-  }
+  };
 
   /// <summary>
   /// Caps the FPS at the number you choose by using SDL_Delay and
@@ -38,7 +38,7 @@ namespace utils {
   /// <param name="start">the amount of times the cpu ticked since the start of the game loop current loop</param>
   /// <param name="maxFPS">The maximum amount of fps the programs runs at.</param>
   inline void CapFPS(Uint64 start, int maxFPS) {
-    
+
     Uint64 end = SDL_GetPerformanceCounter();
 
     float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
@@ -46,8 +46,14 @@ namespace utils {
     float delay = 1000.0f / maxFPS;
 
     //a fail safe incase of a lage spike causing the the final value resulting in a neg val causing a crash
-    if(delay - elapsedMS > 0)
+    if (delay - elapsedMS > 0)
       SDL_Delay(floor(delay - elapsedMS));
     //delay-elapsedMS is there incase of losing frames due to loading times in the pc.
-  }
+  };
+
+  inline SDL_Color ChangeRgbaToSdlColor(RGBA color) {
+    SDL_Color sdlColor;
+    sdlColor.a = color.a; sdlColor.r = color.r; sdlColor.b = color.b; sdlColor.g = color.g;
+    return sdlColor;
+  };
 }

@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
   tex = window.LoadTexture("Assets/button_UI.png");
   Button button = CreateButton(tex, 160, 160, Vector2i(4, 1));
 
-  WindowText winText("Assets/Fonts/Sans.ttf", 24, "aaaaaaaaaa");
+  WindowText winText("Assets/Fonts/Sans.ttf", 40, "aaaaaaaaaa");
 
   rect.x = 700; rect.y = 500, rect.w = 20; rect.h = 20;
 
@@ -123,22 +123,22 @@ int main(int argc, char* argv[]) {
       }
     }
 
-
     SDL_Rect rect1;
     rect1.x = 300; rect1.y = 300, rect1.w = 500; rect1.h = 500;
     RGBA color(40, 80, 100, 160);
     window.CreateRect(&rect1, color);
-
 
     //Text Input Text
     {
       if (keyboard.GetKeyArray()[SDL_SCANCODE_B] || listen) {
         listen = true;
         keyboard.StartBuildText();
+        audio.PauseMusic();
       }
       if (keyboard.GetKeyArray()[SDL_SCANCODE_X] && listen) {
         listen = false;
         keyboard.StopBuildText(false);
+        audio.ResumeMusic();
       }
     }
 
@@ -146,9 +146,8 @@ int main(int argc, char* argv[]) {
     if (button.GetIsPressed())
       running = false;
 
-
     winText.SetText(keyboard.GetText());
-    winText.DisplayText(&window, Vector2i(100, 100), RGBA(0,0,0,0));
+    winText.DisplayText(&window, Vector2i(500, 500), RGBA(0, 0, 0, 0));
 
     //utils::CapFPS(start, 60);
     //utils::GetFPS(start);
