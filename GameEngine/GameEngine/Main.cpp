@@ -11,7 +11,7 @@
 #include "Utils.hpp"
 
 std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex);
-Button CreateButton(SDL_Texture* tex, int w, int h);
+Button CreateButton(SDL_Texture* tex, int w, int h, int ScreenW, int ScreenH);
 
 int main(int argc, char* argv[]) {
 
@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
   if(!(IMG_Init(IMG_INIT_PNG)))
     std::cout << "IMG Init failed. IMG ERROR: " << IMG_GetError() << std::endl;
 
-  const int width = 1920, height = 1080;
+  const int width = 1366, height = 768;
   RenderWindow window("game", width, height);
     
   SDL_Texture* tex = window.LoadTexture("Assets/ground_grass1.png");
@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
   Mouse mouse(pos);
   
   tex = window.LoadTexture("Assets/button_UI.png");
-  Button button = CreateButton(tex, 160, 160);
+  Button button = CreateButton(tex, 160, 160, width, height);
 
   bool running = true;
   SDL_Event event; //the window event(like close, minize, keypress)
@@ -69,17 +69,15 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 
-Button CreateButton(SDL_Texture* tex, int w, int h) {
+Button CreateButton(SDL_Texture* tex, int w, int h, int ScreenW, int ScreenH) {
   //just a rand button for testing
-  Vector2f pos1(1920 / 2, 1080 / 2);
+  Vector2f pos1(ScreenW - w, 0);
   SDL_Rect rect;
-  rect.x = 160; rect.y = 0, rect.w = w; rect.h = h;
+  rect.x = w * 4; rect.y = h, rect.w = w; rect.h = h;
   Button button(pos1, tex, rect);
 
   return button;
 }
-
-
 
 std::vector<Square> CreatePlatforms(int w,int h, SDL_Texture* tex) {
   //the i-1 is there because the window isnt always perfect and sometimes there are still platforms missing

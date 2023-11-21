@@ -87,8 +87,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\ariel hay\Desktop\project\VsLib\SDL2_image\include;C:\Users\ariel hay\Desktop\project\VsLib\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\ariel hay\Desktop\project\VsLib\SDL2_image\lib\x64;C:\Users\ariel hay\Desktop\project\VsLib\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\יעל חי\Desktop\school\VsLib\SDL2\include;C:\Users\יעל חי\Desktop\school\VsLib\SDL2_image\include;C:\Users\ariel hay\Desktop\project\VsLib\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\יעל חי\Desktop\school\VsLib\SDL2\lib\x64;C:\Users\יעל חי\Desktop\school\VsLib\SDL2_image\lib\x64;C:\Users\ariel hay\Desktop\project\VsLib\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
