@@ -133,8 +133,8 @@ int main(int argc, char* argv[]) {
         listen = false;
         keyboard.StopBuildText(false);
       }
-      if (listen)
-        std::cout << keyboard.GetText() << std::endl;
+      /*if (listen)
+        std::cout << keyboard.GetText() << std::endl;*/
     }
 
     button.Update(mouse, MouseButtons::mbl);
@@ -142,13 +142,13 @@ int main(int argc, char* argv[]) {
       running = false;
 
 
+    winText.SetText(keyboard.GetText());
     winText.DisplayText(&window, Vector2i(100, 100), RGBA(0,0,0,0));
-
-    window.Display();
 
     //utils::CapFPS(start, 60);
     //utils::GetFPS(start);
 
+    window.Display();
   };
 
   SDL_Quit();

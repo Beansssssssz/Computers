@@ -16,6 +16,7 @@ Uint8* Keyboard::GetKeyArray()
 {
   return keysArray;
 }
+
 std::string Keyboard::GetText()
 {
   return text;
@@ -43,8 +44,9 @@ void Keyboard::BuildText(SDL_Event event)
   if (event.type == SDL_TEXTINPUT) 
     text += event.text.text;
   
-  else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE) 
-    text.pop_back();
+  else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE)
+    if(text.size() > 0)
+      text.pop_back();
 };
 
 void Keyboard::Update()
