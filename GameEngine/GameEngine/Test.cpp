@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 
-
 #include "RenderWindow.hpp"
 #include "Square.hpp"
 #include "Mouse.hpp"
@@ -14,6 +13,7 @@
 #include "Utils.hpp"
 #include "Keyboard.hpp"
 #include "WindowText.hpp"
+#include"Audio.hpp"
 
 std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex);
 Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos);
@@ -60,6 +60,8 @@ int main(int argc, char* argv[]) {
 
   bool running = true;
   SDL_Event event; //the window event(like close, minize, keypress)
+
+  Audio audio("Assets/Sounds/ahem_x.wav");
 
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
@@ -138,8 +140,6 @@ int main(int argc, char* argv[]) {
         listen = false;
         keyboard.StopBuildText(false);
       }
-      /*if (listen)
-        std::cout << keyboard.GetText() << std::endl;*/
     }
 
     button.Update(mouse, MouseButtons::mbl);
@@ -156,9 +156,10 @@ int main(int argc, char* argv[]) {
     window.Display();
   };
 
-  SDL_Quit();
-  IMG_Quit();
+  Mix_Quit();
   TTF_Quit();
+  IMG_Quit();
+  SDL_Quit();
   return 0;
 };
 
