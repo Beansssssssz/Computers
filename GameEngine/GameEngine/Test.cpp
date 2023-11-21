@@ -1,8 +1,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <iostream>
 #include <vector>
+
 
 #include "RenderWindow.hpp"
 #include "Square.hpp"
@@ -18,7 +20,7 @@ Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos);
 //void CreateSignWindow(const char* text, Keyboard keyboard, RenderWindow window);
 
 int main(int argc, char* argv[]) {
-  if (SDL_Init(SDL_INIT_VIDEO) > 0)
+  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) > 0)
     std::cout << "SDL Init failed. SDL ERROR: " << SDL_GetError() << std::endl;
 
   if (!(IMG_Init(IMG_INIT_PNG)))
@@ -26,6 +28,9 @@ int main(int argc, char* argv[]) {
 
   if (TTF_Init() < 0) 
     std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+
+  if(Mix_Init(MIX_INIT_OGG | MIX_INIT_MOD) < 0)
+    std::cout << "Error initializing SDL_mixer: " << Mix_GetError() << std::endl;
 
   const int width = 1920, height = 1080, gravity = 10;
   RenderWindow window("game", width, height);

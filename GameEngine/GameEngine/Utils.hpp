@@ -10,7 +10,7 @@ namespace utils {
   /// </summary>
   /// <returns>A float represting the amount of time that passed.</returns>
   inline float TimeRunning() {//inline means you can write the code in an header file.
-    float t = SDL_GetTicks64();
+    Uint64 t = SDL_GetTicks64();
     t *= 0.001f;
 
     return t;

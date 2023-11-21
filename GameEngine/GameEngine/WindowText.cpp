@@ -14,7 +14,6 @@ WindowText::WindowText(const char* fontPath, int size, std::string str) {
 }
 
 WindowText:: ~WindowText() {
-  TTF_CloseFont(font);
 }
 
 void  WindowText::DisplayText(RenderWindow* window, Vector2i pos, RGBA color) {
