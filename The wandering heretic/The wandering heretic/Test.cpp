@@ -15,9 +15,11 @@
 #include "WindowText.hpp"
 #include"Audio.hpp"
 
+
 std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex);
 Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos);
 //void CreateSignWindow(const char* text, Keyboard keyboard, RenderWindow window);
+
 
 int main(int argc, char* argv[]) {
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) > 0)
@@ -26,10 +28,10 @@ int main(int argc, char* argv[]) {
   if (!(IMG_Init(IMG_INIT_PNG)))
     std::cout << "IMG Init failed. IMG ERROR: " << IMG_GetError() << std::endl;
 
-  if (TTF_Init() < 0) 
+  if (TTF_Init() < 0)
     std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
 
-  if(Mix_Init(MIX_INIT_OGG | MIX_INIT_MOD) < 0)
+  if (Mix_Init(MIX_INIT_OGG | MIX_INIT_MOD) < 0)
     std::cout << "Error initializing SDL_mixer: " << Mix_GetError() << std::endl;
 
   const int width = 1920, height = 1080, gravity = 10;
@@ -190,6 +192,6 @@ std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex) {
 };
 
 void CreateSignWindow(const char* text, Keyboard keyboard, RenderWindow* window) {
-  
+
 
 }

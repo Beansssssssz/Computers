@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL.h>
 
 struct Vector2f
 {
@@ -24,13 +25,13 @@ struct Vector2i
 
 struct RGBA
 {
+  Uint8 r, g, b, a;
   RGBA()
     :r(0), g(0), b(0), a(0)
   {};
   RGBA(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
     :r(r), g(g), b(b), a(a)
   {};
-  Uint8 r, g, b, a;
 };
 
 

@@ -1,7 +1,9 @@
 #pragma once
-#include <SDL.h>
-#include <SDL_image.h>
+//#include <SDL.h>
+//#include <SDL_image.h>
 #include <iostream>
+
+#include "Math.hpp"
 
 
 namespace utils {
@@ -9,12 +11,12 @@ namespace utils {
   /// Evaluates how long the program is running.
   /// </summary>
   /// <returns>A float represting the amount of time that passed.</returns>
-  inline float TimeRunning() {//inline means you can write the code in an header file.
-    Uint64 t = SDL_GetTicks64();
-    t *= 0.001f;
+  //inline float TimeRunning() {//inline means you can write the code in an header file.
+  //  Uint64 t = SDL_GetTicks64();
+  //  t *= 0.001f;
 
-    return t;
-  }
+  //  return t;
+  //}
 
   /// <summary>
   /// Returns the current numbers of frams per sec by calc the number
