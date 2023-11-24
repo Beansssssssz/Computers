@@ -5,10 +5,12 @@
 
 #include "RenderWindow.hpp"
 
-RenderWindow::RenderWindow(const char* title, int width, int height)
+RenderWindow::RenderWindow(const char* title)
   :window(NULL), renderer(NULL)//sets the 2 vars to null
 {
-  window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_FULLSCREEN);
+  int w, h;
+  RenderWindow::GetWidthHeight(w, h);
+  window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_FULLSCREEN);
   if (window == NULL)
     std::cout << "Window failed to init. Error: " << SDL_GetError() << std::endl;
 
@@ -63,6 +65,13 @@ void RenderWindow::ToggleFullScreen()
   Uint32 FullscreenFlag = SDL_WINDOW_FULLSCREEN;
   bool IsFullscreen = SDL_GetWindowFlags(window) & FullscreenFlag;
   SDL_SetWindowFullscreen(window, IsFullscreen ? 0 : FullscreenFlag);
+}
+void RenderWindow::GetWidthHeight(int& w, int& h)
+{
+  SDL_DisplayMode DM;
+  SDL_GetDesktopDisplayMode(0, &DM);
+  w = DM.w;
+  h = DM.h;
 };
 
 /// <summary>

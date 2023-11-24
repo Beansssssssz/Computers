@@ -4,14 +4,18 @@
 #include "Button.hpp"
 
 Button::Button(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect)
-  :Button::Square(tex, srcrect, dstrect), isPressed(false), isSelected(false)
+:Button::Square(tex, srcrect, dstrect), isPressed(false), isSelected(false)
 {
   isSelected = false;
-}
+};
 
 Button::~Button()
+{};
+
+Button Button::CreateButton(SDL_Texture * tex, SDL_Rect & srcrect, SDL_Rect & dstrect)
 {
-}
+  return Button(tex, srcrect, dstrect);
+};
 
 void Button::Update(Mouse& mouse, MouseButtons btn = MouseButtons::mbl)
 {
@@ -26,18 +30,14 @@ void Button::Update(Mouse& mouse, MouseButtons btn = MouseButtons::mbl)
   }
 
   mouse.ChangeCursorType(isSelected);
-}
-
-//void Button::ChangeState(Mouse& mouse) {
-//  mouse.ChangeCursorType(isSelected);
-//}
+};
 
 bool Button::GetIsSelected()
 {
   return isSelected;
-}
+};
 
 bool Button::GetIsPressed()
 {
   return isPressed;
-}
+};

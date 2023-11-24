@@ -16,7 +16,7 @@
 #include"Audio.hpp"
 
 
-std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex);
+std::vector<Square> CreatePlatforms(SDL_Texture* tex);
 Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos);
 //void CreateSignWindow(const char* text, Keyboard keyboard, RenderWindow window);
 
@@ -34,16 +34,16 @@ int main(int argc, char* argv[]) {
   if (Mix_Init(MIX_INIT_OGG | MIX_INIT_MOD) < 0)
     std::cout << "Error initializing SDL_mixer: " << Mix_GetError() << std::endl;
 
-  const int width = 1920, height = 1080, gravity = 10;
-  RenderWindow window("game", width, height);
+  RenderWindow window("Game");
 
   SDL_Texture* tex = window.LoadTexture("Assets/ground_grass1.png");
 
-  std::vector<Square> platforms = CreatePlatforms(width, height, tex);
+
+  std::vector<Square> platforms = CreatePlatforms(tex);
   tex = window.LoadTexture("Assets/backround_pic.png");
 
   SDL_Rect rect;
-  rect.x = 0; rect.y = 0, rect.w = width; rect.h = height;
+  rect.x = 0; rect.y = 0, rect.w = 1920; rect.h = 1080;
   Square backround(tex, rect, rect);
 
   Vector2i pos(0, 0);
@@ -51,8 +51,8 @@ int main(int argc, char* argv[]) {
 
   Keyboard keyboard;
 
-  tex = window.LoadTexture("Assets/button_UI.png");
-  Button button = CreateButton(tex, 160, 160, Vector2i(4, 1));
+  tex = window.LoadTexture("Assets/GUI/btnExit.png");
+  Button button = CreateButton(tex, 113, 114, Vector2i(2, 1));
 
   WindowText winText("Assets/Fonts/Sans.ttf", 40, "aaaaaaaaaa");
 
@@ -167,15 +167,18 @@ int main(int argc, char* argv[]) {
 Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos) {
   SDL_Rect srcRect, dstRect;
   dstRect.x = 0; dstRect.y = 0, dstRect.w = w; dstRect.h = h;
-  srcRect.x = w * pos.x; srcRect.y = h * pos.y, srcRect.w = w; srcRect.h = h;
+  srcRect.x = 0; srcRect.y = 0, srcRect.w = w; srcRect.h = h;
   Button button(tex, srcRect, dstRect);
 
   return button;
 };
 
-std::vector<Square> CreatePlatforms(int w, int h, SDL_Texture* tex) {
+std::vector<Square> CreatePlatforms(SDL_Texture* tex) {
   //the i-1 is there because the window isnt always perfect and sometimes there are still platforms missing
   //so the -1 is addign another platform so it would all be there.
+  int w, h;
+  RenderWindow::GetWidthHeight(w, h);
+
   std::vector<Square> platforms;
   SDL_Rect dstRect, srcRect;
   srcRect.x = 0; srcRect.y = 0, srcRect.w = 128; srcRect.h = 128;

@@ -44,6 +44,11 @@ SDL_Texture* Square::GetTexture()
   return tex;
 }
 
+void Square::SetTexture(SDL_Texture* texture)
+{
+  tex = texture;
+};
+
 SDL_Rect Square::GetDstRect()
 {
   return dstRect;

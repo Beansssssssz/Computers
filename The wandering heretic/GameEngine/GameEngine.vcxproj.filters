@@ -48,6 +48,9 @@
     <ClCompile Include="WindowText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PopUpWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.hpp">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Audio.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUpWindow.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

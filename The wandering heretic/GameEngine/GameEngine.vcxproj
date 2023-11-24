@@ -146,6 +146,7 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Platforms.cpp" />
+    <ClCompile Include="PopUpWindow.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="Mouse.hpp" />
     <ClInclude Include="Platforms.hpp" />
+    <ClInclude Include="PopUpWindow.hpp" />
     <ClInclude Include="RenderWindow.hpp" />
     <ClInclude Include="Square.hpp" />
     <ClInclude Include="Utils.hpp" />
