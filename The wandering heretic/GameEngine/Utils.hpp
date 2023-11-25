@@ -1,22 +1,21 @@
 #pragma once
-//#include <SDL.h>
-//#include <SDL_image.h>
+#include <SDL.h>
 #include <iostream>
 
 #include "Math.hpp"
-
+#include "Button.hpp"
 
 namespace utils {
   /// <summary>
   /// Evaluates how long the program is running.
   /// </summary>
   /// <returns>A float represting the amount of time that passed.</returns>
-  //inline float TimeRunning() {//inline means you can write the code in an header file.
-  //  Uint64 t = SDL_GetTicks64();
-  //  t *= 0.001f;
+  inline float TimeRunning() {
+    Uint64 t = SDL_GetTicks64();
+    t *= 0.001f;
 
-  //  return t;
-  //}
+    return t;
+  }
 
   /// <summary>
   /// Returns the current numbers of frams per sec by calc the number
@@ -28,8 +27,6 @@ namespace utils {
     Uint64 end = SDL_GetPerformanceCounter();//get the timer inside the cpu in nanosecond.
 
     float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
-    std::cout << "Current FPS: " << 1.0f / elapsed << std::endl;
-
     return 1.0f / elapsed;
   };
 
@@ -57,5 +54,14 @@ namespace utils {
     SDL_Color sdlColor;
     sdlColor.a = color.a; sdlColor.r = color.r; sdlColor.b = color.b; sdlColor.g = color.g;
     return sdlColor;
+  };
+
+  inline Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos) {
+    SDL_Rect srcRect, dstRect;
+    dstRect.x = 0; dstRect.y = 0, dstRect.w = w; dstRect.h = h;
+    srcRect.x = 0; srcRect.y = 0, srcRect.w = w; srcRect.h = h;
+    Button button(tex, srcRect, dstRect);
+
+    return button;
   };
 }

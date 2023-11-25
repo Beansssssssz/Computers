@@ -6,7 +6,7 @@
 
 class Square {
 public:
-  Square(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect, bool collisionEnabled = false);
+  Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled = false);
   ~Square();
   SDL_Texture* GetTexture();
   void SetTexture(SDL_Texture* texture);

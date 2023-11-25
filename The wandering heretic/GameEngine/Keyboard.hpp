@@ -7,7 +7,7 @@
 class Keyboard
 {
 public:
-  Keyboard();
+  static Keyboard* GetKeyboard();
   ~Keyboard();
   Uint8* GetKeyArray();
   std::string GetText();
@@ -17,6 +17,9 @@ public:
   void Update();
 
 private:
+  Keyboard();
+  static Keyboard* _keyboardPtr;
+
   Uint8* keysArray;
   std::string text;
   bool Input;

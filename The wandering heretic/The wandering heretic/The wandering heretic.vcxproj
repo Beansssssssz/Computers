@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.hpp" />
+    <ClInclude Include="Player.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -6,7 +6,7 @@
 #include "RenderWindow.hpp"
 
 
-Square::Square(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect, bool collisionEnabled)
+Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)
   :tex(tex), srcRect(srcrect), dstRect(dstrect), collisionEnabled(collisionEnabled)
 {}
 

@@ -12,14 +12,16 @@ PopUpWindow::PopUpWindow(Button btnExit, SDL_Rect rect, RGBA color, bool open)
 
 void PopUpWindow::Update(RenderWindow* window)
 {
+  std::cout << _tabOpen << std::endl;
   if (!_tabOpen)
     return;
+  
+  Mouse* mouse = Mouse::GetMouse();
 
   window->CreateRect(&_tab, _color);
   window->Render(Square(_btnExit));
 
-  Mouse* mouse = Mouse::GetMouse();
-  _btnExit.Update(mouse, MouseButtons::mbl);
+  _btnExit.Update();
   if (_btnExit.GetIsPressed())
     CloseTab();
 };
@@ -27,10 +29,15 @@ void PopUpWindow::Update(RenderWindow* window)
 void PopUpWindow::OpenTab()
 {
   _tabOpen = true;
+
+  std::cout << "---------" << std::endl;
+  std::cout << _btnExit.GetIsPressed() << std::endl;
+  std::cout << _tabOpen << std::endl;
 };
 
 void PopUpWindow::CloseTab()
 {
+  std::cout << "sdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << std::endl;
   _tabOpen = false;
 };
 

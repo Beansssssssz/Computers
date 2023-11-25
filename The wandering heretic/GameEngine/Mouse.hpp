@@ -25,7 +25,7 @@ public:
   void Update();
   void UpdatePos();
   void ChangeCursorType();
-  void IsSelecting(bool isSelecting);
+  void MouseIsSelecting();
 
 private:
   static Mouse* _mousePtr;

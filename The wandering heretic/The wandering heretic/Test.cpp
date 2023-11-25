@@ -15,13 +15,14 @@
 #include "WindowText.hpp"
 #include "Audio.hpp"
 #include "PopUpWindow.hpp"
+#include "GameManager.hpp"
 
 
 //initializing singletons
 Mouse* Mouse::_mousePtr = NULL;
+Keyboard* Keyboard::_keyboardPtr = NULL;
 
 std::vector<Square> CreatePlatforms(SDL_Texture* tex);
-Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos);
 
 int main(int argc, char* argv[]) {
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) > 0)
@@ -49,28 +50,18 @@ int main(int argc, char* argv[]) {
 
   Mouse* mouse = Mouse::GetMouse();
 
-  Keyboard keyboard;
+  Keyboard* keyboard = Keyboard::GetKeyboard();
 
   tex = window.LoadTexture("Assets/GUI/btnExit.png");
-  Button button = CreateButton(tex, 113, 114, Vector2i(2, 1));
-
-  WindowText winText("Assets/Fonts/Sans.ttf", 40, "aaaaaaaaaa");
+  Button button = utils::CreateButton(tex, 113, 114, Vector2i(2, 1));
 
   rect.x = 700; rect.y = 500, rect.w = 20; rect.h = 20;
 
-  bool listen = false;
+  GameManager gm(tex, "Assets/Fonts/Sans.ttf");
+
 
   bool running = true;
   SDL_Event event; //the window event(like close, minize, keypress)
-
-  Audio audio("Assets/Sounds/ahem_x.wav");
-
-  SDL_Rect rect1;
-  rect1.x = 300; rect1.y = 300, rect1.w = 500; rect1.h = 500;
-  RGBA color(40, 80, 100, 160);
-  Button button1 = CreateButton(tex, 113, 114, Vector2i(2, 1));
-
-  PopUpWindow tab(button1, rect1, color, true);
 
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
@@ -79,88 +70,28 @@ int main(int argc, char* argv[]) {
     {
       if (event.type == SDL_QUIT)
         running = false;
-      keyboard.BuildText(event);
+      if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
+        gm.GetPopUpWindow().OpenTab();
+
+      //keyboard->BuildText(event);
     }
     window.Clear();
 
-    mouse->Update();
-    keyboard.Update();
+    window.Render(backround);
 
-    //window.Render(backround.GetTexture(), backround.GetSrcRect(), backround.GetDstRect());
-    window.Render(Square(backround));
+    mouse->Update();
+    keyboard->Update();
 
     for (int i = 0; i < platforms.size(); i++)
       window.Render(Square(platforms[i]));
-      //platforms[i].GetTexture(), platforms[i].GetSrcRect(), platforms[i].GetDstRect());
 
-    //button.RenderSquare(&window);
-    //window.Render(button.GetTexture(), button.GetSrcRect(), button.GetDstRect());
     window.Render(Square(button));
+    button.Update();
 
-    //Creating the rect(or testing player)
-    {
-      RGBA color(255, 0, 0, 255);
-      window.CreateRect(&rect, color);
-    }
-
-    //Player Movment Text
-    {
-      //SDL_Rect old = rect;
-
-      if (keyboard.GetKeyArray()[SDL_SCANCODE_S]) {
-        rect.y++;
-        for (int i = 0; i < platforms.size(); i++)
-          if (platforms[i].IsColliding(rect))
-            rect.y--;
-      }
-
-      if (keyboard.GetKeyArray()[SDL_SCANCODE_SPACE]) {
-        rect.y--;
-        for (int i = 0; i < platforms.size(); i++)
-          if (platforms[i].IsColliding(rect))
-            rect.y++;
-      }
-
-      if (keyboard.GetKeyArray()[SDL_SCANCODE_A]) {
-        rect.x--;
-        for (int i = 0; i < platforms.size(); i++)
-          if (platforms[i].IsColliding(rect))
-            rect.x++;
-      }
-
-      if (keyboard.GetKeyArray()[SDL_SCANCODE_D]) {
-        rect.x++;
-        for (int i = 0; i < platforms.size(); i++)
-          if (platforms[i].IsColliding(rect))
-            rect.x--;
-      }
-    }
-
-    //Text Input Text
-    {
-      if (keyboard.GetKeyArray()[SDL_SCANCODE_B] || listen) {
-        listen = true;
-        keyboard.StartBuildText();
-        audio.PauseMusic();
-      }
-      if (keyboard.GetKeyArray()[SDL_SCANCODE_X] && listen) {
-        listen = false;
-        keyboard.StopBuildText(false);
-        audio.ResumeMusic();
-      }
-    }
-
-    button.Update(mouse, MouseButtons::mbl);
     if (button.GetIsPressed())
       running = false;
 
-    winText.SetText(keyboard.GetText());
-    winText.DisplayText(&window, Vector2i(500, 500), RGBA(0, 0, 0, 0));
-
-    tab.Update(&window);
-
-    //utils::CapFPS(start, 60);
-    //utils::GetFPS(start);
+    gm.Update(&window);
 
     window.Display();
   };
@@ -170,15 +101,6 @@ int main(int argc, char* argv[]) {
   IMG_Quit();
   SDL_Quit();
   return 0;
-};
-
-Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos) {
-  SDL_Rect srcRect, dstRect;
-  dstRect.x = 0; dstRect.y = 0, dstRect.w = w; dstRect.h = h;
-  srcRect.x = 0; srcRect.y = 0, srcRect.w = w; srcRect.h = h;
-  Button button(tex, srcRect, dstRect);
-
-  return button;
 };
 
 std::vector<Square> CreatePlatforms(SDL_Texture* tex) {

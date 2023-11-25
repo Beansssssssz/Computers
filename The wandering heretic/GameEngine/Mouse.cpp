@@ -44,6 +44,8 @@ void Mouse::Update()
 {
   UpdatePos();
   ChangeCursorType();
+
+  _mouseSelecting = false;//setting up for the next frame
 };
 
 void Mouse::UpdatePos()
@@ -67,9 +69,9 @@ void Mouse::ChangeCursorType()
   }
 };
 
-void Mouse::IsSelecting(bool isSelecting)
+void Mouse::MouseIsSelecting()
 {
-  this->_mouseSelecting = isSelecting;
+  this->_mouseSelecting = true;
 };
 
 
