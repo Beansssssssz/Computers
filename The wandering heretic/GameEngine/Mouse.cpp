@@ -14,10 +14,21 @@ Mouse::Mouse(Vector2i pos)
   SDL_SetCursor(cursor);
 };
 
-
 Mouse::~Mouse()
 {
   SDL_FreeCursor(cursor);
+  delete _mousePtr;
+}
+Mouse* Mouse::GetMouse()
+{
+  if (_mousePtr == NULL)
+  {
+    Vector2i pos(0, 0);
+    _mousePtr = new Mouse(pos);
+    return _mousePtr;
+  }
+  else
+    return _mousePtr;
 };
 
 Vector2i Mouse::GetPos()

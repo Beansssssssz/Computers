@@ -33,12 +33,6 @@ bool Square::IsColliding(SDL_Rect& rect)
   return TopTobottom && BottomToTop && LeftToright && RightToleft;
 }
 
-Vector2f& Square::GetPos()
-{
-  Vector2f pos(dstRect.x, dstRect.y);
-  return pos;
-}
-
 SDL_Texture* Square::GetTexture()
 {
   return tex;
@@ -53,6 +47,15 @@ SDL_Rect Square::GetDstRect()
 {
   return dstRect;
 }
+
+void Square::SetSrcRect(SDL_Rect rect)
+{
+  srcRect = rect;
+}
+void Square::SetDstRect(SDL_Rect rect)
+{
+  dstRect = rect;
+};
 
 SDL_Rect* Square::GetSrcRect()
 {

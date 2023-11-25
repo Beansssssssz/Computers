@@ -1,4 +1,5 @@
-#pragma once 
+#pragma once
+
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -17,14 +18,17 @@ enum class MouseButtons {
 class Mouse
 {
 public:
-  Mouse(Vector2i pos);
   ~Mouse();
+  static Mouse* GetMouse();
   Vector2i GetPos();
   MouseButtons GetPressed();
   void UpdatePos();
   void ChangeCursorType(bool isSelecting);
 
 private:
+  static Mouse* _mousePtr;
+  Mouse(Vector2i pos);
+
   MouseButtons bt = MouseButtons::none;
   Vector2i pos;
   SDL_Cursor* cursor;

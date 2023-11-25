@@ -16,10 +16,12 @@
 #include"Audio.hpp"
 
 
+//initializing singletons
+Mouse* Mouse::_mousePtr = NULL;
+
 std::vector<Square> CreatePlatforms(SDL_Texture* tex);
 Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos);
 //void CreateSignWindow(const char* text, Keyboard keyboard, RenderWindow window);
-
 
 int main(int argc, char* argv[]) {
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) > 0)
@@ -38,7 +40,6 @@ int main(int argc, char* argv[]) {
 
   SDL_Texture* tex = window.LoadTexture("Assets/ground_grass1.png");
 
-
   std::vector<Square> platforms = CreatePlatforms(tex);
   tex = window.LoadTexture("Assets/backround_pic.png");
 
@@ -46,8 +47,7 @@ int main(int argc, char* argv[]) {
   rect.x = 0; rect.y = 0, rect.w = 1920; rect.h = 1080;
   Square backround(tex, rect, rect);
 
-  Vector2i pos(0, 0);
-  Mouse mouse(pos);
+  Mouse* mouse = Mouse::GetMouse();
 
   Keyboard keyboard;
 
@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
     }
     window.Clear();
 
-    mouse.UpdatePos();
+    mouse->UpdatePos();
     keyboard.Update();
 
     window.Render(backround.GetTexture(), backround.GetSrcRect(), backround.GetDstRect());

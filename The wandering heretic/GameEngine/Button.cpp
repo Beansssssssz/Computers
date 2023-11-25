@@ -17,19 +17,19 @@ Button Button::CreateButton(SDL_Texture * tex, SDL_Rect & srcrect, SDL_Rect & ds
   return Button(tex, srcrect, dstrect);
 };
 
-void Button::Update(Mouse& mouse, MouseButtons btn = MouseButtons::mbl)
+void Button::Update(Mouse* mouse, MouseButtons btn = MouseButtons::mbl)
 {
   isPressed = false;
   isSelected = false;
-  bool IsX = dstRect.x <= mouse.GetPos().x && (dstRect.x + dstRect.w >= mouse.GetPos().x);
-  bool IsY = dstRect.y <= mouse.GetPos().y && (dstRect.y + dstRect.h >= mouse.GetPos().y);
+  bool IsX = dstRect.x <= mouse->GetPos().x && (dstRect.x + dstRect.w >= mouse->GetPos().x);
+  bool IsY = dstRect.y <= mouse->GetPos().y && (dstRect.y + dstRect.h >= mouse->GetPos().y);
   if (IsX && IsY) {
     isSelected = true;
-    if (mouse.GetPressed() == btn)
+    if (mouse->GetPressed() == btn)
       isPressed = true;
   }
 
-  mouse.ChangeCursorType(isSelected);
+  mouse->ChangeCursorType(isSelected);
 };
 
 bool Button::GetIsSelected()

@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WelcomeScreen.cpp" />
     <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -36,9 +35,6 @@
     <Image Include="Assets\button_UI.png" />
     <Image Include="Assets\ground_grass1.png" />
     <Image Include="Assets\hulking_knight.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="WelcomeScreen.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -13,7 +13,7 @@ public:
   Button(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect);
   ~Button();
   static Button CreateButton(SDL_Texture* tex, SDL_Rect& srcrect, SDL_Rect& dstrect);
-  void Update(Mouse& mouse, MouseButtons btn);
+  void Update(Mouse* mouse, MouseButtons btn);
   //void ChangeState(Mouse& mouse);
   bool GetIsSelected();
   bool GetIsPressed();
