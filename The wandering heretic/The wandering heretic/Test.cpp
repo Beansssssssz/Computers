@@ -5,15 +5,16 @@
 #include <iostream>
 #include <vector>
 
-#include "RenderWindow.hpp"
 #include "Square.hpp"
+#include "RenderWindow.hpp"
 #include "Mouse.hpp"
 #include "Button.hpp"
 #include "Math.hpp"
 #include "Utils.hpp"
 #include "Keyboard.hpp"
 #include "WindowText.hpp"
-#include"Audio.hpp"
+#include "Audio.hpp"
+#include "PopUpWindow.hpp"
 
 
 //initializing singletons
@@ -21,7 +22,6 @@ Mouse* Mouse::_mousePtr = NULL;
 
 std::vector<Square> CreatePlatforms(SDL_Texture* tex);
 Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos);
-//void CreateSignWindow(const char* text, Keyboard keyboard, RenderWindow window);
 
 int main(int argc, char* argv[]) {
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) > 0)
@@ -65,6 +65,13 @@ int main(int argc, char* argv[]) {
 
   Audio audio("Assets/Sounds/ahem_x.wav");
 
+  SDL_Rect rect1;
+  rect1.x = 300; rect1.y = 300, rect1.w = 500; rect1.h = 500;
+  RGBA color(40, 80, 100, 160);
+  Button button1 = CreateButton(tex, 113, 114, Vector2i(2, 1));
+
+  PopUpWindow tab(button1, rect1, color, true);
+
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
 
@@ -76,15 +83,19 @@ int main(int argc, char* argv[]) {
     }
     window.Clear();
 
-    mouse->UpdatePos();
+    mouse->Update();
     keyboard.Update();
 
-    window.Render(backround.GetTexture(), backround.GetSrcRect(), backround.GetDstRect());
+    //window.Render(backround.GetTexture(), backround.GetSrcRect(), backround.GetDstRect());
+    window.Render(Square(backround));
 
     for (int i = 0; i < platforms.size(); i++)
-      window.Render(platforms[i].GetTexture(), platforms[i].GetSrcRect(), platforms[i].GetDstRect());
+      window.Render(Square(platforms[i]));
+      //platforms[i].GetTexture(), platforms[i].GetSrcRect(), platforms[i].GetDstRect());
 
-    window.Render(button.GetTexture(), button.GetSrcRect(), button.GetDstRect());
+    //button.RenderSquare(&window);
+    //window.Render(button.GetTexture(), button.GetSrcRect(), button.GetDstRect());
+    window.Render(Square(button));
 
     //Creating the rect(or testing player)
     {
@@ -125,11 +136,6 @@ int main(int argc, char* argv[]) {
       }
     }
 
-    SDL_Rect rect1;
-    rect1.x = 300; rect1.y = 300, rect1.w = 500; rect1.h = 500;
-    RGBA color(40, 80, 100, 160);
-    window.CreateRect(&rect1, color);
-
     //Text Input Text
     {
       if (keyboard.GetKeyArray()[SDL_SCANCODE_B] || listen) {
@@ -150,6 +156,8 @@ int main(int argc, char* argv[]) {
 
     winText.SetText(keyboard.GetText());
     winText.DisplayText(&window, Vector2i(500, 500), RGBA(0, 0, 0, 0));
+
+    tab.Update(&window);
 
     //utils::CapFPS(start, 60);
     //utils::GetFPS(start);
@@ -193,8 +201,3 @@ std::vector<Square> CreatePlatforms(SDL_Texture* tex) {
 
   return platforms;
 };
-
-void CreateSignWindow(const char* text, Keyboard keyboard, RenderWindow* window) {
-
-
-}

@@ -5,13 +5,12 @@
 
 #include "Square.hpp"
 
-
 class RenderWindow {
 public:
   RenderWindow(const char* title);
   ~RenderWindow();
   SDL_Texture* LoadTexture(const char* filepath);
-  void Render(SDL_Texture* tex, SDL_Rect* srcrect, SDL_Rect dstrect); 
+  void Render(Square sqr);
   void CreateRect(SDL_Rect* rect, RGBA color);
   void Display();
   void Clear();

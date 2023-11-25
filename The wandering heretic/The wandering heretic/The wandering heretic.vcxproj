@@ -36,6 +36,9 @@
     <Image Include="Assets\ground_grass1.png" />
     <Image Include="Assets\hulking_knight.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameManager.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

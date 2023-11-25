@@ -29,7 +29,7 @@ void Button::Update(Mouse* mouse, MouseButtons btn = MouseButtons::mbl)
       isPressed = true;
   }
 
-  mouse->ChangeCursorType(isSelected);
+  mouse->IsSelecting(isSelected);
 };
 
 bool Button::GetIsSelected()

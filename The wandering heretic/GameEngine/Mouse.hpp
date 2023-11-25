@@ -22,8 +22,10 @@ public:
   static Mouse* GetMouse();
   Vector2i GetPos();
   MouseButtons GetPressed();
+  void Update();
   void UpdatePos();
-  void ChangeCursorType(bool isSelecting);
+  void ChangeCursorType();
+  void IsSelecting(bool isSelecting);
 
 private:
   static Mouse* _mousePtr;
@@ -33,4 +35,5 @@ private:
   Vector2i pos;
   SDL_Cursor* cursor;
   SDL_SystemCursor current;
+  bool _mouseSelecting;
 };

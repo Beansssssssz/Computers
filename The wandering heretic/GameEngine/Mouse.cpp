@@ -39,6 +39,11 @@ Vector2i Mouse::GetPos()
 MouseButtons Mouse::GetPressed()
 {
   return bt;
+}
+void Mouse::Update()
+{
+  UpdatePos();
+  ChangeCursorType();
 };
 
 void Mouse::UpdatePos()
@@ -46,11 +51,11 @@ void Mouse::UpdatePos()
   bt = MouseButtons(SDL_GetMouseState(&pos.x, &pos.y));
 };
 
-void Mouse::ChangeCursorType(bool isSelecting)
+void Mouse::ChangeCursorType()
 {
   SDL_SystemCursor old = current;
 
-  if (isSelecting)
+  if (_mouseSelecting)
     current = SDL_SYSTEM_CURSOR_HAND;
   else
     current = SDL_SYSTEM_CURSOR_ARROW;
@@ -60,6 +65,11 @@ void Mouse::ChangeCursorType(bool isSelecting)
     cursor = SDL_CreateSystemCursor(current);
     SDL_SetCursor(cursor);
   }
+};
+
+void Mouse::IsSelecting(bool isSelecting)
+{
+  this->_mouseSelecting = isSelecting;
 };
 
 
