@@ -15,7 +15,7 @@ RenderWindow::RenderWindow(const char* title)
     std::cout << "Window failed to init. Error: " << SDL_GetError() << std::endl;
 
   //the -1 is saying to use whatever flags the programs needs to run
-  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED && SDL_RENDERER_PRESENTVSYNC);                                                            
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED && SDL_RENDERER_PRESENTVSYNC);                                                    
   if(renderer == NULL)
     std::cout << "Renderer failed to render. Error: " << SDL_GetError() << std::endl;
 
@@ -55,6 +55,11 @@ void RenderWindow::Render(Square sqr)
   if (SDL_RenderCopy(renderer, sqr.GetTexture(), sqr.GetSrcRect(), sqr.GetDstRect()))
     std::cout << "1Texture faild to be copied. Error: " << SDL_GetError() << std::endl;
 };
+void RenderWindow::Render(Square* sqr)
+{
+  if (SDL_RenderCopy(renderer, sqr->GetTexture(), sqr->GetSrcRect(), sqr->GetDstRect()))
+    std::cout << "1Texture faild to be copied. Error: " << SDL_GetError() << std::endl;
+};
 
 
 /// <summary>
@@ -72,6 +77,12 @@ void RenderWindow::GetWidthHeight(int& w, int& h)
   SDL_GetDesktopDisplayMode(0, &DM);
   w = DM.w;
   h = DM.h;
+};
+
+bool RenderWindow::IsWindowFocused()
+{
+  Uint32 flags = SDL_GetWindowFlags(window);
+  return flags & SDL_WINDOW_INPUT_FOCUS;
 };
 
 /// <summary>

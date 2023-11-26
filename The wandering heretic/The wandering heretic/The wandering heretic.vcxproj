@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="WelcomeScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -33,13 +34,13 @@
   <ItemGroup>
     <Image Include="Assets\backround_pic.png" />
     <Image Include="Assets\Buttons.png" />
-    <Image Include="Assets\button_UI.png" />
     <Image Include="Assets\ground_grass1.png" />
     <Image Include="Assets\hulking_knight.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="WelcomeScreen.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

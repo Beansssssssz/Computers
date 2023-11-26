@@ -39,13 +39,10 @@ int main(int argc, char* argv[]) {
 
   RenderWindow window("Game");
 
-  SDL_Texture* tex = window.LoadTexture("Assets/ground_grass1.png");
-
-  std::vector<Square> platforms = CreatePlatforms(tex);
-  tex = window.LoadTexture("Assets/backround_pic.png");
-
+  SDL_Texture* tex = window.LoadTexture("Assets/backround_pic.png");
   SDL_Rect rect;
-  rect.x = 0; rect.y = 0, rect.w = 1920; rect.h = 1080;
+  rect.x = 0; rect.y = 0;
+  RenderWindow::GetWidthHeight(rect.w, rect.h);
   Square backround(tex, rect, rect);
 
   Mouse* mouse = Mouse::GetMouse();
@@ -53,15 +50,12 @@ int main(int argc, char* argv[]) {
   Keyboard* keyboard = Keyboard::GetKeyboard();
 
   tex = window.LoadTexture("Assets/GUI/btnExit.png");
-  Button button = utils::CreateButton(tex, 113, 114, Vector2i(2, 1));
-
-  rect.x = 700; rect.y = 500, rect.w = 20; rect.h = 20;
-
-  GameManager gm(tex, "Assets/Fonts/Sans.ttf");
-
+  //GameManager gm(tex, "Assets/Fonts/Sans.ttf");
 
   bool running = true;
-  SDL_Event event; //the window event(like close, minize, keypress)
+  SDL_Event event;
+
+  bool focused = true;
 
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
@@ -70,11 +64,16 @@ int main(int argc, char* argv[]) {
     {
       if (event.type == SDL_QUIT)
         running = false;
-      if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
-        gm.GetPopUpWindow().OpenTab();
+      //if()
+      //if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
+        //gm.GetPopUpWindow().OpenTab();
 
-      //keyboard->BuildText(event);
+      keyboard->BuildText(event);
     }
+    focused = window.IsWindowFocused();
+    if (!focused)
+      continue;
+
     window.Clear();
 
     window.Render(backround);
@@ -82,16 +81,7 @@ int main(int argc, char* argv[]) {
     mouse->Update();
     keyboard->Update();
 
-    for (int i = 0; i < platforms.size(); i++)
-      window.Render(Square(platforms[i]));
-
-    window.Render(Square(button));
-    button.Update();
-
-    if (button.GetIsPressed())
-      running = false;
-
-    gm.Update(&window);
+    //gm.Update(&window);
 
     window.Display();
   };

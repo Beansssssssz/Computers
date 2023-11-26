@@ -11,23 +11,22 @@ class GameManager {
 public:
   GameManager(SDL_Texture* tex, const char* font);
   void Update(RenderWindow* window);
+  void OpenGame();
+  void CloseGame();
   PopUpWindow SetUpRandTab(SDL_Texture* tex);
 
   PopUpWindow& GetPopUpWindow();
 
 private:
+  bool _isGameOpen;
   Audio* _audio;
   PopUpWindow _tab;
   WindowText _winText;
+  SDL_Event ev;
 };
 
 
-
 //
-///*
-//
-//
-////Text Input Text
 //{
 //  if (keyboard.GetKeyArray()[SDL_SCANCODE_B] || listen) {
 //    listen = true;

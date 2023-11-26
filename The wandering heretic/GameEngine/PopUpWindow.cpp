@@ -12,7 +12,6 @@ PopUpWindow::PopUpWindow(Button btnExit, SDL_Rect rect, RGBA color, bool open)
 
 void PopUpWindow::Update(RenderWindow* window)
 {
-  std::cout << _tabOpen << std::endl;
   if (!_tabOpen)
     return;
   
@@ -29,10 +28,6 @@ void PopUpWindow::Update(RenderWindow* window)
 void PopUpWindow::OpenTab()
 {
   _tabOpen = true;
-
-  std::cout << "---------" << std::endl;
-  std::cout << _btnExit.GetIsPressed() << std::endl;
-  std::cout << _tabOpen << std::endl;
 };
 
 void PopUpWindow::CloseTab()

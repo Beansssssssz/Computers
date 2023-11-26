@@ -21,14 +21,14 @@
     <ClCompile Include="GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WelcomeScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\button_UI.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="Assets\ground_grass1.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -47,6 +47,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Player.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WelcomeScreen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

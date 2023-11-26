@@ -1,15 +1,28 @@
 #include "GameManager.hpp"
 #include "Utils.hpp"
+#include "Keyboard.hpp"
 
 GameManager::GameManager(SDL_Texture* tex, const char* font)
-  :_audio(NULL), _tab(SetUpRandTab(tex)), _winText(font, 24, "dsa")
+  :_audio(NULL), _tab(SetUpRandTab(tex)), _winText(font, 24, "dsa"), _isGameOpen(false)
 {
 };
 
 void GameManager::Update(RenderWindow* window)
 {
+
   _tab.Update(window);
   _winText.DisplayText(window, Vector2i(100, 100), RGBA(0, 0, 0, 255));
+};
+
+void GameManager::OpenGame()
+{
+  _isGameOpen = true;
+
+};
+
+void GameManager::CloseGame()
+{
+  _isGameOpen = false;
 };
 
 PopUpWindow GameManager::SetUpRandTab(SDL_Texture* tex)

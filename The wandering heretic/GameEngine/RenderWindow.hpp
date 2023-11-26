@@ -11,11 +11,13 @@ public:
   ~RenderWindow();
   SDL_Texture* LoadTexture(const char* filepath);
   void Render(Square sqr);
+  void Render(Square* sqr);
   void CreateRect(SDL_Rect* rect, RGBA color);
   void Display();
   void Clear();
   void ToggleFullScreen();
   static void GetWidthHeight(int& width, int& height);
+  bool IsWindowFocused();
   SDL_Window* GetWindow();
   SDL_Renderer* GetRenderer();
 

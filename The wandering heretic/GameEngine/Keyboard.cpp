@@ -6,7 +6,7 @@
 #include "Keyboard.hpp"
 
 Keyboard::Keyboard()
-  :keysArray(NULL), Input(false)
+  :keysArray(NULL), _input(false)
 {};
 
 Keyboard* Keyboard::GetKeyboard()
@@ -39,18 +39,23 @@ void Keyboard::StopBuildText(bool clear)
   SDL_StopTextInput();
   if (clear)
     text.clear();
-  Input = false;
+  _input = false;
 };
 
 void Keyboard::StartBuildText()
 {
   SDL_StartTextInput();
-  Input = true;
+  _input = true;
 };
 
 void Keyboard::BuildText(SDL_Event event)
 {
-  if (!Input)
+  if (event.key.state == SDL_PRESSED)
+    _keyPressed = true;
+  else if(event.key.state == SDL_RELEASED)
+    _keyPressed = false;
+
+  if (!_input)
     return;
 
   if (event.type == SDL_TEXTINPUT) 
@@ -65,4 +70,13 @@ void Keyboard::Update()
 {
   SDL_PumpEvents();
   keysArray = const_cast<Uint8*>(SDL_GetKeyboardState(NULL));
+};
+
+/// <summary>
+/// return true of any key press is happing
+/// otherwise returns false
+/// </summary>
+bool Keyboard::IsKeyPressed()
+{
+  return _keyPressed;
 };
