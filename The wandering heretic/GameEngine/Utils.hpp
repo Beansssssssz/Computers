@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <iostream>
 
+#include "RenderWindow.hpp"
 #include "Math.hpp"
 #include "Button.hpp"
 
@@ -64,4 +65,28 @@ namespace utils {
 
     return button;
   };
-}
+
+  /// <summary>
+  /// return a texture which is widely used in the game
+  /// </summary>
+  /// <param name="num">the num of the texure:
+  /// 1:btn exit
+  /// 2:btn play
+  /// 3:grass or someshit
+  /// 
+  /// </param>
+  /// <returns>return selcted texture or NULL if a number which does exit is selected</returns>
+  inline SDL_Texture* GetTexture(int num) {
+    RenderWindow* window = RenderWindow::GetRenderWindow();
+    switch (num)
+    {
+    case 1:
+      return window->LoadTexture("Assets/GUI/btnExit.png");
+    case 2:
+      return window->LoadTexture("Assets/GUI/btnPlay.png");
+    case 3:
+      break;
+    };
+    return NULL;
+  };
+};

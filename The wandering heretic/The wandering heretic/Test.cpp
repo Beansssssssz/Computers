@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
   RenderWindow::GetWidthHeight(rect.w, rect.h);
   Square backround(tex, rect, rect);
 
-  tex = window->LoadTexture("Assets/GUI/btnExit.png");
+  tex = utils::GetTexture(1);
   GameManager gm(tex, "Assets/Fonts/Sans.ttf");
 
   bool running = true;
