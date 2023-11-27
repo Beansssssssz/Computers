@@ -7,7 +7,8 @@
 
 class RenderWindow {
 public:
-  RenderWindow(const char* title);
+  static RenderWindow* GetRenderWindow();
+
   ~RenderWindow();
   SDL_Texture* LoadTexture(const char* filepath);
   void Render(Square sqr);
@@ -22,6 +23,9 @@ public:
   SDL_Renderer* GetRenderer();
 
 private:
+  RenderWindow(const char* title);
+  static RenderWindow* _windowPtr;
+
   SDL_Window* window; //the window "tab" it self
   SDL_Renderer* renderer;//the way you communicate with the window :)
 

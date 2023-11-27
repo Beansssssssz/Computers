@@ -23,6 +23,16 @@ RenderWindow::RenderWindow(const char* title)
   ToggleFullScreen();
 };
 
+RenderWindow* RenderWindow::GetRenderWindow() {
+  if (_windowPtr == NULL)
+  {
+    _windowPtr = new RenderWindow("Game");
+    return _windowPtr;
+  }
+  else
+    return _windowPtr;
+}
+
 /// <summary>
 /// gets the path and turns it into a sdl texture
 /// </summary>
@@ -95,6 +105,7 @@ void RenderWindow::Clear() {
 RenderWindow::~RenderWindow() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
+  delete _windowPtr;
 };
 
 SDL_Window* RenderWindow::GetWindow()

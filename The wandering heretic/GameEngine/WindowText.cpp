@@ -8,18 +8,23 @@
 
 
 WindowText::WindowText(const char* fontPath, int size, std::string str, int Maxsize)
-  :text(str), lengthMaxSize(Maxsize), characterSize(size)
+  :_fontPath(fontPath), text(str), _characterSize(size), _maxLength(Maxsize)
 {
-  font = TTF_OpenFont(fontPath, characterSize);
-}
+  font = TTF_OpenFont(_fontPath, _characterSize);
+};
 
-WindowText:: ~WindowText() {
-}
+WindowText::~WindowText()
+{
+  TTF_CloseFont(font);
+};
 
-void  WindowText::DisplayText(RenderWindow* window, Vector2i pos, RGBA color) {
+void  WindowText::DisplayText(Vector2i pos, RGBA color) {
   //you cant create a surfarce from no text
   if (text.size() <= 0)
     return;
+
+  RenderWindow* window = RenderWindow::GetRenderWindow();
+
   const char* ch = text.c_str();
 
   SDL_Color sdlColor = utils::ChangeRgbaToSdlColor(color);
@@ -43,24 +48,55 @@ void  WindowText::DisplayText(RenderWindow* window, Vector2i pos, RGBA color) {
   window->Render(sqr);
   SDL_FreeSurface(surfaceMessage);
   SDL_DestroyTexture(message);
-}
+};
 
-void WindowText::CreateSquare(RenderWindow* window, SDL_Rect rect, RGBA color)
+void WindowText::CreateSquare(SDL_Rect rect, RGBA color)
 {
-  rect.w = 9 * characterSize;
+  RenderWindow* window = RenderWindow::GetRenderWindow();
+
+  rect.w = 9 * _characterSize;
   window->CreateRect(&rect, color);
 };
 
-std::string WindowText:: GetText() {
-  return text;
+/// <summary>
+/// remakes the font
+/// </summary>
+void WindowText::RemakeFont()
+{
+  TTF_CloseFont(font);
+  font = TTF_OpenFont(_fontPath, _characterSize);
+};
+
+/// <summary>
+/// changes the character size that the current program is using
+/// </summary>
+/// <param name="size">the size</param>
+void WindowText::SetCharacterSize(int size) {
+  _characterSize = size;
+  RemakeFont();
 }
 
+/// <summary>
+/// sets the text to a new text
+/// </summary>
+/// <param name="str">the text</param>
 void WindowText::SetText(std::string str) {
-  if (str.size() > lengthMaxSize)
+  if (str.size() > _maxLength)
     return;
   text = str;
 };
 
+/// <summary>
+/// returns the text
+/// </summary>
+/// <returns>the currently used text</returns>
+std::string WindowText:: GetText() {
+  return text;
+}
+
+/// <summary>
+/// clears the text
+/// </summary>
 void WindowText::ClearText() {
   text.clear();
 };

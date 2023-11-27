@@ -3,21 +3,60 @@
 #include "Keyboard.hpp"
 
 GameManager::GameManager(SDL_Texture* tex, const char* font)
-  :_audio(NULL), _tab(SetUpRandTab(tex)), _winText(font, 24, "dsa"), _isGameOpen(false)
+  :_audio(NULL), _tab(SetUpRandTab(tex)), _winText(font, 24, "dsa")
 {
 };
 
-void GameManager::Update(RenderWindow* window)
+void GameManager::Update()
 {
+  Keyboard* keyboard = Keyboard::GetKeyboard();
 
-  _tab.Update(window);
-  _winText.DisplayText(window, Vector2i(100, 100), RGBA(0, 0, 0, 255));
+  if (_isGameOpen)
+    Rungame();
+  else
+    RunHomeScreen();
 };
 
+/// <summary>
+/// the function where the game runs
+/// </summary>
+void GameManager::Rungame()
+{
+  RenderWindow* window = RenderWindow::GetRenderWindow();
+  _tab.Update();
+  _winText.DisplayText(Vector2i(100, 100), RGBA(0, 0, 0, 255));
+};
+
+/// <summary>
+/// the function where the homescreen and
+/// the press a welcomescreen runs
+/// </summary>
+void GameManager::RunHomeScreen()
+{
+  Keyboard* keyboard = Keyboard::GetKeyboard();
+  _winText.SetText("press any key to continue...");
+  if (_onWelcomeScreen)
+  {
+    //check if to proggres or no
+    if (keyboard->IsKeyPressed())
+      _onWelcomeScreen = false;
+
+    int w, h;
+    RenderWindow::GetWidthHeight(w, h);
+    _winText.SetCharacterSize(40);
+    _winText.DisplayText(Vector2i(w / 2 , h - 48), RGBA(0, 0, 0, 255));
+    return;
+  }
+  _tab.OpenTab();
+  _tab.Update();
+};
+
+/// <summary>
+/// sets it so that the game will run next
+/// </summary>
 void GameManager::OpenGame()
 {
   _isGameOpen = true;
-
 };
 
 void GameManager::CloseGame()

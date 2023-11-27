@@ -6,7 +6,7 @@
 #include "Keyboard.hpp"
 
 Keyboard::Keyboard()
-  :keysArray(NULL), _input(false)
+  :keysArray(NULL), _input(false), _keyPressed(false)
 {};
 
 Keyboard* Keyboard::GetKeyboard()
@@ -68,8 +68,12 @@ void Keyboard::BuildText(SDL_Event event)
 
 void Keyboard::Update()
 {
+  _keyPressed = false;
   SDL_PumpEvents();
   keysArray = const_cast<Uint8*>(SDL_GetKeyboardState(NULL));
+  for (int i = 0; i < 250; i++)//all the keys on the keyboard
+    if (keysArray[i])
+      _keyPressed = true;
 };
 
 /// <summary>

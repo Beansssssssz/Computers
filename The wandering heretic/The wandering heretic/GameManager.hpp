@@ -10,19 +10,24 @@
 class GameManager {
 public:
   GameManager(SDL_Texture* tex, const char* font);
-  void Update(RenderWindow* window);
+  void Update();
+
   void OpenGame();
   void CloseGame();
+
   PopUpWindow SetUpRandTab(SDL_Texture* tex);
-
   PopUpWindow& GetPopUpWindow();
-
 private:
-  bool _isGameOpen;
+  void Rungame();
+  void RunHomeScreen();
+
   Audio* _audio;
   PopUpWindow _tab;
   WindowText _winText;
   SDL_Event ev;
+
+  bool _onWelcomeScreen = true;//ik the that the welcomescreen opens first
+  bool _isGameOpen = false;//the game opens later
 };
 
 

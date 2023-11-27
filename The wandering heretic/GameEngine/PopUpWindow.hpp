@@ -10,7 +10,7 @@ class PopUpWindow
 public:
   PopUpWindow(Button btnExit, SDL_Rect tab, RGBA color, bool open = false);
   //~PopUpWindow();
-  void Update(RenderWindow* window);
+  void Update();
   void OpenTab();
   void CloseTab();
 private:

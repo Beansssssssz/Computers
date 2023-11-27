@@ -10,10 +10,12 @@ PopUpWindow::PopUpWindow(Button btnExit, SDL_Rect rect, RGBA color, bool open)
   _CorrectButton();
 };
 
-void PopUpWindow::Update(RenderWindow* window)
+void PopUpWindow::Update()
 {
   if (!_tabOpen)
     return;
+
+  RenderWindow* window = RenderWindow::GetRenderWindow();
   
   Mouse* mouse = Mouse::GetMouse();
 
@@ -32,7 +34,6 @@ void PopUpWindow::OpenTab()
 
 void PopUpWindow::CloseTab()
 {
-  std::cout << "sdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << std::endl;
   _tabOpen = false;
 };
 

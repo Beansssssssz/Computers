@@ -10,15 +10,21 @@ class WindowText {
 public:
   WindowText(const char* fontPath, int size, std::string str = "", int maxSize = 30);
   ~WindowText();
-  std::string GetText();
+
+  void DisplayText(Vector2i pos, RGBA color);
+  void CreateSquare(SDL_Rect rect, RGBA color);
+
+  void RemakeFont();
+  void SetCharacterSize(int size);
+
   void SetText(std::string str);
-  void DisplayText(RenderWindow* window, Vector2i pos, RGBA color);
-  void CreateSquare(RenderWindow* window, SDL_Rect rect, RGBA color);
   void ClearText();
+  std::string GetText();
 
 private:
   TTF_Font* font;
   std::string text;
-  int lengthMaxSize;
-  int characterSize;
+  int _maxLength;
+  int _characterSize;
+  const char* _fontPath;
 };

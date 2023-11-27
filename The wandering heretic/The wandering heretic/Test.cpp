@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 
+//#including my own libs
 #include "Square.hpp"
 #include "RenderWindow.hpp"
 #include "Mouse.hpp"
@@ -17,12 +18,11 @@
 #include "PopUpWindow.hpp"
 #include "GameManager.hpp"
 
-
 //initializing singletons
+RenderWindow* RenderWindow::_windowPtr = NULL;
 Mouse* Mouse::_mousePtr = NULL;
 Keyboard* Keyboard::_keyboardPtr = NULL;
 
-std::vector<Square> CreatePlatforms(SDL_Texture* tex);
 
 int main(int argc, char* argv[]) {
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) > 0)
@@ -37,20 +37,18 @@ int main(int argc, char* argv[]) {
   if (Mix_Init(MIX_INIT_OGG | MIX_INIT_MOD) < 0)
     std::cout << "Error initializing SDL_mixer: " << Mix_GetError() << std::endl;
 
-  RenderWindow window("Game");
+  RenderWindow* window = RenderWindow::GetRenderWindow();
+  Mouse* mouse = Mouse::GetMouse();
+  Keyboard* keyboard = Keyboard::GetKeyboard();
 
-  SDL_Texture* tex = window.LoadTexture("Assets/backround_pic.png");
+  SDL_Texture* tex = window->LoadTexture("Assets/backround_pic.png");
   SDL_Rect rect;
   rect.x = 0; rect.y = 0;
   RenderWindow::GetWidthHeight(rect.w, rect.h);
   Square backround(tex, rect, rect);
 
-  Mouse* mouse = Mouse::GetMouse();
-
-  Keyboard* keyboard = Keyboard::GetKeyboard();
-
-  tex = window.LoadTexture("Assets/GUI/btnExit.png");
-  //GameManager gm(tex, "Assets/Fonts/Sans.ttf");
+  tex = window->LoadTexture("Assets/GUI/btnExit.png");
+  GameManager gm(tex, "Assets/Fonts/Sans.ttf");
 
   bool running = true;
   SDL_Event event;
@@ -70,20 +68,20 @@ int main(int argc, char* argv[]) {
 
       keyboard->BuildText(event);
     }
-    focused = window.IsWindowFocused();
+    focused = window->IsWindowFocused();
     if (!focused)
       continue;
 
-    window.Clear();
+    window->Clear();
 
-    window.Render(backround);
+    window->Render(backround);
 
     mouse->Update();
     keyboard->Update();
 
-    //gm.Update(&window);
+    gm.Update();
 
-    window.Display();
+    window->Display();
   };
 
   Mix_Quit();
@@ -91,25 +89,4 @@ int main(int argc, char* argv[]) {
   IMG_Quit();
   SDL_Quit();
   return 0;
-};
-
-std::vector<Square> CreatePlatforms(SDL_Texture* tex) {
-  //the i-1 is there because the window isnt always perfect and sometimes there are still platforms missing
-  //so the -1 is addign another platform so it would all be there.
-  int w, h;
-  RenderWindow::GetWidthHeight(w, h);
-
-  std::vector<Square> platforms;
-  SDL_Rect dstRect, srcRect;
-  srcRect.x = 0; srcRect.y = 0, srcRect.w = 128; srcRect.h = 128;
-  dstRect.x = 300; dstRect.y = 300; dstRect.w = 128, dstRect.h = 128;
-
-  platforms.push_back(Square(tex, srcRect, dstRect, true));
-
-  //for (int i = 0; i - 1 < w / 128; i++) {
-  //  dstRect.x = i * dstRect.w; dstRect.y = h - dstRect.w;
-  //  platforms.push_back(Square(tex, srcRect, dstRect, true));//we need the platforms to have collision
-  //}
-
-  return platforms;
 };
