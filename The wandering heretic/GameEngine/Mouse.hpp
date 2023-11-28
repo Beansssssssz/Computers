@@ -22,11 +22,14 @@ public:
   static Mouse* GetMouse();
   Vector2i GetPos();
   MouseButtons GetPressed();
+
   void Update();
   void UpdatePos();
+
   void ChangeCursorType();
   void MouseIsSelecting();
 
+  bool IsMouseColliding(SDL_Rect rect);
 private:
   static Mouse* _mousePtr;
   Mouse(Vector2i pos);

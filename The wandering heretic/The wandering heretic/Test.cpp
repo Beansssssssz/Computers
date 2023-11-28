@@ -17,6 +17,7 @@
 #include "Audio.hpp"
 #include "PopUpWindow.hpp"
 #include "GameManager.hpp"
+#include "Slider.hpp"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -50,6 +51,10 @@ int main(int argc, char* argv[]) {
   tex = utils::GetTexture(1);
   GameManager gm(tex, "Assets/Fonts/Sans.ttf");
 
+  rect.x = 200; rect.y = 200;rect.w = 20; rect.h = 30;
+
+  Slider test(rect, 100, 300, RGBA(0, 0, 255, 255), 10);
+
   bool running = true;
   SDL_Event event;
 
@@ -78,6 +83,8 @@ int main(int argc, char* argv[]) {
 
     mouse->Update();
     keyboard->Update();
+
+    test.Update();
 
     gm.Update();
 

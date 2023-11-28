@@ -13,7 +13,7 @@ public:
   SDL_Texture* LoadTexture(const char* filepath);
   void Render(Square sqr);
   void Render(Square* sqr);
-  void CreateRect(SDL_Rect* rect, RGBA color);
+  void DisplayRect(SDL_Rect* rect, RGBA color);
   void Display();
   void Clear();
   void ToggleFullScreen();

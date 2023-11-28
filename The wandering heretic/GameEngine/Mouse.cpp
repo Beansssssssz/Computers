@@ -72,6 +72,13 @@ void Mouse::ChangeCursorType()
 void Mouse::MouseIsSelecting()
 {
   this->_mouseSelecting = true;
+}
+bool Mouse::IsMouseColliding(SDL_Rect rect)
+{
+  bool IsX = rect.x <= this->GetPos().x && (rect.x + rect.w >= this->GetPos().x);
+  bool IsY = rect.y <= this->GetPos().y && (rect.y + rect.h >= this->GetPos().y);
+
+  return IsY && IsX;
 };
 
 

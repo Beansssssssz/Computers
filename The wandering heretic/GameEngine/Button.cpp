@@ -19,10 +19,16 @@ void Button::Update(MouseButtons btn)
 
   isPressed = false;
   isSelected = false;
-  bool IsX = dstRect.x <= mouse->GetPos().x && (dstRect.x + dstRect.w >= mouse->GetPos().x);
-  bool IsY = dstRect.y <= mouse->GetPos().y && (dstRect.y + dstRect.h >= mouse->GetPos().y);
+  //bool IsX = dstRect.x <= mouse->GetPos().x && (dstRect.x + dstRect.w >= mouse->GetPos().x);
+  //bool IsY = dstRect.y <= mouse->GetPos().y && (dstRect.y + dstRect.h >= mouse->GetPos().y);
 
-  if (IsX && IsY) {
+  //if (IsX && IsY) {
+  //  isSelected = true;
+  //  if (mouse->GetPressed() == btn)
+  //    isPressed = true;
+  //}
+
+  if (mouse->IsMouseColliding(dstRect)) {
     isSelected = true;
     if (mouse->GetPressed() == btn)
       isPressed = true;

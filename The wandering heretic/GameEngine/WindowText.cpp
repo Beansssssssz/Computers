@@ -55,7 +55,7 @@ void WindowText::CreateSquare(SDL_Rect rect, RGBA color)
   RenderWindow* window = RenderWindow::GetRenderWindow();
 
   rect.w = 9 * _characterSize;
-  window->CreateRect(&rect, color);
+  window->DisplayRect(&rect, color);
 };
 
 /// <summary>

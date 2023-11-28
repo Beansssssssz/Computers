@@ -117,7 +117,7 @@ SDL_Renderer* RenderWindow::GetRenderer()
 {
   return renderer;
 }
-void RenderWindow::CreateRect(SDL_Rect* rect, RGBA color)
+void RenderWindow::DisplayRect(SDL_Rect* rect, RGBA color)
 {
   RGBA oldColor;
   SDL_GetRenderDrawColor(renderer, &oldColor.r, &oldColor.g, &oldColor.b, &oldColor.a);

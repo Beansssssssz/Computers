@@ -148,6 +148,7 @@
     <ClCompile Include="Platforms.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
+    <ClCompile Include="Slider.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WindowText.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Platforms.hpp" />
     <ClInclude Include="PopUpWindow.hpp" />
     <ClInclude Include="RenderWindow.hpp" />
+    <ClInclude Include="Slider.hpp" />
     <ClInclude Include="Square.hpp" />
     <ClInclude Include="Utils.hpp" />
     <ClInclude Include="WindowText.hpp" />

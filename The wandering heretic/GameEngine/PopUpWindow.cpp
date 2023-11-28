@@ -19,7 +19,7 @@ void PopUpWindow::Update()
   
   Mouse* mouse = Mouse::GetMouse();
 
-  window->CreateRect(&_tab, _color);
+  window->DisplayRect(&_tab, _color);
   window->Render(Square(_btnExit));
 
   _btnExit.Update();
