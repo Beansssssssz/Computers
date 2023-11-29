@@ -17,8 +17,8 @@ Slider::Slider(SDL_Rect rect, int pos1, int pos2, RGBA color, int height)
 /// </summary>
 void Slider::Update()
 {
-  ClampDstRectX();
   MoveRectByMouse();
+  ClampDstRectX();
   CreateSliderPath();
 
   RenderWindow* window = RenderWindow::GetRenderWindow();
@@ -38,7 +38,7 @@ void Slider::CreateSliderPath()
   rect.w = _pos2 - _pos1;
   rect.h = _height;
 
-  RGBA color(255, 255, 255, 255);
+  RGBA color(230, 230, 230, 255);
 
   window->DisplayRect(&rect, color);
 };
@@ -50,10 +50,15 @@ void Slider::MoveRectByMouse()
 {
   Mouse* mouse = Mouse::GetMouse();
 
-  if ((mouse->IsMouseColliding(_rect) && mouse->GetPressed() == MouseButtons::mbl))
-    _rect.x += mouse->GetPos().x - _oldPos.x;;
+  if (mouse->IsMouseColliding(_rect)) {
+    mouse->MouseIsSelecting();
+    if (mouse->GetPressed() == MouseButtons::mbl)
+      _rect.x += mouse->GetPos().x - _oldPos.x;;
+  }
 
   _oldPos = mouse->GetPos();
+
+  
 };
 
 /// <summary>

@@ -13,7 +13,6 @@ Keyboard* Keyboard::GetKeyboard()
 {
 	if (_keyboardPtr == NULL)
 	{
-		Vector2i pos(0, 0);
     _keyboardPtr = new Keyboard();
 		return _keyboardPtr;
 	}

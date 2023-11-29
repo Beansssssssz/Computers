@@ -3,13 +3,20 @@
 #include "Keyboard.hpp"
 
 GameManager::GameManager(SDL_Texture* tex, const char* font)
-  :_audio(NULL), _tab(SetUpRandTab(tex)), _winText(font, 24, "dsa")
+  :_audio(NULL), _wcScreen(NULL), _gameScreen(NULL), _homeScreen(NULL)
 {
+  _wcScreen = new WelcomeScreen("aaaaaaaaaaa", "Assets/Fonts/Sans.ttf", 24);
+  _gameScreen = new WelcomeScreen("", "sans", 24);
+  _homeScreen = new WelcomeScreen("", "sans", 24);
+};
+GameManager::~GameManager()
+{
+  delete _wcScreen, _gameScreen, _homeScreen, _audio;
 };
 
 void GameManager::Update()
 {
-  Keyboard* keyboard = Keyboard::GetKeyboard();
+  //Keyboard* keyboard = Keyboard::GetKeyboard();
 
   if (_isGameOpen)
     Rungame();
@@ -23,8 +30,8 @@ void GameManager::Update()
 void GameManager::Rungame()
 {
   RenderWindow* window = RenderWindow::GetRenderWindow();
-  _tab.Update();
-  _winText.DisplayText(Vector2i(100, 100), RGBA(0, 0, 0, 255));
+  /*_tab.Update();
+  _winText.DisplayText(Vector2i(100, 100), RGBA(0, 0, 0, 255));*/
 };
 
 /// <summary>
@@ -33,22 +40,14 @@ void GameManager::Rungame()
 /// </summary>
 void GameManager::RunHomeScreen()
 {
-  Keyboard* keyboard = Keyboard::GetKeyboard();
-  _winText.SetText("press any key to continue...");
-  if (_onWelcomeScreen)
-  {
-    //check if to proggres or no
-    if (keyboard->IsKeyPressed())
-      _onWelcomeScreen = false;
-
+  if (_wcScreen->IsKeyPressed()) {
     int w, h;
     RenderWindow::GetWidthHeight(w, h);
-    _winText.SetCharacterSize(40);
-    _winText.DisplayText(Vector2i(w / 2 , h - 48), RGBA(0, 0, 0, 255));
+    //_winText.SetCharacterSize(40);
+    //_winText.DisplayText(Vector2i(w / 2 , h - 48), RGBA(0, 0, 0, 255));
     return;
   }
-  _tab.OpenTab();
-  _tab.Update();
+  _wcScreen->Update();
 };
 
 /// <summary>
@@ -73,9 +72,4 @@ PopUpWindow GameManager::SetUpRandTab(SDL_Texture* tex)
 
   PopUpWindow tab(button1, rect1, color, true);
   return tab;
-};
-
-PopUpWindow& GameManager::GetPopUpWindow()
-{
-  return _tab;
 };

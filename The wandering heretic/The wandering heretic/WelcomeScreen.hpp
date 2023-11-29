@@ -1,15 +1,21 @@
 #pragma once
-
 #include <SDL.h>
 
-
 #include "Button.hpp"
+#include "Keyboard.hpp"
+#include "WindowText.hpp"
 
 class WelcomeScreen {
 public:
-  WelcomeScreen(SDL_Texture* buttonsTex, Vector2i exitPos, Vector2i StartPos);
+  WelcomeScreen(const char* text, const char* fontpath, int textSize);
+  ~WelcomeScreen();
+  void Update();
+  bool IsKeyPressed();
+  void SetKeyPressed(bool keyPressed);
 
 private:
-  Button* _btnExit;
-  Button* _btnStart;
+  Square* _bg;
+  WindowText* _winText;
+  const char* _text;
+  bool _keyPressed;
 };
