@@ -21,7 +21,10 @@
     <ClCompile Include="GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WelcomeScreen.cpp">
+    <ClCompile Include="WelcomeScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -49,7 +52,10 @@
     <ClInclude Include="Player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WelcomeScreen.hpp">
+    <ClInclude Include="WelcomeScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeScene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

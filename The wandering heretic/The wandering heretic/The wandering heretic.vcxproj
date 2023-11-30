@@ -20,8 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="HomeScene.cpp" />
     <ClCompile Include="Test.cpp" />
-    <ClCompile Include="WelcomeScreen.cpp" />
+    <ClCompile Include="WelcomeScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -39,8 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.hpp" />
+    <ClInclude Include="HomeScene.hpp" />
     <ClInclude Include="Player.hpp" />
-    <ClInclude Include="WelcomeScreen.hpp" />
+    <ClInclude Include="WelcomeScene.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

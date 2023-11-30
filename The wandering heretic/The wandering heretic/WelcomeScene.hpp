@@ -5,10 +5,10 @@
 #include "Keyboard.hpp"
 #include "WindowText.hpp"
 
-class WelcomeScreen {
+class WelcomeScene {
 public:
-  WelcomeScreen(const char* text, const char* fontpath, int textSize);
-  ~WelcomeScreen();
+  WelcomeScene(SDL_Texture* tex, const char* fontpath, int textSize);
+  ~WelcomeScene();
   void Update();
   bool IsKeyPressed();
   void SetKeyPressed(bool keyPressed);
@@ -16,6 +16,5 @@ public:
 private:
   Square* _bg;
   WindowText* _winText;
-  const char* _text;
   bool _keyPressed;
 };

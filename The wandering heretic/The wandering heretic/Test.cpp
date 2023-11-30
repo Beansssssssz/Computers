@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
   rect.x = 200; rect.y = 200;rect.w = 20; rect.h = 30;
 
   /*Slider test(rect, 100, 300, RGBA(0, 0, 255, 255), 10);
-  WelcomeScreen* _wcScreen = new WelcomeScreen(tex, "aaaaaaaaaaa", "Assets/Fonts/Sans.ttf", 24);*/
+  WelcomeScene* _wcScene = new WelcomeScene(tex, "aaaaaaaaaaa", "Assets/Fonts/Sans.ttf", 24);*/
 
   bool running = true;
   SDL_Event event;
@@ -88,14 +88,13 @@ int main(int argc, char* argv[]) {
     //only for testing
     {
       //test.Update();
-      //_wcScreen->Update();
+      //_wcScene->Update();
     }
 
     gm.Update();
 
     window->Display();
   };
-
 
   Mix_Quit();
   TTF_Quit();

@@ -3,7 +3,15 @@
 #include "Audio.hpp"
 #include "PopUpWindow.hpp"
 #include "WindowText.hpp"
-#include "WelcomeScreen.hpp"
+#include "WelcomeScene.hpp"
+#include "HomeScene.hpp"
+
+enum class Scenes
+{
+  welcome,
+  home,
+  game
+};
 
 /// <summary>
 /// the class that manages the game
@@ -14,22 +22,19 @@ public:
   ~GameManager();
   void Update();
 
-  void OpenGame();
-  void CloseGame();
+  Scenes& GetScenes();
 
   PopUpWindow SetUpRandTab(SDL_Texture* tex);
 private:
-  void Rungame();
-  void RunHomeScreen();
+  void FindCurrentScene();
 
   Audio* _audio;
 
-  bool _onWelcomeScreen = true;//ik the that the welcomescreen opens first
-  bool _isGameOpen = false;//the game opens later
+  Scenes _currentScene = Scenes::welcome;//ik the that the WelcomeScene opens first
 
-  WelcomeScreen* _wcScreen;
-  WelcomeScreen* _homeScreen;
-  WelcomeScreen* _gameScreen;
+  WelcomeScene* _wcScene;
+  HomeScene* _HomeScene;
+  WelcomeScene* _gameScreen;
 };
 
 

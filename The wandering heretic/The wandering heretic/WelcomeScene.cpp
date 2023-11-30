@@ -1,12 +1,12 @@
-#include "WelcomeScreen.hpp"
+#include "WelcomeScene.hpp"
 
 #include "RenderWindow.hpp"
 
-WelcomeScreen::WelcomeScreen(const char* text, const char* fontpath, int textSize)
-  :_bg(NULL), _winText(NULL), _text(text),  _keyPressed(false)
+WelcomeScene::WelcomeScene(SDL_Texture* tex, const char* fontpath, int textSize)
+  :_bg(NULL), _winText(NULL), _keyPressed(false)
 {
   RenderWindow* window = RenderWindow::GetRenderWindow();
-  SDL_Texture* tex = window->LoadTexture("Assets/backround_pic.png");
+  tex = window->LoadTexture("Assets/backround_pic.png");
 
   SDL_Rect rect;
   rect.x = 0; rect.y = 0;
@@ -17,7 +17,7 @@ WelcomeScreen::WelcomeScreen(const char* text, const char* fontpath, int textSiz
   _winText->SetText("Press any key to continue...");
 };
 
-WelcomeScreen::~WelcomeScreen()
+WelcomeScene::~WelcomeScene()
 {
   delete _bg, _winText;
 };
@@ -25,7 +25,7 @@ WelcomeScreen::~WelcomeScreen()
 /// <summary>
 /// the update function
 /// </summary>
-void WelcomeScreen::Update() {
+void WelcomeScene::Update() {
   Keyboard* keyboard = Keyboard::GetKeyboard();
     if (keyboard->IsKeyPressed())
       _keyPressed = true;
@@ -44,7 +44,7 @@ void WelcomeScreen::Update() {
 /// return true if a key has been pressed while this window is open
 /// </summary>
 /// <returns></returns>
-bool WelcomeScreen::IsKeyPressed()
+bool WelcomeScene::IsKeyPressed()
 {
   return _keyPressed;
 };
@@ -53,7 +53,7 @@ bool WelcomeScreen::IsKeyPressed()
 /// sets the key pressed var to value recived
 /// </summary>
 /// <param name="keyPressed">booo value</param>
-void WelcomeScreen::SetKeyPressed(bool keyPressed)
+void WelcomeScene::SetKeyPressed(bool keyPressed)
 {
   _keyPressed = keyPressed;
 };

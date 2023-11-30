@@ -3,64 +3,45 @@
 #include "Keyboard.hpp"
 
 GameManager::GameManager(SDL_Texture* tex, const char* font)
-  :_audio(NULL), _wcScreen(NULL), _gameScreen(NULL), _homeScreen(NULL)
+  :_audio(NULL), _wcScene(NULL), _gameScreen(NULL), _HomeScene(NULL)
 {
-  _wcScreen = new WelcomeScreen("aaaaaaaaaaa", "Assets/Fonts/Sans.ttf", 24);
-  _gameScreen = new WelcomeScreen("", "sans", 24);
-  _homeScreen = new WelcomeScreen("", "sans", 24);
+  _wcScene = new WelcomeScene(NULL, "Assets/Fonts/font.otf", 24);
+  _HomeScene = new HomeScene();
+  _gameScreen = new WelcomeScene(NULL, "sans", 24);
 };
 GameManager::~GameManager()
 {
-  delete _wcScreen, _gameScreen, _homeScreen, _audio;
+  delete _wcScene, _gameScreen, _HomeScene, _audio;
 };
 
 void GameManager::Update()
 {
-  //Keyboard* keyboard = Keyboard::GetKeyboard();
-
-  if (_isGameOpen)
-    Rungame();
-  else
-    RunHomeScreen();
-};
-
-/// <summary>
-/// the function where the game runs
-/// </summary>
-void GameManager::Rungame()
-{
-  RenderWindow* window = RenderWindow::GetRenderWindow();
-  /*_tab.Update();
-  _winText.DisplayText(Vector2i(100, 100), RGBA(0, 0, 0, 255));*/
-};
-
-/// <summary>
-/// the function where the homescreen and
-/// the press a welcomescreen runs
-/// </summary>
-void GameManager::RunHomeScreen()
-{
-  if (_wcScreen->IsKeyPressed()) {
-    int w, h;
-    RenderWindow::GetWidthHeight(w, h);
-    //_winText.SetCharacterSize(40);
-    //_winText.DisplayText(Vector2i(w / 2 , h - 48), RGBA(0, 0, 0, 255));
-    return;
+  switch (_currentScene)
+  {
+  case Scenes::game:
+    break;
+  case Scenes::home:
+    _HomeScene->Update();
+    break;
+  case Scenes::welcome:
+    _wcScene->Update();
+    break;
   }
-  _wcScreen->Update();
+  FindCurrentScene();
 };
 
 /// <summary>
 /// sets it so that the game will run next
 /// </summary>
-void GameManager::OpenGame()
+Scenes& GameManager::GetScenes()
 {
-  _isGameOpen = true;
-};
+  return _currentScene;
+}
 
-void GameManager::CloseGame()
+void GameManager::FindCurrentScene()
 {
-  _isGameOpen = false;
+  if (_wcScene->IsKeyPressed())
+    _currentScene = Scenes::home;
 };
 
 PopUpWindow GameManager::SetUpRandTab(SDL_Texture* tex)
