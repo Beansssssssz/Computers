@@ -2,6 +2,13 @@
 
 #include "Button.hpp"
 
+enum class HomeButton {
+  Play,
+  Settings,
+  Help,
+  Quit,
+};
+
 class HomeScene
 {
 public:
@@ -9,9 +16,19 @@ public:
   ~HomeScene();
 
   void Update();
+
 private:
-  Button* _btnExit;
-  Button* _btnStart;
+  void HandleInput();
+  //void CreateButton();
+  void DisplayText();
+
+  HomeButton _current;
+
+  Button* _btnQuit;
+  Button* _btnPlay;
   Button* _btnSettings;
+  Button* _btnHelp;
   Square* _bg;
+
+  bool* _keyPressed;
 };

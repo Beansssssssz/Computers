@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include <iostream>
 
 #include "RenderWindow.hpp"
 #include "Utils.hpp"

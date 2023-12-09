@@ -1,6 +1,5 @@
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
 #include <iostream>
 
 #include "RenderWindow.hpp"
@@ -10,14 +9,17 @@ RenderWindow::RenderWindow(const char* title)
 {
   int w, h;
   RenderWindow::GetWidthHeight(w, h);
+
   window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_FULLSCREEN);
+
   if (window == NULL)
-    std::cout << "Window failed to init. Error: " << SDL_GetError() << std::endl;
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Window failed to init.Error: % s", SDL_GetError());
 
   //the -1 is saying to use whatever flags the programs needs to run
-  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED && SDL_RENDERER_PRESENTVSYNC);                                                    
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED && SDL_RENDERER_PRESENTVSYNC);
+
   if(renderer == NULL)
-    std::cout << "Renderer failed to render. Error: " << SDL_GetError() << std::endl;
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Renderer failed to render. Error: %s", SDL_GetError());
 
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);//sets it so that you can blend colors
   ToggleFullScreen();
@@ -44,7 +46,7 @@ SDL_Texture* RenderWindow::LoadTexture(const char* filepath) {
   texture = IMG_LoadTexture(renderer, filepath);
 
   if (texture == NULL)
-    std::cout << "Texture faild to load. Error: " << SDL_GetError() << std::endl;
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to load. Error: %s", IMG_GetError());
 
   return texture;
 };
@@ -65,6 +67,7 @@ void RenderWindow::Render(Square sqr)
   if (SDL_RenderCopy(renderer, sqr.GetTexture(), sqr.GetSrcRect(), sqr.GetDstRect()))
     std::cout << "1Texture faild to be copied. Error: " << SDL_GetError() << std::endl;
 };
+
 void RenderWindow::Render(Square* sqr)
 {
   if (SDL_RenderCopy(renderer, sqr->GetTexture(), sqr->GetSrcRect(), sqr->GetDstRect()))
@@ -116,7 +119,8 @@ SDL_Window* RenderWindow::GetWindow()
 SDL_Renderer* RenderWindow::GetRenderer()
 {
   return renderer;
-}
+};
+
 void RenderWindow::DisplayRect(SDL_Rect* rect, RGBA color)
 {
   RGBA oldColor;

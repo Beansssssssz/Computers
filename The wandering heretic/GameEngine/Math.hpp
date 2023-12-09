@@ -1,4 +1,5 @@
 #pragma once
+
 #include <SDL.h>
 
 struct Vector2f

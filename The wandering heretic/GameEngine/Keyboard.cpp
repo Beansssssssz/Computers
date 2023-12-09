@@ -69,6 +69,7 @@ void Keyboard::Update()
 {
   _keyPressed = false;
   SDL_PumpEvents();
+
   keysArray = const_cast<Uint8*>(SDL_GetKeyboardState(NULL));
   for (int i = 0; i < 250; i++)//all the keys on the keyboard
     if (keysArray[i])

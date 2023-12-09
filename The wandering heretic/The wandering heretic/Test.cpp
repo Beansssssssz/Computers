@@ -2,10 +2,11 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
-#include <iostream>
 #include <vector>
+#include <iostream>
+#include <pthread.h>
 
-//#including my own libs
+//including my own libs
 #include "Square.hpp"
 #include "RenderWindow.hpp"
 #include "Mouse.hpp"
@@ -24,19 +25,22 @@ RenderWindow* RenderWindow::_windowPtr = NULL;
 Mouse* Mouse::_mousePtr = NULL;
 Keyboard* Keyboard::_keyboardPtr = NULL;
 
+//initializing functions
+void InfiniteThreadLoop(void* FuncPtr);
 
 int main(int argc, char* argv[]) {
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) > 0)
-    std::cout << "SDL Init failed. SDL ERROR: " << SDL_GetError() << std::endl;
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL Init failed. SDL ERROR: %s", SDL_GetError());
 
   if (!(IMG_Init(IMG_INIT_PNG)))
-    std::cout << "IMG Init failed. IMG ERROR: " << IMG_GetError() << std::endl;
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG Init failed. IMG ERROR: %s", IMG_GetError());
 
   if (TTF_Init() < 0)
-    std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error initializing SDL_ttf: %s", TTF_GetError());
 
   if (Mix_Init(MIX_INIT_OGG | MIX_INIT_MOD) < 0)
-    std::cout << "Error initializing SDL_mixer: " << Mix_GetError() << std::endl;
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error initializing SDL_mixer: %s", Mix_GetError());
+
 
   RenderWindow* window = RenderWindow::GetRenderWindow();
   Mouse* mouse = Mouse::GetMouse();
@@ -44,17 +48,17 @@ int main(int argc, char* argv[]) {
 
   SDL_Texture* tex = window->LoadTexture("Assets/backround_pic.png");
   SDL_Rect rect;
-  rect.x = 0; rect.y = 0;
   RenderWindow::GetWidthHeight(rect.w, rect.h);
   Square backround(tex, rect, rect);
 
   tex = utils::GetTexture(1);
   GameManager gm(tex, "Assets/Fonts/Sans.ttf");
 
-  rect.x = 200; rect.y = 200;rect.w = 20; rect.h = 30;
-
-  /*Slider test(rect, 100, 300, RGBA(0, 0, 255, 255), 10);
-  WelcomeScene* _wcScene = new WelcomeScene(tex, "aaaaaaaaaaa", "Assets/Fonts/Sans.ttf", 24);*/
+  /*
+  rect.x = 200; rect.y = 200; rect.w = 20; rect.h = 30;
+  Slider test(rect, 100, 300, RGBA(0, 0, 255, 255), 10);
+  WelcomeScene* _wcScene = new WelcomeScene(tex, "aaaaaaaaaaa", "Assets/Fonts/Sans.ttf", 24);
+  */
 
   bool running = true;
   SDL_Event event;
@@ -94,6 +98,7 @@ int main(int argc, char* argv[]) {
     gm.Update();
 
     window->Display();
+    
   };
 
   Mix_Quit();
