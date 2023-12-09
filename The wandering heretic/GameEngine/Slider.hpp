@@ -9,7 +9,6 @@ public:
   void Update();
   void CreateSliderPath();
   void MoveRectByMouse();
-  void ClampDstRectX();
   int GetValue();
 
 private:

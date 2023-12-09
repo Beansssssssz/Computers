@@ -4,7 +4,7 @@
 
 #include "RenderWindow.hpp"
 #include "Mouse.hpp"
-
+#include "Utils.hpp"
 
 Slider::Slider(SDL_Rect rect, int pos1, int pos2, RGBA color, int height)
   :_rect(rect), _pos1(pos1), _pos2(pos2), _color(color), _height(height)
@@ -18,7 +18,7 @@ Slider::Slider(SDL_Rect rect, int pos1, int pos2, RGBA color, int height)
 void Slider::Update()
 {
   MoveRectByMouse();
-  ClampDstRectX();
+  utils::Clamp(_rect.x, _pos1, _pos2);
   CreateSliderPath();
 
   RenderWindow* window = RenderWindow::GetRenderWindow();
@@ -59,18 +59,6 @@ void Slider::MoveRectByMouse()
   _oldPos = mouse->GetPos();
 
   
-};
-
-/// <summary>
-///clamps the x of the rect so that it
-/// wouldnt go outbounds
-/// </summary>
-void Slider::ClampDstRectX()
-{
-  if (_rect.x > _pos2)
-    _rect.x = _pos2;
-  if (_rect.x < _pos1)
-    _rect.x = _pos1;
 };
 
 /// <summary>

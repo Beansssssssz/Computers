@@ -21,6 +21,7 @@ private:
   void HandleInput();
   //void CreateButton();
   void DisplayText();
+  void ChangeCurrent(int increment);
 
   HomeButton _current;
 

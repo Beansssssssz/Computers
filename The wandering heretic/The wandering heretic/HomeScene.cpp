@@ -4,6 +4,7 @@
 
 #include "RenderWindow.hpp"
 #include "Keyboard.hpp"
+#include "Utils.hpp"
 
 
 HomeScene::HomeScene()
@@ -39,10 +40,13 @@ void HomeScene::Update()
   window->Render(_bg);
 
   HandleInput();
+  DisplayText();
 }
 
 void HomeScene::HandleInput()
 {
+  int val = 0;
+
   Keyboard* keyboard = Keyboard::GetKeyboard();
   Uint8* keyArr = keyboard->GetKeyArray();
 
@@ -51,27 +55,49 @@ void HomeScene::HandleInput()
 
   else if (_keyPressed[0]) {
     _keyPressed[0] = false;
-    std::cout << "Confirmmmmmmmm" << std::endl;
   }
 
   if (keyArr[SDL_SCANCODE_W] || keyArr[SDL_SCANCODE_UP])
     _keyPressed[1] = true;
 
   else if (_keyPressed[1]) {
-      std::cout << "Upppppppp" << std::endl;
-      _keyPressed[1] = false;
+    val = -1;
+    _keyPressed[1] = false;
   }
 
   if (keyArr[SDL_SCANCODE_S] || keyArr[SDL_SCANCODE_DOWN])
     _keyPressed[2] = true;
 
   else if(_keyPressed[2]){
-    std::cout << "Downnnnnnnnn" << std::endl;
+    val = 1;
     _keyPressed[2] = false;
   }
+
+  val += (int)_current;
+  utils::Clamp(val, 3, 0);
+
+  _current = (HomeButton)val;
 };
 
 void HomeScene::DisplayText()
 {
 
-};
+
+
+
+  switch (_current)
+  {
+  case HomeButton::Play:
+    std::cout << "Playyyyyyy" << std::endl;
+    break;
+  case HomeButton::Settings:
+    std::cout << "Settingssssssssssssss" << std::endl;
+    break;
+  case HomeButton::Help:
+    std::cout << "Helpppppppp" << std::endl;
+    break;
+  case HomeButton::Quit:
+    std::cout << "Quitttttttttt" << std::endl;
+    break;
+  }
+}

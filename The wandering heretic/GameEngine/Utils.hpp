@@ -89,4 +89,17 @@ namespace utils {
     };
     return NULL;
   };
+
+  /// <summary>
+  /// clamps the val so that i wont go out of bouns
+  /// </summary>
+  /// <param name="val">the value refrence</param>
+  /// <param name="max"></param>
+  /// <param name="min"></param>
+  inline void Clamp(int& val, int max, int min = 0) {
+    if (val > max)
+      val = max;
+    if (val < min)
+      val = min;
+  }
 };
