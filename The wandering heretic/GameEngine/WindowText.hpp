@@ -18,12 +18,17 @@ public:
 
   void SetText(std::string str);
   void ClearText();
+
   std::string GetText();
+  int GetTextWidth();
 
 private:
   TTF_Font* font;
   std::string text;
+
   int _maxLength;
   int _characterSize;
   const char* _fontPath;
+
+  int _width;
 };

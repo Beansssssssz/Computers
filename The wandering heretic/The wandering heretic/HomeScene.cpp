@@ -82,7 +82,7 @@ void HomeScene::HandleInput()
 void HomeScene::DisplayText()
 {
 
-
+  
 
 
   switch (_current)

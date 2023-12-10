@@ -37,7 +37,7 @@ void WelcomeScene::Update() {
     int w = _bg->GetDstRect()->w, h = _bg->GetDstRect()->h;
 
   _winText->SetCharacterSize(40);
-  _winText->DisplayText(Vector2i( w / 2, h - 48), RGBA(0, 0, 0, 255));
+  _winText->DisplayText(Vector2i( w / 2 - _winText->GetTextWidth() / 2, h - 48), RGBA(0, 0, 0, 255));
 }
 
 /// <summary>

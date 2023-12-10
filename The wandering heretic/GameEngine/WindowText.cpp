@@ -11,6 +11,8 @@ WindowText::WindowText(const char* fontPath, int size, std::string str, int Maxs
   :_fontPath(fontPath), text(str), _characterSize(size), _maxLength(Maxsize)
 {
   font = TTF_OpenFont(_fontPath, _characterSize);
+
+  _width = 0;
 };
 
 WindowText::~WindowText()
@@ -32,6 +34,8 @@ void  WindowText::DisplayText(Vector2i pos, RGBA color) {
   SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, ch, sdlColor);
   SDL_Texture* message = SDL_CreateTextureFromSurface(window->GetRenderer(), surfaceMessage);
 
+  _width = surfaceMessage->w;
+
   SDL_Rect src;
   src.x = 0;
   src.y = 0;
@@ -44,8 +48,7 @@ void  WindowText::DisplayText(Vector2i pos, RGBA color) {
   dst.w = src.w;
   dst.h = src.h;
 
-  Square sqr(message, src, dst);
-  window->Render(sqr);
+  window->Render(Square(message, src, dst));
   SDL_FreeSurface(surfaceMessage);
   SDL_DestroyTexture(message);
 };
@@ -92,6 +95,11 @@ void WindowText::SetText(std::string str) {
 /// <returns>the currently used text</returns>
 std::string WindowText:: GetText() {
   return text;
+}
+
+int WindowText::GetTextWidth()
+{
+  return _width;
 }
 
 /// <summary>
