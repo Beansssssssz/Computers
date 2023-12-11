@@ -25,10 +25,8 @@ RenderWindow* RenderWindow::_windowPtr = NULL;
 Mouse* Mouse::_mousePtr = NULL;
 Keyboard* Keyboard::_keyboardPtr = NULL;
 
-//initializing functions
-void InfiniteThreadLoop(void* FuncPtr);
-
 int main(int argc, char* argv[]) {
+  //initializing the libraries
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) > 0)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL Init failed. SDL ERROR: %s", SDL_GetError());
 
@@ -41,30 +39,16 @@ int main(int argc, char* argv[]) {
   if (Mix_Init(MIX_INIT_OGG | MIX_INIT_MOD) < 0)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error initializing SDL_mixer: %s", Mix_GetError());
 
-
+  //singletons
   RenderWindow* window = RenderWindow::GetRenderWindow();
   Mouse* mouse = Mouse::GetMouse();
   Keyboard* keyboard = Keyboard::GetKeyboard();
 
-  SDL_Texture* tex = window->LoadTexture("Assets/backround_pic.png");
-  SDL_Rect rect;
-  RenderWindow::GetWidthHeight(rect.w, rect.h);
-  Square backround(tex, rect, rect);
+  GameManager gm;
 
-  tex = utils::GetTexture(1);
-  GameManager gm(tex, "Assets/Fonts/Sans.ttf");
-
-  /*
-  rect.x = 200; rect.y = 200; rect.w = 20; rect.h = 30;
-  Slider test(rect, 100, 300, RGBA(0, 0, 255, 255), 10);
-  WelcomeScene* _wcScene = new WelcomeScene(tex, "aaaaaaaaaaa", "Assets/Fonts/Sans.ttf", 24);
-  */
-
+  //starting the main loop
   bool running = true;
   SDL_Event event;
-
-  bool focused = true;
-
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
 
@@ -72,28 +56,16 @@ int main(int argc, char* argv[]) {
     {
       if (event.type == SDL_QUIT)
         running = false;
-      //if()
-      //if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
-        //gm.GetPopUpWindow().OpenTab();
 
       keyboard->BuildText(event);
     }
-    focused = window->IsWindowFocused();
-    if (!focused)
+    if (!window->IsWindowFocused())
       continue;
 
     window->Clear();
 
-    //window->Render(backround);
-
     mouse->Update();
     keyboard->Update();
-
-    //only for testing
-    {
-      //test.Update();
-      //_wcScene->Update();
-    }
 
     gm.Update();
 

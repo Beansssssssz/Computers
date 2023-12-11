@@ -5,7 +5,7 @@
 #include "RenderWindow.hpp"
 
 RenderWindow::RenderWindow(const char* title)
-  :window(NULL), renderer(NULL)//sets the 2 vars to null
+  :window(NULL), renderer(NULL)
 {
   int w, h;
   RenderWindow::GetWidthHeight(w, h);
@@ -22,7 +22,7 @@ RenderWindow::RenderWindow(const char* title)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Renderer failed to render. Error: %s", SDL_GetError());
 
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);//sets it so that you can blend colors
-  ToggleFullScreen();
+  //ToggleFullScreen();
 };
 
 RenderWindow* RenderWindow::GetRenderWindow() {
@@ -65,25 +65,26 @@ void RenderWindow::Display() {
 void RenderWindow::Render(Square sqr)
 {
   if (SDL_RenderCopy(renderer, sqr.GetTexture(), sqr.GetSrcRect(), sqr.GetDstRect()))
-    std::cout << "1Texture faild to be copied. Error: " << SDL_GetError() << std::endl;
+      SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to be copied. Error: ");
 };
 
 void RenderWindow::Render(Square* sqr)
 {
   if (SDL_RenderCopy(renderer, sqr->GetTexture(), sqr->GetSrcRect(), sqr->GetDstRect()))
-    std::cout << "1Texture faild to be copied. Error: " << SDL_GetError() << std::endl;
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to be copied. Error: ");
 };
 
 
-/// <summary>
-/// not working currently.
-/// </summary>
-void RenderWindow::ToggleFullScreen()
-{
-  Uint32 FullscreenFlag = SDL_WINDOW_FULLSCREEN;
-  bool IsFullscreen = SDL_GetWindowFlags(window) & FullscreenFlag;
-  SDL_SetWindowFullscreen(window, IsFullscreen ? 0 : FullscreenFlag);
-}
+///// <summary>
+///// not working currently.
+///// </summary>
+//void RenderWindow::ToggleFullScreen()
+//{
+//  Uint32 FullscreenFlag = SDL_WINDOW_FULLSCREEN;
+//  bool IsFullscreen = SDL_GetWindowFlags(window) & FullscreenFlag;
+//  SDL_SetWindowFullscreen(window, IsFullscreen ? 0 : FullscreenFlag);
+//};
+
 void RenderWindow::GetWidthHeight(int& w, int& h)
 {
   SDL_DisplayMode DM;
@@ -102,7 +103,8 @@ bool RenderWindow::IsWindowFocused()
 /// clears the screen buffer
 /// </summary>
 void RenderWindow::Clear() {
-  SDL_RenderClear(renderer);
+  if(SDL_RenderClear(renderer) != 0)
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,"Failed to clean renderer");
 };
 
 RenderWindow::~RenderWindow() {

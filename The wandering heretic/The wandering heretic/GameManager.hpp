@@ -18,7 +18,7 @@ enum class Scenes
 /// </summary>
 class GameManager {
 public:
-  GameManager(SDL_Texture* tex, const char* font);
+  GameManager();
   ~GameManager();
   void Update();
 

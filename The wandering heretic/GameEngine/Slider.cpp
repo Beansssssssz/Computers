@@ -67,7 +67,7 @@ void Slider::MoveRectByMouse()
 /// <returns>pso of the slider</returns>
 int Slider::GetValue()
 {
-  float width = (_pos2 - _pos1) / 100; // gets the amout of pixels you have to move so it will register 
+  float width = _pos2 - _pos1 / 100.0f; // gets the amout of pixels you have to move so it will register 
   int x = _rect.x - _pos1; // your pos relitave to the start point
   return int(x / width); // diving and finding your value
 };

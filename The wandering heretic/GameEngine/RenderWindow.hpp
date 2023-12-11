@@ -8,17 +8,19 @@
 class RenderWindow {
 public:
   static RenderWindow* GetRenderWindow();
-
   ~RenderWindow();
+
   SDL_Texture* LoadTexture(const char* filepath);
+  void DisplayRect(SDL_Rect* rect, RGBA color);
+
   void Render(Square sqr);
   void Render(Square* sqr);
-  void DisplayRect(SDL_Rect* rect, RGBA color);
   void Display();
   void Clear();
-  void ToggleFullScreen();
+
   static void GetWidthHeight(int& width, int& height);
   bool IsWindowFocused();
+
   SDL_Window* GetWindow();
   SDL_Renderer* GetRenderer();
 

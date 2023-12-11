@@ -2,7 +2,7 @@
 #include "Utils.hpp"
 #include "Keyboard.hpp"
 
-GameManager::GameManager(SDL_Texture* tex, const char* font)
+GameManager::GameManager()
   :_audio(NULL), _wcScene(NULL), _gameScreen(NULL), _HomeScene(NULL)
 {
   _wcScene = new WelcomeScene(NULL, "Assets/Fonts/font.otf", 24);

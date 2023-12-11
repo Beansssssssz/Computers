@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Button.hpp"
+#define BUTTON_ARR_SIZE 4
 
 enum class HomeButton {
   Play,
@@ -19,16 +20,13 @@ public:
 
 private:
   void HandleInput();
-  //void CreateButton();
+  void CreateButtons();
   void DisplayText();
-  void ChangeCurrent(int increment);
+  //void ChangeCurrent(int increment);
 
   HomeButton _current;
 
-  Button* _btnQuit;
-  Button* _btnPlay;
-  Button* _btnSettings;
-  Button* _btnHelp;
+  Button** _buttons;
   Square* _bg;
 
   bool* _keyPressed;
