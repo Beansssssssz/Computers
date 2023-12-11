@@ -47,10 +47,10 @@ namespace utils {
   };
 
   inline Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos) {
-    SDL_Rect srcRect, dstRect;
-    dstRect.x = 0; dstRect.y = 0, dstRect.w = w; dstRect.h = h;
-    srcRect.x = 0; srcRect.y = 0, srcRect.w = w; srcRect.h = h;
-    Button button(tex, srcRect, dstRect);
+    SDL_Rect src, dst;
+    dst.x = 0; dst.y = 0, dst.w = w; dst.h = h;
+    src.x = 0; src.y = 0, src.w = w; src.h = h;
+    Button button(tex, src, dst);
 
     return button;
   };

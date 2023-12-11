@@ -101,31 +101,17 @@ void HomeScene::CreateButtons()
   RenderWindow* window = RenderWindow::GetRenderWindow();
   SDL_Texture* tex = window->LoadTexture("Assets/GUI/HomeButtons.png");
 
-  int w = 500, h = 92;
+  int w = 500, h = 91;
+  int diff = 100;//the length between each button
 
   SDL_Rect src = utils::InitRects(w, h), dst = utils::InitRects(w, h);
-  //window->GetWidthHeight(dst.x, dst.y);
-  /*dst.x = dst.x / 2 - w / 2;
-  dst.y /= 4;*/
+  window->GetWidthHeight(dst.x, dst.y);
+  dst.x = dst.x / 2 - w / 2;
+  dst.y = dst.y / 2 - (h * 5) - diff; //looked the best for me like this
 
   for (int i = 0; i < BUTTON_ARR_SIZE; i++) {
-    dst.x = 0;
-    switch (i)
-    {
-    case 0:
-      dst.x = 1000;
-      break;
-    case 1:
-      dst.y = 0;
-      break;
-    case 2:
-      dst.y = 92;
-      break;
-    case 3:
-      dst.y = 92 + 92 + 100;
-      break;
-    }
-    //src.y += i * dst.h;
+    dst.y += h + diff;
+    src.y = i * src.h;
     _buttons[i] = new Button(tex, src, dst);
   }
 };
