@@ -22,7 +22,7 @@ public:
   void SetIsPressed(bool val);
 
 private:
-  bool isSelected;
-  bool isPressed;
+  bool _isSelected;
+  bool _isPressed;
 
 };

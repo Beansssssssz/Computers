@@ -82,3 +82,12 @@ int main(int argc, char* argv[]) {
 };
 
 
+/*
+TODO
+1.in homeScene update the key control
+2.sign in
+3.settings
+4.about
+5.learn sql
+5.the game itself
+*/

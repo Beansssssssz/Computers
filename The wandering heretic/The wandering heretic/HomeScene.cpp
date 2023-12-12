@@ -9,7 +9,7 @@
 
 
 HomeScene::HomeScene()
-  :_buttons(NULL), _bg(NULL), _current(HomeButton::Play)
+  :_buttons(NULL), _bg(NULL), _current(HomeButtons::Play), _mousePr(false)
 {
   //creating the background image for the current sence
   RenderWindow* window = RenderWindow::GetRenderWindow();
@@ -40,9 +40,10 @@ HomeScene::~HomeScene()
   free(_keyPressed);
 };
 
-void HomeScene::Update()
+int HomeScene::Update()
 {
   RenderWindow* window = RenderWindow::GetRenderWindow();
+  _mousePr = false;
 
   //rernder background
   window->Render(_bg);
@@ -52,6 +53,8 @@ void HomeScene::Update()
   {
     _buttons[i]->Update();
     window->Render((Square*)_buttons[i]);
+    if (_buttons[i]->GetIsSelected())
+      _mousePr = true;
   }
 
   //render arrows
@@ -59,28 +62,34 @@ void HomeScene::Update()
     window->Render(_arrows[i]);
 
   HandleInput();
-  InputToButtons();
   ButtonResized();
+  return CheckButtons();
 }
 
+/// <summary>
+/// handles anything input related
+/// </summary>
 void HomeScene::HandleInput()
 {
-  int val = 0;
+  if (_mousePr)//basicly means if the mouse is selecting dont do nothing
+    return;
 
   Keyboard* keyboard = Keyboard::GetKeyboard();
   Uint8* keyArr = keyboard->GetKeyArray();
+  int val = 0;
 
   if (keyArr[SDL_SCANCODE_E] || keyArr[SDL_SCANCODE_SPACE] || keyArr[SDL_SCANCODE_KP_ENTER])
     _keyPressed[0] = true;
 
-  else if (_keyPressed[0]) {
+  else if (_keyPressed[0]) { //0 is confirm
+    _buttons[(int)_current]->SetIsPressed(true);
     _keyPressed[0] = false;
   }
 
   if (keyArr[SDL_SCANCODE_W] || keyArr[SDL_SCANCODE_UP])
     _keyPressed[1] = true;
 
-  else if (_keyPressed[1]) {
+  else if (_keyPressed[1]) { //1 is up
     val = -1;
     _keyPressed[1] = false;
   }
@@ -88,7 +97,7 @@ void HomeScene::HandleInput()
   if (keyArr[SDL_SCANCODE_S] || keyArr[SDL_SCANCODE_DOWN])
     _keyPressed[2] = true;
 
-  else if (_keyPressed[2]) {
+  else if (_keyPressed[2]) { //2 is down
     val = 1;
     _keyPressed[2] = false;
   }
@@ -96,9 +105,64 @@ void HomeScene::HandleInput()
   val += (int)_current;
   utils::Clamp(val, 3, 0);
 
-  _buttons[(int)_current]->SetIsSelected(false);
-  _current = (HomeButton)val;
+  _current = (HomeButtons)val;
+  _buttons[(int)_current]->SetIsSelected(true);
 };
+
+/// <summary>
+/// resizes the current selected Button so that you would know that it was selected
+/// </summary>
+void HomeScene::ButtonResized()
+{
+  int speed = -1;
+  if (_isIncrease)
+    speed *= -1;
+
+  for (int i = 0; i < BUTTON_ARR_SIZE; i++) 
+    if (_buttons[i]->GetIsSelected())
+    {
+      //left arrow
+      SDL_Rect* rect = _arrows[i]->GetDstRect();
+      rect->w += speed;
+      rect->h += speed;
+      rect->x -= speed;
+
+      //right arrow
+      rect = _arrows[i + 4]->GetDstRect();
+      rect->w += speed;
+      rect->h += speed;
+
+      if (rect->w > MAX_SIZE || rect->h < MIN_SIZ)
+        _isIncrease = !_isIncrease;
+    }
+    else
+    {
+      //left arrow
+      SDL_Rect* rect = _arrows[i]->GetDstRect();
+      rect->w = ARROWWIDTH;
+      rect->h = ARROWHEIGHT;
+      rect->x = _buttons[0]->GetDstRect()->x - ARROWWIDTH - XDIFF;
+      
+
+      //right arrow
+      rect = _arrows[i + 4]->GetDstRect();
+      rect->w = ARROWWIDTH;
+      rect->h = ARROWHEIGHT;
+    }
+};
+
+/// <summary>
+/// checks which button is pressed the returns the value
+/// </summary>
+/// <returns>returns in int the enum class HomeButtons if no button is pressed return -1</returns>
+int HomeScene::CheckButtons() {
+  for (int i = 0; i < BUTTON_ARR_SIZE; i++)
+  {
+    if (_buttons[i]->GetIsPressed())
+      return i;
+  }
+  return -1;
+}
 
 /// <summary>
 /// creates the buttons
@@ -130,6 +194,9 @@ void HomeScene::CreateButtons()
   //56+7 is the size of an arrow and the empty space
 };
 
+/// <summary>
+/// creates the arrows
+/// </summary>
 void HomeScene::CreateArrows()
 {
   RenderWindow* window = RenderWindow::GetRenderWindow();
@@ -161,67 +228,3 @@ void HomeScene::CreateArrows()
     dst.y += diff;
   }
 }
-
-void HomeScene::InputToButtons()
-{
-  _buttons[(int)_current]->SetIsSelected(true);
-
-  /*switch (_current)
-  {
-  case HomeButton::Play:
-    std::cout << "Playyyyyyy" << std::endl;
-    break;
-  case HomeButton::Settings:
-    std::cout << "Settingssssssssssssss" << std::endl;
-    break;
-  case HomeButton::Help:
-    std::cout << "Helpppppppp" << std::endl;
-    break;
-  case HomeButton::Quit:
-    std::cout << "Quitttttttttt" << std::endl;
-    break;
-  }*/
-};
-
-/// <summary>
-/// resizes the current selected Button so that you would know that it was selected
-/// </summary>
-void HomeScene::ButtonResized()
-{
-  int speed = -1;
-  if (_isIncrease)
-    speed *= -1;
-
-  for (int i = 0; i < BUTTON_ARR_SIZE; i++) 
-    if (_buttons[i]->GetIsSelected())
-    {
-
-      //left arrow
-      SDL_Rect* rect = _arrows[i]->GetDstRect();
-      rect->w += speed;
-      rect->h += speed;
-      rect->x -= speed;
-
-      //right arrow
-      rect = _arrows[i + 4]->GetDstRect();
-      rect->w += speed;
-      rect->h += speed;
-
-      if (rect->w > MAX_SIZE || rect->h < MIN_SIZ)
-        _isIncrease = !_isIncrease;
-    }
-    else
-    {
-      //left arrow
-      SDL_Rect* rect = _arrows[i]->GetDstRect();
-      rect->w = ARROWWIDTH;
-      rect->h = ARROWHEIGHT;
-      rect->x = _buttons[0]->GetDstRect()->x - ARROWWIDTH - XDIFF;
-      
-
-      //right arrow
-      rect = _arrows[i + 4]->GetDstRect();
-      rect->w = ARROWWIDTH;
-      rect->h = ARROWHEIGHT;
-    }
-};

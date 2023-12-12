@@ -16,12 +16,16 @@ GameManager::~GameManager()
 
 void GameManager::Update()
 {
+  int ret = 0;
   switch (_currentScene)
   {
   case Scenes::game:
     break;
   case Scenes::home:
-    _HomeScene->Update();
+    ret = _HomeScene->Update();
+    if (ret == (int)HomeButtons::Quit)
+      SDL_Quit();
+
     break;
   case Scenes::welcome:
     _wcScene->Update();

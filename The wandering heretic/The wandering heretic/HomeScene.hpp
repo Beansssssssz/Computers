@@ -3,7 +3,7 @@
 #include "Button.hpp"
 #define BUTTON_ARR_SIZE 4
 
-enum class HomeButton {
+enum class HomeButtons {
   Play,
   Settings,
   Help,
@@ -16,16 +16,15 @@ public:
   HomeScene();
   ~HomeScene();
 
-  void Update();
+  int Update();
 private:
   void HandleInput();
+  void ButtonResized();
+  int CheckButtons();
   void CreateButtons();
   void CreateArrows();
-  void InputToButtons();
-  void ButtonResized();
-  //void ChangeCurrent(int increment);
 
-  HomeButton _current;
+  HomeButtons _current;
 
   Button** _buttons;
   Square** _arrows;
@@ -38,4 +37,6 @@ private:
   bool _isIncrease;
   const int YDIFF = 100;//the in between the buttons
   const int XDIFF = 7;//the in between the Arrows to the button
+
+  bool _mousePr;//the mouse priority
 };
