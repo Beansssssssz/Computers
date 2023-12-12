@@ -5,7 +5,7 @@
 #include "Button.hpp"
 
 Button::Button(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect)
-:Button::Square(tex, srcrect, dstrect), isPressed(false), isSelected(false)
+  :Button::Square(tex, srcrect, dstrect), isPressed(false), isSelected(false)
 {
   isSelected = false;
 };
@@ -30,7 +30,7 @@ void Button::Update(MouseButtons btn)
 
   if (mouse->IsMouseColliding(dst)) {
     isSelected = true;
-    if (mouse->GetPressed() == btn)
+    if (mouse->GetPressed() == btn) 
       isPressed = true;
   }
 
@@ -46,4 +46,14 @@ bool Button::GetIsSelected()
 bool Button::GetIsPressed()
 {
   return isPressed;
+}
+
+void Button::SetIsSelected(bool val)
+{
+   isSelected = val;
+};
+
+void Button::SetIsPressed(bool val)
+{
+  isPressed = val;
 };

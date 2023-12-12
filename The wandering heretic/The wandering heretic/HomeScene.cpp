@@ -1,6 +1,7 @@
 #include "HomeScene.hpp"
 
 #include <iostream>
+#include <SDL_thread.h>
 
 #include "RenderWindow.hpp"
 #include "Keyboard.hpp"
@@ -25,15 +26,16 @@ HomeScene::HomeScene()
   _buttons = (Button**)malloc(sizeof(Button*) * BUTTON_ARR_SIZE);
   if (_buttons == NULL)
     perror(NULL);
+  _arrows = (Square**)malloc(sizeof(Button*) * BUTTON_ARR_SIZE * 2);//there are 2 arrows for each button
+  if (_buttons == NULL)
+    perror(NULL);
 
   CreateButtons();
+  CreateArrows();
 };
 
 HomeScene::~HomeScene()
 {
-  for (int i = 0; i < BUTTON_ARR_SIZE; i++)
-    delete* _buttons;
-
   free(_buttons);
   free(_keyPressed);
 };
@@ -51,13 +53,14 @@ void HomeScene::Update()
     _buttons[i]->Update();
     window->Render((Square*)_buttons[i]);
   }
-  if (_buttons[2]->GetIsPressed())
-  {
-    perror(NULL);
-  }
+
+  //render arrows
+  for (int i = 0; i < BUTTON_ARR_SIZE * 2; i++)
+    window->Render(_arrows[i]);
 
   HandleInput();
-  //DisplayText();
+  InputToButtons();
+  ButtonResized();
 }
 
 void HomeScene::HandleInput()
@@ -93,32 +96,77 @@ void HomeScene::HandleInput()
   val += (int)_current;
   utils::Clamp(val, 3, 0);
 
+  _buttons[(int)_current]->SetIsSelected(false);
   _current = (HomeButton)val;
 };
 
+/// <summary>
+/// creates the buttons
+/// </summary>
 void HomeScene::CreateButtons()
 {
   RenderWindow* window = RenderWindow::GetRenderWindow();
   SDL_Texture* tex = window->LoadTexture("Assets/GUI/HomeButtons.png");
 
-  int w = 500, h = 91;
-  int diff = 100;//the length between each button
+  int w = 370, h = 91, Ystart, Xstart;
 
-  SDL_Rect src = utils::InitRects(w, h), dst = utils::InitRects(w, h);
+  //puts the buttons in the middle of the screen
+  window->GetWidthHeight(Xstart, Ystart);
+  Xstart = Xstart / 2 - w / 2;
+  Ystart = Ystart / 2 - (h * 5) - YDIFF;
+
+  SDL_Rect src = utils::InitRects(w, h), dst = utils::InitRects(w, h, Xstart, Ystart);
+
   window->GetWidthHeight(dst.x, dst.y);
   dst.x = dst.x / 2 - w / 2;
-  dst.y = dst.y / 2 - (h * 5) - diff; //looked the best for me like this
+  dst.y = dst.y / 2 - (h * 5) - YDIFF; //looked the best for me like this
 
   for (int i = 0; i < BUTTON_ARR_SIZE; i++) {
-    dst.y += h + diff;
-    src.y = i * src.h;
+    dst.y += h + YDIFF;
+    src.y = h * i;
     _buttons[i] = new Button(tex, src, dst);
   }
+
+  //56+7 is the size of an arrow and the empty space
 };
 
-void HomeScene::DisplayText()
+void HomeScene::CreateArrows()
 {
-  switch (_current)
+  RenderWindow* window = RenderWindow::GetRenderWindow();
+  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Arrows.png");
+
+  //create the left arrows
+  int Ystart, Xstart;
+
+  Xstart = _buttons[0]->GetDstRect()->x - ARROWWIDTH - XDIFF;
+  Ystart = _buttons[0]->GetDstRect()->y + ARROWHEIGHT / 2 + 8;//the 8 is there because of a problem with the
+
+  SDL_Rect src = utils::InitRects(ARROWWIDTH, ARROWHEIGHT),
+    dst = utils::InitRects(ARROWWIDTH, ARROWHEIGHT, Xstart, Ystart);
+
+  int diff = _buttons[0]->GetDstRect()->h + YDIFF;
+  for (int i = 0; i < BUTTON_ARR_SIZE; i++) {
+    _arrows[i] = new Square(tex, src, dst);
+    dst.y += diff;
+  }
+
+  //create the right arrows
+
+  src.y += src.h;//switching to the left arrow
+  dst.x = _buttons[0]->GetDstRect()->x + _buttons[0]->GetDstRect()->w + XDIFF;
+  dst.y = Ystart;
+
+  for (int i = 0; i < BUTTON_ARR_SIZE; i++) {
+    _arrows[i + 4] = new Square(tex, src, dst);
+    dst.y += diff;
+  }
+}
+
+void HomeScene::InputToButtons()
+{
+  _buttons[(int)_current]->SetIsSelected(true);
+
+  /*switch (_current)
   {
   case HomeButton::Play:
     std::cout << "Playyyyyyy" << std::endl;
@@ -132,5 +180,48 @@ void HomeScene::DisplayText()
   case HomeButton::Quit:
     std::cout << "Quitttttttttt" << std::endl;
     break;
-  }
-}
+  }*/
+};
+
+/// <summary>
+/// resizes the current selected Button so that you would know that it was selected
+/// </summary>
+void HomeScene::ButtonResized()
+{
+  int speed = -1;
+  if (_isIncrease)
+    speed *= -1;
+
+  for (int i = 0; i < BUTTON_ARR_SIZE; i++) 
+    if (_buttons[i]->GetIsSelected())
+    {
+
+      //left arrow
+      SDL_Rect* rect = _arrows[i]->GetDstRect();
+      rect->w += speed;
+      rect->h += speed;
+      rect->x -= speed;
+
+      //right arrow
+      rect = _arrows[i + 4]->GetDstRect();
+      rect->w += speed;
+      rect->h += speed;
+
+      if (rect->w > MAX_SIZE || rect->h < MIN_SIZ)
+        _isIncrease = !_isIncrease;
+    }
+    else
+    {
+      //left arrow
+      SDL_Rect* rect = _arrows[i]->GetDstRect();
+      rect->w = ARROWWIDTH;
+      rect->h = ARROWHEIGHT;
+      rect->x = _buttons[0]->GetDstRect()->x - ARROWWIDTH - XDIFF;
+      
+
+      //right arrow
+      rect = _arrows[i + 4]->GetDstRect();
+      rect->w = ARROWWIDTH;
+      rect->h = ARROWHEIGHT;
+    }
+};

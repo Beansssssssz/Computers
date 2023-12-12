@@ -70,7 +70,8 @@ int main(int argc, char* argv[]) {
     gm.Update();
 
     window->Display();
-    
+
+    utils::CapFPS(start, 60);
   };
 
   Mix_Quit();
@@ -79,3 +80,5 @@ int main(int argc, char* argv[]) {
   SDL_Quit();
   return 0;
 };
+
+

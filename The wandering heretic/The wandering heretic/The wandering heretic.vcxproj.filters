@@ -47,6 +47,9 @@
     <Image Include="Assets\GUI\HomeButtons.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Assets\GUI\Arrows.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.hpp">

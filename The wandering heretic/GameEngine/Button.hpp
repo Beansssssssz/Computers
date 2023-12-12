@@ -1,6 +1,7 @@
 #pragma once 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <functional>
 
 
 #include "Square.hpp"
@@ -16,6 +17,10 @@ public:
   //void ChangeState(Mouse& mouse);
   bool GetIsSelected();
   bool GetIsPressed();
+
+  void SetIsSelected(bool val);
+  void SetIsPressed(bool val);
+
 private:
   bool isSelected;
   bool isPressed;
