@@ -7,7 +7,7 @@
 
 class WelcomeScene {
 public:
-  WelcomeScene(SDL_Texture* tex, const char* fontpath, int textSize);
+  WelcomeScene(const char* fontpath, int textSize);
   ~WelcomeScene();
   void Update();
   bool IsKeyPressed();

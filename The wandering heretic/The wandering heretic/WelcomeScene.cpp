@@ -2,11 +2,11 @@
 
 #include "RenderWindow.hpp"
 
-WelcomeScene::WelcomeScene(SDL_Texture* tex, const char* fontpath, int textSize)
+WelcomeScene::WelcomeScene(const char* fontpath, int textSize)
   :_bg(NULL), _winText(NULL), _keyPressed(false)
 {
   RenderWindow* window = RenderWindow::GetRenderWindow();
-  tex = window->LoadTexture("Assets/backround_pic.png");
+  SDL_Texture* tex = window->LoadTexture("Assets/backround_pic.png");
 
   SDL_Rect rect;
   rect.x = 0; rect.y = 0;
@@ -19,7 +19,9 @@ WelcomeScene::WelcomeScene(SDL_Texture* tex, const char* fontpath, int textSize)
 
 WelcomeScene::~WelcomeScene()
 {
+  SDL_DestroyTexture(_bg->GetTexture());
   delete _bg, _winText;
+  
 };
 
 /// <summary>

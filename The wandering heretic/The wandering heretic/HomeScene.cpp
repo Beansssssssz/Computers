@@ -36,6 +36,12 @@ HomeScene::HomeScene()
 
 HomeScene::~HomeScene()
 {
+  for (int i = 0; i < BUTTON_ARR_SIZE; i++)
+  {
+    SDL_DestroyTexture(_buttons[i]->GetTexture());
+    delete _buttons[i];
+  }
+
   free(_buttons);
   free(_keyPressed);
 };
@@ -156,11 +162,10 @@ void HomeScene::ButtonResized()
 /// </summary>
 /// <returns>returns in int the enum class HomeButtons if no button is pressed return -1</returns>
 int HomeScene::CheckButtons() {
-  for (int i = 0; i < BUTTON_ARR_SIZE; i++)
-  {
-    if (_buttons[i]->GetIsPressed())
-      return i;
-  }
+  if (_buttons[(int)HomeButtons::Play]->GetIsPressed())
+    return (int)HomeButtons::Play;
+  if (_buttons[(int)HomeButtons::Quit]->GetIsPressed())
+      return (int)HomeButtons::Quit;
   return -1;
 }
 

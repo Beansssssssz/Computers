@@ -20,7 +20,7 @@ class GameManager {
 public:
   GameManager();
   ~GameManager();
-  void Update();
+  bool Update();
 
   Scenes& GetScenes();
 
@@ -28,9 +28,8 @@ public:
 private:
   void FindCurrentScene();
 
+  Scenes _currentScene = Scenes::welcome;//You always start at the welcome Scene
   Audio* _audio;
-
-  Scenes _currentScene = Scenes::welcome;//ik the that the WelcomeScene opens first
 
   WelcomeScene* _wcScene;
   HomeScene* _HomeScene;

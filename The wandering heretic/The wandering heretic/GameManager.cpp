@@ -5,16 +5,16 @@
 GameManager::GameManager()
   :_audio(NULL), _wcScene(NULL), _gameScreen(NULL), _HomeScene(NULL)
 {
-  _wcScene = new WelcomeScene(NULL, "Assets/Fonts/font.otf", 24);
+  _wcScene = new WelcomeScene("Assets/Fonts/font.otf", 24);
   _HomeScene = new HomeScene();
-  _gameScreen = new WelcomeScene(NULL, "sans", 24);
+  _gameScreen = new WelcomeScene("sans", 24);
 };
 GameManager::~GameManager()
 {
   delete _wcScene, _gameScreen, _HomeScene, _audio;
 };
 
-void GameManager::Update()
+bool GameManager::Update()
 {
   int ret = 0;
   switch (_currentScene)
@@ -23,15 +23,14 @@ void GameManager::Update()
     break;
   case Scenes::home:
     ret = _HomeScene->Update();
-    if (ret == (int)HomeButtons::Quit)
-      SDL_Quit();
-
+    return ret != (int)HomeButtons::Quit;
     break;
   case Scenes::welcome:
     _wcScene->Update();
     break;
   }
   FindCurrentScene();
+  return true;
 };
 
 /// <summary>
