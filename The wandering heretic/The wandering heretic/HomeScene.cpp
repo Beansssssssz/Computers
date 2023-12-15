@@ -9,7 +9,8 @@
 
 
 HomeScene::HomeScene()
-  :_buttons(NULL), _bg(NULL), _current(HomeButtons::Play), _mousePr(false)
+  :_buttons(NULL), _bg(NULL), _aboutTex(NULL), _aboutExit(NULL),
+  _current(HomeButtons::Play), _mousePr(false)
 {
   //creating the background image for the current sence
   RenderWindow* window = RenderWindow::GetRenderWindow();
@@ -32,6 +33,7 @@ HomeScene::HomeScene()
 
   CreateButtons();
   CreateArrows();
+  CreateAboutWindow();
 };
 
 HomeScene::~HomeScene()
@@ -46,6 +48,11 @@ HomeScene::~HomeScene()
   free(_keyPressed);
 };
 
+/// <summary>
+/// updates the home scene
+/// the return value is the current action,the action is play:0,quit:3 or none:-1
+/// </summary>
+/// <returns>return the current action if no action is happing then -1 is returned</returns>
 int HomeScene::Update()
 {
   RenderWindow* window = RenderWindow::GetRenderWindow();
@@ -160,7 +167,7 @@ void HomeScene::ButtonResized()
 /// <summary>
 /// checks which button is pressed the returns the value
 /// </summary>
-/// <returns>returns in int the enum class HomeButtons if no button is pressed return -1</returns>
+/// <returns>returns an int the enum class HomeButtons if no button is pressed return -1</returns>
 int HomeScene::CheckButtons() {
   if (_buttons[(int)HomeButtons::Play]->GetIsPressed())
     return (int)HomeButtons::Play;
@@ -168,6 +175,24 @@ int HomeScene::CheckButtons() {
       return (int)HomeButtons::Quit;
   return -1;
 }
+
+/// <summary>
+/// updates the about window
+/// </summary>
+void HomeScene::AboutWindowUpdate()
+{
+  if (!_aboutOpen)
+    return;//if the window isnt open there isnt any need to update it
+
+  RenderWindow* window = RenderWindow::GetRenderWindow();
+
+  window->Render(_aboutTex);
+  window->Render(_aboutExit);
+  _aboutExit->Update();
+
+  if (_aboutExit->GetIsPressed())
+    _aboutOpen = false;
+};
 
 /// <summary>
 /// creates the buttons
@@ -232,4 +257,12 @@ void HomeScene::CreateArrows()
     _arrows[i + 4] = new Square(tex, src, dst);
     dst.y += diff;
   }
+}
+
+/// <summary>
+/// TODO
+/// </summary>
+void HomeScene::CreateAboutWindow()
+{
+  //TODO
 }

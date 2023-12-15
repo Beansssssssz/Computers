@@ -49,6 +49,7 @@ void  WindowText::DisplayText(Vector2i pos, RGBA color) {
   dst.h = src.h;
 
   window->Render(Square(message, src, dst));
+
   SDL_FreeSurface(surfaceMessage);
   SDL_DestroyTexture(message);
 };
@@ -97,6 +98,10 @@ std::string WindowText:: GetText() {
   return text;
 }
 
+/// <summary>
+/// returns the text width
+/// </summary>
+/// <returns></returns>
 int WindowText::GetTextWidth()
 {
   return _width;
