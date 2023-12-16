@@ -19,10 +19,10 @@ public:
 
   int Update();
 private:
+  void AboutWindowUpdate();
   void HandleInput();
   void ButtonResized();
   int CheckButtons();
-  void AboutWindowUpdate();
 
   void CreateButtons();
   void CreateArrows();

@@ -22,7 +22,8 @@ HomeScene::HomeScene()
   _bg = new Square(tex, rect, rect);
 
   //creating key array so that you could know when a button is down and up
-  _keyPressed = (bool*)calloc(3, sizeof(bool));//there are only 3 action: Confirm, Up and Down
+  _keyPressed = (bool*)calloc(4, sizeof(bool));//there are only 4 action: Confirm, Up and Down
+                                               //and Esc(only for about)
 
   _buttons = (Button**)malloc(sizeof(Button*) * BUTTON_ARR_SIZE);
   if (_buttons == NULL)
@@ -56,18 +57,21 @@ HomeScene::~HomeScene()
 int HomeScene::Update()
 {
   RenderWindow* window = RenderWindow::GetRenderWindow();
-  _mousePr = false;
 
-  //rernder background
+  //render background
   window->Render(_bg);
+
+  //about window update and render(because its above everything else no need to to render it
+  if (_aboutOpen) {
+    AboutWindowUpdate();
+    return -1;//no need to run over the button functions
+  }
 
   //Buttons Update and render
   for (int i = 0; i < BUTTON_ARR_SIZE; i++)
   {
     _buttons[i]->Update();
     window->Render((Square*)_buttons[i]);
-    if (_buttons[i]->GetIsSelected())
-      _mousePr = true;
   }
 
   //render arrows
@@ -90,6 +94,14 @@ void HomeScene::HandleInput()
   Keyboard* keyboard = Keyboard::GetKeyboard();
   Uint8* keyArr = keyboard->GetKeyArray();
   int val = 0;
+
+  if (keyArr[SDL_SCANCODE_ESCAPE])
+    _keyPressed[3] = true;
+
+  else if (_keyPressed[3]) {
+    _keyPressed[3] = false;
+    _aboutOpen = true;
+  }
 
   if (keyArr[SDL_SCANCODE_E] || keyArr[SDL_SCANCODE_SPACE] || keyArr[SDL_SCANCODE_KP_ENTER])
     _keyPressed[0] = true;
@@ -181,9 +193,6 @@ int HomeScene::CheckButtons() {
 /// </summary>
 void HomeScene::AboutWindowUpdate()
 {
-  if (!_aboutOpen)
-    return;//if the window isnt open there isnt any need to update it
-
   RenderWindow* window = RenderWindow::GetRenderWindow();
 
   window->Render(_aboutTex);
@@ -233,9 +242,7 @@ void HomeScene::CreateArrows()
   SDL_Texture* tex = window->LoadTexture("Assets/GUI/Arrows.png");
 
   //create the left arrows
-  int Ystart, Xstart;
-
-  Xstart = _buttons[0]->GetDstRect()->x - ARROWWIDTH - XDIFF;
+  int Xstart = _buttons[0]->GetDstRect()->x - ARROWWIDTH - XDIFF,
   Ystart = _buttons[0]->GetDstRect()->y + ARROWHEIGHT / 2 + 8;//the 8 is there because of a problem with the
 
   SDL_Rect src = utils::InitRects(ARROWWIDTH, ARROWHEIGHT),
@@ -264,5 +271,27 @@ void HomeScene::CreateArrows()
 /// </summary>
 void HomeScene::CreateAboutWindow()
 {
-  //TODO
+  RenderWindow* window = RenderWindow::GetRenderWindow();
+  int w, h;
+
+  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Text.jpg");
+  SDL_QueryTexture(tex, NULL, NULL, &w, &h);//gets the width and height of a texture
+
+  int Xstart = 0, //TODO
+  Ystart = 0; //TODO
+  SDL_Rect src = utils::InitRects(w, h),
+  dst = utils::InitRects(w, h, Xstart, Ystart);
+
+  _aboutTex = new Square(tex, src, dst);
+
+  //Create the Exit Button:
+  tex = window->LoadTexture("Assets/GUI/AboutExitButton.png");
+  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+
+  Xstart = dst.x + dst.w - w; //TODO
+  Ystart = 0; //TODO
+  dst = utils::InitRects(w, h, Xstart, Ystart);
+  src = utils::InitRects(w, h);
+
+  _aboutExit = new Button(tex, src, dst);
 }
