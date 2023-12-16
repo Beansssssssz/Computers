@@ -19,7 +19,9 @@ public:
 
   int Update();
 private:
+  void UpdateButtons();
   void AboutWindowUpdate();
+
   void HandleInput();
   void ButtonResized();
   int CheckButtons();
@@ -28,14 +30,12 @@ private:
   void CreateArrows();
   void CreateAboutWindow();
 
-
   HomeButtons _current;
 
   Button** _buttons;
   Square** _arrows;
   Square* _bg;
 
-  
   Square* _aboutTex;
   Button* _aboutExit;
 
@@ -44,9 +44,10 @@ private:
   const int ARROWWIDTH = 56, ARROWHEIGHT = 36;
   const int MAX_SIZE = 80, MIN_SIZ = 20;
   bool _isIncrease;
-  const int YDIFF = 100;//the in between the buttons
-  const int XDIFF = 7;//the in between the Arrows to the button
+
+  const int MARGINY = 100;//the margin between the buttons
+  const int MARGINX = 7;//the margin between the Arrows to the button
 
   bool _mousePr;//the mouse priority
-  bool _aboutOpen;
+  bool _aboutOpen; // if the about window is open
 };

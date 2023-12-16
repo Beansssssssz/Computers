@@ -85,9 +85,8 @@ int main(int argc, char* argv[]) {
 
 /*
 TODO
-2.about // changed to creating a a texture with a x button to close or esc.
 3.settings // add a slider and on of for music
 4.sign in //kill me
-5.learn sql // double it
+5.learn sqlite3 // double it
 5.the game itself //fun ☺
 */

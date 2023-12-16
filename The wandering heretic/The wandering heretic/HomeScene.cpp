@@ -7,7 +7,6 @@
 #include "Keyboard.hpp"
 #include "Utils.hpp"
 
-
 HomeScene::HomeScene()
   :_buttons(NULL), _bg(NULL), _aboutTex(NULL), _aboutExit(NULL),
   _current(HomeButtons::Play), _mousePr(false)
@@ -53,7 +52,8 @@ HomeScene::~HomeScene()
 /// updates the home scene
 /// the return value is the current action,the action is play:0,quit:3 or none:-1
 /// </summary>
-/// <returns>return the current action if no action is happing then -1 is returned</returns>
+/// <returns>return the current action if no action is happing
+/// then -1 is returned</returns>
 int HomeScene::Update()
 {
   RenderWindow* window = RenderWindow::GetRenderWindow();
@@ -61,11 +61,23 @@ int HomeScene::Update()
   //render background
   window->Render(_bg);
 
-  //about window update and render(because its above everything else no need to to render it
-  if (_aboutOpen) {
+  if (!_aboutOpen) 
+    UpdateButtons();
+  else 
     AboutWindowUpdate();
-    return -1;//no need to run over the button functions
-  }
+
+  HandleInput();
+  return CheckButtons();
+}
+
+/// <summary>
+/// Updates and renders the Buttons and the Arrows
+/// </summary>
+void HomeScene::UpdateButtons()
+{
+  RenderWindow* window = RenderWindow::GetRenderWindow();
+
+  ButtonResized(); //nees to applay the resizing before rending
 
   //Buttons Update and render
   for (int i = 0; i < BUTTON_ARR_SIZE; i++)
@@ -78,10 +90,24 @@ int HomeScene::Update()
   for (int i = 0; i < BUTTON_ARR_SIZE * 2; i++)
     window->Render(_arrows[i]);
 
-  HandleInput();
-  ButtonResized();
-  return CheckButtons();
-}
+};
+
+/// <summary>
+/// updates and renders the about window
+/// </summary>
+void HomeScene::AboutWindowUpdate()
+{
+  _buttons[(int)HomeButtons::Help]->SetIsPressed(false);
+
+  RenderWindow* window = RenderWindow::GetRenderWindow();
+
+  window->Render(_aboutTex);
+  window->Render(_aboutExit);
+  _aboutExit->Update();
+
+  if (_aboutExit->GetIsPressed())
+    _aboutOpen = false;
+};
 
 /// <summary>
 /// handles anything input related
@@ -95,12 +121,15 @@ void HomeScene::HandleInput()
   Uint8* keyArr = keyboard->GetKeyArray();
   int val = 0;
 
-  if (keyArr[SDL_SCANCODE_ESCAPE])
-    _keyPressed[3] = true;
+  //escapes only works when about is open
+  if (_aboutOpen) {
+    if (keyArr[SDL_SCANCODE_ESCAPE])
+      _keyPressed[3] = true;
 
-  else if (_keyPressed[3]) {
-    _keyPressed[3] = false;
-    _aboutOpen = true;
+    else if (_keyPressed[3]) {//3 is esc
+      _keyPressed[3] = false;
+      _aboutOpen = false;
+    }
   }
 
   if (keyArr[SDL_SCANCODE_E] || keyArr[SDL_SCANCODE_SPACE] || keyArr[SDL_SCANCODE_KP_ENTER])
@@ -166,7 +195,7 @@ void HomeScene::ButtonResized()
       SDL_Rect* rect = _arrows[i]->GetDstRect();
       rect->w = ARROWWIDTH;
       rect->h = ARROWHEIGHT;
-      rect->x = _buttons[0]->GetDstRect()->x - ARROWWIDTH - XDIFF;
+      rect->x = _buttons[0]->GetDstRect()->x - ARROWWIDTH - MARGINX;
       
 
       //right arrow
@@ -177,31 +206,28 @@ void HomeScene::ButtonResized()
 };
 
 /// <summary>
-/// checks which button is pressed the returns the value
+/// checks which button is pressed then does the appropriate action
+/// exmple 1: play returns 0(its value)
+/// exmple 2: Help:returns -1 and opens the about window
 /// </summary>
-/// <returns>returns an int the enum class HomeButtons if no button is pressed return -1</returns>
+/// <returns>returns an int the enum class HomeButtons(only play or quit)
+///  if no button is pressed return -1</returns>
 int HomeScene::CheckButtons() {
   if (_buttons[(int)HomeButtons::Play]->GetIsPressed())
     return (int)HomeButtons::Play;
+
   if (_buttons[(int)HomeButtons::Quit]->GetIsPressed())
-      return (int)HomeButtons::Quit;
+    return (int)HomeButtons::Quit;
+
+  if (_buttons[(int)HomeButtons::Help]->GetIsPressed())
+    if (!_aboutOpen)
+      _aboutOpen = true;
+
+  if (_buttons[(int)HomeButtons::Settings]->GetIsPressed())
+    { }//TODO
+
   return -1;
 }
-
-/// <summary>
-/// updates the about window
-/// </summary>
-void HomeScene::AboutWindowUpdate()
-{
-  RenderWindow* window = RenderWindow::GetRenderWindow();
-
-  window->Render(_aboutTex);
-  window->Render(_aboutExit);
-  _aboutExit->Update();
-
-  if (_aboutExit->GetIsPressed())
-    _aboutOpen = false;
-};
 
 /// <summary>
 /// creates the buttons
@@ -216,16 +242,16 @@ void HomeScene::CreateButtons()
   //puts the buttons in the middle of the screen
   window->GetWidthHeight(Xstart, Ystart);
   Xstart = Xstart / 2 - w / 2;
-  Ystart = Ystart / 2 - (h * 5) - YDIFF;
+  Ystart = Ystart / 2 - (h * 5) - MARGINY;
 
   SDL_Rect src = utils::InitRects(w, h), dst = utils::InitRects(w, h, Xstart, Ystart);
 
   window->GetWidthHeight(dst.x, dst.y);
   dst.x = dst.x / 2 - w / 2;
-  dst.y = dst.y / 2 - (h * 5) - YDIFF; //looked the best for me like this
+  dst.y = dst.y / 2 - (h * 5) - MARGINY; //looked the best for me like this
 
   for (int i = 0; i < BUTTON_ARR_SIZE; i++) {
-    dst.y += h + YDIFF;
+    dst.y += h + MARGINY;
     src.y = h * i;
     _buttons[i] = new Button(tex, src, dst);
   }
@@ -234,7 +260,7 @@ void HomeScene::CreateButtons()
 };
 
 /// <summary>
-/// creates the arrows
+/// Creates the arrows
 /// </summary>
 void HomeScene::CreateArrows()
 {
@@ -242,13 +268,13 @@ void HomeScene::CreateArrows()
   SDL_Texture* tex = window->LoadTexture("Assets/GUI/Arrows.png");
 
   //create the left arrows
-  int Xstart = _buttons[0]->GetDstRect()->x - ARROWWIDTH - XDIFF,
+  int Xstart = _buttons[0]->GetDstRect()->x - ARROWWIDTH - MARGINX,
   Ystart = _buttons[0]->GetDstRect()->y + ARROWHEIGHT / 2 + 8;//the 8 is there because of a problem with the
 
   SDL_Rect src = utils::InitRects(ARROWWIDTH, ARROWHEIGHT),
     dst = utils::InitRects(ARROWWIDTH, ARROWHEIGHT, Xstart, Ystart);
 
-  int diff = _buttons[0]->GetDstRect()->h + YDIFF;
+  int diff = _buttons[0]->GetDstRect()->h + MARGINY;
   for (int i = 0; i < BUTTON_ARR_SIZE; i++) {
     _arrows[i] = new Square(tex, src, dst);
     dst.y += diff;
@@ -257,7 +283,7 @@ void HomeScene::CreateArrows()
   //create the right arrows
 
   src.y += src.h;//switching to the left arrow
-  dst.x = _buttons[0]->GetDstRect()->x + _buttons[0]->GetDstRect()->w + XDIFF;
+  dst.x = _buttons[0]->GetDstRect()->x + _buttons[0]->GetDstRect()->w + MARGINX;
   dst.y = Ystart;
 
   for (int i = 0; i < BUTTON_ARR_SIZE; i++) {
@@ -267,18 +293,20 @@ void HomeScene::CreateArrows()
 }
 
 /// <summary>
-/// TODO
+/// Creates the about window and its Exit button
 /// </summary>
 void HomeScene::CreateAboutWindow()
 {
   RenderWindow* window = RenderWindow::GetRenderWindow();
-  int w, h;
+  int w, h, ScreenW, ScreenH;
+  window->GetWidthHeight(ScreenW, ScreenH);
 
-  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Text.jpg");
+  SDL_Texture* tex = window->LoadTexture("Assets/GUI/AboutText.png");
   SDL_QueryTexture(tex, NULL, NULL, &w, &h);//gets the width and height of a texture
 
-  int Xstart = 0, //TODO
-  Ystart = 0; //TODO
+  int Xstart = ScreenW / 2 - w / 2,
+      Ystart = ScreenH / 2 - h / 2;
+
   SDL_Rect src = utils::InitRects(w, h),
   dst = utils::InitRects(w, h, Xstart, Ystart);
 
@@ -288,8 +316,10 @@ void HomeScene::CreateAboutWindow()
   tex = window->LoadTexture("Assets/GUI/AboutExitButton.png");
   SDL_QueryTexture(tex, NULL, NULL, &w, &h);
 
-  Xstart = dst.x + dst.w - w; //TODO
-  Ystart = 0; //TODO
+  const int MARGIN = 8;
+
+  Xstart = dst.x + dst.w - w * 2 - MARGIN;
+  Ystart = dst.y + h + MARGIN;
   dst = utils::InitRects(w, h, Xstart, Ystart);
   src = utils::InitRects(w, h);
 
