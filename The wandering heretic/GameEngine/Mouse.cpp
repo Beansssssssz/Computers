@@ -6,29 +6,24 @@
 
 
 Mouse::Mouse(Vector2i pos)
-  :current(SDL_SYSTEM_CURSOR_ARROW)
+  :_current(SDL_SYSTEM_CURSOR_ARROW)
 {
-  cursor = SDL_CreateSystemCursor(current);
-  if (cursor == NULL)
-    std::cout << "mouse has failed to initialize. Error: " << SDL_GetError() << std::endl;
-  SDL_SetCursor(cursor);
+  _cursor = SDL_CreateSystemCursor(_current);
+  if (_cursor == NULL)
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "mouse has failed to initialize.");
+  SDL_SetCursor(_cursor);
 };
 
 Mouse::~Mouse()
 {
-  SDL_FreeCursor(cursor);
-  delete _mousePtr;
-}
-Mouse* Mouse::GetMouse()
+  SDL_FreeCursor(_cursor);
+};
+
+Mouse* Mouse::GetMouseInstance()
 {
   if (_mousePtr == NULL)
-  {
-    Vector2i pos(0, 0);
-    _mousePtr = new Mouse(pos);
-    return _mousePtr;
-  }
-  else
-    return _mousePtr;
+    _mousePtr = new Mouse(Vector2i{ 0,0 });
+  return _mousePtr;
 };
 
 Vector2i Mouse::GetPos()
@@ -55,17 +50,20 @@ void Mouse::UpdatePos()
 
 void Mouse::ChangeCursorType()
 {
-  SDL_SystemCursor old = current;
+  if (_isFrozen)
+    return;
+
+  SDL_SystemCursor old = _current;
 
   if (_mouseSelecting)
-    current = SDL_SYSTEM_CURSOR_HAND;
+    _current = SDL_SYSTEM_CURSOR_HAND;
   else
-    current = SDL_SYSTEM_CURSOR_ARROW;
+    _current = SDL_SYSTEM_CURSOR_ARROW;
 
-  if (current != old) {
-    SDL_FreeCursor(cursor);
-    cursor = SDL_CreateSystemCursor(current);
-    SDL_SetCursor(cursor);
+  if (_current != old) {
+    SDL_SetCursor(_cursor);
+    _cursor = SDL_CreateSystemCursor(_current);
+    SDL_SetCursor(_cursor);
   }
 };
 
@@ -73,6 +71,19 @@ void Mouse::MouseIsSelecting()
 {
   this->_mouseSelecting = true;
 }
+
+void Mouse::FreezeAutomaticSelecting(bool isFrozen, SDL_SystemCursor cursor)
+{
+  _current = cursor;
+  _isFrozen = isFrozen;
+}
+
+/// <summary>
+/// checks if the mouse is collising with a rect
+/// </summary>
+/// <param name="rect"></param>
+/// <returns>true if the mouse is inside the rect
+/// otherwise returns false</returns>
 bool Mouse::IsMouseColliding(SDL_Rect rect)
 {
   bool IsX = rect.x <= this->GetPos().x && (rect.x + rect.w >= this->GetPos().x);

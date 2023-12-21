@@ -6,7 +6,7 @@
 #include "Mouse.hpp"
 #include "Utils.hpp"
 
-Slider::Slider(SDL_Rect rect, int pos1, int pos2, RGBA color, int height)
+Slider::Slider(SDL_Rect rect, int pos1, int pos2, SDL_Color color, int height)
   :_rect(rect), _pos1(pos1), _pos2(pos2), _color(color), _height(height)
 {
   _oldPos.x = rect.x, _oldPos.y = rect.y;
@@ -21,7 +21,7 @@ void Slider::Update()
   utils::Clamp(_rect.x, _pos1, _pos2);
   CreateSliderPath();
 
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   window->DisplayRect(&_rect, _color);//print the block that u move
 };
 
@@ -30,7 +30,7 @@ void Slider::Update()
 /// </summary>
 void Slider::CreateSliderPath()
 {
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   SDL_Rect rect;
 
   rect.x = _pos1;
@@ -38,7 +38,7 @@ void Slider::CreateSliderPath()
   rect.w = _pos2 - _pos1;
   rect.h = _height;
 
-  RGBA color(230, 230, 230, 255);
+  SDL_Color color{ 230, 230, 230, 255 };
 
   window->DisplayRect(&rect, color);
 };
@@ -48,7 +48,7 @@ void Slider::CreateSliderPath()
 /// </summary>
 void Slider::MoveRectByMouse()
 {
-  Mouse* mouse = Mouse::GetMouse();
+  Mouse* mouse = Mouse::GetMouseInstance();
 
   if (mouse->IsMouseColliding(_rect)) {
     mouse->MouseIsSelecting();
@@ -57,8 +57,6 @@ void Slider::MoveRectByMouse()
   }
 
   _oldPos = mouse->GetPos();
-
-  
 };
 
 /// <summary>

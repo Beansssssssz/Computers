@@ -12,7 +12,7 @@ HomeScene::HomeScene()
   _current(HomeButtons::Play), _mousePr(false)
 {
   //creating the background image for the current sence
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   SDL_Texture* tex = window->LoadTexture("Assets/backround_pic.png");
 
   SDL_Rect rect;
@@ -56,7 +56,7 @@ HomeScene::~HomeScene()
 /// then -1 is returned</returns>
 int HomeScene::Update()
 {
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
   //render background
   window->Render(_bg);
@@ -66,6 +66,8 @@ int HomeScene::Update()
   else 
     AboutWindowUpdate();
 
+  //in UpdateButtons i update the buttons which reset if they are pressed or not
+  //so HandleINput is after
   HandleInput();
   return CheckButtons();
 }
@@ -75,15 +77,18 @@ int HomeScene::Update()
 /// </summary>
 void HomeScene::UpdateButtons()
 {
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
   ButtonResized(); //nees to applay the resizing before rending
 
+  _mousePr = false;//reseting value
   //Buttons Update and render
   for (int i = 0; i < BUTTON_ARR_SIZE; i++)
   {
     _buttons[i]->Update();
     window->Render((Square*)_buttons[i]);
+    if (_buttons[i]->GetIsSelected())
+      _mousePr = true;
   }
 
   //render arrows
@@ -97,9 +102,7 @@ void HomeScene::UpdateButtons()
 /// </summary>
 void HomeScene::AboutWindowUpdate()
 {
-  _buttons[(int)HomeButtons::Help]->SetIsPressed(false);
-
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
   window->Render(_aboutTex);
   window->Render(_aboutExit);
@@ -116,8 +119,10 @@ void HomeScene::HandleInput()
 {
   if (_mousePr)//basicly means if the mouse is selecting dont do nothing
     return;
+  _buttons[(int)_current]->SetIsSelected(false);
+  _buttons[(int)_current]->SetIsPressed(false);
 
-  Keyboard* keyboard = Keyboard::GetKeyboard();
+  Keyboard* keyboard = Keyboard::GetKeyboardInstance();
   Uint8* keyArr = keyboard->GetKeyArray();
   int val = 0;
 
@@ -195,9 +200,8 @@ void HomeScene::ButtonResized()
       SDL_Rect* rect = _arrows[i]->GetDstRect();
       rect->w = ARROWWIDTH;
       rect->h = ARROWHEIGHT;
-      rect->x = _buttons[0]->GetDstRect()->x - ARROWWIDTH - MARGINX;
+      rect->x = _buttons[i]->GetDstRect()->x - ARROWWIDTH - MARGINX;
       
-
       //right arrow
       rect = _arrows[i + 4]->GetDstRect();
       rect->w = ARROWWIDTH;
@@ -224,7 +228,7 @@ int HomeScene::CheckButtons() {
       _aboutOpen = true;
 
   if (_buttons[(int)HomeButtons::Settings]->GetIsPressed())
-    { }//TODO
+    return (int)HomeButtons::Settings;
 
   return -1;
 }
@@ -234,7 +238,7 @@ int HomeScene::CheckButtons() {
 /// </summary>
 void HomeScene::CreateButtons()
 {
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   SDL_Texture* tex = window->LoadTexture("Assets/GUI/HomeButtons.png");
 
   int w = 370, h = 91, Ystart, Xstart;
@@ -264,7 +268,7 @@ void HomeScene::CreateButtons()
 /// </summary>
 void HomeScene::CreateArrows()
 {
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   SDL_Texture* tex = window->LoadTexture("Assets/GUI/Arrows.png");
 
   //create the left arrows
@@ -297,7 +301,7 @@ void HomeScene::CreateArrows()
 /// </summary>
 void HomeScene::CreateAboutWindow()
 {
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   int w, h, ScreenW, ScreenH;
   window->GetWidthHeight(ScreenW, ScreenH);
 
@@ -313,7 +317,7 @@ void HomeScene::CreateAboutWindow()
   _aboutTex = new Square(tex, src, dst);
 
   //Create the Exit Button:
-  tex = window->LoadTexture("Assets/GUI/AboutExitButton.png");
+  tex = window->LoadTexture("Assets/GUI/Xbtn.png");
   SDL_QueryTexture(tex, NULL, NULL, &w, &h);
 
   const int MARGIN = 8;

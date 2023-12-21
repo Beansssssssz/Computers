@@ -9,7 +9,7 @@ class WelcomeScene {
 public:
   WelcomeScene(const char* fontpath, int textSize);
   ~WelcomeScene();
-  void Update();
+  int Update();
   bool IsKeyPressed();
   void SetKeyPressed(bool keyPressed);
 

@@ -7,11 +7,12 @@
 
 class RenderWindow {
 public:
-  static RenderWindow* GetRenderWindow();
+  static RenderWindow* GetRenderWindowInstance();
+  void DeleteInstance();
   ~RenderWindow();
 
   SDL_Texture* LoadTexture(const char* filepath);
-  void DisplayRect(SDL_Rect* rect, RGBA color);
+  void DisplayRect(SDL_Rect* rect, SDL_Color color);
 
   void Render(Square sqr);
   void Render(Square* sqr);

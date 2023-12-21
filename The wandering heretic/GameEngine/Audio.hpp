@@ -6,14 +6,19 @@
 class Audio
 {
 public:
-  Audio(const char* path, int channels = 2);
+  static Audio* GetAudioInstance();
   ~Audio();
+  void PlayMusic(int channel, int loop);
+
   int GetVolume(int channel);
   void SetVolume(int vol, int channel);
-  void ChangeMusic(const char* path, int channel);
+
+  void SetMusic(const char* path, int channel, bool startPlayin = false);
   void PauseMusic(int channel = -1);
   void ResumeMusic(int channel = -1);
 
 private:
-  Mix_Chunk** sound;
+  static Audio* _audioInstance;
+  Audio(int channels = 2);
+  Mix_Chunk** _sound;
 };

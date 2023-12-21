@@ -25,14 +25,20 @@ RenderWindow::RenderWindow(const char* title)
   //ToggleFullScreen();
 };
 
-RenderWindow* RenderWindow::GetRenderWindow() {
+void RenderWindow::DeleteInstance() {
+
+}
+
+RenderWindow::~RenderWindow() {
+
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(window);
+};
+
+RenderWindow* RenderWindow::GetRenderWindowInstance() {
   if (_windowPtr == NULL)
-  {
     _windowPtr = new RenderWindow("Game");
-    return _windowPtr;
-  }
-  else
-    return _windowPtr;
+  return _windowPtr;
 }
 
 /// <summary>
@@ -74,17 +80,6 @@ void RenderWindow::Render(Square* sqr)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to be copied. Error: ");
 };
 
-
-///// <summary>
-///// not working currently.
-///// </summary>
-//void RenderWindow::ToggleFullScreen()
-//{
-//  Uint32 FullscreenFlag = SDL_WINDOW_FULLSCREEN;
-//  bool IsFullscreen = SDL_GetWindowFlags(window) & FullscreenFlag;
-//  SDL_SetWindowFullscreen(window, IsFullscreen ? 0 : FullscreenFlag);
-//};
-
 void RenderWindow::GetWidthHeight(int& w, int& h)
 {
   SDL_DisplayMode DM;
@@ -107,12 +102,6 @@ void RenderWindow::Clear() {
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,"Failed to clean renderer");
 };
 
-RenderWindow::~RenderWindow() {
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
-  delete _windowPtr;
-};
-
 SDL_Window* RenderWindow::GetWindow()
 {
   return window;
@@ -123,16 +112,20 @@ SDL_Renderer* RenderWindow::GetRenderer()
   return renderer;
 };
 
-void RenderWindow::DisplayRect(SDL_Rect* rect, RGBA color)
+void RenderWindow::DisplayRect(SDL_Rect* rect, SDL_Color color)
 {
-  RGBA oldColor;
-  SDL_GetRenderDrawColor(renderer, &oldColor.r, &oldColor.g, &oldColor.b, &oldColor.a);
+  SDL_Color oldColor;
+  int err = SDL_GetRenderDrawColor(renderer, &oldColor.r,
+    &oldColor.g, &oldColor.b, &oldColor.a);
 
   //outline rect
-  SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-  SDL_RenderDrawRect(renderer, rect);
-  //fill up rectangle with color
-  SDL_RenderFillRect(renderer, rect);
-  SDL_SetRenderDrawColor(renderer, oldColor.r, oldColor.g, oldColor.b, oldColor.a);
+  err += SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+  err += SDL_RenderDrawRect(renderer, rect);
+  err += SDL_RenderFillRect(renderer, rect);
 
+  err += SDL_SetRenderDrawColor(renderer, oldColor.r,
+    oldColor.g, oldColor.b, oldColor.a);
+
+  if (err != 0)
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Sdl failed to render a rect", SDL_GetError());
 }

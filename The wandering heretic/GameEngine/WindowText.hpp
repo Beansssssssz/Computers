@@ -10,8 +10,8 @@ public:
   WindowText(const char* fontPath, int size, std::string str = "", int maxSize = 30);
   ~WindowText();
 
-  void DisplayText(Vector2i pos, RGBA color);
-  void CreateSquare(SDL_Rect rect, RGBA color);
+  void DisplayText(Vector2i pos, SDL_Color color);
+  void CreateSquare(SDL_Rect rect, SDL_Color color);
 
   void RemakeFont();
   void SetCharacterSize(int size);

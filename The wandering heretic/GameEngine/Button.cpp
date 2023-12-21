@@ -15,7 +15,7 @@ Button::~Button()
 
 void Button::Update(MouseButtons btn)
 {
-  Mouse* mouse = Mouse::GetMouse();
+  Mouse* mouse = Mouse::GetMouseInstance();
 
   _isPressed = false;
   _isSelected = false;

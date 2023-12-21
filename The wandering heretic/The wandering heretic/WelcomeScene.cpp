@@ -5,7 +5,7 @@
 WelcomeScene::WelcomeScene(const char* fontpath, int textSize)
   :_bg(NULL), _winText(NULL), _keyPressed(false)
 {
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   SDL_Texture* tex = window->LoadTexture("Assets/backround_pic.png");
 
   SDL_Rect rect;
@@ -19,37 +19,36 @@ WelcomeScene::WelcomeScene(const char* fontpath, int textSize)
 
 WelcomeScene::~WelcomeScene()
 {
-  SDL_DestroyTexture(_bg->GetTexture());
   delete _bg, _winText;
-  
 };
 
 /// <summary>
 /// the update function
 /// </summary>
-void WelcomeScene::Update() {
-  Keyboard* keyboard = Keyboard::GetKeyboard();
-    if (keyboard->IsKeyPressed())
-      _keyPressed = true;
+int WelcomeScene::Update() {
+  Keyboard* keyboard = Keyboard::GetKeyboardInstance();
 
-    RenderWindow* window = RenderWindow::GetRenderWindow();
-    window->Render(_bg);
+  int ret = false;
+  if (keyboard->IsKeyPressed())
+    _keyPressed = true;
+  else if (_keyPressed) {
+    ret = true;
+    _keyPressed = false;
+  }
 
-    //we know that the background image is the size of the entire screen
-    int w = _bg->GetDstRect()->w, h = _bg->GetDstRect()->h;
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  window->Render(_bg);
+
+  //we know that the background image is the size of the entire screen
+  int w = _bg->GetDstRect()->w, h = _bg->GetDstRect()->h;
+
+  SDL_Color color{ 0, 0, 0, 255 };
 
   _winText->SetCharacterSize(40);
-  _winText->DisplayText(Vector2i( w / 2 - _winText->GetTextWidth() / 2, h - 48), RGBA(0, 0, 0, 255));
-}
+  _winText->DisplayText(Vector2i(w / 2 - _winText->GetTextWidth() / 2, h - 48), color);
 
-/// <summary>
-/// return true if a key has been pressed while this window is open
-/// </summary>
-/// <returns></returns>
-bool WelcomeScene::IsKeyPressed()
-{
-  return _keyPressed;
-};
+  return ret;
+}
 
 /// <summary>
 /// sets the key pressed var to value recived

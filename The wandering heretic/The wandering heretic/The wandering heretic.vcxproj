@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="HomeScene.cpp" />
+    <ClCompile Include="Setting.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WelcomeScene.cpp" />
   </ItemGroup>
@@ -44,6 +45,7 @@
     <ClInclude Include="GameManager.hpp" />
     <ClInclude Include="HomeScene.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="Setting.hpp" />
     <ClInclude Include="WelcomeScene.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

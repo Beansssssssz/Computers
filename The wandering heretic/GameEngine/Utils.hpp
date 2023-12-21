@@ -40,12 +40,6 @@ namespace utils {
     //delay-elapsedMS is there incase of losing frames due to loading times in the pc.
   };
 
-  inline SDL_Color ChangeRgbaToSdlColor(RGBA color) {
-    SDL_Color sdlColor;
-    sdlColor.a = color.a; sdlColor.r = color.r; sdlColor.b = color.b; sdlColor.g = color.g;
-    return sdlColor;
-  };
-
   inline Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos) {
     SDL_Rect src, dst;
     dst.x = 0; dst.y = 0, dst.w = w; dst.h = h;
@@ -66,7 +60,7 @@ namespace utils {
   /// </param>
   /// <returns>return selcted texture or NULL if a number which does exit is selected</returns>
   inline SDL_Texture* GetTexture(int num) {
-    RenderWindow* window = RenderWindow::GetRenderWindow();
+    RenderWindow* window = RenderWindow::GetRenderWindowInstance();
     switch (num)
     {
     case 1:

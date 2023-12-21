@@ -1,11 +1,9 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include <iostream>
 
 #include "RenderWindow.hpp"
 #include "WindowText.hpp"
 #include "Utils.hpp"
-
 
 WindowText::WindowText(const char* fontPath, int size, std::string str, int Maxsize)
   :_fontPath(fontPath), text(str), _characterSize(size), _maxLength(Maxsize)
@@ -20,18 +18,21 @@ WindowText::~WindowText()
   TTF_CloseFont(font);
 };
 
-void  WindowText::DisplayText(Vector2i pos, RGBA color) {
+/// <summary>
+/// displays the text onto the screen
+/// </summary>
+/// <param name="pos">the pos of the text</param>
+/// <param name="color">the color of the text</param>
+void  WindowText::DisplayText(Vector2i pos, SDL_Color color) {
   //you cant create a surfarce from no text
   if (text.size() <= 0)
     return;
 
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
   const char* ch = text.c_str();
 
-  SDL_Color sdlColor = utils::ChangeRgbaToSdlColor(color);
-
-  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, ch, sdlColor);
+  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, ch, color);
   SDL_Texture* message = SDL_CreateTextureFromSurface(window->GetRenderer(), surfaceMessage);
 
   _width = surfaceMessage->w;
@@ -54,9 +55,14 @@ void  WindowText::DisplayText(Vector2i pos, RGBA color) {
   SDL_DestroyTexture(message);
 };
 
-void WindowText::CreateSquare(SDL_Rect rect, RGBA color)
+/// <summary>
+/// update
+/// </summary>
+/// <param name="rect"></param>
+/// <param name="color"></param>
+void WindowText::CreateSquare(SDL_Rect rect, SDL_Color color)
 {
-  RenderWindow* window = RenderWindow::GetRenderWindow();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
   rect.w = 9 * _characterSize;
   window->DisplayRect(&rect, color);

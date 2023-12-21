@@ -6,10 +6,10 @@
 #include "Keyboard.hpp"
 
 Keyboard::Keyboard()
-  :keysArray(NULL), _input(false), _keyPressed(false)
+  :_keysArray(NULL), _input(false), _keyPressed(false)
 {};
 
-Keyboard* Keyboard::GetKeyboard()
+Keyboard* Keyboard::GetKeyboardInstance()
 {
 	if (_keyboardPtr == NULL)
 	{
@@ -21,11 +21,13 @@ Keyboard* Keyboard::GetKeyboard()
 }
 
 Keyboard::~Keyboard()
-{};
+{
+  delete _keysArray;
+};
 
 Uint8* Keyboard::GetKeyArray()
 {
-  return keysArray;
+  return _keysArray;
 }
 
 std::string Keyboard::GetText()
@@ -70,9 +72,9 @@ void Keyboard::Update()
   _keyPressed = false;
   SDL_PumpEvents();
 
-  keysArray = const_cast<Uint8*>(SDL_GetKeyboardState(NULL));
+  _keysArray = const_cast<Uint8*>(SDL_GetKeyboardState(NULL));
   for (int i = 0; i < 250; i++)//all the keys on the keyboard
-    if (keysArray[i])
+    if (_keysArray[i])
       _keyPressed = true;
 };
 

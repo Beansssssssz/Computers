@@ -19,7 +19,7 @@ class Mouse
 {
 public:
   ~Mouse();
-  static Mouse* GetMouse();
+  static Mouse* GetMouseInstance();
   Vector2i GetPos();
   MouseButtons GetPressed();
 
@@ -28,6 +28,8 @@ public:
 
   void ChangeCursorType();
   void MouseIsSelecting();
+  void FreezeAutomaticSelecting(bool isFrozen, SDL_SystemCursor cursor
+    = SDL_SYSTEM_CURSOR_ARROW);
 
   bool IsMouseColliding(SDL_Rect rect);
 private:
@@ -36,7 +38,9 @@ private:
 
   MouseButtons bt = MouseButtons::none;
   Vector2i pos;
-  SDL_Cursor* cursor;
-  SDL_SystemCursor current;
+  SDL_Cursor* _cursor;
+  SDL_SystemCursor _current;
   bool _mouseSelecting;
+
+  bool _isFrozen;
 };

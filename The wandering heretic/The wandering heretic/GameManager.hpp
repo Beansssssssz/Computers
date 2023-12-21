@@ -22,14 +22,14 @@ public:
   ~GameManager();
   bool Update();
 
-  Scenes& GetScenes();
+  bool UpdateWelcomeScene();
+  bool UpdateHomeScene();
+  bool UpdateGameScene();
 
-  PopUpWindow SetUpRandTab(SDL_Texture* tex);
+  //PopUpWindow SetUpRandTab(SDL_Texture* tex);
 private:
-  void FindCurrentScene();
 
   Scenes _currentScene = Scenes::welcome;//You always start at the welcome Scene
-  Audio* _audio;
 
   WelcomeScene* _wcScene;
   HomeScene* _HomeScene;
