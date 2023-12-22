@@ -35,7 +35,15 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
 
   GameManager gm;
-  Settings st;
+
+  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Xbtn.png");
+  int w, h;
+  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+
+
+  Button* btn = new Button(tex, { 0,0,w,h }, { 0,0,w,h });
+  Settings st(btn, { 0,0,100,100 }, { 100,100,100,100 });
+  st.OpenTab();
 
   bool running = true;
   SDL_Event event;

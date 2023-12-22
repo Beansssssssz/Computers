@@ -4,16 +4,15 @@
 #include "PopUpWindow.hpp"
 #include "Square.hpp"
 
-PopUpWindow::PopUpWindow(Button btnExit, SDL_Rect rect, SDL_Color color, bool open)
-  :_btnExit(NULL), _tab(rect), _color(color), _tabOpen(open)
+PopUpWindow::PopUpWindow(Button* btnExit, SDL_Rect rect, SDL_Color color, bool open)
+  :_btnExit(btnExit), _tab(rect), _color(color), _tabOpen(open)
 {
-  _btnExit = new Button(btnExit);
   _CorrectButton();
 };
 
 PopUpWindow::~PopUpWindow()
 {
-
+  delete _btnExit;
 };
 
 void PopUpWindow::Update()
@@ -33,17 +32,25 @@ void PopUpWindow::Update()
     CloseTab();
 };
 
+/// <summary>
+/// Opens the tab
+/// </summary>
 void PopUpWindow::OpenTab()
 {
   _tabOpen = true;
 };
 
+/// <summary>
+/// Closes the tab
+/// </summary>
 void PopUpWindow::CloseTab()
 {
   _tabOpen = false;
 };
 
-//corrects the placement of the button in "tab" that opens
+/// <summary>
+/// corrects the placement of the button in "tab" that opens
+/// </summary>
 void PopUpWindow::_CorrectButton()
 {
   int right = _tab.x + _tab.w;
