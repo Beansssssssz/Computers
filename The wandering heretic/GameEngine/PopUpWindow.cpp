@@ -21,7 +21,6 @@ void PopUpWindow::Update()
     return;
 
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  
   Mouse* mouse = Mouse::GetMouseInstance();
 
   window->DisplayRect(&_tab, _color);
@@ -31,6 +30,22 @@ void PopUpWindow::Update()
   if (_btnExit->GetIsPressed())
     CloseTab();
 };
+
+/// <summary>
+/// rerturns the rect of the tab
+/// </summary>
+/// <returns></returns>
+SDL_Rect PopUpWindow::GetRect() {
+  return _tab;
+}
+
+/// <summary>
+/// returns the color of the tab
+/// </summary>
+/// <returns></returns>
+SDL_Color PopUpWindow::GetColor() {
+  return _color;
+}
 
 /// <summary>
 /// Opens the tab

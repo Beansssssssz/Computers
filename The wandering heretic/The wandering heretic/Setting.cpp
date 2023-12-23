@@ -71,14 +71,19 @@ void Settings::CreateButtons(int marginx, int marginy) {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   SDL_Texture* tex = window->LoadTexture("Assets/GUI/HomeButtons.png");
 
-  SDL_Rect src{ 0, 0, 50, 50 }, dst{ 0, 0, 50, 50 };//{x, y, w, h)
+  int w, h;
+  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+  SDL_Rect src{ 0, 0, w, h }, dst{ 0, 0, w, h };//{x, y, w, h)
 
-  int ScreenW, ScreenH;
+  /*int ScreenW, ScreenH;
   window->GetWidthHeight(ScreenW, ScreenH);
 
   int x = ScreenW / 2 - 50 / 2,
   y = ScreenH / 2 - 50 / 2;
-  dst.x = x; dst.y = y;
+  dst.x = x; dst.y = y;*/
+  SDL_Rect temp = PopUpWindow::GetRect();
+  dst.x = temp.x + temp.w / 2 - src.w / 2;
+  dst.y = temp.y + temp.h / 2 - src.h / 2;
 
   _btnMusic = new Button(tex, src, dst);
   _btnEffect = new Button(tex, src, dst);

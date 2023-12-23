@@ -15,7 +15,7 @@ Keyboard* Keyboard::_keyboardPtr = NULL;
 Audio* Audio::_audioInstance = NULL;
 
 
-Settings* CreateSettings(int marginx = 500, int marginy = 300);
+Settings* CreateSettings(int marginx = 350, int marginy = 150);
 
 int main(int argc, char* argv[]) {
   //initializing the libraries
