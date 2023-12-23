@@ -11,8 +11,9 @@ public:
   ~Settings();
 
   int Update(bool NeedExitGame = false);
+  void UpdateMusic();
 
-  void CreateButtons();
+  void CreateButtons(int marginx = 100, int marginy = 100);
   void CreateSlider();
 private:
   Button* _btnMusic;//the on and off of the general music

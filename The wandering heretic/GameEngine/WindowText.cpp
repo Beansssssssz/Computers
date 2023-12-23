@@ -49,7 +49,8 @@ void  WindowText::DisplayText(Vector2i pos, SDL_Color color) {
   dst.w = src.w;
   dst.h = src.h;
 
-  window->Render(Square(message, src, dst));
+  Square temp(message, src, dst);
+  window->Render(&temp);
 
   SDL_FreeSurface(surfaceMessage);
   SDL_DestroyTexture(message);

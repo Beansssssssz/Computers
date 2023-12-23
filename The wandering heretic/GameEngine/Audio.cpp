@@ -7,16 +7,13 @@
 //channel 0 is for backround music/boss fights
 //channel 1 is for pop effect(npc or such)
 //channel 2 is cause for future 
-Audio::Audio(int channels)
+Audio::Audio()
 {
-  Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, channels, 1024);
-  _sound = new Mix_Chunk* [channels];
+  Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, CHANNAELS_COUNT, 1024);
+  _sound = new Mix_Chunk* [CHANNAELS_COUNT];
+  _paused = new bool(CHANNAELS_COUNT);
 
-
-  if (_sound == NULL)
-    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-      "Error _sound failed to load: %s", Mix_GetError());
-
+  StartMusic();
 };
 
 Audio* Audio::GetAudioInstance()
@@ -33,16 +30,44 @@ Audio::~Audio()
   delete _sound;
 }
 
+/// <summary>
+/// starts all the music
+/// </summary>
+void Audio::StartMusic()
+{
+  _sound[0] = Mix_LoadWAV("Assets/Sounds/MainMusic.mp3");
+  if(_sound[0] == NULL)
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+      "Error _sound failed to load: %s", Mix_GetError());
+
+  if(Mix_PlayChannel(0, _sound[0], -1) == -1)
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+      "Error _sound could not be played: %s", Mix_GetError());
+};
+
 void Audio::PlayMusic(int channel, int loop)
 {
 
 };
 
+/// <summary>
+/// returns the volume of the channel,if var is left empty or -1
+/// then returns
+/// </summary>
+/// <param name="channel"></param>
+/// <returns></returns>
 int Audio::GetVolume(int channel)
 {
   return Mix_VolumeChunk(_sound[channel], -1);
 };
 
+/// <summary>
+/// sets the volume to the value recived.
+/// if the channel parameter is empty all channels are effected
+/// </summary>
+/// <param name="vol">the volume</param>
+/// <param name="channel">the channel
+/// leave empty or enter as -1 for every channel</param>
 void Audio::SetVolume(int vol, int channel)
 {
   Mix_VolumeChunk(_sound[channel], vol);
@@ -78,6 +103,11 @@ void Audio::SetMusic(const char* path, int channel, bool startPlayin)
 /// <param name="channel"></param>
 void Audio::PauseMusic(int channel)
 {
+  if (channel >= 0)
+    _paused[channel] = true;
+  else
+    for (char i = 0; i < CHANNAELS_COUNT; i++)
+      _paused[channel] = true;
   Mix_Pause(channel);
 };
 
@@ -88,5 +118,11 @@ void Audio::PauseMusic(int channel)
 /// <param name="channel"></param>
 void Audio::ResumeMusic(int channel)
 {
+  if (channel >= 0)
+    _paused[channel] = false;
+  else
+    for (char i = 0; i < CHANNAELS_COUNT; i++)
+      _paused[channel] = false;
+
   Mix_Resume(channel);
 };

@@ -25,10 +25,6 @@ RenderWindow::RenderWindow(const char* title)
   //ToggleFullScreen();
 };
 
-void RenderWindow::DeleteInstance() {
-
-}
-
 RenderWindow::~RenderWindow() {
 
   SDL_DestroyRenderer(renderer);
@@ -68,16 +64,11 @@ void RenderWindow::Display() {
 /// copies the texture onto the renderer
 /// </summary>
 /// <param name="sqr">the root class sqaure</param>
-void RenderWindow::Render(Square sqr)
-{
-  if (SDL_RenderCopy(renderer, sqr.GetTexture(), sqr.GetSrcRect(), sqr.GetDstRect()))
-      SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to be copied. Error: ");
-};
-
 void RenderWindow::Render(Square* sqr)
 {
   if (SDL_RenderCopy(renderer, sqr->GetTexture(), sqr->GetSrcRect(), sqr->GetDstRect()))
-    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to be copied. Error: ");
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to be copied. Error: %s"
+      , SDL_GetError());
 };
 
 void RenderWindow::GetWidthHeight(int& w, int& h)

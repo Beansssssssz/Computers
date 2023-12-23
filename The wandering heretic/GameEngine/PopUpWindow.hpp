@@ -12,12 +12,11 @@ public:
   void OpenTab();
   void CloseTab();
 private:
-  void _CorrectButton();
-
   Button* _btnExit;
   SDL_Rect _tab;//the tab that the buttons are displayed on
   SDL_Color _color;
 
 protected:
+  void _CorrectButton();
   bool _tabOpen;
 };

@@ -14,6 +14,9 @@ Mouse* Mouse::_mousePtr = NULL;
 Keyboard* Keyboard::_keyboardPtr = NULL;
 Audio* Audio::_audioInstance = NULL;
 
+
+Settings* CreateSettings(int marginx = 500, int marginy = 300);
+
 int main(int argc, char* argv[]) {
   //initializing the libraries
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
@@ -35,15 +38,8 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
 
   GameManager gm;
-
-  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Xbtn.png");
-  int w, h;
-  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
-
-
-  Button* btn = new Button(tex, { 0,0,w,h }, { 0,0,w,h });
-  Settings st(btn, { 0,0,100,100 }, { 100,100,100,100 });
-  st.OpenTab();
+  Settings* st = CreateSettings();
+  st->OpenTab();
 
   bool running = true;
   SDL_Event event;
@@ -70,15 +66,15 @@ int main(int argc, char* argv[]) {
     if (running && !gm.Update())//if the game is not going to be closed from events
       running = false;
 
-    st.Update();
+    st->Update();
 
     window->Display();
 
     utils::CapFPS(start, 60);
   };
 
-
-  delete window, mouse, keyboard;
+  //deleting singletons
+  delete window, mouse, keyboard, audio;
   Mix_Quit();
   TTF_Quit();
   IMG_Quit();
@@ -86,11 +82,33 @@ int main(int argc, char* argv[]) {
   return 0;
 };
 
+Settings* CreateSettings(int marginx, int marginy) {
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Xbtn.png");
+  int w, h;
+  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+  Button* btn = new Button(tex, { 0,0,w,h }, { 0,0,w,h });
+
+  SDL_Color _color{ 255,100,100,100 };
+
+  SDL_Rect rect;
+  RenderWindow::GetWidthHeight(w, h);
+  rect.x = marginx;
+  rect.y = marginy;
+  rect.w = w - marginx * 2;
+  rect.h = h - marginy * 2;
+
+
+  Settings* st = new Settings(btn, rect, _color);
+
+  return  st;
+}
 
 /*
 TODO
-3.settings // add a slider and on of for music
+2.enter doesnt work(why idk check it)
+3.settings ->add the slider and correct pictures and correct placements
 4.sign in //kill me(later, wayyyy later)
-5.learn sqlite3 how to send to main databse not local(use arduino to do it)
+5.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)
 5.the game itself //fun ☺
 */
