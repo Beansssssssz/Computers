@@ -38,7 +38,17 @@ bool Button::GetIsSelected()
 bool Button::GetIsPressed()
 {
   return _isPressed;
-}
+};
+
+/// <summary>
+/// returns whether or not
+/// </summary>
+/// <returns></returns>
+bool Button::GetIsReleased(MouseButtons state)
+{
+  Mouse* mouse = Mouse::GetMouseInstance();
+  return _isPressed && mouse->GetPressed() != state;
+};
 
 void Button::SetIsSelected(bool val)
 {

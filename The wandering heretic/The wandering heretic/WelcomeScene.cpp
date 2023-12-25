@@ -2,7 +2,7 @@
 
 #include "RenderWindow.hpp"
 
-WelcomeScene::WelcomeScene(const char* fontpath, int textSize)
+WelcomeScene::WelcomeScene()
   :_bg(NULL), _winText(NULL), _keyPressed(false)
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -13,7 +13,7 @@ WelcomeScene::WelcomeScene(const char* fontpath, int textSize)
   RenderWindow::GetWidthHeight(rect.w, rect.h);
   _bg = new Square(tex, rect, rect);
 
-  _winText = new WindowText(fontpath, textSize);
+  _winText = new WindowText();
   _winText->SetText("Press any key to continue...");
 };
 

@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 
-#define CHANNAELS_COUNT 2
+#define CHANNAELS_COUNT 1
 
 class Audio
 {
@@ -18,6 +18,8 @@ public:
   void SetVolume(int vol, int channel = -1);
 
   void SetMusic(const char* path, int channel, bool startPlayin = false);
+
+  void SetMusicState(bool state, int channel = -1);
   void PauseMusic(int channel = -1);
   void ResumeMusic(int channel = -1);
 

@@ -6,7 +6,6 @@
 
 //channel 0 is for backround music/boss fights
 //channel 1 is for pop effect(npc or such)
-//channel 2 is cause for future 
 Audio::Audio()
 {
   Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, CHANNAELS_COUNT, 1024);
@@ -95,6 +94,21 @@ void Audio::SetMusic(const char* path, int channel, bool startPlayin)
       "Error _sound failed to play: %s", Mix_GetError());
 
 }
+
+/// <summary>
+/// sets the music the the boolean value recived
+/// if true them music isnt paused
+/// otherwise music is paused
+/// </summary>
+/// <param name="state"></param>
+/// <param name="channel"></param>
+void Audio::SetMusicState(bool state, int channel) {
+  if (state)
+    PauseMusic(channel);
+  else
+    ResumeMusic(channel);
+}
+
 
 /// <summary>
 /// Pauses the music for selected channel or all if no value

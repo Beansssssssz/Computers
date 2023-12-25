@@ -22,7 +22,6 @@ public:
 
   SDL_Window* GetWindow();
   SDL_Renderer* GetRenderer();
-
 private:
   RenderWindow(const char* title);
   static RenderWindow* _windowPtr;

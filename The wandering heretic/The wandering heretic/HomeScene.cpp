@@ -9,7 +9,7 @@
 
 HomeScene::HomeScene()
   :_buttons(NULL), _bg(NULL), _aboutTex(NULL), _aboutExit(NULL),
-  _current(HomeButtons::Play), _mousePr(false)
+  _current(HomeButtons::Play), _mousePr(false), _aboutOpen(false)
 {
   //creating the background image for the current sence
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -63,11 +63,11 @@ int HomeScene::Update()
 
   if (!_aboutOpen) 
     UpdateButtons();
-  else 
+  else {
     AboutWindowUpdate();
+    return -1;//no need to go on other iterations 
+  }
 
-  //in UpdateButtons i update the buttons which reset if they are pressed or not
-  //so HandleINput is after
   HandleInput();
   return CheckButtons();
 }
@@ -110,6 +110,18 @@ void HomeScene::AboutWindowUpdate()
 
   if (_aboutExit->GetIsPressed())
     _aboutOpen = false;
+
+  //check input
+  Keyboard* keyboard = Keyboard::GetKeyboardInstance();
+  Uint8* keyArr = keyboard->GetKeyArray();
+
+  if (keyArr[SDL_SCANCODE_ESCAPE])
+    _keyPressed[3] = true;
+
+  else if (_keyPressed[3]) {//3 is esc
+    _keyPressed[3] = false;
+    _aboutOpen = false;
+  }
 };
 
 /// <summary>
@@ -126,18 +138,7 @@ void HomeScene::HandleInput()
   Uint8* keyArr = keyboard->GetKeyArray();
   int val = 0;
 
-  //escapes only works when about is open
-  if (_aboutOpen) {
-    if (keyArr[SDL_SCANCODE_ESCAPE])
-      _keyPressed[3] = true;
-
-    else if (_keyPressed[3]) {//3 is esc
-      _keyPressed[3] = false;
-      _aboutOpen = false;
-    }
-  }
-
-  if (keyArr[SDL_SCANCODE_E] || keyArr[SDL_SCANCODE_SPACE] || keyArr[SDL_SCANCODE_KP_ENTER])
+  if (keyArr[SDL_SCANCODE_E] || keyArr[SDL_SCANCODE_SPACE] || keyArr[SDL_SCANCODE_RETURN])
     _keyPressed[0] = true;
 
   else if (_keyPressed[0]) { //0 is confirm
@@ -224,7 +225,7 @@ int HomeScene::CheckButtons() {
     return (int)HomeButtons::Quit;
 
   if (_buttons[(int)HomeButtons::Help]->GetIsPressed())
-    if (!_aboutOpen)
+    if (!_aboutOpen) 
       _aboutOpen = true;
 
   if (_buttons[(int)HomeButtons::Settings]->GetIsPressed())

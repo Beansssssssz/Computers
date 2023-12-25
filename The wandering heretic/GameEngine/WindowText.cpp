@@ -19,7 +19,8 @@ WindowText::~WindowText()
 };
 
 /// <summary>
-/// displays the text onto the screen
+/// displays the text onto the screen, if {-1,-1}
+/// is the value of pos then the _pos var will be used instead
 /// </summary>
 /// <param name="pos">the pos of the text</param>
 /// <param name="color">the color of the text</param>
@@ -28,11 +29,12 @@ void  WindowText::DisplayText(Vector2i pos, SDL_Color color) {
   if (text.size() <= 0)
     return;
 
+  if (pos.x == -1 && pos.y == -1)
+    pos = _pos;
+
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
-  const char* ch = text.c_str();
-
-  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, ch, color);
+  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, text.c_str(), color);
   SDL_Texture* message = SDL_CreateTextureFromSurface(window->GetRenderer(), surfaceMessage);
 
   _width = surfaceMessage->w;
@@ -88,6 +90,16 @@ void WindowText::SetCharacterSize(int size) {
 }
 
 /// <summary>
+/// sets the value into the _pos value(which is zero by default)
+/// from now on this value will display the pos
+/// </summary>
+/// <param name="pos"></param>
+void WindowText::SetPos(Vector2i pos)
+{
+  _pos = pos;
+}
+
+/// <summary>
 /// sets the text to a new text
 /// </summary>
 /// <param name="str">the text</param>
@@ -111,7 +123,26 @@ std::string WindowText:: GetText() {
 /// <returns></returns>
 int WindowText::GetTextWidth()
 {
+  if(!(_width <= 0 && text.size() > 0))
+    return _width;
+
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, text.c_str(),
+    { 0,0,0,0 });
+  SDL_Texture* message = SDL_CreateTextureFromSurface(window->GetRenderer(),
+    surfaceMessage);
+
+  _width = surfaceMessage->w;
+
+  SDL_FreeSurface(surfaceMessage);
+  SDL_DestroyTexture(message);
+
   return _width;
+}
+
+Vector2i WindowText::GetPos()
+{
+  return _pos;
 }
 
 /// <summary>

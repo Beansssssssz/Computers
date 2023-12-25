@@ -9,7 +9,9 @@ public:
   void Update();
   void CreateSliderPath();
   void MoveRectByMouse();
+
   int GetValue();
+  SDL_Rect GetRect();
 
 private:
   SDL_Rect _rect;

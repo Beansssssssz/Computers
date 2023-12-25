@@ -5,9 +5,9 @@
 GameManager::GameManager()
   :_wcScene(NULL), _gameScreen(NULL), _HomeScene(NULL)
 {
-  _wcScene = new WelcomeScene("Assets/Fonts/font.otf", 24);
+  _wcScene = new WelcomeScene();
   _HomeScene = new HomeScene();
-  _gameScreen = new WelcomeScene("sans", 24);
+  _gameScreen = new WelcomeScene();
 };
 
 GameManager::~GameManager()
@@ -64,7 +64,7 @@ bool GameManager::UpdateHomeScene()
   }
 
   if (ret == (int)HomeButtons::Settings)
-    std::cout << "kill me\n" << std::endl;
+    std::cout << "kill me" << std::endl;
 
   return ret != (int)HomeButtons::Quit;
 };

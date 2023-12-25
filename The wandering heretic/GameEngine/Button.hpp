@@ -17,6 +17,7 @@ public:
   //void ChangeState(Mouse& mouse);
   bool GetIsSelected();
   bool GetIsPressed();
+  bool GetIsReleased(MouseButtons state = MouseButtons::mbl);
 
   void SetIsSelected(bool val);
   void SetIsPressed(bool val);

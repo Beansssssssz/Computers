@@ -49,5 +49,5 @@ private:
   const int MARGINX = 7;//the margin between the Arrows to the button
 
   bool _mousePr;//the mouse priority
-  bool _aboutOpen; // if the about window is open
+  bool _aboutOpen; // if the about window is open(used for muiltple stuff)
 };

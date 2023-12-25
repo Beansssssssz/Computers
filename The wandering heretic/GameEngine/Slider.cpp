@@ -18,7 +18,7 @@ Slider::Slider(SDL_Rect rect, int pos1, int pos2, SDL_Color color, int height)
 void Slider::Update()
 {
   MoveRectByMouse();
-  utils::Clamp(_rect.x, _pos1, _pos2);
+  utils::Clamp(_rect.x, _pos2 - _rect.w, _pos1);
   CreateSliderPath();
 
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -34,7 +34,7 @@ void Slider::CreateSliderPath()
   SDL_Rect rect;
 
   rect.x = _pos1;
-  rect.y = _rect.y + (_rect.w / 2);
+  rect.y = _rect.y + _rect.h / 2 - _height / 2;
   rect.w = _pos2 - _pos1;
   rect.h = _height;
 
@@ -65,9 +65,17 @@ void Slider::MoveRectByMouse()
 /// <returns>pso of the slider</returns>
 int Slider::GetValue()
 {
-  float width = _pos2 - _pos1 / 100.0f; // gets the amout of pixels you have to move so it will register 
+  float width = (_pos2 - _pos1 - _rect.w)
+    / 128.0f; // gets the amout of pixels you have to move so it will register 
   int x = _rect.x - _pos1; // your pos relitave to the start point
   return int(x / width); // diving and finding your value
 };
 
+/// <summary>
+/// retusn the rect of the slider
+/// </summary>
+/// <returns></returns>
+SDL_Rect Slider::GetRect() {
+  return _rect;
+}
 

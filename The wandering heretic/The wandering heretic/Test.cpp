@@ -5,7 +5,7 @@
 #include <vector>
 
 //including my own libs
-#include "GameManager.hpp"//everything is inside GameManager.
+#include "GameManager.hpp"
 #include "Setting.hpp"
 
 //initializing singletons
@@ -13,9 +13,6 @@ RenderWindow* RenderWindow::_windowPtr = NULL;
 Mouse* Mouse::_mousePtr = NULL;
 Keyboard* Keyboard::_keyboardPtr = NULL;
 Audio* Audio::_audioInstance = NULL;
-
-
-Settings* CreateSettings(int marginx = 350, int marginy = 150);
 
 int main(int argc, char* argv[]) {
   //initializing the libraries
@@ -38,7 +35,7 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
 
   GameManager gm;
-  Settings* st = CreateSettings();
+  Settings* st = Settings::CreateSettings();
   st->OpenTab();
 
   bool running = true;
@@ -66,7 +63,8 @@ int main(int argc, char* argv[]) {
     if (running && !gm.Update())//if the game is not going to be closed from events
       running = false;
 
-    st->Update();
+    if (running && st->Update(true))
+      running = false;
 
     window->Display();
 
@@ -82,33 +80,13 @@ int main(int argc, char* argv[]) {
   return 0;
 };
 
-Settings* CreateSettings(int marginx, int marginy) {
-  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Xbtn.png");
-  int w, h;
-  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
-  Button* btn = new Button(tex, { 0,0,w,h }, { 0,0,w,h });
-
-  SDL_Color _color{ 255,100,100,100 };
-
-  SDL_Rect rect;
-  RenderWindow::GetWidthHeight(w, h);
-  rect.x = marginx;
-  rect.y = marginy;
-  rect.w = w - marginx * 2;
-  rect.h = h - marginy * 2;
-
-
-  Settings* st = new Settings(btn, rect, _color);
-
-  return  st;
-}
-
 /*
 TODO
-2.enter doesnt work(why idk check it)
-3.settings ->add the slider and correct pictures and correct placements
+2.5 ->add a way to "freeze" stuff //☺
+3.settings ->change colors and change quit btn tex;
 4.sign in //kill me(later, wayyyy later)
 5.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)
-5.the game itself //fun ☺
+6.learn socket and how to send and recive data
+and how to store said data in server//use arduino to do it?
+7.the game itself //fun ☺
 */
