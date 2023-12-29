@@ -95,6 +95,9 @@
     <ClInclude Include="Slider.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="JsonParser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

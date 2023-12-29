@@ -6,7 +6,7 @@
 
 
 Mouse::Mouse(Vector2i pos)
-  :_current(SDL_SYSTEM_CURSOR_ARROW)
+  :_current(SDL_SYSTEM_CURSOR_ARROW), _isFrozen(false), _mouseSelecting(false)
 {
   _cursor = SDL_CreateSystemCursor(_current);
   if (_cursor == NULL)
@@ -37,15 +37,10 @@ MouseButtons Mouse::GetPressed()
 }
 void Mouse::Update()
 {
-  UpdatePos();
+  bt = MouseButtons(SDL_GetMouseState(&pos.x, &pos.y));
   ChangeCursorType();
 
   _mouseSelecting = false;//setting up for the next frame
-};
-
-void Mouse::UpdatePos()
-{
-  bt = MouseButtons(SDL_GetMouseState(&pos.x, &pos.y));
 };
 
 void Mouse::ChangeCursorType()

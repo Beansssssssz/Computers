@@ -5,10 +5,13 @@
 #include "Button.hpp"
 
 Button::Button(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect)
-  :Button::Square(tex, srcrect, dstrect), _isPressed(false), _isSelected(false)
-{
-  _isSelected = false;
-};
+  :Button::Square(tex, srcrect, dstrect), _isPressed(true), _isSelected(false)
+  {}
+
+
+Button::Button(const char* path, SDL_Rect srcrect, SDL_Rect dstrect)
+  :Button::Square(path, srcrect, dstrect), _isPressed(true), _isSelected(false)
+  {}
 
 Button::~Button()
 {};
@@ -20,7 +23,7 @@ void Button::Update(MouseButtons btn)
   _isPressed = false;
   _isSelected = false;
 
-  if (mouse->IsMouseColliding(dst)) {
+  if (mouse->IsMouseColliding(_dst)) {
     _isSelected = true;
     if (mouse->GetPressed() == btn) 
       _isPressed = true;
@@ -41,7 +44,8 @@ bool Button::GetIsPressed()
 };
 
 /// <summary>
-/// returns whether or not
+/// returns whether or not the mouse
+/// button is released
 /// </summary>
 /// <returns></returns>
 bool Button::GetIsReleased(MouseButtons state)

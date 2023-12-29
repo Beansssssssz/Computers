@@ -7,10 +7,12 @@
 class Square {
 public:
   Square(SDL_Texture* tex, SDL_Rect src, SDL_Rect dst, bool collisionEnabled = false);
+  Square(const char* path, SDL_Rect src, SDL_Rect dst, bool collisionEnabled = false);
+
   ~Square();
 
   SDL_Texture* GetTexture();
-  void SetTexture(SDL_Texture* texture);
+  void SetTexture(const char* path, SDL_Rect src = { -1,-1,-1,-1 });
 
   SDL_Rect* GetSrcRect();
   SDL_Rect* GetDstRect();
@@ -20,8 +22,11 @@ public:
   bool IsColliding(SDL_Rect rect);
 
 protected:
-  SDL_Texture* tex;
-  SDL_Rect src;
-  SDL_Rect dst;
+  SDL_Texture* _tex;
+  const char* _path;
+
+  SDL_Rect _src;
+  SDL_Rect _dst;
+
   bool collisionEnabled = false;
 };

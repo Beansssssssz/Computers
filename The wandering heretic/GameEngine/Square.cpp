@@ -5,13 +5,22 @@
 #include "Square.hpp"
 #include "RenderWindow.hpp"
 
+Square::Square(const char* path, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)
+  :_path(path), _src(srcrect), _dst(dstrect), collisionEnabled(collisionEnabled)
+{
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  _tex = window->LoadTexture(path);
+  _path = path;
+}
+
 Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)
-  :tex(tex), src(srcrect), dst(dstrect), collisionEnabled(collisionEnabled)
+  :_path(NULL), _src(srcrect), _dst(dstrect),
+  collisionEnabled(collisionEnabled), _tex(tex)
 {}
 
 Square::~Square()
 {
-  SDL_DestroyTexture(tex);
+  SDL_DestroyTexture(_tex);
 }
 
 /// <summary>
@@ -25,10 +34,10 @@ bool Square::IsColliding(SDL_Rect rect)
     return false;
   bool TopTobottom, BottomToTop, LeftToright, RightToleft;
 
-  TopTobottom = dst.y <= rect.y + rect.h;//
-  LeftToright = dst.x < rect.x + rect.h;//
-  BottomToTop = dst.y + dst.h > rect.y;
-  RightToleft = dst.x + dst.w > rect.x;
+  TopTobottom = _dst.y <= rect.y + rect.h;//
+  LeftToright = _dst.x < rect.x + rect.h;//
+  BottomToTop = _dst.y + _dst.h > rect.y;
+  RightToleft = _dst.x + _dst.w > rect.x;
 
   return TopTobottom && BottomToTop && LeftToright && RightToleft;
 }
@@ -39,16 +48,22 @@ bool Square::IsColliding(SDL_Rect rect)
 /// <returns></returns>
 SDL_Texture* Square::GetTexture()
 {
-  return tex;
+  return _tex;
 }
 
 /// <summary>
 /// sets the texture of the rect to the provided texture
+/// if u want the src rect to stay the then dont input the src param
 /// </summary>
 /// <param name="texture"></param>
-void Square::SetTexture(SDL_Texture* texture)
+void Square::SetTexture(const char* path, SDL_Rect src)
 {
-  tex = texture;
+  _path = path;
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  _tex = window->LoadTexture(path);
+
+  if (src.w == -1 && src.h == -1)//width and height cant be negetive
+    _src = src;
 };
 
 /// <summary>
@@ -57,7 +72,7 @@ void Square::SetTexture(SDL_Texture* texture)
 /// <param name="rect"></param>
 void Square::SetSrcRect(SDL_Rect rect)
 {
-  src = rect;
+  _src = rect;
 }
 
 /// <summary>
@@ -66,7 +81,7 @@ void Square::SetSrcRect(SDL_Rect rect)
 /// <param name="rect"></param>
 void Square::SetDstRect(SDL_Rect rect)
 {
-  dst = rect;
+  _dst = rect;
 };
 
 /// <summary>
@@ -75,7 +90,7 @@ void Square::SetDstRect(SDL_Rect rect)
 /// <returns></returns>
 SDL_Rect* Square::GetSrcRect()
 {
-  return &src;
+  return &_src;
 };
 
 /// <summary>
@@ -84,5 +99,5 @@ SDL_Rect* Square::GetSrcRect()
 /// <returns></returns>
 SDL_Rect* Square::GetDstRect()
 {
-  return &dst;
+  return &_dst;
 };

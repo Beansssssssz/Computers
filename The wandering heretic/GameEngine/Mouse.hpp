@@ -24,9 +24,8 @@ public:
   MouseButtons GetPressed();
 
   void Update();
-  void UpdatePos();
-
   void ChangeCursorType();
+
   void MouseIsSelecting();
   void FreezeAutomaticSelecting(bool isFrozen, SDL_SystemCursor cursor
     = SDL_SYSTEM_CURSOR_ARROW);

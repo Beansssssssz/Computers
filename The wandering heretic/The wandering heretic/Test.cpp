@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
     if (running && !gm.Update())//if the game is not going to be closed from events
       running = false;
 
-    if (running && st->Update(true))
+    if (running && st->Update())
       running = false;
 
     window->Display();
@@ -82,6 +82,25 @@ int main(int argc, char* argv[]) {
 
 /*
 TODO
+now:
+//parse and unparse array of objects
+how to do -> create a vector of object,
+then created buttons {},
+in there nest each object.
+
+//display all object into the screen
+how to do -> diplay vector of rects
+
+//add ability to select and update
+how to do -> u have vector, if add square resize vector,
+in deconstructor call function to save the map into json.
+
+//in choosing an element ->
+the last elemented selected(kept in a pointer) will be moved.
+
+
+
+
 2.5 ->add a way to "freeze" stuff //☺
 3.settings ->change colors and change quit btn tex;
 4.sign in //kill me(later, wayyyy later)

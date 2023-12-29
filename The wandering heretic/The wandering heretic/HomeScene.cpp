@@ -306,27 +306,27 @@ void HomeScene::CreateAboutWindow()
   int w, h, ScreenW, ScreenH;
   window->GetWidthHeight(ScreenW, ScreenH);
 
-  SDL_Texture* tex = window->LoadTexture("Assets/GUI/AboutText.png");
-  SDL_QueryTexture(tex, NULL, NULL, &w, &h);//gets the width and height of a texture
+  char* path = const_cast<char*>("Assets/GUI/AboutText.png");
+  w = 940;//width of picture
+  h = 830;// height of picture
 
   int Xstart = ScreenW / 2 - w / 2,
       Ystart = ScreenH / 2 - h / 2;
 
-  SDL_Rect src = utils::InitRects(w, h),
-  dst = utils::InitRects(w, h, Xstart, Ystart);
+  SDL_Rect src{ 0,0,w,h },
+  dst{ Xstart, Ystart, w,h };
 
-  _aboutTex = new Square(tex, src, dst);
+  _aboutTex = new Square(path, src, dst);
 
   //Create the Exit Button:
-  tex = window->LoadTexture("Assets/GUI/Xbtn.png");
-  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+  path = const_cast<char*>("Assets/GUI/Xbtn.png");
+  w = 25;
+  h = 25;
 
-  const int MARGIN = 8;
+  Xstart = dst.x + dst.w - w * 2 - MARGIN_EXIT;
+  Ystart = dst.y + h + MARGIN_EXIT;
+  src = SDL_Rect{ 0,0,w,h },
+  dst = SDL_Rect{ Xstart, Ystart, w,h };
 
-  Xstart = dst.x + dst.w - w * 2 - MARGIN;
-  Ystart = dst.y + h + MARGIN;
-  dst = utils::InitRects(w, h, Xstart, Ystart);
-  src = utils::InitRects(w, h);
-
-  _aboutExit = new Button(tex, src, dst);
+  _aboutExit = new Button(path, src, dst);
 }
