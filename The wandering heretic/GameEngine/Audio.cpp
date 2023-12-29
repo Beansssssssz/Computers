@@ -13,8 +13,14 @@ Audio::Audio()
   _paused = new bool(CHANNAELS_COUNT);
 
   StartMusic();
+  SetVolume(MAX_VAL / 2, 0);
 };
 
+/// <summary>
+/// returns an Instance of the Audio
+/// (no static class so singleton works fine)
+/// </summary>
+/// <returns></returns>
 Audio* Audio::GetAudioInstance()
 {
   if (_audioInstance == NULL)
@@ -42,11 +48,6 @@ void Audio::StartMusic()
   if(Mix_PlayChannel(0, _sound[0], -1) == -1)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
       "Error _sound could not be played: %s", Mix_GetError());
-};
-
-void Audio::PlayMusic(int channel, int loop)
-{
-
 };
 
 /// <summary>
@@ -79,7 +80,7 @@ void Audio::SetVolume(int vol, int channel)
 /// <param name="channel">the channal number</param>
 /// <param name="startPlayin">if to start playing or no,will start
 /// in an infinite loop</param>
-void Audio::SetMusic(const char* path, int channel, bool startPlayin)
+void Audio::SetMusic(const char* path, int channel, int loops, bool startPlayin)
 {
   _sound[channel] = Mix_LoadWAV("Assets/Sounds/ahem_x.wav");
   if (_sound == NULL)
@@ -89,7 +90,7 @@ void Audio::SetMusic(const char* path, int channel, bool startPlayin)
   if (!startPlayin)
     return;
 
-  if (Mix_PlayChannel(-1, _sound[0], -1))
+  if (Mix_PlayChannel(-1, _sound[0], loops))
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
       "Error _sound failed to play: %s", Mix_GetError());
 
@@ -108,7 +109,6 @@ void Audio::SetMusicState(bool state, int channel) {
   else
     ResumeMusic(channel);
 }
-
 
 /// <summary>
 /// Pauses the music for selected channel or all if no value

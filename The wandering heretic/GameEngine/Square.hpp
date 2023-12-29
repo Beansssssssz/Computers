@@ -20,7 +20,6 @@ public:
   void SetDstRect(SDL_Rect rect);
 
   bool IsColliding(SDL_Rect rect);
-
 protected:
   SDL_Texture* _tex;
   const char* _path;

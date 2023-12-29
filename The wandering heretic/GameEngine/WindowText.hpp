@@ -23,6 +23,7 @@ public:
 
   std::string GetText();
   int GetTextWidth();
+  int GetTextHeight();
   Vector2i GetPos();
 
 private:
@@ -33,7 +34,7 @@ private:
   int _characterSize;
   const char* _fontPath;
 
-  int _width;
+  int _width, _height;
 
   Vector2i _pos = Vector2i{ 0,0 };//default value is {0,0}
 };

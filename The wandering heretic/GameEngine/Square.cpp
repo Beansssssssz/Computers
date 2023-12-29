@@ -20,7 +20,8 @@ Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collis
 
 Square::~Square()
 {
-  SDL_DestroyTexture(_tex);
+  if(_tex != NULL)
+    SDL_DestroyTexture(_tex);
 }
 
 /// <summary>

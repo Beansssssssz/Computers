@@ -1,10 +1,8 @@
 #pragma once
 
-#include "Audio.hpp"
-#include "PopUpWindow.hpp"
-#include "WindowText.hpp"
 #include "WelcomeScene.hpp"
 #include "HomeScene.hpp"
+#include "Setting.hpp"
 
 enum class Scenes
 {
@@ -22,9 +20,9 @@ public:
   ~GameManager();
   bool Update();
 
-  bool UpdateWelcomeScene();
-  bool UpdateHomeScene();
-  bool UpdateGameScene();
+  void UpdateWelcomeScene();
+  int UpdateHomeScene();
+  int UpdateGameScene();
 
   //PopUpWindow SetUpRandTab(SDL_Texture* tex);
 private:
@@ -34,6 +32,8 @@ private:
   WelcomeScene* _wcScene;
   HomeScene* _HomeScene;
   WelcomeScene* _gameScreen;
+
+  Settings* _settings;
 };
 
 

@@ -6,7 +6,6 @@
 
 //including my own libs
 #include "GameManager.hpp"
-#include "Setting.hpp"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -35,8 +34,6 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
 
   GameManager gm;
-  Settings* st = Settings::CreateSettings();
-  st->OpenTab();
 
   bool running = true;
   SDL_Event event;
@@ -61,9 +58,6 @@ int main(int argc, char* argv[]) {
     keyboard->Update();
 
     if (running && !gm.Update())//if the game is not going to be closed from events
-      running = false;
-
-    if (running && st->Update())
       running = false;
 
     window->Display();
@@ -98,10 +92,12 @@ in deconstructor call function to save the map into json.
 //in choosing an element ->
 the last elemented selected(kept in a pointer) will be moved.
 
-
-
-
 2.5 ->add a way to "freeze" stuff //☺
+
+
+
+
+
 3.settings ->change colors and change quit btn tex;
 4.sign in //kill me(later, wayyyy later)
 5.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)

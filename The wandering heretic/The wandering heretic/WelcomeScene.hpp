@@ -9,7 +9,7 @@ class WelcomeScene {
 public:
   WelcomeScene();
   ~WelcomeScene();
-  int Update();
+  bool Update();
   void SetKeyPressed(bool keyPressed);
 
 private:

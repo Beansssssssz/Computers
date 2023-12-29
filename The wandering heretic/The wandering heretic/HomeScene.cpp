@@ -79,7 +79,7 @@ void HomeScene::UpdateButtons()
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
-  ButtonResized(); //nees to applay the resizing before rending
+  ButtonResized(); //needs to applay the resizing before rending
 
   _mousePr = false;//reseting value
   //Buttons Update and render
@@ -306,7 +306,7 @@ void HomeScene::CreateAboutWindow()
   int w, h, ScreenW, ScreenH;
   window->GetWidthHeight(ScreenW, ScreenH);
 
-  char* path = const_cast<char*>("Assets/GUI/AboutText.png");
+  SDL_Texture* tex = window->LoadTexture("Assets/GUI/AboutText.png");
   w = 940;//width of picture
   h = 830;// height of picture
 
@@ -316,10 +316,10 @@ void HomeScene::CreateAboutWindow()
   SDL_Rect src{ 0,0,w,h },
   dst{ Xstart, Ystart, w,h };
 
-  _aboutTex = new Square(path, src, dst);
+  _aboutTex = new Square(tex, src, dst);
 
   //Create the Exit Button:
-  path = const_cast<char*>("Assets/GUI/Xbtn.png");
+  tex = window->LoadTexture("Assets/GUI/Xbtn.png");
   w = 25;
   h = 25;
 
@@ -328,5 +328,5 @@ void HomeScene::CreateAboutWindow()
   src = SDL_Rect{ 0,0,w,h },
   dst = SDL_Rect{ Xstart, Ystart, w,h };
 
-  _aboutExit = new Button(path, src, dst);
+  _aboutExit = new Button(tex, src, dst);
 }

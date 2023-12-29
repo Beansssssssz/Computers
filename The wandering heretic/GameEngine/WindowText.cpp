@@ -133,11 +133,37 @@ int WindowText::GetTextWidth()
     surfaceMessage);
 
   _width = surfaceMessage->w;
+  _height = surfaceMessage->h;
 
   SDL_FreeSurface(surfaceMessage);
   SDL_DestroyTexture(message);
 
   return _width;
+}
+
+/// <summary>
+/// returns the text height
+/// </summary>
+/// <returns></returns>
+int WindowText::GetTextHeight()
+{
+  if(!(_height <= 0 && text.size() > 0))
+    return _height;
+
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, text.c_str(),
+    { 0,0,0,0 });
+
+  SDL_Texture* message = SDL_CreateTextureFromSurface(window->GetRenderer(),
+    surfaceMessage);
+
+  _width = surfaceMessage->w;
+  _height = surfaceMessage->h;
+
+  SDL_FreeSurface(surfaceMessage);
+  SDL_DestroyTexture(message);
+
+  return _height;
 }
 
 Vector2i WindowText::GetPos()

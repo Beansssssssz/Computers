@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Button.hpp"
+
 #define BUTTON_ARR_SIZE 4
 
 enum class HomeButtons {

@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include "RenderWindow.hpp"
-#include "Audio.hpp"
 
 Settings::Settings(Button* btnExit, SDL_Rect rect, SDL_Color color)
   :Settings::PopUpWindow(btnExit, rect, color), _marginY(0),
@@ -115,15 +114,16 @@ void Settings::CreateText() {
   CreateButtons();//is here becuse is saves cycles creating the text first
   //then changing the position only once(not necessary its just optimization)
 
+  SDL_Rect tempRect = *_btnMusic->GetDstRect();
+
   ///music text
-  int x = _btnMusic->GetDstRect()->x - _musicText->GetTextWidth() - MARGIN;
-  int y = _btnMusic->GetDstRect()->y;
-  _musicText->SetPos({ x,y });
+  int x = tempRect.x - _musicText->GetTextWidth() - MARGIN;
+  int y = tempRect.y + _musicText->GetTextHeight();
+  _musicText->SetPos(Vector2i{x, y});
 
   //effect text
-  y = _btnEffect->GetDstRect()->y;
-
-  _effectText->SetPos({ x,y });
+  y = _btnEffect->GetDstRect()->y + _effectText->GetTextHeight();
+  _effectText->SetPos(Vector2i{x, y});
 }
 
 /// <summary>
@@ -141,7 +141,7 @@ void Settings::CreateButtons(int marginx, int marginy) {
   CalculateMargin(marginy, temp.h);
 
   //create Music Button:
-  dst.x = temp.x + _effectText->GetTextWidth() + MARGIN;
+  dst.x = ( temp.x  + temp.w + _effectText->GetTextWidth()) / 2 ;
   dst.y = temp.y + marginy;
   _btnMusic = new Button(tex, src, dst);
 
@@ -171,6 +171,9 @@ void Settings::CreateSlider(int marginx, int w, int h) {
   _slider = new Slider(dst, pos1, pos2, color, 15);
 }
 
+/// <summary>
+/// creates the quit button
+/// </summary>
 void Settings::CreateQuitButton() {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   SDL_Texture* tex = window->LoadTexture("Assets/GUI/ON_OFF.png");

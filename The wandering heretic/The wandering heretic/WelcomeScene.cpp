@@ -25,10 +25,10 @@ WelcomeScene::~WelcomeScene()
 /// <summary>
 /// the update function
 /// </summary>
-int WelcomeScene::Update() {
+bool WelcomeScene::Update() {
   Keyboard* keyboard = Keyboard::GetKeyboardInstance();
 
-  int ret = false;
+  bool ret = false;
   if (keyboard->IsKeyPressed())
     _keyPressed = true;
   else if (_keyPressed) {

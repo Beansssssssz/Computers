@@ -1,9 +1,12 @@
+#pragma once
+
 #include <SDL.h>
 #include <nlohmann/json.hpp>
 #include <iostream>
 
 using json = nlohmann::json;
 
+///returns the name of the inputed var
 #define GETVARNAME(x) #x
 
 namespace jsonParser {
@@ -46,6 +49,12 @@ namespace jsonParser {
     return 0;
   }
 
+  /// <summary>
+  /// turns a SDL_REct into a json
+  /// the json param exmple: data["rect.x"] / data["rect.w"] 
+  /// </summary>
+  /// <param name="rect"></param>
+  /// <returns></returns>
   inline json FromRectToJson(SDL_Rect rect) {
     json data;
     data[GETVARNAME(rect.h)] = rect.h;
@@ -56,6 +65,13 @@ namespace jsonParser {
     return data;
   };
 
+  /// <summary>
+  /// turns a json into an SDL_Rect struct
+  /// exmple of json: data["rect.x"] / data["rect.w"]
+  /// otherwise will not work
+  /// </summary>
+  /// <param name="data"></param>
+  /// <returns></returns>
   inline SDL_Rect FromJsonToRect(json data) {
     SDL_Rect rect;
     rect.x = data[GETVARNAME(rect.x)];
@@ -66,7 +82,14 @@ namespace jsonParser {
     return rect;
   }
 
-  inline json Keep(SDL_Rect dst, SDL_Rect src, const char* path) {
+  /// <summary>
+  /// creates a json data from a normal sqaure class data
+  /// </summary>
+  /// <param name="dst"></param>
+  /// <param name="src"></param>
+  /// <param name="path"></param>
+  /// <returns></returns>
+  inline json CreateJsonFromData(SDL_Rect dst, SDL_Rect src, const char* path) {
     json data;
     data["src"] = FromRectToJson(src);
     data["dst"] = FromRectToJson(dst);
@@ -74,7 +97,6 @@ namespace jsonParser {
 
     return data;
   }
-
 }
 
 //no hagging macros

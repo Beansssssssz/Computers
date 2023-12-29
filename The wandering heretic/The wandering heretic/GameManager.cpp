@@ -7,12 +7,15 @@ GameManager::GameManager()
 {
   _wcScene = new WelcomeScene();
   _HomeScene = new HomeScene();
-  _gameScreen = new WelcomeScene();
+  //_gameScreen = new WelcomeScene();
+
+  _settings = Settings::CreateSettings();
 };
 
 GameManager::~GameManager()
 {
-  delete _wcScene, _gameScreen, _HomeScene;
+  delete _wcScene, _gameScreen, _HomeScene
+    ,_settings;
 };
 
 /// <summary>
@@ -29,33 +32,38 @@ bool GameManager::Update()
     UpdateWelcomeScene();
     break;
   case Scenes::home:
-    return UpdateHomeScene();
+    ret = UpdateHomeScene();
+    if (!ret)
+      return false;
     break;
   case Scenes::game:
-    return UpdateGameScene();
+    //return UpdateGameScene();
+    return false;
     break;
   }
+
+  //settings is a universal thing so in game manager
+  _settings->Update(_currentScene != Scenes::home);
   return true;
 };
 
 /// <summary>
-/// Always returns false
+/// checks if a u need to go into
+/// the home Scene
 /// </summary>
-/// <returns></returns>
-bool GameManager::UpdateWelcomeScene()
+void GameManager::UpdateWelcomeScene()
 {
-  int  ret = _wcScene->Update();
-  if (ret == 1)
+  if (_wcScene->Update() == 1){
     _currentScene = Scenes::home;
-
-  return false;
+    delete _wcScene;
+  }
 }
 
 /// <summary>
 /// Updates the Home Scene with the correct happings
 /// </summary>
 /// <returns></returns>
-bool GameManager::UpdateHomeScene()
+int GameManager::UpdateHomeScene()
 {
   int ret = _HomeScene->Update();
   if (ret == (int)HomeButtons::Play) {
@@ -63,28 +71,20 @@ bool GameManager::UpdateHomeScene()
     delete _HomeScene;
   }
 
-  if (ret == (int)HomeButtons::Settings)
-    std::cout << "kill me" << std::endl;
+  else if (ret == (int)HomeButtons::Settings)
+    _settings->OpenTab();
 
-  return ret != (int)HomeButtons::Quit;
+  else if (ret == (int)HomeButtons::Quit)
+    return false;
+
+  return true;
 };
 
 /// <summary>
 /// TODO
 /// </summary>
 /// <returns></returns>
-bool GameManager::UpdateGameScene()
+int GameManager::UpdateGameScene()
 {
-  return false;
+  return 0;
 }
-
-//PopUpWindow GameManager::SetUpRandTab(SDL_Texture* tex)
-//{
-//  SDL_Rect rect1;
-//  rect1.x = 300; rect1.y = 300, rect1.w = 500; rect1.h = 500;
-//  SDL_Color color{ 40, 80, 100, 160 };
-//  Button button1 = utils::CreateButton(tex, 113, 114, Vector2i(2, 1));
-//
-//  PopUpWindow tab(button1, rect1, color, true);
-//  return tab;
-//};

@@ -4,6 +4,7 @@
 #include "Slider.hpp"
 #include "PopUpWindow.hpp"
 #include "WindowText.hpp"
+#include "Audio.hpp"
 
 // the margin between the text and the button
 #define MARGIN 30;
@@ -15,6 +16,9 @@ public:
   ~Settings();
 
   int Update(bool NeedExitGame = false);
+
+  static Settings* CreateSettings(int marginx = 350, int marginy = 150);
+private:
   void UpdateMusic();
   void UpdateText();
   int UpdateQuitBtn();
@@ -23,9 +27,6 @@ public:
   void CreateSlider(int marginx = 10, int w = 50, int h = 50);
   void CreateQuitButton();
   void CreateText();
-
-  static Settings* CreateSettings(int marginx = 350, int marginy = 150);
-private:
   void CalculateMargin(int margin, int overall);
 
   Button* _btnMusic;//the on and off of the general music
