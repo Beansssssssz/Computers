@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameScene.hpp" />
     <ClCompile Include="HomeScene.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="Test.cpp" />
