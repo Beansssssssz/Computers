@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 
-#define CHANNAELS_COUNT 1
+#define CHANNELS_COUNT 1
 
 class Audio
 {

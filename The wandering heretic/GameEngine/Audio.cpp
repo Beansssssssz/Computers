@@ -8,9 +8,9 @@
 //channel 1 is for pop effect(npc or such)
 Audio::Audio()
 {
-  Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, CHANNAELS_COUNT, 1024);
-  _sound = new Mix_Chunk* [CHANNAELS_COUNT];
-  _paused = new bool(CHANNAELS_COUNT);
+  Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, CHANNELS_COUNT, 1024);
+  _sound = new Mix_Chunk* [CHANNELS_COUNT];
+  _paused = new bool(CHANNELS_COUNT);
 
   StartMusic();
   SetVolume(MAX_VAL / 2, 0);
@@ -120,7 +120,7 @@ void Audio::PauseMusic(int channel)
   if (channel >= 0)
     _paused[channel] = true;
   else
-    for (char i = 0; i < CHANNAELS_COUNT; i++)
+    for (char i = 0; i < CHANNELS_COUNT; i++)
       _paused[channel] = true;
   Mix_Pause(channel);
 };
@@ -135,7 +135,7 @@ void Audio::ResumeMusic(int channel)
   if (channel >= 0)
     _paused[channel] = false;
   else
-    for (char i = 0; i < CHANNAELS_COUNT; i++)
+    for (char i = 0; i < CHANNELS_COUNT; i++)
       _paused[channel] = false;
 
   Mix_Resume(channel);

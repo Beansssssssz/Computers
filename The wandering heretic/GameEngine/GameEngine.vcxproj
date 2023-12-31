@@ -143,14 +143,11 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Keyboard.cpp" />
-    <ClCompile Include="Math.cpp" />
     <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="Platforms.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="Square.cpp" />
-    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WindowText.cpp" />
   </ItemGroup>
   <ItemGroup>

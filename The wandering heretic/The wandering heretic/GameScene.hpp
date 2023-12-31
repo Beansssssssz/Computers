@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Square.hpp"
+#include "Button.hpp"
+
+#include <string>
 
 enum class Mode
 {
@@ -15,6 +17,10 @@ public:
 
   int Update();
 private:
+  int LogUser();
+  char** GetAllUsers();
+  void AddUser();
 
+  std::string _currentUser;
   Square* _bg;
 };
