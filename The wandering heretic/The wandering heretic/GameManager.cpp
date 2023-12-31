@@ -7,7 +7,7 @@ GameManager::GameManager()
 {
   _wcScene = new WelcomeScene();
   _HomeScene = new HomeScene();
-  //_gameScreen = new WelcomeScene();
+  _gameScreen = new GameScene();
 
   _settings = Settings::CreateSettings();
 };
@@ -37,8 +37,9 @@ bool GameManager::Update()
       return false;
     break;
   case Scenes::game:
-    //return UpdateGameScene();
-    return false;
+    ret = UpdateGameScene();
+    if (!ret)
+      return false;
     break;
   }
 
@@ -53,9 +54,9 @@ bool GameManager::Update()
 /// </summary>
 void GameManager::UpdateWelcomeScene()
 {
-  if (_wcScene->Update() == 1){
+  if (_wcScene->Update()){
     _currentScene = Scenes::home;
-    delete _wcScene;
+    //delete _wcScene;
   }
 }
 
@@ -63,12 +64,12 @@ void GameManager::UpdateWelcomeScene()
 /// Updates the Home Scene with the correct happings
 /// </summary>
 /// <returns></returns>
-int GameManager::UpdateHomeScene()
+bool GameManager::UpdateHomeScene()
 {
   int ret = _HomeScene->Update();
   if (ret == (int)HomeButtons::Play) {
     _currentScene = Scenes::game;
-    delete _HomeScene;
+    //delete _HomeScene;
   }
 
   else if (ret == (int)HomeButtons::Settings)
@@ -83,8 +84,9 @@ int GameManager::UpdateHomeScene()
 /// <summary>
 /// TODO
 /// </summary>
-/// <returns></returns>
-int GameManager::UpdateGameScene()
+/// <returns>true if game is running false if quitting game</returns>
+bool GameManager::UpdateGameScene()
 {
-  return 0;
+  _gameScreen->Update();
+  return true;
 }

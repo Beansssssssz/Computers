@@ -3,9 +3,9 @@
 #include <iostream>
 
 #include "Mouse.hpp"
+#include "Utils.hpp"
 
-
-Mouse::Mouse(Vector2i pos)
+Mouse::Mouse(Vector2i _pos)
   :_current(SDL_SYSTEM_CURSOR_ARROW), _isFrozen(false), _mouseSelecting(false)
 {
   _cursor = SDL_CreateSystemCursor(_current);
@@ -28,7 +28,7 @@ Mouse* Mouse::GetMouseInstance()
 
 Vector2i Mouse::GetPos()
 {
-  return pos;
+  return _pos;
 };
 
 MouseButtons Mouse::GetPressed()
@@ -37,7 +37,7 @@ MouseButtons Mouse::GetPressed()
 }
 void Mouse::Update()
 {
-  bt = MouseButtons(SDL_GetMouseState(&pos.x, &pos.y));
+  bt = MouseButtons(SDL_GetMouseState(&_pos.x, &_pos.y));
   ChangeCursorType();
 
   _mouseSelecting = false;//setting up for the next frame

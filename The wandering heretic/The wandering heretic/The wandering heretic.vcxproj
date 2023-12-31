@@ -23,6 +23,7 @@
     <ClCompile Include="GameScene.cpp" />
     <ClInclude Include="GameScene.hpp" />
     <ClCompile Include="HomeScene.cpp" />
+    <ClCompile Include="LevelEditor.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WelcomeScene.cpp" />
@@ -46,6 +47,7 @@
   <ItemGroup>
     <ClInclude Include="GameManager.hpp" />
     <ClInclude Include="HomeScene.hpp" />
+    <ClInclude Include="LevelEditor.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Setting.hpp" />
     <ClInclude Include="WelcomeScene.hpp" />

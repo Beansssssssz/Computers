@@ -8,9 +8,6 @@ Mouse* Mouse::_mousePtr = NULL;
 Keyboard* Keyboard::_keyboardPtr = NULL;
 Audio* Audio::_audioInstance = NULL;
 
-
-//std::vector<Button*> CreateVector();
-
 int main(int argc, char* argv[]) {
   //initializing the libraries
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
@@ -36,8 +33,6 @@ int main(int argc, char* argv[]) {
   bool running = true;
   SDL_Event event;
 
-  std::vector<Button*> vec = CreateVector();
-
   //starting the main loop
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
@@ -49,8 +44,8 @@ int main(int argc, char* argv[]) {
 
       keyboard->BuildText(event);
     }
-    if (!window->IsWindowFocused())
-      continue;
+   /* if (!window->IsWindowFocused())
+      continue;*/
 
     window->Clear();
 
@@ -60,29 +55,10 @@ int main(int argc, char* argv[]) {
     if (running && !gm.Update())//if the game is not going to be closed from events
       running = false;
 
-    for (Button* btn : vec)
-    {
-      btn->Update();
-      window->Render((Square*)btn);
-    }
-
-    if (mouse->GetPressed() == MouseButtons::mbl) {
-      int x, y, w = 32, h = 32;
-      Vector2i pos = mouse->GetPos();
-      x = pos.x;
-      y = pos.y;
-      SDL_Rect dst = { x, y, h, w },
-        src = { 0, 0, w, h };
-      Button* btn = new Button("Assets/ground_grass1.png", src, dst);
-      vec.push_back(btn);
-    }
-
     window->Display();
 
     utils::CapFPS(start, 60);
   };
-
-  vec.empty();
 
   //deleting singletons
   delete window, mouse, keyboard, audio;
@@ -92,39 +68,37 @@ int main(int argc, char* argv[]) {
   TTF_Quit();
   IMG_Quit();
   SDL_Quit();
-
-  std::cin.get();
   return 0;
 };
 
-std::vector<Button*> CreateVector() {
-  std::vector<Button*> vec;
-  std::string path = "Assets/ground_grass1.png";
-  SDL_Rect dst, src;
-
-  //
-  dst = SDL_Rect{ 0, 0, 32,32 };
-  src = SDL_Rect{ 0, 0, 32, 32 };
-
-  Button* btn = new Button(path.c_str(), src, dst);
-  vec.push_back(btn);
-
-  //
-  dst = SDL_Rect{ 32, 0, 32 ,32 };
-  src = SDL_Rect{ 0, 0, 32, 32 };
-
-  btn = new Button(path.c_str(), src, dst);
-  vec.push_back(btn);
-
-  //
-  dst = SDL_Rect{ 64, 0, 32, 32 };
-  src = SDL_Rect{ 0, 0, 32, 32 };
-
-  btn = new Button(path.c_str(), src, dst);
-  vec.push_back(btn);
-
-  return vec;
-}
+//std::vector<Button*> CreateVector() {
+//  std::vector<Button*> vec;
+//  std::string path = "Assets/ground_grass1.png";
+//  SDL_Rect dst, src;
+//
+//  //
+//  dst = SDL_Rect{ 0, 0, 32,32 };
+//  src = SDL_Rect{ 0, 0, 32, 32 };
+//
+//  Button* btn = new Button(path.c_str(), src, dst);
+//  vec.push_back(btn);
+//
+//  //
+//  dst = SDL_Rect{ 32, 0, 32 ,32 };
+//  src = SDL_Rect{ 0, 0, 32, 32 };
+//
+//  btn = new Button(path.c_str(), src, dst);
+//  vec.push_back(btn);
+//
+//  //
+//  dst = SDL_Rect{ 64, 0, 32, 32 };
+//  src = SDL_Rect{ 0, 0, 32, 32 };
+//
+//  btn = new Button(path.c_str(), src, dst);
+//  vec.push_back(btn);
+//
+//  return vec;
+//}
 
 /*
 TODO
@@ -145,8 +119,6 @@ in deconstructor call function to save the map into json.
 the last elemented selected(kept in a pointer) will be moved.
 
 2.5 ->add a way to "freeze" stuff //☺
-
-
 
 
 

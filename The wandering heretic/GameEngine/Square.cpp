@@ -19,9 +19,9 @@ Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collis
 
 Square::~Square()
 {
-  if(_tex != NULL)
+  if (_tex != nullptr)
     SDL_DestroyTexture(_tex);
-}
+};
 
 /// <summary>
 /// return true if the rect provided and this rect are colliding.
@@ -64,6 +64,11 @@ void Square::SetTexture(const char* path, SDL_Rect src)
 
   if (src.w == -1 && src.h == -1)//width and height cant be negetive
     _src = src;
+};
+
+const char* Square::GetPath()
+{
+  return _path;
 };
 
 /// <summary>

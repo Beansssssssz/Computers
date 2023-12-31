@@ -1,25 +1,23 @@
 #include "GameScene.hpp"
+#include "RenderWindow.hpp"
 
 #include <iostream>
 #include <vector>
 
 GameScene::GameScene()
-  :_bg(NULL)
+  :_bg(NULL), edit(NULL)
 {
-
+  edit = new LevelEditor();
 };
 
 GameScene::~GameScene()
 {
-  delete _bg;
+  delete _bg, edit;
 };
 
 int GameScene::Update()
 {
-  std::vector<Button> buttons;
-  /*Button temp("a", { 0,0,0,0 });
-  buttons.push_back();*/
-
+  edit->Update();
   return 0;
 };
 

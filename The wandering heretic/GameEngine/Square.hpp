@@ -14,6 +14,7 @@ public:
   SDL_Texture* GetTexture();
   void SetTexture(const char* path, SDL_Rect src = { -1,-1,-1,-1 });
 
+  const char* GetPath();
   SDL_Rect* GetSrcRect();
   SDL_Rect* GetDstRect();
   void SetSrcRect(SDL_Rect rect);

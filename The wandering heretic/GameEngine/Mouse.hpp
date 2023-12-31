@@ -36,10 +36,10 @@ private:
   Mouse(Vector2i pos);
 
   MouseButtons bt = MouseButtons::none;
-  Vector2i pos;
-  SDL_Cursor* _cursor;
-  SDL_SystemCursor _current;
-  bool _mouseSelecting;
+  Vector2i _pos; // the pos of the cursor
+  SDL_Cursor* _cursor; // the cursor
+  SDL_SystemCursor _current; // current cursor
+  bool _mouseSelecting; // if the mouse is currently selecting smth
 
-  bool _isFrozen;
+  bool _isFrozen;// if mouse is frozen.
 };

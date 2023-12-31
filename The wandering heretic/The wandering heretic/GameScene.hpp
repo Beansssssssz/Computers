@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Button.hpp"
+#include "LevelEditor.hpp"
 
 #include <string>
 
@@ -23,4 +24,6 @@ private:
 
   std::string _currentUser;
   Square* _bg;
+
+  LevelEditor* edit;
 };

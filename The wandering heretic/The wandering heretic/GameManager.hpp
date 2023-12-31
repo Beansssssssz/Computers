@@ -2,6 +2,7 @@
 
 #include "WelcomeScene.hpp"
 #include "HomeScene.hpp"
+#include "GameScene.hpp"
 #include "Setting.hpp"
 
 enum class Scenes
@@ -21,17 +22,14 @@ public:
   bool Update();
 
   void UpdateWelcomeScene();
-  int UpdateHomeScene();
-  int UpdateGameScene();
-
-  //PopUpWindow SetUpRandTab(SDL_Texture* tex);
+  bool UpdateHomeScene();
+  bool UpdateGameScene();
 private:
-
   Scenes _currentScene = Scenes::welcome;//You always start at the welcome Scene
 
   WelcomeScene* _wcScene;
   HomeScene* _HomeScene;
-  WelcomeScene* _gameScreen;
+  GameScene* _gameScreen;
 
   Settings* _settings;
 };

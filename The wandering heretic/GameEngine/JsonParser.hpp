@@ -1,8 +1,11 @@
 #pragma once
 
 #include <SDL.h>
-#include <nlohmann/json.hpp>
 #include <iostream>
+#include <fstream>
+#include <nlohmann/json.hpp>
+
+#include "Button.hpp"
 
 using json = nlohmann::json;
 
@@ -97,8 +100,31 @@ namespace jsonParser {
 
     return data;
   }
+
+  /// <summary>
+  /// froms a json param it create a button obj
+  /// </summary>
+  /// <param name="data"></param>
+  /// <returns></returns>
+  inline Button* FromJsonToButton(json data) {
+    SDL_Rect dst = FromJsonToRect(data["dst"]),
+      src = FromJsonToRect(data["src"]);
+    std::string path = data["path"];
+
+    return new Button(path.c_str(), src, dst);
+  };
+
+  /// <summary>
+  /// froms a Button param it create a json
+  /// </summary>
+  /// <param name="btn"></param>
+  /// <returns></returns>
+  inline json FromButtonToJson(Button* btn) {
+    json data;
+
+    return CreateJsonFromData(*btn->GetSrcRect(),
+      *btn->GetSrcRect(), btn->GetPath());
+  };
 }
 
-//no hagging macros
-//only leads to bad code design
 #undef GETVARNAME
