@@ -249,7 +249,8 @@ void HomeScene::CreateButtons()
   Xstart = Xstart / 2 - w / 2;
   Ystart = Ystart / 2 - (h * 5) - MARGINY;
 
-  SDL_Rect src = utils::InitRects(w, h), dst = utils::InitRects(w, h, Xstart, Ystart);
+  SDL_Rect src{ 0,0,w,h },
+    dst = { Xstart,Ystart,w,h };
 
   window->GetWidthHeight(dst.x, dst.y);
   dst.x = dst.x / 2 - w / 2;
@@ -276,8 +277,8 @@ void HomeScene::CreateArrows()
   int Xstart = _buttons[0]->GetDstRect()->x - ARROWWIDTH - MARGINX,
   Ystart = _buttons[0]->GetDstRect()->y + ARROWHEIGHT / 2 + 8;//the 8 is there because of a problem with the
 
-  SDL_Rect src = utils::InitRects(ARROWWIDTH, ARROWHEIGHT),
-    dst = utils::InitRects(ARROWWIDTH, ARROWHEIGHT, Xstart, Ystart);
+  SDL_Rect src = { 0,0, ARROWWIDTH , ARROWHEIGHT },
+    dst = { Xstart,Ystart, ARROWWIDTH , ARROWHEIGHT };
 
   int diff = _buttons[0]->GetDstRect()->h + MARGINY;
   for (int i = 0; i < BUTTON_ARR_SIZE; i++) {

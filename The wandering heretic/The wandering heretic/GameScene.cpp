@@ -16,10 +16,13 @@ GameScene::~GameScene()
   delete _edit;
 };
 
+/// <summary>
+/// TODO
+/// </summary>
+/// <returns></returns>
 int GameScene::Update()
 {
-  _edit->Update();
-  return 0;
+  return _edit->Update();
 };
 
 int GameScene::LogUser()

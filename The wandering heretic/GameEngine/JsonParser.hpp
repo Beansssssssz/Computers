@@ -28,12 +28,17 @@ namespace jsonParser {
       return 1;
     }
 
-    file << std::setw(4) << data << std::endl;
+    try {
+      file << std::setw(4) << data << std::endl;
+      std::cout << "JSON file updated successfully.\n";
+      return 0;
+    }
+    catch (const std::exception& e) {
+      std::cout << "Error writing to JSON file: " << e.what() << "\n";
+      std::cout << data<< "\n";
+      return 1;
+    }
     file.close();
-
-    std::cout << "JSON file updated successfully.\n";
-
-    return 0;
   }
 
   /// <summary>
@@ -92,7 +97,7 @@ namespace jsonParser {
   /// <param name="src"></param>
   /// <param name="path"></param>
   /// <returns></returns>
-  inline json CreateJsonFromData(SDL_Rect dst, SDL_Rect src, const char* path) {
+  inline json CreateJsonFromData(SDL_Rect dst, SDL_Rect src, std::string path) {
     json data;
     data["src"] = FromRectToJson(src);
     data["dst"] = FromRectToJson(dst);

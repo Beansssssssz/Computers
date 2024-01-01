@@ -1,8 +1,6 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <iostream>
-
 #include "RenderWindow.hpp"
+
+#include <iostream>
 
 RenderWindow::RenderWindow(const char* title)
   :window(NULL), renderer(NULL)
@@ -26,7 +24,6 @@ RenderWindow::RenderWindow(const char* title)
 };
 
 RenderWindow::~RenderWindow() {
-
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 };
@@ -43,10 +40,7 @@ RenderWindow* RenderWindow::GetRenderWindowInstance() {
 /// <param name="filepath">thr path of an img to turn into an sdl_texture</param>
 /// <returns>an sdl texture from the path</returns>
 SDL_Texture* RenderWindow::LoadTexture(const char* filepath) {
-
-  SDL_Texture* texture = NULL;
-  texture = IMG_LoadTexture(renderer, filepath);
-
+   SDL_Texture* texture = IMG_LoadTexture(renderer, filepath);
   if (texture == NULL)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to load. Error: %s", IMG_GetError());
 
@@ -73,10 +67,8 @@ void RenderWindow::Render(Square* sqr)
 
 void RenderWindow::GetWidthHeight(int& w, int& h)
 {
-  SDL_DisplayMode DM;
-  SDL_GetDesktopDisplayMode(0, &DM);
-  w = DM.w;
-  h = DM.h;
+  w = 1920;
+  h = 1080;
 };
 
 bool RenderWindow::IsWindowFocused()
@@ -118,5 +110,5 @@ void RenderWindow::DisplayRect(SDL_Rect* rect, SDL_Color color)
     oldColor.g, oldColor.b, oldColor.a);
 
   if (err != 0)
-    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Sdl failed to render a rect", SDL_GetError());
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Sdl failed to render a rect %s", SDL_GetError());
 }

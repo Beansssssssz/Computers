@@ -46,7 +46,10 @@ bool GameManager::Update()
   }
 
   //settings is a universal thing so in game manager
-  _settings->Update(_currentScene != Scenes::home);
+  if (_settings->Update(_currentScene != Scenes::home)) {
+    _currentScene = Scenes::welcome;
+    _settings->CloseTab();
+  }
   return true;
 };
 
@@ -85,6 +88,7 @@ bool GameManager::UpdateHomeScene()
 /// <returns>true if game is running false if quitting game</returns>
 bool GameManager::UpdateGameScene()
 {
-  _gameScene->Update();
+  if (_gameScene->Update())
+    _settings->OpenTab();
   return true;
 }

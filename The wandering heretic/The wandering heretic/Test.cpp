@@ -38,8 +38,10 @@ int main(int argc, char* argv[]) {
 
     while (SDL_PollEvent(&event))
     {
-      if (event.type == SDL_QUIT)
+      if (event.type == SDL_QUIT) {
         running = false;
+        break;
+      }
 
       keyboard->BuildText(event);
     }

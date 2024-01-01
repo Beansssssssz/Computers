@@ -86,13 +86,14 @@ namespace utils {
       val = min;
   }
 
-  inline SDL_Rect InitRects(int w, int h, int x = 0, int y = 0) {
-    SDL_Rect rect;
-    rect.w = w;
-    rect.h = h;
-    rect.x = x;
-    rect.y = y;
-
-    return rect;
+  /// <summary>
+  /// returns true if the two rects are equale
+  /// </summary>
+  /// <param name="rect1"></param>
+  /// <param name="rect2"></param>
+  /// <returns></returns>
+  inline bool CmpRects(SDL_Rect rect1, SDL_Rect rect2) {
+    return rect1.x == rect2.x && rect1.y == rect2.y
+      && rect1.w == rect2.w && rect1.h == rect2.h;
   }
 };

@@ -5,16 +5,16 @@
 #include "Square.hpp"
 #include "RenderWindow.hpp"
 
-Square::Square(const char* path, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)
+Square::Square(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)
   :_path(path), _src(srcrect), _dst(dstrect), collisionEnabled(collisionEnabled)
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  _tex = window->LoadTexture(path);
+  _tex = window->LoadTexture(path.c_str());
 }
 
 Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)
-  :_path(NULL), _src(srcrect), _dst(dstrect),
-  collisionEnabled(collisionEnabled), _tex(tex)
+  :_src(srcrect), _dst(dstrect),_tex(tex),
+  collisionEnabled(collisionEnabled)
 {}
 
 Square::~Square()
@@ -66,7 +66,7 @@ void Square::SetTexture(const char* path, SDL_Rect src)
     _src = src;
 };
 
-const char* Square::GetPath()
+std::string Square::GetPath()
 {
   return _path;
 };

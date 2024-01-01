@@ -6,11 +6,12 @@
 #include "Button.hpp"
 #include "PopUpWindow.hpp"
 
-
 using json = nlohmann::json;
 
-#define GRID_WIDTH 32
-#define GRID_HEIGHT 32
+#define GRID_WIDTH 64
+#define GRID_HEIGHT 64
+
+//the counter of the amount of example blocks to use
 #define BUTTONS_COUNT 9
 
 class LevelEditor 
@@ -21,10 +22,16 @@ public:
 
   int Update();
 private:
-  void SaveToFile();
   void UpdateButtons();
+  void AddButtons();
   void DisplayGrids();
+  void UpdateTab();
+  bool UpdateSideButtons();
+
+  void PlaceCurrentButton();
   void CreateTabAndButtons();
+  void CreateSideButtons();
+  void SaveToFile();
 
   json _data;
 
@@ -34,8 +41,16 @@ private:
 
   //the tab where the exmples of the Squares u can create the levels are in.
   PopUpWindow* _tab;
-  Button** _exampleBtns;// the buttons that u can used in the level editor
+  Button** _exampleBtns;// the buttons that u can use in the level editor
 
-  bool _movingBlock;
+  bool _movingBlock; /// for later when i implinaite moving a object
+
+  //side var:
+
+  Button* _settingBtn; // the settings button
+  Button* _resetBtn; // the settings button
+  Button* _saveBtn; // the settings button
+
+  bool* _sideButtons;
 };
 

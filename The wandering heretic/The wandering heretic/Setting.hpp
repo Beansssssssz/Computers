@@ -15,7 +15,7 @@ public:
   Settings(Button* btnExit, SDL_Rect rect, SDL_Color color);
   ~Settings();
 
-  int Update(bool NeedExitGame = false);
+  bool Update(bool NeedExitGame = false);
 
   static Settings* CreateSettings(int marginx = 350, int marginy = 150);
 private:

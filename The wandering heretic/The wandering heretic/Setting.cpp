@@ -26,11 +26,11 @@ Settings::~Settings()
 /// </summary>
 /// <param name="NeedExitGame">if true then displays the quit game button
 /// otherwise does not</param>
-/// <returns>1 or 0,1 means quit 0 means no action needed</returns>
-int Settings::Update(bool NeedExitGame)
+/// <returns>true or false,true means quit</returns>
+bool Settings::Update(bool NeedExitGame)
 {
   if (!_tabOpen) 
-    return -1;
+    return false;
 
   Settings::PopUpWindow::Update();
   UpdateText();
@@ -39,7 +39,7 @@ int Settings::Update(bool NeedExitGame)
 
   if (NeedExitGame)
     return UpdateQuitBtn();
-  return 0;
+  return false;
 };
 
 /// <summary>

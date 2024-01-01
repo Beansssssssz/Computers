@@ -6,16 +6,16 @@
 #include "Utils.hpp"
 
 WindowText::WindowText(const char* fontPath, int size, std::string str, int Maxsize)
-  :_fontPath(fontPath), text(str), _characterSize(size), _maxLength(Maxsize)
+  :_fontPath(fontPath), text(str), _characterSize(size),
+  _maxLength(Maxsize), _width(0), _height(0)
 {
   font = TTF_OpenFont(_fontPath, _characterSize);
-
-  _width = 0;
 };
 
 WindowText::~WindowText()
 {
-  TTF_CloseFont(font);
+  /*if(font != NULL)
+    TTF_CloseFont(font);*/
 };
 
 /// <summary>

@@ -25,10 +25,11 @@ void PopUpWindow::Update()
   Mouse* mouse = Mouse::GetMouseInstance();
 
   window->DisplayRect(&_tab, _color);
-  window->Render((Square*)_btnExit);
 
   if (_btnExit == NULL)
     return;
+
+  window->Render((Square*)_btnExit);
   _btnExit->Update();
   if (_btnExit->GetIsPressed())
     CloseTab();
