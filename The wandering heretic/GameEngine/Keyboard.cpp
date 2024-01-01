@@ -21,9 +21,7 @@ Keyboard* Keyboard::GetKeyboardInstance()
 }
 
 Keyboard::~Keyboard()
-{
-  delete _keysArray;
-};
+{};
 
 Uint8* Keyboard::GetKeyArray()
 {

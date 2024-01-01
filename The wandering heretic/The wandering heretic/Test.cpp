@@ -1,6 +1,5 @@
 //including my own libs
 #include "GameManager.hpp"
-#include <vector>
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -44,8 +43,8 @@ int main(int argc, char* argv[]) {
 
       keyboard->BuildText(event);
     }
-    if (!window->IsWindowFocused())
-      continue;
+    /*if (!window->IsWindowFocused())
+      continue;*/
 
     window->Clear();
 

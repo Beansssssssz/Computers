@@ -15,8 +15,10 @@ Settings::Settings(Button* btnExit, SDL_Rect rect, SDL_Color color)
 
 Settings::~Settings()
 {
-  delete _btnMusic, _btnEffect,
-  _slider, _btnQuit;
+  delete _btnMusic;
+  delete _btnEffect;
+  delete _btnQuit;
+  delete _slider;
 }
 
 /// <summary>

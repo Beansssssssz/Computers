@@ -11,6 +11,7 @@ using json = nlohmann::json;
 
 #define GRID_WIDTH 32
 #define GRID_HEIGHT 32
+#define BUTTONS_COUNT 9
 
 class LevelEditor 
 {
@@ -20,6 +21,7 @@ public:
 
   int Update();
 private:
+  void SaveToFile();
   void UpdateButtons();
   void DisplayGrids();
   void CreateTabAndButtons();

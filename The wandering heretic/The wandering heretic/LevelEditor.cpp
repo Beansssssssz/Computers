@@ -15,25 +15,13 @@ LevelEditor::LevelEditor(json* data)
 
   for (json element : *data)
     _btnVec.push_back(jsonParser::FromJsonToButton(element));
+
+  CreateTabAndButtons();
 };
 
 LevelEditor::~LevelEditor()
 {
-  std::cout << "what\n";
-
-  json data;
-  int i = 0;
-  for (Button* btn : _btnVec)
-  {
-    std::string name = "Square" + std::to_string(i);
-    data[name.c_str()] = jsonParser::CreateJsonFromData(*btn->GetDstRect(),
-      *btn->GetSrcRect(), btn->GetPath());
-    i++;
-  }
-
-  if (jsonParser::WriteToFile("C:/Users/ariel hay/Downloads/temp.json", data) != 0)
-    std::cout << stderr << std::endl;
-
+  SaveToFile();
   _btnVec.clear();
   delete _tab;
   delete[] _exampleBtns;
@@ -91,6 +79,22 @@ int LevelEditor::Update()
   return 0;
 }
 
+void LevelEditor::SaveToFile()
+{
+  json data;
+  int i = 0;
+  for (Button* btn : _btnVec)
+  {
+    std::string name = "Square" + std::to_string(i);
+    data[name.c_str()] = jsonParser::CreateJsonFromData(*btn->GetDstRect(),
+      *btn->GetSrcRect(), btn->GetPath());
+    i++;
+  }
+
+  if (jsonParser::WriteToFile("C:/Users/ariel hay/Downloads/temp.json", data) != 0)
+    std::cout << stderr << std::endl;
+}
+
 /// <summary>
 /// updates the buttons
 /// and moves them if needed
@@ -146,5 +150,16 @@ void LevelEditor::CreateTabAndButtons()
   SDL_Color color{ 255, 255, 255, 10 };
   _tab = new PopUpWindow(NULL, rect, color, true);
 
-  _exampleBtns = (Button**)malloc(9 * sizeof(Button*));
+  _exampleBtns = new Button*[BUTTONS_COUNT];
+
+  const char* dirPath = "Assets/Blocks/image_";
+  SDL_Rect dst{ x, 0, w, h },
+    src{ x, 0, w, h };
+
+  for (char i = 0; i < BUTTONS_COUNT; i++)
+  {
+    std::string fullPath = dirPath + std::to_string(i) + ".png";
+    std::cout << fullPath << '\n';
+
+  }
 };

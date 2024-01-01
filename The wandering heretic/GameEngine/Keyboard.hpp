@@ -19,7 +19,7 @@ private:
   Keyboard();
   static Keyboard* _keyboardPtr;
 
-  Uint8* _keysArray;
+  Uint8* _keysArray;//the key array given by sdl(deleted in SDL_Quit())
   std::string text;
   bool _input;
   bool _keyPressed;
