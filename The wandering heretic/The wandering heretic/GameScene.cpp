@@ -5,19 +5,20 @@
 #include <vector>
 
 GameScene::GameScene()
-  :_bg(NULL), edit(NULL)
+  :_bg(NULL), _edit(NULL)
 {
-  edit = new LevelEditor();
+  _edit = new LevelEditor();
 };
 
 GameScene::~GameScene()
 {
-  delete _bg, edit;
+  delete _bg;
+  delete _edit;
 };
 
 int GameScene::Update()
 {
-  edit->Update();
+  _edit->Update();
   return 0;
 };
 
@@ -66,8 +67,4 @@ void GameScene::AddUser()
       std::cout << "\ndo u want to confirm user: " << user << " as your name(Y/N): ";
     }
   }
-  
-
-  
-
 };

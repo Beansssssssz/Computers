@@ -8,7 +8,7 @@
 
 LevelEditor::LevelEditor(json* data)
   :_currentBtn(NULL), _mousePressed(false), _exampleBtns(NULL),
-  _tab(NULL)
+  _tab(NULL), _movingBlock(false)
 {
   if (data == NULL)//if it is null then vector is empty
     return;
@@ -19,14 +19,18 @@ LevelEditor::LevelEditor(json* data)
 
 LevelEditor::~LevelEditor()
 {
+  std::cout << "what\n";
+
   json data;
   int i = 0;
   for (Button* btn : _btnVec)
   {
-    std::string name = "Square" + i;
-    data[name.c_str()] = jsonParser::WriteToFile("", jsonParser::CreateJsonFromData(*btn->GetDstRect(),
-      *btn->GetSrcRect(), btn->GetPath()));
+    std::string name = "Square" + std::to_string(i);
+    data[name.c_str()] = jsonParser::CreateJsonFromData(*btn->GetDstRect(),
+      *btn->GetSrcRect(), btn->GetPath());
+    i++;
   }
+
   if (jsonParser::WriteToFile("C:/Users/ariel hay/Downloads/temp.json", data) != 0)
     std::cout << stderr << std::endl;
 

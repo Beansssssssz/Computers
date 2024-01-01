@@ -19,7 +19,8 @@ WelcomeScene::WelcomeScene()
 
 WelcomeScene::~WelcomeScene()
 {
-  delete _bg, _winText;
+  delete _bg;
+  delete _winText;
 };
 
 /// <summary>

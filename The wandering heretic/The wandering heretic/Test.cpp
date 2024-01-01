@@ -44,8 +44,8 @@ int main(int argc, char* argv[]) {
 
       keyboard->BuildText(event);
     }
-   /* if (!window->IsWindowFocused())
-      continue;*/
+    if (!window->IsWindowFocused())
+      continue;
 
     window->Clear();
 
@@ -61,7 +61,10 @@ int main(int argc, char* argv[]) {
   };
 
   //deleting singletons
-  delete window, mouse, keyboard, audio;
+  delete window;
+  delete mouse;
+  delete keyboard;
+  delete audio;
 
   //quit sdl services
   Mix_Quit();
@@ -71,45 +74,9 @@ int main(int argc, char* argv[]) {
   return 0;
 };
 
-//std::vector<Button*> CreateVector() {
-//  std::vector<Button*> vec;
-//  std::string path = "Assets/ground_grass1.png";
-//  SDL_Rect dst, src;
-//
-//  //
-//  dst = SDL_Rect{ 0, 0, 32,32 };
-//  src = SDL_Rect{ 0, 0, 32, 32 };
-//
-//  Button* btn = new Button(path.c_str(), src, dst);
-//  vec.push_back(btn);
-//
-//  //
-//  dst = SDL_Rect{ 32, 0, 32 ,32 };
-//  src = SDL_Rect{ 0, 0, 32, 32 };
-//
-//  btn = new Button(path.c_str(), src, dst);
-//  vec.push_back(btn);
-//
-//  //
-//  dst = SDL_Rect{ 64, 0, 32, 32 };
-//  src = SDL_Rect{ 0, 0, 32, 32 };
-//
-//  btn = new Button(path.c_str(), src, dst);
-//  vec.push_back(btn);
-//
-//  return vec;
-//}
-
 /*
 TODO
 now:
-//parse and unparse array of objects
-how to do -> create a vector of object,
-then created buttons {},
-in there nest each object.
-
-//display all object into the screen
-how to do -> diplay vector of rects
 
 //add ability to select and update
 how to do -> u have vector, if add square resize vector,

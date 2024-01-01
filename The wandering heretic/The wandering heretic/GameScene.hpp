@@ -25,5 +25,5 @@ private:
   std::string _currentUser;
   Square* _bg;
 
-  LevelEditor* edit;
+  LevelEditor* _edit;//the level editor
 };

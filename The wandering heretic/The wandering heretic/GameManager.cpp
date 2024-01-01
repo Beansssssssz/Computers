@@ -3,19 +3,21 @@
 #include "Keyboard.hpp"
 
 GameManager::GameManager()
-  :_wcScene(NULL), _gameScreen(NULL), _HomeScene(NULL)
+  :_wcScene(NULL), _gameScene(NULL), _HomeScene(NULL)
 {
   _wcScene = new WelcomeScene();
   _HomeScene = new HomeScene();
-  _gameScreen = new GameScene();
+  _gameScene = new GameScene();
 
   _settings = Settings::CreateSettings();
 };
 
 GameManager::~GameManager()
 {
-  delete _wcScene, _gameScreen, _HomeScene
-    ,_settings;
+  delete _wcScene;
+  delete _gameScene;
+  delete _HomeScene;
+  delete _settings;
 };
 
 /// <summary>
@@ -54,10 +56,8 @@ bool GameManager::Update()
 /// </summary>
 void GameManager::UpdateWelcomeScene()
 {
-  if (_wcScene->Update()){
+  if (_wcScene->Update())
     _currentScene = Scenes::home;
-    //delete _wcScene;
-  }
 }
 
 /// <summary>
@@ -67,10 +67,8 @@ void GameManager::UpdateWelcomeScene()
 bool GameManager::UpdateHomeScene()
 {
   int ret = _HomeScene->Update();
-  if (ret == (int)HomeButtons::Play) {
+  if (ret == (int)HomeButtons::Play) 
     _currentScene = Scenes::game;
-    //delete _HomeScene;
-  }
 
   else if (ret == (int)HomeButtons::Settings)
     _settings->OpenTab();
@@ -87,6 +85,6 @@ bool GameManager::UpdateHomeScene()
 /// <returns>true if game is running false if quitting game</returns>
 bool GameManager::UpdateGameScene()
 {
-  _gameScreen->Update();
+  _gameScene->Update();
   return true;
 }

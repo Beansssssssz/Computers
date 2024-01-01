@@ -19,6 +19,7 @@ class GameManager {
 public:
   GameManager();
   ~GameManager();
+
   bool Update();
 
   void UpdateWelcomeScene();
@@ -29,7 +30,7 @@ private:
 
   WelcomeScene* _wcScene;
   HomeScene* _HomeScene;
-  GameScene* _gameScreen;
+  GameScene* _gameScene;
 
   Settings* _settings;
 };
