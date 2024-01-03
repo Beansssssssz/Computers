@@ -53,15 +53,16 @@ void LevelEditor::UpdateButtons()
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   Mouse* mouse = Mouse::GetMouseInstance();
 
+  _movingBlock = false;
   for (Button* btn : _btnVec)
   {
     btn->Update();
     window->Render((Square*)btn);
 
     //not working fix later
-    //if (mouse->IsMouseColliding(*btn->GetDstRect()))
-    //  if(_currentBtn == NULL)
-    //    _currentBtn = btn;
+    if (mouse->IsMouseColliding(*btn->GetDstRect()) && _currentBtn == NULL) {
+        _currentBtn = btn;
+    }
   }
 }
 
@@ -194,8 +195,6 @@ void LevelEditor::PlaceCurrentButton()
     SDL_Rect current = *_currentBtn->GetDstRect(),
       temp = *btn->GetDstRect();
     if (utils::CmpRects(current, temp)) {
-      //delete _currentBtn;
-      //_currentBtn = NULL;
       return;
     }
   }
@@ -291,6 +290,5 @@ void LevelEditor::SaveToFile()
     i++;
   }
 
-  if (jsonParser::WriteToFile("C:/Users/ariel hay/Downloads/temp.json", data) != 0)
-    std::cout << stderr << std::endl;
+  jsonParser::WriteToFile("Assets/Levels/temp.json", data);
 }

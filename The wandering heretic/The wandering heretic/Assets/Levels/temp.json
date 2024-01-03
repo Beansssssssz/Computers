@@ -1,0 +1,32 @@
+{
+    "Square0": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 320,
+            "rect.y": 1024
+        },
+        "path": "Assets/Blocks/image_0.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
+    },
+    "Square1": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 576,
+            "rect.y": 832
+        },
+        "path": "Assets/Blocks/image_1.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
+    }
+}

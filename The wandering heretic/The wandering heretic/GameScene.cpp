@@ -1,13 +1,17 @@
 #include "GameScene.hpp"
+
 #include "RenderWindow.hpp"
+#include "JsonParser.hpp"
 
 #include <iostream>
 #include <vector>
 
+
 GameScene::GameScene()
   :_bg(NULL), _edit(NULL)
 {
-  _edit = new LevelEditor();
+  json data = jsonParser::ReadFromFile("Assets/Levels/temp.json");
+  _edit = new LevelEditor(&data);
 };
 
 GameScene::~GameScene()

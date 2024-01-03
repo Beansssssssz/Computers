@@ -14,31 +14,45 @@ using json = nlohmann::json;
 
 namespace jsonParser {
 
-  /// <summary>
+/// <summary>
 /// Cleans the file then writes to it the
 /// param data
 /// </summary>
 /// <param name="path"> the file path</param>
 /// <param name="data">a json object</param>
 /// <returns></returns>
-  inline int WriteToFile(const char* path, json data) {
+  inline void WriteToFile(const char* path, json data) {
     std::ofstream file(path);
+    if (!file.is_open()) {
+      std::cerr << "Error opening JSON file.\n";
+      return;
+    }
+
+
+    try {
+      file << std::setw(4) << data << std::endl;
+      std::cerr << "JSON file updated successfully.\n";
+    }
+    catch (const std::exception& e) {
+      std::cerr << "Error writing to JSON file: " << e.what() << "\n";
+    }
+
+    file.close();
+  }
+
+  inline json ReadFromFile(const char* path) {
+    std::ifstream file(path);
     if (!file.is_open()) {
       std::cerr << "Error opening JSON file.\n";
       return 1;
     }
 
-    try {
-      file << std::setw(4) << data << std::endl;
-      std::cout << "JSON file updated successfully.\n";
-      return 0;
-    }
-    catch (const std::exception& e) {
-      std::cout << "Error writing to JSON file: " << e.what() << "\n";
-      std::cout << data<< "\n";
-      return 1;
-    }
+    json data;
+    file >> data;
+
+
     file.close();
+    return data;
   }
 
   /// <summary>
@@ -46,7 +60,7 @@ namespace jsonParser {
   /// </summary>
   /// <param name="data">the json data to delete element from</param>
   /// <param name="element">the json element name</param>
-  /// <returns> 0 if no erros occured other wise returns 1
+  /// <returns> 0 if no errors occured other wise returns 1
   /// error code is found in stderr </returns>
   inline int DeleteElement(json* data, const char* element) {
     if (data->find(element) == data->end()) {
@@ -58,7 +72,7 @@ namespace jsonParser {
   }
 
   /// <summary>
-  /// turns a SDL_REct into a json
+  /// turns a SDL_Rect into a json
   /// the json param exmple: data["rect.x"] / data["rect.w"] 
   /// </summary>
   /// <param name="rect"></param>

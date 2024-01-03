@@ -58,8 +58,10 @@ SDL_Texture* Square::GetTexture()
 /// <param name="texture"></param>
 void Square::SetTexture(const char* path, SDL_Rect src)
 {
-  _path = path;
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  SDL_DestroyTexture(_tex);
+
+  _path = path;
   _tex = window->LoadTexture(path);
 
   if (src.w == -1 && src.h == -1)//width and height cant be negetive

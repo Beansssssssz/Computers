@@ -79,18 +79,27 @@ int main(int argc, char* argv[]) {
 TODO
 now:
 
-//add ability to select and update
-how to do -> u have vector, if add square resize vector,
-in deconstructor call function to save the map into json.
-
 //in choosing an element ->
-the last elemented selected(kept in a pointer) will be moved.
+add CTRL + Z and CTRL + Y using anther vector
+
+//add a way to change squares location
+-> if cuurent is null and mouse is pressed and is on block
+current is current block
+
+//search for UB and fix bugs ->
+...dude
+
+
+//add GUI format to select levels ->
+add a pop up winodw where u can select a window, ethier a fixed amount or
+add new window everytime
+
 
 2.5 ->add a way to "freeze" stuff //☺
 
 
 
-3.settings ->change colors and change quit btn tex;
+3.settings ->change textures and change quit btn tex;
 4.sign in //kill me(later, wayyyy later)
 5.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)
 6.learn socket and how to send and recive data
