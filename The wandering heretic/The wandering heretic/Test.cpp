@@ -79,30 +79,35 @@ int main(int argc, char* argv[]) {
 TODO
 now:
 
-//in choosing an element ->
-add CTRL + Z and CTRL + Y using anther vector
-
 //add a way to change squares location
 -> if cuurent is null and mouse is pressed and is on block
 current is current block
 
-//search for UB and fix bugs ->
-...dude
+//in choosing an element ->
+add CTRL + Z and CTRL + Y using anther vector
 
+//search for UB and fix bugs -> just play the game
 
-//add GUI format to select levels ->
+//add GUI to select levels ->
 add a pop up winodw where u can select a window, ethier a fixed amount or
 add new window everytime
 
 
-2.5 ->add a way to "freeze" stuff //☺
-
-
+2.5 ->add a way to "freeze" stuff ->
+a way to tell the mouse to stop the pressing on other buttons
+or -> use the bool as a pointer or ref(ref better) and when u r updating the buttons
+check if the settings is open.
 
 3.settings ->change textures and change quit btn tex;
-4.sign in //kill me(later, wayyyy later)
+
+4.sign in //later, wayyyy later
+
 5.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)
-6.learn socket and how to send and recive data
+
+6.learn socket -> how to communt in sqlite3
 and how to store said data in server//use arduino to do it?
+
 7.the game itself //fun ☺
+->the games is built of rooms
+->like hollow knight rooms not mario like.
 */

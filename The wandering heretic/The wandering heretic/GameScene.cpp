@@ -29,6 +29,19 @@ int GameScene::Update()
   return _edit->Update();
 };
 
+void GameScene::InputUser()
+{
+  //create a white rect
+  //if text.size() <= 0 then display in a gray-ish color the text
+  //of what to input exmaple:
+  // example@gmail.com
+  // Enter your username
+  // Enter your password
+  //then when enter is pressed go into the next one
+  //when inputing then make the gray text dissapear so u will know where u r
+  //maybe add a small gray text flashing
+}
+
 int GameScene::LogUser()
 {
   const int bufferSize = 20; // Adjust the size according to your needs

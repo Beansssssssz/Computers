@@ -18,6 +18,7 @@ public:
 
   int Update();
 private:
+  void InputUser();
   int LogUser();
   char** GetAllUsers();
   void AddUser();
