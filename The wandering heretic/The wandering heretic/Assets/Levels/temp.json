@@ -28,5 +28,20 @@
             "rect.x": 0,
             "rect.y": 0
         }
+    },
+    "Square2": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 960,
+            "rect.y": 192
+        },
+        "path": "Assets/Blocks/image_0.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
     }
 }

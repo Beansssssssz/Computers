@@ -20,7 +20,11 @@ RenderWindow::RenderWindow(const char* title)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Renderer failed to render. Error: %s", SDL_GetError());
 
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);//sets it so that you can blend colors
-  //ToggleFullScreen();
+
+
+  SDL_Rect rec{ 0,0,1366, 768 };
+  const SDL_Rect* rect = &rec;
+  SDL_RenderSetViewport(renderer, rect);
 };
 
 RenderWindow::~RenderWindow() {
@@ -60,7 +64,18 @@ void RenderWindow::Display() {
 /// <param name="sqr">the root class sqaure</param>
 void RenderWindow::Render(Square* sqr)
 {
-  if (SDL_RenderCopy(renderer, sqr->GetTexture(), sqr->GetSrcRect(), sqr->GetDstRect()))
+  SDL_Rect dst = *sqr->GetDstRect();
+
+  SDL_DisplayMode DM;
+  SDL_GetCurrentDisplayMode(0, &DM);
+  int ScreenW = DM.w;
+
+  dst.x /= 1920.0f / 1366;
+  dst.y /= 1920.0f / 1366;
+  dst.h /= 1920.0f / 1366;
+  dst.w /= 1920.0f / 1366;
+
+  if (SDL_RenderCopy(renderer, sqr->GetTexture(), sqr->GetSrcRect(), &dst))
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to be copied. Error: %s"
       , SDL_GetError());
 };
@@ -97,14 +112,26 @@ SDL_Renderer* RenderWindow::GetRenderer()
 
 void RenderWindow::DisplayRect(SDL_Rect* rect, SDL_Color color)
 {
+  SDL_Rect dst = *rect;
+
+  SDL_DisplayMode DM;
+  SDL_GetCurrentDisplayMode(0, &DM);
+  int ScreenW = DM.w;
+
+  dst.x /= 1920.0f / ScreenW;
+  dst.y /= 1920.0f / ScreenW;
+  dst.h /= 1920.0f / ScreenW;
+  dst.w /= 1920.0f / ScreenW;
+
+
   SDL_Color oldColor;
   int err = SDL_GetRenderDrawColor(renderer, &oldColor.r,
     &oldColor.g, &oldColor.b, &oldColor.a);
 
   //outline rect
   err += SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-  err += SDL_RenderDrawRect(renderer, rect);
-  err += SDL_RenderFillRect(renderer, rect);
+  err += SDL_RenderDrawRect(renderer, &dst);
+  err += SDL_RenderFillRect(renderer, &dst);
 
   err += SDL_SetRenderDrawColor(renderer, oldColor.r,
     oldColor.g, oldColor.b, oldColor.a);

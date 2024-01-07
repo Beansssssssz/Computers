@@ -2,6 +2,7 @@
 
 #include "RenderWindow.hpp"
 #include "Mouse.hpp"
+#include "KeyBoard.hpp"
 #include "JsonParser.hpp"
 #include "Utils.hpp"
 
@@ -18,11 +19,19 @@ LevelEditor::LevelEditor(json* data)
 
   CreateTabAndButtons();
   CreateSideButtons();
+
+  _stackActions = new bool[2];
+  _stackActions[0] = false;
+  _stackActions[1] = false;
 };
 
 LevelEditor::~LevelEditor()
 {
   _btnVec.clear();
+  while (!_stack.empty())
+    _stack.pop();
+  delete _stackActions;
+
   delete _tab;
   delete[] _exampleBtns;
   if (_currentBtn != NULL)
@@ -41,6 +50,7 @@ int LevelEditor::Update()
   AddButtons();
   DisplayGrids();
   UpdateTab();
+  HandleInput();
   return UpdateSideButtons();
 }
 
@@ -60,9 +70,9 @@ void LevelEditor::UpdateButtons()
     window->Render((Square*)btn);
 
     //not working fix later
-    if (mouse->IsMouseColliding(*btn->GetDstRect()) && _currentBtn == NULL) {
-        _currentBtn = btn;
-    }
+    //if (mouse->IsMouseColliding(*btn->GetDstRect()) && _currentBtn == NULL) {
+    //    _currentBtn = btn;
+    //}
   }
 }
 
@@ -136,6 +146,43 @@ void LevelEditor::UpdateTab()
     window->Render((Square*)_exampleBtns[i]);
     _exampleBtns[i]->Update();
   }
+}
+
+/// <summary>
+/// Hanldes input related actions
+/// </summary>
+void LevelEditor::HandleInput()
+{
+  Keyboard* keyboard = Keyboard::GetKeyboardInstance();
+  Uint8* keyarr = keyboard->GetKeyArray();
+
+  if (keyarr[SDL_SCANCODE_LCTRL] && keyarr[SDL_SCANCODE_Z])
+    _stackActions[0] = true;
+
+  else if (_stackActions[0]) {
+    _stackActions[0] = false;
+    if (_btnVec.size() <= 0)
+      return;
+
+    _stack.push(_btnVec.back());//basically takes the last element and puts it in the stack
+    _btnVec.pop_back();//pops the last element out of the vector
+
+    return;
+  }
+
+  if (keyarr[SDL_SCANCODE_LCTRL] && keyarr[SDL_SCANCODE_Y])
+    _stackActions[1] = true;
+
+  else if (_stackActions[1]) {
+    _stackActions[1] = false;
+
+    if (_stack.size() <= 0)
+      return;
+
+    _btnVec.push_back(_stack.top());//takes the top element in the stack and puts it into vector
+    _stack.pop(); // pops the top element from the stack
+  }
+
 }
 
 /// <summary>

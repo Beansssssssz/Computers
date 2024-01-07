@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <stack>
 #include <nlohmann/json.hpp>
 
 #include "Button.hpp"
@@ -26,6 +27,7 @@ private:
   void AddButtons();
   void DisplayGrids();
   void UpdateTab();
+  void HandleInput();
   bool UpdateSideButtons();
 
   void PlaceCurrentButton();
@@ -38,6 +40,10 @@ private:
   std::vector<Button*> _btnVec;
   Button* _currentBtn;
   bool _mousePressed;
+
+ 
+  std::stack<Button*> _stack; //the stack that keeps the buttons placed
+  bool* _stackActions; // the array that keeps track of what buttons are placed
 
   //the tab where the exmples of the Squares u can create the levels are in.
   PopUpWindow* _tab;

@@ -13,8 +13,8 @@ public:
   SDL_Rect GetRect();
   SDL_Color GetColor();
 
-  void OpenTab();
-  void CloseTab();
+  void SetTab(bool val);
+  bool GetTab();
 private:
   Button* _btnExit;
   SDL_Rect _tab;//the tab that the buttons are displayed on

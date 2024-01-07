@@ -48,7 +48,7 @@ bool GameManager::Update()
   //settings is a universal thing so in game manager
   if (_settings->Update(_currentScene != Scenes::home)) {
     _currentScene = Scenes::welcome;
-    _settings->CloseTab();
+    _settings->SetTab(false);
   }
   return true;
 };
@@ -74,7 +74,7 @@ bool GameManager::UpdateHomeScene()
     _currentScene = Scenes::game;
 
   else if (ret == (int)HomeButtons::Settings)
-    _settings->OpenTab();
+    _settings->SetTab(true);
 
   else if (ret == (int)HomeButtons::Quit)
     return false;
@@ -89,6 +89,6 @@ bool GameManager::UpdateHomeScene()
 bool GameManager::UpdateGameScene()
 {
   if (_gameScene->Update())
-    _settings->OpenTab();
+    _settings->SetTab(true);
   return true;
 }

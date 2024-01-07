@@ -32,7 +32,7 @@ void PopUpWindow::Update()
   window->Render((Square*)_btnExit);
   _btnExit->Update();
   if (_btnExit->GetIsPressed())
-    CloseTab();
+    SetTab(false);
 };
 
 /// <summary>
@@ -52,20 +52,21 @@ SDL_Color PopUpWindow::GetColor() {
 }
 
 /// <summary>
-/// Opens the tab
+/// Sets the tab open in val is true, otherwise closes the tabs
 /// </summary>
-void PopUpWindow::OpenTab()
+void PopUpWindow::SetTab(bool val)
 {
-  _tabOpen = true;
+  _tabOpen = val;
 };
 
 /// <summary>
-/// Closes the tab
+/// Returns the if the tab is open or not
 /// </summary>
-void PopUpWindow::CloseTab()
+bool PopUpWindow::GetTab()
 {
-  _tabOpen = false;
+  return _tabOpen;
 };
+
 
 /// <summary>
 /// corrects the placement of the button in "tab" that opens
