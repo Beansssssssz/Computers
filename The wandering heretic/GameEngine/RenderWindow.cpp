@@ -20,11 +20,6 @@ RenderWindow::RenderWindow(const char* title)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Renderer failed to render. Error: %s", SDL_GetError());
 
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);//sets it so that you can blend colors
-
-
-  SDL_Rect rec{ 0,0,1366, 768 };
-  const SDL_Rect* rect = &rec;
-  SDL_RenderSetViewport(renderer, rect);
 };
 
 RenderWindow::~RenderWindow() {
@@ -66,14 +61,15 @@ void RenderWindow::Render(Square* sqr)
 {
   SDL_Rect dst = *sqr->GetDstRect();
 
-  SDL_DisplayMode DM;
-  SDL_GetCurrentDisplayMode(0, &DM);
-  int ScreenW = DM.w;
+  /* testing to be able to display on muiltiple screen sizes */
+  //SDL_DisplayMode DM;
+  //SDL_GetCurrentDisplayMode(0, &DM);
+  //float ScreenW = DM.w;
 
-  dst.x /= 1920.0f / 1366;
-  dst.y /= 1920.0f / 1366;
-  dst.h /= 1920.0f / 1366;
-  dst.w /= 1920.0f / 1366;
+  //dst.x /= 1920.0f / ScreenW;
+  //dst.y /= 1920.0f / ScreenW;
+  //dst.h /= 1920.0f / ScreenW;
+  //dst.w /= 1920.0f / ScreenW;
 
   if (SDL_RenderCopy(renderer, sqr->GetTexture(), sqr->GetSrcRect(), &dst))
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to be copied. Error: %s"
@@ -114,14 +110,15 @@ void RenderWindow::DisplayRect(SDL_Rect* rect, SDL_Color color)
 {
   SDL_Rect dst = *rect;
 
-  SDL_DisplayMode DM;
-  SDL_GetCurrentDisplayMode(0, &DM);
-  int ScreenW = DM.w;
+  /* testing to be able to display on muiltiple screen sizes */
+  //SDL_DisplayMode DM;
+  //SDL_GetCurrentDisplayMode(0, &DM);
+  //float ScreenW = DM.w;
 
-  dst.x /= 1920.0f / ScreenW;
-  dst.y /= 1920.0f / ScreenW;
-  dst.h /= 1920.0f / ScreenW;
-  dst.w /= 1920.0f / ScreenW;
+  //dst.x /= 1920.0f / ScreenW;
+  //dst.y /= 1920.0f / ScreenW;
+  //dst.h /= 1920.0f / ScreenW;
+  //dst.w /= 1920.0f / ScreenW;
 
 
   SDL_Color oldColor;

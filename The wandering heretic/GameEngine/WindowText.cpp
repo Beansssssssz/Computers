@@ -14,8 +14,8 @@ WindowText::WindowText(const char* fontPath, int size, std::string str, int Maxs
 
 WindowText::~WindowText()
 {
-  /*if(font != NULL)
-    TTF_CloseFont(font);*/
+  if(font != NULL)
+    TTF_CloseFont(font);
 };
 
 /// <summary>
@@ -59,19 +59,6 @@ void  WindowText::DisplayText(Vector2i pos, SDL_Color color) {
 };
 
 /// <summary>
-/// update
-/// </summary>
-/// <param name="rect"></param>
-/// <param name="color"></param>
-void WindowText::CreateSquare(SDL_Rect rect, SDL_Color color)
-{
-  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-
-  rect.w = 9 * _characterSize;
-  window->DisplayRect(&rect, color);
-};
-
-/// <summary>
 /// remakes the font
 /// </summary>
 void WindowText::RemakeFont()
@@ -90,6 +77,15 @@ void WindowText::SetCharacterSize(int size) {
 }
 
 /// <summary>
+/// returns the character size
+/// </summary>
+/// <returns></returns>
+int WindowText::GetCharacterSize()
+{
+  return _characterSize;
+}
+
+/// <summary>
 /// sets the value into the _pos value(which is zero by default)
 /// from now on this value will display the pos
 /// </summary>
@@ -97,6 +93,15 @@ void WindowText::SetCharacterSize(int size) {
 void WindowText::SetPos(Vector2i pos)
 {
   _pos = pos;
+}
+
+/// <summary>
+/// returns the starting pos of the text
+/// </summary>
+/// <returns></returns>
+Vector2i WindowText::GetPos()
+{
+  return _pos;
 }
 
 /// <summary>
@@ -118,12 +123,19 @@ std::string WindowText:: GetText() {
 }
 
 /// <summary>
+/// clears the text
+/// </summary>
+void WindowText::ClearText() {
+  text.clear();
+};
+
+/// <summary>
 /// returns the text width
 /// </summary>
 /// <returns></returns>
 int WindowText::GetTextWidth()
 {
-  if(!(_width <= 0 && text.size() > 0))
+  if(_width >= 0 || text.size() < 0)
     return _width;
 
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -165,15 +177,3 @@ int WindowText::GetTextHeight()
 
   return _height;
 }
-
-Vector2i WindowText::GetPos()
-{
-  return _pos;
-}
-
-/// <summary>
-/// clears the text
-/// </summary>
-void WindowText::ClearText() {
-  text.clear();
-};

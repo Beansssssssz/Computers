@@ -12,20 +12,20 @@ public:
   ~WindowText();
 
   void DisplayText(Vector2i pos = { -1,-1 }, SDL_Color color = { 0,0,0,255 });
-  void CreateSquare(SDL_Rect rect, SDL_Color color);
 
   void RemakeFont();
   void SetCharacterSize(int size);
+  int GetCharacterSize();
+
   void SetPos(Vector2i pos);
-
-  void SetText(std::string str);
-  void ClearText();
-
-  std::string GetText();
-  int GetTextWidth();
-  int GetTextHeight();
   Vector2i GetPos();
 
+  void SetText(std::string str);
+  std::string GetText();
+  void ClearText();
+
+  int GetTextWidth();
+  int GetTextHeight();
 private:
   TTF_Font* font;
   std::string text;

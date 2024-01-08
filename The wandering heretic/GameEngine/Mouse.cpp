@@ -73,6 +73,11 @@ void Mouse::FreezeAutomaticSelecting(bool isFrozen, SDL_SystemCursor cursor)
   _isFrozen = isFrozen;
 }
 
+void Mouse::ShowMouse(bool show) {
+  SDL_ShowCursor(show ? SDL_ENABLE : SDL_DISABLE);
+}
+
+
 /// <summary>
 /// checks if the mouse is collising with a rect
 /// </summary>

@@ -3,18 +3,25 @@
 #include <SDL_image.h>
 #include <string>
 
+#define LIMIT 30
+
 class Keyboard
 {
 public:
   static Keyboard* GetKeyboardInstance();
   ~Keyboard();
+
   Uint8* GetKeyArray();
   std::string GetText();
+  void EmptyText();
+
   void StopBuildText(bool clear = true);
   void StartBuildText();
   void BuildText(SDL_Event event);
+
   void Update();
   bool IsKeyPressed();
+
 private:
   Keyboard();
   static Keyboard* _keyboardPtr;

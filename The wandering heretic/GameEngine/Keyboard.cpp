@@ -21,7 +21,9 @@ Keyboard* Keyboard::GetKeyboardInstance()
 }
 
 Keyboard::~Keyboard()
-{};
+{
+  StopBuildText();
+};
 
 Uint8* Keyboard::GetKeyArray()
 {
@@ -31,6 +33,10 @@ Uint8* Keyboard::GetKeyArray()
 std::string Keyboard::GetText()
 {
   return text;
+}
+void Keyboard::EmptyText()
+{
+  text.clear();
 };
 
 void Keyboard::StopBuildText(bool clear)
@@ -57,12 +63,16 @@ void Keyboard::BuildText(SDL_Event event)
   if (!_input)
     return;
 
-  if (event.type == SDL_TEXTINPUT) 
+  if (event.type == SDL_TEXTINPUT && text.size() < LIMIT)
     text += event.text.text;
   
   else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE)
     if(text.size() > 0)
       text.pop_back();
+
+  // removes the first element if its space
+  if(text.c_str()[0] == ' ')
+    text.erase(text.begin());
 };
 
 void Keyboard::Update()

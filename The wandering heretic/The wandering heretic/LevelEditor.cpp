@@ -253,8 +253,12 @@ void LevelEditor::PlaceCurrentButton()
 /// </summary>
 void LevelEditor::CreateTabAndButtons()
 {
-  int x = 1600;
-  int w = 1920 - 1600, h = 1080;
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  int w, h, x;
+  window->GetWidthHeight(w, h);
+  x = (int)(w * 0.85f);
+  w = (int)(1920 * 0.15f);
+
   SDL_Rect rect{ x, 0, w, h };
   SDL_Color color{ 90, 200, 170, 255 };
   _tab = new PopUpWindow(NULL, rect, color, true);
