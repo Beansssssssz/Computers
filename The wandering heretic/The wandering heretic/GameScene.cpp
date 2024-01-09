@@ -14,6 +14,7 @@ GameScene::GameScene()
   _inText = new InputText*[2];
   _inText[0] = new InputText("Enter your username", { 1920 / 2, 1080 / 2 });
   _inText[1] = new InputText("Enter your password", { 1920 / 2 - 20, 1080 / 2 - 50});
+
   json data = jsonParser::ReadFromFile("Assets/Levels/temp.json");
   _edit = new LevelEditor(&data);
 };
@@ -31,12 +32,12 @@ GameScene::~GameScene()
 /// <returns></returns>
 int GameScene::Update()
 {
-  if (!_isAdmin) {
-    LogUser();
-    return 0;
-  }
-  if (_inText[0]->GetText() != "ariel")
-    return 1;
+  //if (!_isAdmin) {
+  //  LogUser();
+  //  return 0;
+  //}
+  /*if (_inText[0]->GetText() != "ariel")
+    return 1;*/
   return _edit->Update();
 };
 

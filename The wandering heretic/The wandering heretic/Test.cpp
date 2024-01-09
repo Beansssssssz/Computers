@@ -106,13 +106,6 @@ and how to store said data in server//use arduino to do it?
 
 
 
-
-
-
 try:
-//add a way to change squares location
--> if cuurent is null and mouse is pressed and is on block
-current is current block
-
-//search for UB and fix bugs -> just play the game(no bugs exept
+//search for UB and fix bugs -> just play the game
 */

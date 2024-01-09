@@ -43,5 +43,35 @@
             "rect.x": 0,
             "rect.y": 0
         }
+    },
+    "Square3": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 1024,
+            "rect.y": 640
+        },
+        "path": "Assets/Blocks/image_0.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
+    },
+    "Square4": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 1280,
+            "rect.y": 384
+        },
+        "path": "Assets/Blocks/image_8.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
     }
 }

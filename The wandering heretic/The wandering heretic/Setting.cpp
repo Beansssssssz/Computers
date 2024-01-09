@@ -119,7 +119,7 @@ void Settings::CreateText() {
   SDL_Rect tempRect = *_btnMusic->GetDstRect();
 
   ///music text
-  int x = tempRect.x - _musicText->GetTextWidth() - MARGIN;
+  int x = tempRect.x - _musicText->GetTextWidth() * 2 - MARGIN;
   int y = tempRect.y + _musicText->GetTextHeight();
   _musicText->SetPos(Vector2i{x, y});
 

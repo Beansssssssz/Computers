@@ -14,8 +14,8 @@ WindowText::WindowText(const char* fontPath, int size, std::string str, int Maxs
 
 WindowText::~WindowText()
 {
-  if(font != NULL)
-    TTF_CloseFont(font);
+  //if(font != NULL)
+  //  TTF_CloseFont(font);
 };
 
 /// <summary>
@@ -135,7 +135,7 @@ void WindowText::ClearText() {
 /// <returns></returns>
 int WindowText::GetTextWidth()
 {
-  if(_width >= 0 || text.size() < 0)
+  if(_width > 0 || text.size() < 0)
     return _width;
 
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
