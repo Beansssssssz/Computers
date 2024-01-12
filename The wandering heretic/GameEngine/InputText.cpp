@@ -22,6 +22,11 @@ InputText::~InputText()
   mouse->ShowMouse(true);
 }
 
+/// <summary>
+/// updates the square
+/// Displays the the sqaure and the rect
+/// </summary>
+/// <param name="input"></param>
 void InputText::Update(bool input)
 {
   Mouse* mouse = Mouse::GetMouseInstance();
@@ -33,24 +38,48 @@ void InputText::Update(bool input)
     DisplayFlashingCursor();
 }
 
+/// <summary>
+/// returns the text that the user inputed inside the sqaure
+/// </summary>
+/// <returns></returns>
 std::string InputText::GetText()
 {
   return _text;
 }
 
+/// <summary>
+/// returns an const int value that its the width of the Square width
+/// </summary>
+/// <returns></returns>
 const int InputText::GetSquareWidth()
 {
   return WIDTH;
 }
 
+/// <summary>
+/// returns an const int value that its the width of the Square height
+/// </summary>
+/// <returns></returns>
 const int InputText::GetSquareHeight()
 {
   return HEIGHT;
 }
 
-SDL_Rect InputText::GetRect()
-{
-  return SDL_Rect{_pos.x, _pos.y, WIDTH, HEIGHT};
+/// <summary>
+/// return a pointer to the pos
+/// </summary>
+/// <returns></returns>
+Vector2i* InputText::GetPos() {
+  return &_pos;
+}
+
+/// <summary>
+/// returns and Rvalue Rect
+/// that is the rect of the InpuText
+/// </summary>
+/// <returns></returns>
+const SDL_Rect InputText::GetRvalueRect() {
+  return { _pos.x, _pos.y, WIDTH, HEIGHT };
 }
 
 /// <summary>

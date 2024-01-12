@@ -78,7 +78,9 @@ int main(int argc, char* argv[]) {
 TODO
 NOW:
 
-//fix resizing issue
+//sign in->
+make is to that sign in exit when u press in a diffrante place than the sqaure
+and add a done button
 
 //add GUI to select levels ->
 add a pop up winodw where u can select a fixed amount of levels or

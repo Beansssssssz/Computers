@@ -17,6 +17,8 @@ public:
 private:
   void LogUser();
 
+  void CreateInputTextAreas();
+
   std::string _currentUser;
   Square* _bg;
 

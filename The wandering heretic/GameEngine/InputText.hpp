@@ -15,7 +15,8 @@ public:
   std::string GetText();
   const int GetSquareWidth();
   const int GetSquareHeight();
-  SDL_Rect GetRect();
+  Vector2i* GetPos();
+  const SDL_Rect GetRvalueRect();
 private:
   void DisplayRect();
   void DisplayText(bool input);
