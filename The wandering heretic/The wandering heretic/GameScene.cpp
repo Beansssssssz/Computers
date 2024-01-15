@@ -33,10 +33,10 @@ GameScene::~GameScene()
 /// <returns></returns>
 int GameScene::Update()
 {
-  if (!_isAdmin) {
-    LogUser();
-    return 0;
-  }
+  //if (!_isAdmin) {
+  //  LogUser();
+  //  return 0;
+  //}
   return _edit->Update();
 };
 

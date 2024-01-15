@@ -95,7 +95,7 @@ check if the settings is open.
 
 3.settings ->change textures and change quit btn tex;
 
-4.sign in //later, wayyyy later
+4.the games
 
 5.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)
 
