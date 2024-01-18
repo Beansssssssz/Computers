@@ -9,7 +9,7 @@ Square::Square(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool collis
   :_path(path), _src(srcrect), _dst(dstrect), collisionEnabled(collisionEnabled)
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  _tex = window->LoadTexture(path.c_str());
+  _tex = window->LoadTexture(path.c_str()); 
 }
 
 Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)

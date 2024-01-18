@@ -49,7 +49,7 @@ SDL_Texture* RenderWindow::LoadTexture(const char* filepath) {
 /// <summary>
 /// copies the the renderer buffer into the screen buffer
 /// </summary>
-void RenderWindow::Display() {
+void RenderWindow::Display() {  
   SDL_RenderPresent(renderer);
 };
 
@@ -59,19 +59,7 @@ void RenderWindow::Display() {
 /// <param name="sqr">the root class sqaure</param>
 void RenderWindow::Render(Square* sqr)
 {
-  SDL_Rect dst = *sqr->GetDstRect();
-
-  /* testing to be able to display on muiltiple screen sizes */
-  //SDL_DisplayMode DM;
-  //SDL_GetCurrentDisplayMode(0, &DM);
-  //float ScreenW = DM.w;
-
-  //dst.x /= 1920.0f / ScreenW;
-  //dst.y /= 1920.0f / ScreenW;
-  //dst.h /= 1920.0f / ScreenW;
-  //dst.w /= 1920.0f / ScreenW;
-
-  if (SDL_RenderCopy(renderer, sqr->GetTexture(), sqr->GetSrcRect(), &dst))
+  if (SDL_RenderCopy(renderer, sqr->GetTexture(), sqr->GetSrcRect(), sqr->GetDstRect()))
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture faild to be copied. Error: %s"
       , SDL_GetError());
 };
@@ -109,17 +97,6 @@ SDL_Renderer* RenderWindow::GetRenderer()
 void RenderWindow::DisplayRect(SDL_Rect* rect, SDL_Color color)
 {
   SDL_Rect dst = *rect;
-
-  /* testing to be able to display on muiltiple screen sizes */
-  //SDL_DisplayMode DM;
-  //SDL_GetCurrentDisplayMode(0, &DM);
-  //float ScreenW = DM.w;
-
-  //dst.x /= 1920.0f / ScreenW;
-  //dst.y /= 1920.0f / ScreenW;
-  //dst.h /= 1920.0f / ScreenW;
-  //dst.w /= 1920.0f / ScreenW;
-
 
   SDL_Color oldColor;
   int err = SDL_GetRenderDrawColor(renderer, &oldColor.r,

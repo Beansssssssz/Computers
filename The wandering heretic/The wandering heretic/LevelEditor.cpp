@@ -28,7 +28,7 @@ LevelEditor::LevelEditor(json* data)
 LevelEditor::~LevelEditor()
 {
   for (int i = 0; i < _btnVec.size(); i++)
-    delete _btnVec[i];
+    delete _btnVec[i];  
   _btnVec.clear();
 
   while (!_stack.empty()) {

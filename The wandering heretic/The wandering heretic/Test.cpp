@@ -78,6 +78,12 @@ int main(int argc, char* argv[]) {
 TODO
 NOW:
 
+//create the actuall game
+i am burnt out and need to do somthing fun in this project
+
+
+
+
 //sign in->
 make is to that sign in exit when u press in a diffrante place than the sqaure
 and add a done button
