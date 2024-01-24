@@ -39,9 +39,7 @@ bool GameManager::Update()
       return false;
     break;
   case Scenes::game:
-    ret = UpdateGameScene();
-    if (!ret)
-      return false;
+    UpdateGameScene();
     break;
   }
 
@@ -83,12 +81,10 @@ bool GameManager::UpdateHomeScene()
 };
 
 /// <summary>
-/// TODO
+/// runs the games(nothing more really)
 /// </summary>
-/// <returns>true if game is running false if quitting game</returns>
-bool GameManager::UpdateGameScene()
+void GameManager::UpdateGameScene()
 {
   if (_gameScene->Update())
     _settings->SetTab(true);
-  return true;
 }

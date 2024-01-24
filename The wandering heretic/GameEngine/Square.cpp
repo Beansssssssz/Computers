@@ -5,16 +5,15 @@
 #include "Square.hpp"
 #include "RenderWindow.hpp"
 
-Square::Square(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)
-  :_path(path), _src(srcrect), _dst(dstrect), collisionEnabled(collisionEnabled)
+Square::Square(std::string path, SDL_Rect srcrect, SDL_Rect dstrect)
+  :_path(path), _src(srcrect), _dst(dstrect)
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   _tex = window->LoadTexture(path.c_str()); 
 }
 
-Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)
-  :_src(srcrect), _dst(dstrect),_tex(tex),
-  collisionEnabled(collisionEnabled)
+Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect)
+  :_src(srcrect), _dst(dstrect),_tex(tex)
 {}
 
 Square::~Square()
@@ -30,8 +29,6 @@ Square::~Square()
 /// <returns></returns>
 bool Square::IsColliding(SDL_Rect rect)
 {
-  if (!collisionEnabled)
-    return false;
   bool TopTobottom, BottomToTop, LeftToright, RightToleft;
 
   TopTobottom = _dst.y <= rect.y + rect.h;//

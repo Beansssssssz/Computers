@@ -4,6 +4,7 @@
 #include "LevelEditor.hpp"
 #include "WindowText.hpp"
 #include "InputText.hpp"
+#include "ChooseNumber.hpp"
 
 #include <string>
 
@@ -24,7 +25,9 @@ private:
 
   LevelEditor* _edit;//the level editor
   InputText** _inText;
+  ChooseNumber* ch;
 
   bool _logUser;
+  bool _choosingLevel;
   bool _isAdmin;
 };

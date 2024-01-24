@@ -62,7 +62,7 @@ void PopUpWindow::SetTab(bool val)
 /// <summary>
 /// Returns the if the tab is open or not
 /// </summary>
-bool PopUpWindow::GetTab()
+bool PopUpWindow::GetTabOpen()
 {
   return _tabOpen;
 };

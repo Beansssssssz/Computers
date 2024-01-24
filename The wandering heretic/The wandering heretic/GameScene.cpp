@@ -7,7 +7,8 @@
 #include <Keyboard.hpp>
 
 GameScene::GameScene()
-  :_bg(NULL), _edit(NULL), _isAdmin(false), _logUser(false)
+  :_bg(nullptr), _edit(nullptr), ch(nullptr)
+  ,_isAdmin(false), _logUser(false), _choosingLevel(true)
 {
   int w, h;
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -16,8 +17,7 @@ GameScene::GameScene()
 
   CreateInputTextAreas();
 
-  json data = jsonParser::ReadFromFile("Assets/Levels/temp.json");
-  _edit = new LevelEditor(&data);
+  ch = new ChooseNumber(10);
 };
 
 GameScene::~GameScene()
@@ -33,10 +33,20 @@ GameScene::~GameScene()
 /// <returns></returns>
 int GameScene::Update()
 {
-  //if (!_isAdmin) {
-  //  LogUser();
-  //  return 0;
-  //}
+  if (_choosingLevel)
+  {
+    int num = ch->Update();
+    if (num > 0)
+    {
+      std::string path = "Assets/Levels/Level_" + std::to_string(num) + ".json";
+      json data = jsonParser::ReadFromFile(path.c_str());
+      _edit = new LevelEditor(&data, path);
+
+      _choosingLevel = false;
+    }
+
+    return 0;
+  }
   return _edit->Update();
 };
 
@@ -84,10 +94,10 @@ void GameScene::CreateInputTextAreas()
   inputTextRect = _inText[0]->GetPos();
 
   inputTextRect->x = w / 2 - InpuTextW / 2;
-  inputTextRect->y = margineCaculated * h - InpuTextH / 2;
+  inputTextRect->y = (int)(margineCaculated * h - InpuTextH / 2);
 
   //password rect fixing
   inputTextRect = _inText[1]->GetPos();
   inputTextRect->x = w / 2 - InpuTextW / 2;
-  inputTextRect->y = (margineCaculated + margin) * h - InpuTextH / 2;
+  inputTextRect->y = (int)((margineCaculated + margin) * h - InpuTextH / 2);
 }

@@ -14,7 +14,7 @@ public:
   SDL_Color GetColor();
 
   void SetTab(bool val);
-  bool GetTab();
+  bool GetTabOpen();
 private:
   Button* _btnExit;
   SDL_Rect _tab;//the tab that the buttons are displayed on

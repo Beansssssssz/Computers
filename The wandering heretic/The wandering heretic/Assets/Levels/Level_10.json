@@ -1,0 +1,92 @@
+{
+    "Square0": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 320,
+            "rect.y": 1024
+        },
+        "path": "Assets/Blocks/image_0.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
+    },
+    "Square1": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 576,
+            "rect.y": 832
+        },
+        "path": "Assets/Blocks/image_1.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
+    },
+    "Square2": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 960,
+            "rect.y": 192
+        },
+        "path": "Assets/Blocks/image_0.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
+    },
+    "Square3": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 1024,
+            "rect.y": 640
+        },
+        "path": "Assets/Blocks/image_0.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
+    },
+    "Square4": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 1280,
+            "rect.y": 384
+        },
+        "path": "Assets/Blocks/image_8.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
+    },
+    "Square5": {
+        "dst": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 448
+        },
+        "path": "Assets/Blocks/image_0.png",
+        "src": {
+            "rect.h": 64,
+            "rect.w": 64,
+            "rect.x": 0,
+            "rect.y": 0
+        }
+    }
+}

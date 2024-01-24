@@ -7,8 +7,8 @@
 
 class Square {
 public:
-  Square(SDL_Texture* tex, SDL_Rect src, SDL_Rect dst, bool collisionEnabled = false);
-  Square(std::string path, SDL_Rect src, SDL_Rect dst, bool collisionEnabled = false);
+  Square(SDL_Texture* tex, SDL_Rect src, SDL_Rect dst);
+  Square(std::string path, SDL_Rect src, SDL_Rect dst);
 
   ~Square();
 
@@ -28,6 +28,4 @@ protected:
 
   SDL_Rect _src;
   SDL_Rect _dst;
-
-  bool collisionEnabled = false;
 };

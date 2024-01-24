@@ -8,14 +8,16 @@
 
 #define ROUND(x, multiple) (((x) + (multiple) / 2) / (multiple) * (multiple))
 
-LevelEditor::LevelEditor(json* data)
+LevelEditor::LevelEditor(json* data, std::string path)
   :_currentBtn(NULL), _mousePressed(false), _exampleBtns(NULL),
   _tab(NULL), _movingBlock(false), _sideButtons(NULL),
-  _settingBtn(NULL), _saveBtn(NULL), _resetBtn(NULL)
+  _settingBtn(NULL), _saveBtn(NULL), _resetBtn(NULL), _path(path)
 {
   if (data != NULL)//if it is null then vector is empty
     for (json element : *data)
       _btnVec.push_back(jsonParser::FromJsonToButton(element));
+  else 
+    data = new json();
 
   CreateTabAndButtons();
   CreateSideButtons();
@@ -73,11 +75,6 @@ void LevelEditor::UpdateButtons()
   {
     btn->Update();
     window->Render((Square*)btn);
-
-    //not working fix later
-    //if (mouse->IsMouseColliding(*btn->GetDstRect()) && _currentBtn == NULL) {
-    //    _currentBtn = btn;
-    //}
   }
 }
 
@@ -346,5 +343,5 @@ void LevelEditor::SaveToFile()
     i++;
   }
 
-  jsonParser::WriteToFile("Assets/Levels/temp.json", data);
+  jsonParser::WriteToFile(_path.c_str(), data);
 }

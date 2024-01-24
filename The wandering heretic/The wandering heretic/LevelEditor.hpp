@@ -18,7 +18,7 @@ using json = nlohmann::json;
 class LevelEditor 
 {
 public:
-  LevelEditor(json* data = NULL);
+  LevelEditor(json* data, std::string path);
   ~LevelEditor();
 
   int Update();
@@ -58,5 +58,7 @@ private:
   Button* _saveBtn; // the settings button
 
   bool* _sideButtons;
+
+  std::string _path;
 };
 
