@@ -1,6 +1,5 @@
 //including my own libs
 #include "GameManager.hpp"
-#include "GIF.h"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -35,7 +34,6 @@ int main(int argc, char* argv[]) {
 
 
   //GIF(nullptr, { 0,0,0,0 }, {0,0,0,0}, 0);
-  // i have local commit
   //starting the main loop
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
@@ -81,32 +79,35 @@ int main(int argc, char* argv[]) {
 /*
 TODO
 NOW:
-//square class->a basic square (no collisions)
-//Entity class->sqaure with collisions(like floor or wall)
-//basePlayer class -> a player class that can move left and right and jump has gravity
-//baseEnemy class -> idk yet
 
+//fix resizing issue
 
-
-//create the actually game
-i am burnt out and need to do somthing fun in this project
-
-
-
-//sign in -> after the game?
+//add GUI to select levels ->
+add a pop up winodw where u can select a fixed amount of levels or
+all the levels and an emtyp level with the name empty
 
 //OVERALL:
+
 2.5 ->add a way to "freeze" stuff ->
 a way to tell the mouse to stop the pressing on other buttons
 or -> use the bool as a pointer or ref(ref better) and when u r updating the buttons
 check if the settings is open.
 
-3.settings -> change textures(when active and not active) and change quit btn texture;
+3.settings ->change textures and change quit btn tex;
 
-4.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)
+4.sign in //later, wayyyy later
 
-5. multiplayer????
+5.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)
 
-7.the game itself -> the games is built of rooms.
-(like hollow knight rooms not mario like)
+6.learn socket -> how to communt in sqlite3
+and how to store said data in server//use arduino to do it?
+
+7.the game itself //fun ☺
+->the games is built of rooms
+->like hollow knight rooms not mario like.
+
+
+
+try:
+//search for UB and fix bugs -> just play the game
 */
