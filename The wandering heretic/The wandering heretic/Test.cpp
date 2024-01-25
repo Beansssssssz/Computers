@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
 
 
   //GIF(nullptr, { 0,0,0,0 }, {0,0,0,0}, 0);
+  // i have local commit
   //starting the main loop
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
