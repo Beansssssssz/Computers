@@ -1,6 +1,6 @@
 //including my own libs
 #include "GameManager.hpp"
-#include "ChooseNumber.hpp"
+#include "GIF.h"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
   SDL_Event event;
 
 
-  ChooseNumber chNum(10);
+  //GIF(nullptr, { 0,0,0,0 }, {0,0,0,0}, 0);
   //starting the main loop
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
