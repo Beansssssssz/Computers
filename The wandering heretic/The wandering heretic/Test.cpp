@@ -1,5 +1,6 @@
 //including my own libs
 #include "GameManager.hpp"
+#include "GIF.h"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -79,13 +80,6 @@ int main(int argc, char* argv[]) {
 /*
 TODO
 NOW:
-
-//fix resizing issue
-
-//add GUI to select levels ->
-add a pop up winodw where u can select a fixed amount of levels or
-all the levels and an emtyp level with the name empty
-
 //OVERALL:
 
 2.5 ->add a way to "freeze" stuff ->

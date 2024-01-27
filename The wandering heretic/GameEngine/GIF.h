@@ -3,6 +3,11 @@
 #include <SDL.h>
 #include<SDL_image.h>
 
+
+/// <summary>
+/// create a new thread where all the textures are being updated to their next cycle
+/// </summary>
+
 class GIF
 {
 public:
