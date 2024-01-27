@@ -5,20 +5,20 @@
 #include "Square.hpp"
 #include "RenderWindow.hpp"
 
-Square::Square(std::string path, SDL_Rect srcrect, SDL_Rect dstrect)
+Square::Square(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool destroyTex)
   :_path(path), _src(srcrect), _dst(dstrect)
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   _tex = window->LoadTexture(path.c_str()); 
 }
 
-Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect)
-  :_src(srcrect), _dst(dstrect),_tex(tex)
+Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool destroyTex)
+  :_src(srcrect), _dst(dstrect), _tex(tex)
 {}
 
 Square::~Square()
 {
-  if (_tex != nullptr)
+  if (_tex != nullptr && _destroytex)
     SDL_DestroyTexture(_tex);
 };
 

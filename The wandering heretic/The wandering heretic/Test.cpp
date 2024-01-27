@@ -30,22 +30,18 @@ int main(int argc, char* argv[]) {
 
   GameManager gm;
 
-  bool running = true;
   SDL_Event event;
+  bool running = true;
 
-
-  //GIF(nullptr, { 0,0,0,0 }, {0,0,0,0}, 0);
-  //starting the main loop
+  //the game loop
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
 
     while (SDL_PollEvent(&event))
     {
-      if (event.type == SDL_QUIT) {
+      if (event.type == SDL_QUIT) 
         running = false;
-        break;
-      }
-
+      
       keyboard->BuildText(event);
     }
     /*if (!window->IsWindowFocused())
@@ -80,6 +76,14 @@ int main(int argc, char* argv[]) {
 /*
 TODO
 NOW:
+
+//Create Entity Class that maybe has collision and has ethier gif or a square)
+//Create RealGame(like the actual game)
+//create BasePlayer in the gameEngine project
+//Add basePlayer To the real game and run the basePlayer there with a map
+//Add settings to the RealGame
+
+
 //OVERALL:
 
 2.5 ->add a way to "freeze" stuff ->
