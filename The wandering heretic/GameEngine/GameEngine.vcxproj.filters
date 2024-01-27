@@ -110,7 +110,7 @@
     <ClInclude Include="BasePlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GIF.h">
+    <ClInclude Include="GIF.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

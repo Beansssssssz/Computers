@@ -5,16 +5,20 @@
 #include "Square.hpp"
 #include "RenderWindow.hpp"
 
-Square::Square(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool destroyTex)
-  :_path(path), _src(srcrect), _dst(dstrect)
-{
-  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  _tex = window->LoadTexture(path.c_str()); 
-}
-
 Square::Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool destroyTex)
-  :_src(srcrect), _dst(dstrect), _tex(tex)
+  :_src(srcrect), _dst(dstrect), _tex(tex),
+  _path(""), _destroytex(destroyTex)
 {}
+
+Square::Square(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool destroyTex)
+  :_path(path), _src(srcrect), _dst(dstrect),
+  _tex(nullptr), _destroytex(destroyTex)
+{
+  if (path != "") {
+    RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+    _tex = window->LoadTexture(path.c_str());
+  }
+}
 
 Square::~Square()
 {
@@ -65,15 +69,20 @@ void Square::SetTexture(const char* path, SDL_Rect src)
     _src = src;
 };
 
+/// <summary>
+/// Returns the path of the Texture.
+/// returns an empty string if there is no path
+/// </summary>
+/// <returns></returns>
 std::string Square::GetPath()
 {
   return _path;
 };
 
 /// <summary>
-/// sets the source rect of the rect to the provided rect
+/// Sets the source rect of the rect to the provided rect.
 /// </summary>
-/// <param name="rect"></param>
+/// <param name="rect">SDL_Rect type</param>
 void Square::SetSrcRect(SDL_Rect rect)
 {
   _src = rect;

@@ -3,12 +3,10 @@
 #include "Keyboard.hpp"
 
 GameManager::GameManager()
-  :_wcScene(NULL), _gameScene(NULL), _HomeScene(NULL)
+  :_wcScene(new WelcomeScene()),
+  _homeScene(new HomeScene()),
+  _gameScene(new GameScene())
 {
-  _wcScene = new WelcomeScene();
-  _HomeScene = new HomeScene();
-  _gameScene = new GameScene();
-
   _settings = Settings::CreateSettings();
 };
 
@@ -16,7 +14,7 @@ GameManager::~GameManager()
 {
   delete _wcScene;
   delete _gameScene;
-  delete _HomeScene;
+  delete _homeScene;
   delete _settings;
 };
 
@@ -67,7 +65,7 @@ void GameManager::UpdateWelcomeScene()
 /// <returns></returns>
 bool GameManager::UpdateHomeScene()
 {
-  int ret = _HomeScene->Update();
+  int ret = _homeScene->Update();
   if (ret == (int)HomeButtons::Play) 
     _currentScene = Scenes::game;
 

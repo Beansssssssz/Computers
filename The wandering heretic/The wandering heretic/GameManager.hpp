@@ -15,7 +15,7 @@ enum class Scenes
 /// <summary>
 /// the class that manages the game
 /// </summary>
-class GameManager {
+ class GameManager {
 public:
   GameManager();
   ~GameManager();
@@ -29,7 +29,7 @@ private:
   Scenes _currentScene = Scenes::welcome;//You always start at the welcome Scene
 
   WelcomeScene* _wcScene;
-  HomeScene* _HomeScene;
+  HomeScene* _homeScene;
   GameScene* _gameScene;
 
   Settings* _settings;

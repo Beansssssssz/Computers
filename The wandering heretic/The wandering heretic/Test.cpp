@@ -1,6 +1,5 @@
 //including my own libs
 #include "GameManager.hpp"
-#include "GIF.h"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -77,11 +76,11 @@ int main(int argc, char* argv[]) {
 TODO
 NOW:
 
-//Create Entity Class that maybe has collision and has ethier gif or a square)
-//Create RealGame(like the actual game)
-//create BasePlayer in the gameEngine project
-//Add basePlayer To the real game and run the basePlayer there with a map
-//Add settings to the RealGame
+//Create Entity Class that maybe has collision and has gif )//today
+//Create RealGame(like the actual game)//sunday
+//create BasePlayer in the gameEngine project//sunday
+//Add basePlayer To the real game and run the basePlayer there with a map //monday
+//Add settings to the RealGame //monday
 
 
 //OVERALL:
@@ -103,7 +102,6 @@ and how to store said data in server//use arduino to do it?
 7.the game itself //fun ☺
 ->the games is built of rooms
 ->like hollow knight rooms not mario like.
-
 
 
 try:

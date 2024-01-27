@@ -197,16 +197,16 @@ void HomeScene::ButtonResized()
     }
     else
     {
-      ////left arrow
-      //SDL_Rect* rect = _arrows[i]->GetDstRect();
-      //rect->w = ARROWWIDTH;
-      //rect->h = ARROWHEIGHT;
-      //rect->x = _buttons[i]->GetDstRect()->x - ARROWWIDTH - MARGINX;
-      //
-      ////right arrow
-      //rect = _arrows[i + 4]->GetDstRect();
-      //rect->w = ARROWWIDTH;
-      //rect->h = ARROWHEIGHT;
+      //left arrow
+      SDL_Rect* rect = _arrows[i]->GetDstRect();
+      rect->w = ARROWWIDTH;
+      rect->h = ARROWHEIGHT;
+      rect->x = _buttons[i]->GetDstRect()->x - ARROWWIDTH - MARGINX;
+      
+      //right arrow
+      rect = _arrows[i + 4]->GetDstRect();
+      rect->w = ARROWWIDTH;
+      rect->h = ARROWHEIGHT;
     }
 };
 

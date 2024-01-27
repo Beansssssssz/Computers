@@ -1,4 +1,4 @@
-#include "GIF.h"
+#include "GIF.hpp"
 
 #include <iostream>
 

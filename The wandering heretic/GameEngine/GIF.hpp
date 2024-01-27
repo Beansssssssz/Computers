@@ -4,7 +4,6 @@
 #include<SDL_image.h>
 
 #include "Square.hpp"
-
 /// <summary>
 /// create a new thread where all the textures are being updated to their next cycle
 /// </summary>

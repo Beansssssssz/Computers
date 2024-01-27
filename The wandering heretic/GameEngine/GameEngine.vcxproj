@@ -160,7 +160,7 @@
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="ChooseNumber.hpp" />
     <ClInclude Include="Entity.hpp" />
-    <ClInclude Include="GIF.h" />
+    <ClInclude Include="GIF.hpp" />
     <ClInclude Include="InputText.hpp" />
     <ClInclude Include="JsonParser.hpp" />
     <ClInclude Include="Keyboard.hpp" />
