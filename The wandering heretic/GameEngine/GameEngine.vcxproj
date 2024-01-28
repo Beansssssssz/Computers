@@ -156,7 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio.hpp" />
-    <ClInclude Include="BasePlayer.h" />
+    <ClInclude Include="BasePlayer.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="ChooseNumber.hpp" />
     <ClInclude Include="Entity.hpp" />

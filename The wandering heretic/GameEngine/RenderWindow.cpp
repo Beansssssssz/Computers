@@ -20,6 +20,10 @@ RenderWindow::RenderWindow(const char* title)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Renderer failed to render. Error: %s", SDL_GetError());
 
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);//sets it so that you can blend colors
+
+  const SDL_Rect SetSize = { 0, 0, 1920, 1080 };//the size i render the game(its a fixed size)
+  if(SDL_RenderSetViewport(renderer, &SetSize) != 0)
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to set Viewport. Error: %s", SDL_GetError());
 };
 
 RenderWindow::~RenderWindow() {

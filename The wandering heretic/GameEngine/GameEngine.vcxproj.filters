@@ -107,7 +107,7 @@
     <ClInclude Include="ChooseNumber.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BasePlayer.h">
+    <ClInclude Include="BasePlayer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GIF.hpp">

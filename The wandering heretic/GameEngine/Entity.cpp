@@ -1,5 +1,7 @@
 #include "Entity.hpp"
 
+#include <iostream>
+
 Entity::Entity(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)
   :Entity::Square(tex, srcrect, dstrect), _gif(nullptr),
   _isRight(true), _collisionEnabled(collisionEnabled)
@@ -32,18 +34,35 @@ void Entity::Update()
 /// <summary>
 /// TODO
 /// </summary>
-/// <param name="vec">the vector of all the list</param>
+/// <param name="vec">/param>
 /// <param name="offsetX"></param>
 /// <param name="offsetY"></param>
-void Entity::MoveTo(std::vector<Square*> vec, int offsetX, int offsetY) {
-  SDL_Rect offsetRect{
-    _dst.x + offsetX, _dst.y + offsetY,
-    _dst.w, _dst.h
-  };
-  for (Square* sqr : vec)
-    if (((Entity*)sqr)->_collisionEnabled && sqr->IsColliding(offsetRect))
-      break;
+void Entity::MoveTo(std::vector<Entity*> vec, uint8_t offsetX, uint8_t offsetY) {
+  SDL_Rect newDst = _dst;
+  newDst.x += offsetX;
+  newDst.y += offsetY;
 
+  std::cout << ((Entity*)vec[0])->_collisionEnabled << '\n';
+
+  for (Entity* sqr : vec)
+    if (sqr->_collisionEnabled && sqr->IsColliding(newDst))
+      return;
+  _dst = newDst;
+}
+
+GIF* Entity::GetGIF()
+{
+    return _gif;
+}
+
+/// <summary>
+/// deletese the original gif
+/// </summary>
+/// <param name="gif"></param>
+void Entity::SetGIF(GIF* gif)
+{
+  delete _gif;
+  _gif = gif;
 }
 
 bool Entity::GetIsRight()

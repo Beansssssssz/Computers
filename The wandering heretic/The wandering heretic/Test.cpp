@@ -1,5 +1,6 @@
 //including my own libs
 #include "GameManager.hpp"
+#include "Entity.hpp"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
