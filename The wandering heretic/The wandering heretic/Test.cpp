@@ -1,6 +1,5 @@
 //including my own libs
 #include "GameManager.hpp"
-#include "Entity.hpp"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -77,7 +76,6 @@ int main(int argc, char* argv[]) {
 TODO
 NOW:
 
-//Create Entity Class that maybe has collision and has gif )//today
 //Create RealGame(like the actual game)//sunday
 //create BasePlayer in the gameEngine project//sunday
 //Add basePlayer To the real game and run the basePlayer there with a map //monday

@@ -1,6 +1,8 @@
 #pragma once
 #include "Entity.hpp"
 
+#include <vector>
+
 enum class GifTypes
 {
   idle,
@@ -13,15 +15,21 @@ enum class GifTypes
 class BasePlayer : public Entity
 {
 public:
-  BasePlayer(GIF** gifs, SDL_Rect srcrect, SDL_Rect dstrect, bool _collisionEnabled = true);
+  BasePlayer(GIF** gifs, bool _collisionEnabled = true);
   ~BasePlayer();
 
-  void Update() override;
-private:
-  //void ApplyGravity();
+  void Update(std::vector<Entity*> vec);
+private: //private functions
   void GetInput();
+  void UpdateVelocity();
 
+private: //private members
   GIF** _gifs;
+
+  Vector2f _speed;
+  constexpr static int MAXSPEED = 5;
+  constexpr static double GRAVITY = 0.1;
+  constexpr static double FRICTION = 0.2;
 };
 
 

@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Button.hpp"
 #include "LevelEditor.hpp"
+#include "GameWorld.hpp"
+
+#include "Button.hpp"
 #include "WindowText.hpp"
 #include "InputText.hpp"
 #include "ChooseNumber.hpp"
@@ -24,6 +26,8 @@ private:
   Square* _bg;
 
   LevelEditor* _edit;//the level editor
+  GameWorld* _world;
+
   InputText** _inText;
   ChooseNumber* ch;
 

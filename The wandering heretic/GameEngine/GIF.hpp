@@ -17,9 +17,17 @@ public:
   void Update();
   void RenderGIF();
 
-  Square* GetCurrentSquare();
+  SDL_Texture* GetCurrentTexture();
+  void SetCurrentTexture(SDL_Texture* tex, uint8_t loc);
+
+  SDL_Rect GetDstRect();
+  SDL_Rect GetSrcRect();
+
+  void SetDstRect(SDL_Rect rect);
+  void SetSrcRect(SDL_Rect rect);
+
 private:
-  Square** _sqrs; //pointer arrays of sqaures(the pngs)
+  SDL_Texture** _texs; //pointer arrays of sqaures(the pngs)
   uint8_t _loc; //the current iterator of the tex array(aka current tex).
 
   uint8_t _len; //the length of the array.

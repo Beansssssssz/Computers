@@ -15,7 +15,7 @@ Entity::Entity(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool collis
 }
 
 Entity::Entity(GIF* gif, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled)
-  :Entity::Square("", srcrect, dstrect), _gif(gif),
+  :Entity::Square("", srcrect, dstrect),  _gif(gif),
   _isRight(true), _collisionEnabled(collisionEnabled)
 {};
 
@@ -27,8 +27,11 @@ Entity::~Entity()
 /// </summary>
 void Entity::Update()
 {
-  if (_gif != nullptr)
+  if (_gif != nullptr) {
+    _gif->SetDstRect(_dst);
     _gif->Update();
+    _gif->RenderGIF();
+  }
 }
 
 /// <summary>
@@ -37,15 +40,13 @@ void Entity::Update()
 /// <param name="vec">/param>
 /// <param name="offsetX"></param>
 /// <param name="offsetY"></param>
-void Entity::MoveTo(std::vector<Entity*> vec, uint8_t offsetX, uint8_t offsetY) {
+void Entity::MoveTo(std::vector<Entity*> vec, int8_t offsetX, int8_t offsetY) {
   SDL_Rect newDst = _dst;
   newDst.x += offsetX;
   newDst.y += offsetY;
 
-  std::cout << ((Entity*)vec[0])->_collisionEnabled << '\n';
-
   for (Entity* sqr : vec)
-    if (sqr->_collisionEnabled && sqr->IsColliding(newDst))
+    if (sqr != nullptr && sqr->_collisionEnabled && sqr->IsColliding(newDst))
       return;
   _dst = newDst;
 }

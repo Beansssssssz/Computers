@@ -7,7 +7,7 @@
 #include <Keyboard.hpp>
 
 GameScene::GameScene()
-  :_bg(nullptr), _edit(nullptr), ch(nullptr)
+  :_bg(nullptr), _edit(nullptr), ch(nullptr), _world(nullptr)
   ,_isAdmin(false), _logUser(false), _choosingLevel(true)
 {
   int w, h;
@@ -33,6 +33,12 @@ GameScene::~GameScene()
 /// <returns></returns>
 int GameScene::Update()
 {
+  if (_world == nullptr)
+    _world = new GameWorld();
+
+  _world->Update();
+  return false;
+
   if (_choosingLevel)
   {
     int num = ch->Update();

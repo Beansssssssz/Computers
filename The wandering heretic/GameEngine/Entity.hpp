@@ -1,6 +1,6 @@
 #pragma once
 #include "Square.hpp"
-#include "GIF.hpp"
+#include "GIF.hpp" 
 
 #include <vector>
 
@@ -13,7 +13,7 @@ public:
   ~Entity();
 
   virtual void Update();
-  void MoveTo(std::vector<Entity*> vec, uint8_t offsetX, uint8_t offsetY);
+  void MoveTo(std::vector<Entity*> vec, int8_t offsetX, int8_t offsetY);
 
   GIF* GetGIF();
   void SetGIF(GIF* gif);
