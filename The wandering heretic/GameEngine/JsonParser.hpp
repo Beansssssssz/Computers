@@ -5,7 +5,7 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
-#include "Button.hpp"
+#include "Square.hpp"
 
 using json = nlohmann::json;
 
@@ -125,12 +125,12 @@ namespace jsonParser {
   /// </summary>
   /// <param name="data"></param>
   /// <returns></returns>
-  inline Button* FromJsonToButton(json data) {
+  inline Square* FromJsonToSquare(json data, bool destoryTex = true) {
     SDL_Rect dst = FromJsonToRect(data["dst"]),
       src = FromJsonToRect(data["src"]);
     std::string path = data["path"];
 
-    return new Button(path.c_str(), src, dst);
+    return new Square(path.c_str(), src, dst, destoryTex);
   };
 
   /// <summary>
@@ -138,11 +138,11 @@ namespace jsonParser {
   /// </summary>
   /// <param name="btn"></param>
   /// <returns></returns>
-  inline json FromButtonToJson(Button* btn) {
+  inline json FromSquareToJson(Square* sqr) {
     json data;
 
-    return CreateJsonFromData(*btn->GetSrcRect(),
-      *btn->GetSrcRect(), btn->GetPath());
+    return CreateJsonFromData(*sqr->GetSrcRect(),
+      *sqr->GetSrcRect(), sqr->GetPath());
   };
 }
 

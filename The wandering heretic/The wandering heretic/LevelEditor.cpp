@@ -14,8 +14,13 @@ LevelEditor::LevelEditor(json* data, std::string path)
   _settingBtn(NULL), _saveBtn(NULL), _resetBtn(NULL), _path(path)
 {
   if (data != NULL)//if it is null then vector is empty
-    for (json element : *data)
-      _btnVec.push_back(jsonParser::FromJsonToButton(element));
+    for (json element : *data) {
+      Square* sqr = jsonParser::FromJsonToSquare(element, false);
+      Button* btn = new Button(sqr->GetTexture(), *sqr->GetSrcRect(), *sqr->GetDstRect());
+      _btnVec.push_back(btn);
+
+      delete sqr;
+    }
   else 
     data = new json();
 

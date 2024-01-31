@@ -12,8 +12,8 @@ BasePlayer::BasePlayer(GIF** gifs, bool _collisionEnabled)
 
 BasePlayer::~BasePlayer()
 {
-  _gif = nullptr;//incase of UB
-  delete[] _gifs;
+  //TODO
+  //delete[] _gifs;
 }
 
 /// <summary>
@@ -23,7 +23,7 @@ void BasePlayer::Update(std::vector<Entity*> vec)
 {
   Entity::Update();
   this->GetInput();
-  this->UpdateVelocity();
+  this->UpdateVelocity(vec );
 }
 
 void BasePlayer::GetInput()
@@ -34,34 +34,30 @@ void BasePlayer::GetInput()
   if (keyArr[SDL_SCANCODE_W] || keyArr[SDL_SCANCODE_UP])
     _speed.y = -MAXSPEED;
 
+  else if (keyArr[SDL_SCANCODE_S] || keyArr[SDL_SCANCODE_DOWN])
+    _speed.y = MAXSPEED;
+
   if (keyArr[SDL_SCANCODE_D] || keyArr[SDL_SCANCODE_RIGHT])
     _speed.x = MAXSPEED;
 
-  if (keyArr[SDL_SCANCODE_A] || keyArr[SDL_SCANCODE_LEFT])
+  else if (keyArr[SDL_SCANCODE_A] || keyArr[SDL_SCANCODE_LEFT])
     _speed.x = -MAXSPEED;
 }
 
 
-void BasePlayer::UpdateVelocity()
+void BasePlayer::UpdateVelocity(std::vector<Entity*> vec)
 {
-  std::vector<Entity*> vec;
-
   //moving the player
-  if (_speed.x != 0 || _speed.y != 0)
-  {
-
-    int8_t x = (int8_t)_speed.x;
-    int8_t y = (int8_t)_speed.y;
-    if (_speed.x < 0)
-      std::cout << ((int)x) << '\n';
-    this->MoveTo(vec, x, y);
-  }
+  if (_speed.x != 0)
+    this->MoveTo(vec, (int8_t)_speed.x, 0);
+  if (_speed.y != 0)
+    this->MoveTo(vec, 0, (int8_t)_speed.y);
 
   //slowing the player
   if (_speed.x != 0)
     _speed.x += _speed.x > 0 ? -1 : 1 * FRICTION;
 
   //applaying gravity to the player
- /* if (_speed.y > MAXSPEED)
-    _speed.y += _speed.y + GRAVITY;*/
+  if (_speed.y != 0)
+    _speed.y += _speed.y > 0 ? -1 : 1 * FRICTION;
 }

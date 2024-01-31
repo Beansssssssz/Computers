@@ -20,7 +20,10 @@ Entity::Entity(GIF* gif, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabl
 {};
 
 Entity::~Entity()
-{};
+{
+  delete _gif;
+  _gif = nullptr;
+};
 
 /// <summary>
 /// Updates all the nececery data for the entity

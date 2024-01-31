@@ -1,13 +1,23 @@
 #include "GameWorld.hpp"
 
+#include "RenderWindow.hpp"
 #include "Keyboard.hpp"
+#include "JsonParser.hpp"
 
-GameWorld::GameWorld()
-  :_player(nullptr), _settingsBtn(nullptr)
+GameWorld::GameWorld(json* data, std::string path)
+  :_data(data), _path(path),
+  _player(nullptr), _settingsBtn(nullptr)
 {
-  _vec.push_back(nullptr);
+  for (json block : *data)
+  {
+    Square* sqr = jsonParser::FromJsonToSquare(block, false);
+    Entity* entity = new Entity(sqr->GetTexture(), *sqr->GetSrcRect(), *sqr->GetDstRect());
+    _vec.push_back(entity);
 
-  SDL_Rect rect{ 0,0,320,320 };
+    delete sqr;
+  }
+
+  SDL_Rect rect{ 60, 60, 188, 260 - 42 };
   GIF* gif = new GIF("Assets\\Character\\FrogIdle\\FrogIdle_", 12, rect, rect, 180);
   _player = new BasePlayer(&gif);
 }
@@ -15,14 +25,21 @@ GameWorld::GameWorld()
 GameWorld::~GameWorld()
 {
   for (size_t i = 0; i < _vec.size(); i++)
-    delete _vec[0];
+    delete _vec[i];
 
+  delete _player;
   delete _settingsBtn;
 }
 
 bool GameWorld::Update()
 {
-  _player->Update(_vec);
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
-  return true;
+  _player->Update(_vec);
+  for (Entity* entity : _vec)
+  {
+    entity->Update();
+    window->Render((Square*)entity);
+  }
+  return false;
 }

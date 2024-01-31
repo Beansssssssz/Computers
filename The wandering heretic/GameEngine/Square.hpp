@@ -12,7 +12,7 @@ public:
 
   ~Square();
 
-  SDL_Texture* GetTexture();
+  virtual SDL_Texture* GetTexture();
   void SetTexture(const char* path, SDL_Rect src = { -1,-1,-1,-1 });
   std::string GetPath();
 

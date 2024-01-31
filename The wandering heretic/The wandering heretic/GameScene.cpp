@@ -7,8 +7,8 @@
 #include <Keyboard.hpp>
 
 GameScene::GameScene()
-  :_bg(nullptr), _edit(nullptr), ch(nullptr), _world(nullptr)
-  ,_isAdmin(false), _logUser(false), _choosingLevel(true)
+  :_bg(nullptr), _edit(nullptr), ch(nullptr), _world(nullptr),
+   _logUser(false), _choosingLevel(true), _username("")
 {
   int w, h;
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -22,8 +22,9 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-  delete _bg;
   delete _edit;
+  delete _world;
+  delete _bg;
   delete[] _inText;
 };
 
@@ -33,12 +34,6 @@ GameScene::~GameScene()
 /// <returns></returns>
 int GameScene::Update()
 {
-  if (_world == nullptr)
-    _world = new GameWorld();
-
-  _world->Update();
-  return false;
-
   if (_choosingLevel)
   {
     int num = ch->Update();
@@ -46,18 +41,25 @@ int GameScene::Update()
     {
       std::string path = "Assets/Levels/Level_" + std::to_string(num) + ".json";
       json data = jsonParser::ReadFromFile(path.c_str());
-      _edit = new LevelEditor(&data, path);
+
+      
+      _world = new GameWorld(&data, path);
+      //_edit = new LevelEditor(&data, path);
 
       _choosingLevel = false;
     }
 
     return 0;
   }
+
+  if (_world != nullptr)
+    return _world->Update();
+
   return _edit->Update();
 };
 
 /// <summary>
-/// Logs the user
+/// TODO
 /// </summary>
 void GameScene::LogUser() {
   Mouse* mouse = Mouse::GetMouseInstance();
@@ -71,7 +73,8 @@ void GameScene::LogUser() {
 
   if (!_logUser && !mouse->IsMouseColliding(textRect)
     && mouse->GetPressed() == MouseButtons::mbl)
-    _isAdmin = true;
+  {
+  }
   if (!mouse->IsMouseColliding(textRect) && mouse->GetPressed() == MouseButtons::mbl)
     _logUser = false;
   

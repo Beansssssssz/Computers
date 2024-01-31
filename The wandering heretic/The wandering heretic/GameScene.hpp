@@ -33,5 +33,5 @@ private:
 
   bool _logUser;
   bool _choosingLevel;
-  bool _isAdmin;
+  std::string _username;
 };

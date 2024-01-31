@@ -76,11 +76,8 @@ int main(int argc, char* argv[]) {
 TODO
 NOW:
 
-//Create RealGame(like the actual game)//sunday
-//create BasePlayer in the gameEngine project//sunday
-//Add basePlayer To the real game and run the basePlayer there with a map //monday
-//Add settings to the RealGame //monday
-
+//run the basePlayer there with a map
+//Add settings to the RealGame
 
 //OVERALL:
 

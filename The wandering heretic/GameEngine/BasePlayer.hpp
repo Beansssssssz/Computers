@@ -21,7 +21,7 @@ public:
   void Update(std::vector<Entity*> vec);
 private: //private functions
   void GetInput();
-  void UpdateVelocity();
+  void UpdateVelocity(std::vector<Entity*> vec);
 
 private: //private members
   GIF** _gifs;

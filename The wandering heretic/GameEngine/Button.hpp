@@ -25,5 +25,4 @@ public:
 private:
   bool _isSelected;
   bool _isPressed;
-
 };
