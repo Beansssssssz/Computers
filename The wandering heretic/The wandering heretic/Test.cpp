@@ -76,8 +76,10 @@ int main(int argc, char* argv[]) {
 TODO
 NOW:
 
-//run the basePlayer there with a map
 //Add settings to the RealGame
+//Create a real map
+//Create the actuall Player Class(not gameEngine one)
+//Go through code and fix bugs
 
 //OVERALL:
 
