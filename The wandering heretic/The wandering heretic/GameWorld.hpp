@@ -7,7 +7,6 @@
 #include <vector>
 #include <nlohmann/json.hpp>
 
-//     __ _____ _____ _____
 using json = nlohmann::json;
 
 class GameWorld

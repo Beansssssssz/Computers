@@ -43,15 +43,17 @@ void Entity::Update()
 /// <param name="vec">/param>
 /// <param name="offsetX"></param>
 /// <param name="offsetY"></param>
-void Entity::MoveTo(std::vector<Entity*> vec, int8_t offsetX, int8_t offsetY) {
+bool Entity::MoveTo(std::vector<Entity*> vec, int8_t offsetX, int8_t offsetY) {
   SDL_Rect newDst = _dst;
   newDst.x += offsetX;
   newDst.y += offsetY;
 
   for (Entity* sqr : vec)
     if (sqr != nullptr && sqr->_collisionEnabled && sqr->IsColliding(newDst))
-      return;
+      return false;
+
   _dst = newDst;
+  return true;
 }
 
 GIF* Entity::GetGIF()

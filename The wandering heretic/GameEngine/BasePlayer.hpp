@@ -9,7 +9,7 @@ enum class GifTypes
   walking,
   running,
   attacking,
-  death,
+  death
 };
 
 class BasePlayer : public Entity
@@ -19,17 +19,21 @@ public:
   ~BasePlayer();
 
   void Update(std::vector<Entity*> vec);
+  void ChangeType(GifTypes type);
 private: //private functions
   void GetInput();
   void UpdateVelocity(std::vector<Entity*> vec);
 
 private: //private members
   GIF** _gifs;
+  GifTypes _currentType;
 
   Vector2f _speed;
-  constexpr static int MAXSPEED = 5;
-  constexpr static double GRAVITY = 0.1;
-  constexpr static double FRICTION = 0.2;
+  float _gravityCounter;
+  constexpr static int MAX_SPEED = 10;
+  constexpr static float FRICTION = 0.2f;
+  constexpr static float GRAVITY = 0.3f;
+  constexpr static float MAX_GRAVITY = 10.0f;
 };
 
 
