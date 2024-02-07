@@ -60,23 +60,19 @@ void BasePlayer::GetInput()
 void BasePlayer::UpdateVelocity(std::vector<Entity*> vec)
 {
   //moving the player
-  if (_speed.x != 0) {
-    while(this->MoveTo(vec, (int8_t)_speed.x, 0));
-      _speed.x += (_speed.x > 0 ? -1 : 1);
-  }
-  if (_speed.y != 0) {
+  if (_speed.x != 0) 
+   this->MoveTo(vec, (int8_t)_speed.x, 0);
+  
+  if (_speed.y != 0) 
     while(!this->MoveTo(vec, 0, (int8_t)_speed.y))
       _speed.y += (_speed.y > 0 ? -1 : 1);
-  }
+  
 
   //applying friction and smoothness to the player
   if (_speed.x != 0)
-    _speed.x += (_speed.x > 0 ? -1 : 1) * FRICTION;
+    _speed.x += _speed.x > 0 ? -1 : 1;
 
   //applying gravity
   if (_speed.y < MAX_GRAVITY)
     _speed.y += GRAVITY;
-
-  //applaying gravity
-  this->MoveTo(vec, 0, (int8_t)GRAVITY);
 }

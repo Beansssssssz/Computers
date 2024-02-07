@@ -343,8 +343,7 @@ void LevelEditor::SaveToFile()
   for (Button* btn : _btnVec)
   {
     std::string name = "Square" + std::to_string(i);
-    data[name.c_str()] = jsonParser::CreateJsonFromData(*btn->GetDstRect(),
-      *btn->GetSrcRect(), btn->GetPath());
+    data[name.c_str()] = jsonParser::CreateJsonFromData(*btn->GetDstRect(), btn->GetPath());
     i++;
   }
 

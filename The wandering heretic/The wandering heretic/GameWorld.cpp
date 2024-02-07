@@ -17,7 +17,7 @@ GameWorld::GameWorld(json* data, std::string path)
     delete sqr;
   }
 
-  SDL_Rect rect{ 60, 60, 188, 260 - 42 };
+  SDL_Rect rect{ 60, 60, 178, 260 - 42 };
   GIF* gif = new GIF("Assets\\Character\\FrogIdle\\FrogIdle_", 12, rect, rect, 180);
   _player = new BasePlayer(&gif);
 }

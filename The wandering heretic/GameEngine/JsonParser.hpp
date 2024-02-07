@@ -111,9 +111,8 @@ namespace jsonParser {
   /// <param name="src"></param>
   /// <param name="path"></param>
   /// <returns></returns>
-  inline json CreateJsonFromData(SDL_Rect dst, SDL_Rect src, std::string path) {
+  inline json CreateJsonFromData(SDL_Rect dst, std::string path) {
     json data;
-    data["src"] = FromRectToJson(src);
     data["dst"] = FromRectToJson(dst);
     data["path"] = path;
 
@@ -127,8 +126,12 @@ namespace jsonParser {
   /// <returns></returns>
   inline Square* FromJsonToSquare(json data, bool destoryTex = true) {
     SDL_Rect dst = FromJsonToRect(data["dst"]),
-      src = FromJsonToRect(data["src"]);
+      src = { 0,0,64,64 };//a fixed size and loc
+
     std::string path = data["path"];
+    if (path == "")//failsafe
+      path = "Assets\\Blocks\\image_0.png";
+
 
     return new Square(path.c_str(), src, dst, destoryTex);
   };
@@ -141,8 +144,7 @@ namespace jsonParser {
   inline json FromSquareToJson(Square* sqr) {
     json data;
 
-    return CreateJsonFromData(*sqr->GetSrcRect(),
-      *sqr->GetSrcRect(), sqr->GetPath());
+    return CreateJsonFromData(*sqr->GetSrcRect(), sqr->GetPath());
   };
 }
 

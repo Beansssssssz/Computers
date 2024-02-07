@@ -44,13 +44,18 @@ void Entity::Update()
 /// <param name="offsetX"></param>
 /// <param name="offsetY"></param>
 bool Entity::MoveTo(std::vector<Entity*> vec, int8_t offsetX, int8_t offsetY) {
+  if (offsetX == 0 && offsetY == 0)
+    return true;
+
   SDL_Rect newDst = _dst;
   newDst.x += offsetX;
   newDst.y += offsetY;
 
   for (Entity* sqr : vec)
-    if (sqr != nullptr && sqr->_collisionEnabled && sqr->IsColliding(newDst))
+  {
+    if (sqr->_collisionEnabled && sqr->IsColliding(newDst))
       return false;
+  }
 
   _dst = newDst;
   return true;

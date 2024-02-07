@@ -29,9 +29,7 @@ private: //private members
   GifTypes _currentType;
 
   Vector2f _speed;
-  float _gravityCounter;
   constexpr static int MAX_SPEED = 10;
-  constexpr static float FRICTION = 0.2f;
   constexpr static float GRAVITY = 0.3f;
   constexpr static float MAX_GRAVITY = 10.0f;
 };
