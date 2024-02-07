@@ -13,16 +13,8 @@ LevelEditor::LevelEditor(json* data, std::string path)
   _tab(NULL), _movingBlock(false), _sideButtons(NULL),
   _settingBtn(NULL), _saveBtn(NULL), _resetBtn(NULL), _path(path)
 {
-  if (data != NULL)//if it is null then vector is empty
-    for (json element : *data) {
-      Square* sqr = jsonParser::FromJsonToSquare(element, false);
-      Button* btn = new Button(sqr->GetTexture(), *sqr->GetSrcRect(), *sqr->GetDstRect());
-      _btnVec.push_back(btn);
 
-      delete sqr;
-    }
-  else 
-    data = new json();
+  _btnVec = jsonParser::FromJsonToVector<Button>(*data);
 
   CreateTabAndButtons();
   CreateSideButtons();
@@ -338,14 +330,6 @@ void LevelEditor::CreateSideButtons()
 /// </summary>
 void LevelEditor::SaveToFile()
 {
-  json data;
-  int i = 0;
-  for (Button* btn : _btnVec)
-  {
-    std::string name = "Square" + std::to_string(i);
-    data[name.c_str()] = jsonParser::CreateJsonFromData(*btn->GetDstRect(), btn->GetPath());
-    i++;
-  }
-
+  json data = jsonParser::FromVectorToJson(_btnVec);
   jsonParser::WriteToFile(_path.c_str(), data);
 }

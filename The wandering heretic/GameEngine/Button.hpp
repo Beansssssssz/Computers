@@ -10,7 +10,7 @@ class Button : public Square
 {
 public:
   Button(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect);
-  Button(const char* path, SDL_Rect srcrect, SDL_Rect dstrect);
+  Button(std::string path, SDL_Rect srcrect, SDL_Rect dstrect);
   ~Button();
 
   void Update(MouseButtons btn = MouseButtons::mbl);

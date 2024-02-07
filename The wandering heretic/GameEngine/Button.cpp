@@ -9,7 +9,7 @@ Button::Button(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect)
   {}
 
 
-Button::Button(const char* path, SDL_Rect srcrect, SDL_Rect dstrect)
+Button::Button(std::string path, SDL_Rect srcrect, SDL_Rect dstrect)
   :Button::Square(path, srcrect, dstrect), _isPressed(true), _isSelected(false)
   {}
 

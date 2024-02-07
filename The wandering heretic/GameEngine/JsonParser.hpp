@@ -29,8 +29,30 @@ namespace jsonParser {
     }
 
 
+    int width = data["width"];
+    int height = data["height"];
+
+    // Write the JSON data to a file
     try {
-      file << std::setw(4) << data << std::endl;
+      file << "{\n";
+
+      file << "    \"data\": [\n";
+      for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+          file << data["data"][y * x];
+          if (x < width - 1)
+            file << ", ";
+        }
+        if (y < height - 1)
+          file << ",\n";
+      }
+      file << "],\n    ";
+
+      file << "    \"width\": " << width << ",\n";
+      file << "    \"height\": " << height << "\n";
+      file << "}";
+      file.close();
+
       std::cerr << "JSON file updated successfully.\n";
     }
     catch (const std::exception& e) {
@@ -144,8 +166,108 @@ namespace jsonParser {
   inline json FromSquareToJson(Square* sqr) {
     json data;
 
-    return CreateJsonFromData(*sqr->GetSrcRect(), sqr->GetPath());
+    return CreateJsonFromData(*sqr->GetDstRect(), sqr->GetPath());
   };
+
+  /// <summary>
+  /// a function that converts the vector into a 1d int array with a
+  /// fixed width and height for the block
+  /// </summary>
+  /// <typeparam name="T">(is a pointer type) an Square object or an object with the
+  /// GetDstRect function and type</typeparam>
+  /// <param name="vec"></param>
+  /// <returns>a json type object</returns>
+  template<typename T>
+  inline json FromVectorToJson(std::vector<T> vec) {
+    json data;
+
+    //finding the width and size of the 1d array
+    long long width = 0;
+    long long height = 0;
+
+    for (T obj : vec) {
+      SDL_Rect rect = *obj->GetDstRect();
+      rect.y /= 64;
+      rect.x /= 64;
+
+      if (rect.y > height)
+        height = rect.y;
+
+      if (rect.x > width)
+        width = rect.x;
+    }
+
+    /*
+      the actuall width and height needs to be bigger in 1
+      because an array with only location 0 has a size of 1
+    */
+    width++;
+    height++;
+
+    //creating the 2d array
+    std::vector<int> arr(height * width);
+
+    for (long long i = 0; i < height; i++)
+      for (long long j = 0; j < width; j++)
+      {
+        if (vec.size() <= i * j)
+          continue;
+        SDL_Rect rect = *vec[i * j]->GetDstRect();
+        std::string path = vec[i * j]->GetPath();
+        int x = rect.x / 64;
+        int y = rect.y / 64;
+
+        if (path == "")
+          arr[x * y] = 1;
+        else
+          arr[x * y] = (int)(path[path.size() - 5] - '0');
+      }
+
+
+    data["data"] = arr;
+    data["width"] = width;
+    data["height"] = height;
+
+    return data;
+  }
+
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <typeparam name="T">a square type</typeparam>
+  /// <param name="data">a json data</param>
+  /// <returns>a vector with all the objects</returns>
+  template<typename T>
+  inline std::vector<T*> FromJsonToVector(json data) {
+    SDL_Rect src = { 0, 0, 64, 64 };
+    SDL_Rect dst = { 0, 0, 64, 64 };
+
+    
+    std::vector<int> arr = data["data"];
+    int width = data["width"];
+    int height = data["height"];
+
+    std::string path = "Assets/Blocks/image_0.png";
+
+    std::vector<T*> vec;
+    for (long long i = 0; i < height; i++)
+      for (long long j = 0; j < width; j++)
+      {
+        int loc = i * width + j;
+        if (arr[loc] == 0)
+          continue;
+         
+        dst.y = i * 64;
+        dst.x = j * 64;
+        path[path.size() - 5] = arr[loc] + '0';
+
+        vec.push_back(new T(path, src, dst));
+      }
+
+    return vec;
+  }
 }
+
+
 
 #undef GETVARNAME

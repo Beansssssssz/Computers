@@ -52,7 +52,7 @@ SDL_Texture* GIF::GetCurrentTexture()
 
 void GIF::SetCurrentTexture(SDL_Texture* tex, uint8_t loc)
 {
-  delete _texs[loc];
+  SDL_DestroyTexture(_texs[loc]);
   _texs[loc] = tex;
 }
 
