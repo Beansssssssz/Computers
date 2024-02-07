@@ -207,13 +207,15 @@ namespace jsonParser {
     //creating the 2d array
     std::vector<int> arr(height * width);
 
-    for (long long i = 0; i < height; i++)
-      for (long long j = 0; j < width; j++)
+    for (unsigned int i = 0; i < height; i++)
+      for (unsigned int j = 0; j < width; j++)
       {
         if (vec.size() <= i * j)
           continue;
+
         SDL_Rect rect = *vec[i * j]->GetDstRect();
         std::string path = vec[i * j]->GetPath();
+
         int x = rect.x / 64;
         int y = rect.y / 64;
 
@@ -250,8 +252,8 @@ namespace jsonParser {
     std::string path = "Assets/Blocks/image_0.png";
 
     std::vector<T*> vec;
-    for (long long i = 0; i < height; i++)
-      for (long long j = 0; j < width; j++)
+    for (int i = 0; i < height; i++)
+      for (int j = 0; j < width; j++)
       {
         int loc = i * width + j;
         if (arr[loc] == 0)
