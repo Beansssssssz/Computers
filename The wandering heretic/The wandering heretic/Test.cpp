@@ -76,8 +76,14 @@ int main(int argc, char* argv[]) {
 TODO
 NOW:
 
+//make sure the jump can only happen once the player touch the ground
+//add scrolling
+//add scrolling in the editor
+//create a map
+//create enemy
+
+
 //Add settings to the RealGame
-//Create a real map
 //Create the actuall Player Class(not gameEngine one)
 //Go through code and fix bugs
 
@@ -90,17 +96,12 @@ check if the settings is open.
 
 3.settings ->change textures and change quit btn tex;
 
-4.sign in //later, wayyyy later
+4.sign in //later, wayyyy later // like at the end of this month
 
 5.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)
 
 6.learn socket -> how to communt in sqlite3
 and how to store said data in server//use arduino to do it?
-
-7.the game itself //fun ☺
-->the games is built of rooms
-->like hollow knight rooms not mario like.
-
 
 try:
 //search for UB and fix bugs -> just play the game

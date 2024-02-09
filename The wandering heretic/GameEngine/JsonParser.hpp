@@ -219,6 +219,7 @@ namespace jsonParser {
         int x = rect.x / 64;
         int y = rect.y / 64;
 
+
         if (path == "")
           arr[x * y] = 1;
         else
