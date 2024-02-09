@@ -44,9 +44,9 @@ namespace jsonParser {
             file << ", ";
         }
         if (y < height - 1)
-          file << ",\n";
+          file << ",\n    ";
       }
-      file << "],\n    ";
+      file << "],\n";
 
       file << "    \"width\": " << width << ",\n";
       file << "    \"height\": " << height << "\n";
@@ -71,6 +71,7 @@ namespace jsonParser {
 
     json data;
     file >> data;
+    std::cout << path << std::endl;;
 
 
     file.close();
@@ -205,7 +206,9 @@ namespace jsonParser {
     height++;
 
     //creating the 2d array
-    std::vector<int> arr(height * width);
+    std::vector<int> arr(height * width); //the vector witch the correct size
+    std::string path; //the path of the current block
+    SDL_Rect rect; //the rect of the current block
 
     for (unsigned int i = 0; i < height; i++)
       for (unsigned int j = 0; j < width; j++)
@@ -213,8 +216,8 @@ namespace jsonParser {
         if (vec.size() <= i * j)
           continue;
 
-        SDL_Rect rect = *vec[i * j]->GetDstRect();
-        std::string path = vec[i * j]->GetPath();
+        rect = *vec[i * j]->GetDstRect();
+        path = vec[i * j]->GetPath();
 
         int x = rect.x / 64;
         int y = rect.y / 64;
