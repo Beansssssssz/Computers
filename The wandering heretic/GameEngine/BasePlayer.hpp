@@ -23,13 +23,16 @@ public:
 private: //private functions
   void GetInput();
   void UpdateVelocity(std::vector<Entity*> vec);
+  void CheckJump(std::vector<Entity*> vec);
 
 private: //private members
   GIF** _gifs;
   GifTypes _currentType;
 
+  bool _canJump;
   Vector2f _speed;
   constexpr static int MAX_SPEED = 10;
+  constexpr static int JUMP_VEL = -20;
   constexpr static float GRAVITY = 0.3f;
   constexpr static float MAX_GRAVITY = 10.0f;
 };

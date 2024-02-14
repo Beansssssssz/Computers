@@ -14,14 +14,18 @@ using json = nlohmann::json;
 
 namespace jsonParser {
 
-/// <summary>
-/// Cleans the file then writes to it the
-/// param data
-/// </summary>
-/// <param name="path"> the file path</param>
-/// <param name="data">a json object</param>
-/// <returns></returns>
-  inline void WriteToFile(const char* path, json data) {
+  /// <summary>
+  /// Cleans the file then writes to it the
+  /// param data
+  /// TODO
+  /// there is overflow?
+  /// dont know
+  /// doesnt really work
+  /// </summary>
+  /// <param name="path"> the file path</param>
+  /// <param name="data">a json object</param>
+  /// <returns></returns>
+  inline void WriteToFile(const char* path, json* data) {
     std::ofstream file(path);
     if (!file.is_open()) {
       std::cerr << "Error opening JSON file.\n";
@@ -29,21 +33,27 @@ namespace jsonParser {
     }
 
 
-    int width = data["width"];
-    int height = data["height"];
+    int width = (*data)["width"];
+    int height = (*data)["height"];
+    json arr = (*data)["data"];
+    std::cout << arr << std::endl;
 
     // Write the JSON data to a file
     try {
       file << "{\n";
 
-      file << "    \"data\": [\n";
-      for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
-          file << data["data"][y * x];
-          if (x < width - 1)
+      long long loc = 0;
+      file << "    \"data\": [\n    ";
+      for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+          loc = (long long)x * (long long)y;
+
+          file << arr[loc];
+          if (x < (long long)width - 1)
             file << ", ";
         }
-        if (y < height - 1)
+
+        if (y < (long long)height - 1)
           file << ",\n    ";
       }
       file << "],\n";
@@ -183,8 +193,8 @@ namespace jsonParser {
     json data;
 
     //finding the width and size of the 1d array
-    long long width = 0;
-    long long height = 0;
+    int width = 0;
+    int height = 0;
 
     for (T obj : vec) {
       SDL_Rect rect = *obj->GetDstRect();
@@ -210,23 +220,25 @@ namespace jsonParser {
     std::string path; //the path of the current block
     SDL_Rect rect; //the rect of the current block
 
-    for (unsigned int i = 0; i < height; i++)
-      for (unsigned int j = 0; j < width; j++)
+    long long loc; //the current loc in the array
+    for (int i = 0; i < height; i++)
+      for (int j = 0; j < width; j++)
       {
-        if (vec.size() <= i * j)
+        loc = i * j;
+        if ((long long)vec.size() <= loc)
           continue;
 
-        rect = *vec[i * j]->GetDstRect();
-        path = vec[i * j]->GetPath();
+        rect = *vec[loc]->GetDstRect();
+        path = vec[loc]->GetPath();
 
         int x = rect.x / 64;
         int y = rect.y / 64;
-
+        loc = x * y;
 
         if (path == "")
-          arr[x * y] = 1;
+          arr[loc] = 1;
         else
-          arr[x * y] = (int)(path[path.size() - 5] - '0');
+          arr[loc] = (int)(path[path.size() - 5] - '0');
       }
 
 

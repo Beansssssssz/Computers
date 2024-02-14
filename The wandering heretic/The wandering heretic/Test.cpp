@@ -74,20 +74,38 @@ int main(int argc, char* argv[]) {
 
 /*
 TODO
-NOW:
+========NOW========:
 
-//make sure the jump can only happen once the player touch the ground
+//make jump more smooth(like in u control the strength)
+->have a check if the player still pressing
+if yes then add to speed.y
+else then make the var false and continue normally
+
 //add scrolling
+check if the player is too far in 1 direction
+if yes then add said direction the all the Entitys in the level
+
 //add scrolling in the editor
+mouse scroll whell up -> all vector _dst.y-- (up)
+mouse scroll whell down -> all vector _dst.y++ (down)
+mouse shift scroll whell up -> all vector _dst.x-- (left)
+mouse shift scroll whell down -> all vector _dst.y++ (right)
+
 //create a map
+->in tiled create a map for the player
 //create enemy
+->enemy check if player in the same y ~ish
+if yes then go to enemy
+maybe jump if needed
 
 
 //Add settings to the RealGame
+
 //Create the actuall Player Class(not gameEngine one)
+
 //Go through code and fix bugs
 
-//OVERALL:
+========TODO========:
 
 2.5 ->add a way to "freeze" stuff ->
 a way to tell the mouse to stop the pressing on other buttons
@@ -96,13 +114,14 @@ check if the settings is open.
 
 3.settings ->change textures and change quit btn tex;
 
-4.sign in //later, wayyyy later // like at the end of this month
+4.sign in -> start in the middle of the 3rd month
 
 5.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)
 
-6.learn socket -> how to communt in sqlite3
-and how to store said data in server//use arduino to do it?
+6.learn socket -> send struct through sockets of players to create a multiplayer game
 
-try:
-//search for UB and fix bugs -> just play the game
+========TRY========:
+1.search for UB and fix bugs -> just play the game
+
+2.fix the save game function in editing
 */

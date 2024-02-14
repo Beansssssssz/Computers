@@ -6,7 +6,7 @@
 
 BasePlayer::BasePlayer(GIF** gifs, bool _collisionEnabled)
   :BasePlayer::Entity(gifs[0], gifs[0]->GetDstRect(), gifs[0]->GetSrcRect()),
-  _gifs(gifs), _currentType(GifTypes::idle)
+  _gifs(gifs), _currentType(GifTypes::idle), _canJump(true)
 {
 }
 
@@ -22,8 +22,10 @@ BasePlayer::~BasePlayer()
 void BasePlayer::Update(std::vector<Entity*> vec)
 {
   Entity::Update();
+
+  this->CheckJump(vec);
   this->GetInput();
-  this->UpdateVelocity(vec );
+  this->UpdateVelocity(vec);
 }
 
 void BasePlayer::ChangeType(GifTypes type)
@@ -39,11 +41,13 @@ void BasePlayer::GetInput()
   Keyboard* keyboard = Keyboard::GetKeyboardInstance();
   Uint8* keyArr = keyboard->GetKeyArray();
 
-  if (keyArr[SDL_SCANCODE_W] || keyArr[SDL_SCANCODE_UP])
-    _speed.y = -MAX_SPEED;
+  if ((keyArr[SDL_SCANCODE_W] || keyArr[SDL_SCANCODE_UP] || keyArr[SDL_SCANCODE_SPACE]) && _canJump) {
+    _speed.y = JUMP_VEL;
+    _canJump = false;
+  }
 
   else if (keyArr[SDL_SCANCODE_S] || keyArr[SDL_SCANCODE_DOWN])
-    _speed.y = MAX_SPEED;
+    _speed.y = -JUMP_VEL;
 
   if (keyArr[SDL_SCANCODE_D] || keyArr[SDL_SCANCODE_RIGHT])
     _speed.x = MAX_SPEED;
@@ -75,4 +79,14 @@ void BasePlayer::UpdateVelocity(std::vector<Entity*> vec)
   //applying gravity
   if (_speed.y < MAX_GRAVITY)
     _speed.y += GRAVITY;
+}
+
+void BasePlayer::CheckJump(std::vector<Entity*> vec)
+{
+  SDL_Rect check{ _dst.x, _dst.y + _dst.h , _dst.w, 1 };
+  for(Entity* entity: vec)
+    if (entity->IsColliding(check)) {
+      _canJump = true;
+      return;
+    }
 }

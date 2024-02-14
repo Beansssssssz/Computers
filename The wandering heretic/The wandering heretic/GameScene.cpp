@@ -42,7 +42,6 @@ int GameScene::Update()
       std::string path = "Assets/Levels/Level_" + std::to_string(num) + ".json";
       json data = jsonParser::ReadFromFile(path.c_str());
 
-      
       _world = new GameWorld(&data, path);
       //_edit = new LevelEditor(&data, path);
 

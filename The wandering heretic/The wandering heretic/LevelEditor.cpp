@@ -331,5 +331,5 @@ void LevelEditor::CreateSideButtons()
 void LevelEditor::SaveToFile()
 {
   json data = jsonParser::FromVectorToJson(_btnVec);
-  jsonParser::WriteToFile(_path.c_str(), data);
+  jsonParser::WriteToFile(_path.c_str(), &data);
 }
