@@ -30,11 +30,14 @@ private: //private members
   GifTypes _currentType;
 
   bool _canJump;
+  bool _isJumping;
   Vector2f _speed;
   constexpr static int MAX_SPEED = 10;
-  constexpr static int JUMP_VEL = -20;
-  constexpr static float GRAVITY = 0.3f;
+  constexpr static int MAX_JUMP = -10;
   constexpr static float MAX_GRAVITY = 10.0f;
+
+  constexpr static float JUMP = -2.0f;
+  constexpr static float GRAVITY = 0.3f;
 };
 
 
