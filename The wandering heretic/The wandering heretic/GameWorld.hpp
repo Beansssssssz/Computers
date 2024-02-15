@@ -17,6 +17,10 @@ public:
 
   bool Update();
 private:
+  void UpdateWorldPos();
+  void OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst);
+  void UpdateWorldEntities();
+
   json* _data;
   std::string _path;
 

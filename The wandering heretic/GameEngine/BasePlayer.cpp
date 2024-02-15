@@ -5,7 +5,7 @@
 #include <iostream>
 
 BasePlayer::BasePlayer(GIF** gifs, bool _collisionEnabled)
-  :BasePlayer::Entity(gifs[0], gifs[0]->GetDstRect(), gifs[0]->GetSrcRect()),
+  :BasePlayer::Entity(gifs[0], gifs[0]->GetSrcRect(), gifs[0]->GetDstRect()),
   _gifs(gifs), _currentType(GifTypes::idle), _canJump(true), _isJumping(false)
 {
 }
@@ -31,6 +31,11 @@ void BasePlayer::Update(std::vector<Entity*> vec)
 void BasePlayer::ChangeType(GifTypes type)
 {
   _currentType = type;
+}
+
+Vector2f* BasePlayer::GetSpeed()
+{
+  return &_speed;
 }
 
 /// <summary>

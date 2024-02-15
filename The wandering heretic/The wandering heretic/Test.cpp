@@ -76,15 +76,6 @@ int main(int argc, char* argv[]) {
 TODO
 ========NOW========:
 
-//make jump more smooth(like in u control the strength)
-->have a check if the player still pressing
-if yes then add to speed.y
-else then make the var false and continue normally
-
-//add scrolling
-check if the player is too far in 1 direction
-if yes then add said direction the all the Entitys in the level
-
 //add scrolling in the editor
 mouse scroll whell up -> all vector _dst.y-- (up)
 mouse scroll whell down -> all vector _dst.y++ (down)
@@ -93,17 +84,17 @@ mouse shift scroll whell down -> all vector _dst.y++ (right)
 
 //create a map
 ->in tiled create a map for the player
+
 //create enemy
 ->enemy check if player in the same y ~ish
 if yes then go to enemy
 maybe jump if needed
 
-
 //Add settings to the RealGame
 
-//Create the actuall Player Class(not gameEngine one)
+//change the buttons
 
-//Go through code and fix bugs
+//Create the actuall Player Class(not gameEngine one)
 
 ========TODO========:
 
@@ -124,4 +115,8 @@ check if the settings is open.
 1.search for UB and fix bugs -> just play the game
 
 2.fix the save game function in editing
+
+3.make jump more smooth(like hollow knight smooth)
+
+4.check my scrolling (was very very scuffed)
 */

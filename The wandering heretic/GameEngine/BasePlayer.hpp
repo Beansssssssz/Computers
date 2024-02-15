@@ -20,6 +20,8 @@ public:
 
   void Update(std::vector<Entity*> vec);
   void ChangeType(GifTypes type);
+
+  Vector2f* GetSpeed();
 private: //private functions
   void GetInput();
   void UpdateVelocity(std::vector<Entity*> vec);
@@ -31,6 +33,7 @@ private: //private members
 
   bool _canJump;
   bool _isJumping;
+
   Vector2f _speed;
   constexpr static int MAX_SPEED = 10;
   constexpr static int MAX_JUMP = -10;
