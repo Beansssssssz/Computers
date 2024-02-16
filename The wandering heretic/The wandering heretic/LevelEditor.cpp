@@ -12,6 +12,7 @@ LevelEditor::LevelEditor(json* data, std::string path)
   :_currentBtn(NULL), _mousePressed(false), _exampleBtns(NULL),
   _tab(NULL), _movingBlock(false), _sideButtons(NULL),
   _settingBtn(NULL), _saveBtn(NULL), _resetBtn(NULL), _path(path)
+  , _offsetY(0), _offsetX(0)
 {
   _btnVec = jsonParser::FromJsonToVector<Button>(*data);
 
@@ -251,6 +252,9 @@ void LevelEditor::MoveVectorWorld()
     offsetY = 0;
   }
 
+  _offsetX += offsetX;
+  _offsetY += offsetY;
+
   SDL_Rect* rect = nullptr;
   for (Button* entity : _btnVec)
   {
@@ -360,6 +364,25 @@ void LevelEditor::CreateSideButtons()
 /// </summary>
 void LevelEditor::SaveToFile()
 {
+  //change the offset back to 0,0
+  SDL_Rect* rect = nullptr;
+  for (Button* entity : _btnVec)
+  {
+    rect = entity->GetDstRect();
+    rect->x -= _offsetX;
+    rect->y -= _offsetY;
+  }
+
+  //write to file
   json data = jsonParser::FromVectorToJson(_btnVec);
   jsonParser::WriteToFile(_path.c_str(), &data);
+
+  //restore the original offset
+  SDL_Rect* rect = nullptr;
+  for (Button* entity : _btnVec)
+  {
+    rect = entity->GetDstRect();
+    rect->x += _offsetX;
+    rect->y += _offsetY;
+  }
 }

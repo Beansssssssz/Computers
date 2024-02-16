@@ -78,13 +78,6 @@ int main(int argc, char* argv[]) {
 /*
 TODO
 ========NOW========:
-
-//add scrolling in the editor
-mouse scroll whell up -> all vector _dst.y-- (up)
-mouse scroll whell down -> all vector _dst.y++ (down)
-mouse shift scroll whell up -> all vector _dst.x-- (left)
-mouse shift scroll whell down -> all vector _dst.y++ (right)
-
 //create a map
 in tiled create a map for the player
 
@@ -100,7 +93,7 @@ when escape is pressed open settings
 updates the images to the better images
 and change images when pressed
 
-//Create the actuall Player Class(not gameEngine one)
+//create the actuall Player Class(not gameEngine one)
 actuall player creation
 actuall gifs
 attacks and health

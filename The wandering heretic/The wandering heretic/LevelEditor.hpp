@@ -41,6 +41,8 @@ private:
   std::vector<Button*> _btnVec;
   Button* _currentBtn;
   bool _mousePressed;
+  int _offsetX;
+  int _offsetY;
 
  
   std::stack<Button*> _stack; //the stack that keeps the buttons placed
