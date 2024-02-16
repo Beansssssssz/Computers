@@ -26,6 +26,9 @@ public:
   void Update();
   void ChangeCursorType();
 
+  void SetScrollYFromEvent(SDL_Event ev);
+  int GetScrollY();
+
   void MouseIsSelecting();
   void FreezeAutomaticSelecting(bool isFrozen, SDL_SystemCursor cursor
     = SDL_SYSTEM_CURSOR_ARROW);
@@ -38,6 +41,9 @@ private:
 
   MouseButtons bt = MouseButtons::none;
   Vector2i _pos; // the pos of the cursor
+  int _scrollY;
+  int _isScrolling;
+
   SDL_Cursor* _cursor; // the cursor
   SDL_SystemCursor _current; // current cursor
   bool _mouseSelecting; // if the mouse is currently selecting smth

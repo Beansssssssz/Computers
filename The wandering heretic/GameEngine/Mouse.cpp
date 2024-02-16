@@ -6,7 +6,8 @@
 #include "Utils.hpp"
 
 Mouse::Mouse(Vector2i _pos)
-  :_current(SDL_SYSTEM_CURSOR_ARROW), _isFrozen(false), _mouseSelecting(false)
+  :_current(SDL_SYSTEM_CURSOR_ARROW), _isFrozen(false), _mouseSelecting(false),
+  _scrollY(0) , _isScrolling(false)
 {
   _cursor = SDL_CreateSystemCursor(_current);
   if (_cursor == NULL)
@@ -35,12 +36,24 @@ MouseButtons Mouse::GetPressed()
 {
   return bt;
 }
+
+/// <summary>
+/// updates the pos and pressing button of the mouse
+/// changes the cursor type based on if its hovering or not
+/// </summary>
 void Mouse::Update()
 {
   bt = MouseButtons(SDL_GetMouseState(&_pos.x, &_pos.y));
   ChangeCursorType();
 
   _mouseSelecting = false;//setting up for the next frame
+
+  //checking is the mouse didnt scroll
+  if (!_isScrolling)
+    _scrollY = 0;
+
+  //reseting the scrolling
+  _isScrolling = false;
 };
 
 void Mouse::ChangeCursorType()
@@ -61,6 +74,23 @@ void Mouse::ChangeCursorType()
     SDL_SetCursor(_cursor);
   }
 };
+
+/// <summary>
+/// using the events tab it checks if the event is a mouse scroll wheel
+/// if yes then adds the y to the var
+/// </summary>
+/// <param name="ev"></param>
+void Mouse::SetScrollYFromEvent(SDL_Event ev) {
+  if (ev.type == SDL_MOUSEWHEEL) {
+    std::cout << ev.wheel.y << std::endl;
+    _scrollY = ev.wheel.y;
+    _isScrolling = true;
+  }
+}
+
+int Mouse::GetScrollY() {
+  return _scrollY;
+}
 
 void Mouse::MouseIsSelecting()
 {

@@ -29,6 +29,7 @@ private:
   void UpdateTab();
   void HandleInput();
   bool UpdateSideButtons();
+  void MoveVectorWorld();
 
   void PlaceCurrentButton();
   void CreateTabAndButtons();

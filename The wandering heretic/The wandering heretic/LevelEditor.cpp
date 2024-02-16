@@ -13,7 +13,6 @@ LevelEditor::LevelEditor(json* data, std::string path)
   _tab(NULL), _movingBlock(false), _sideButtons(NULL),
   _settingBtn(NULL), _saveBtn(NULL), _resetBtn(NULL), _path(path)
 {
-
   _btnVec = jsonParser::FromJsonToVector<Button>(*data);
 
   CreateTabAndButtons();
@@ -55,6 +54,7 @@ int LevelEditor::Update()
   DisplayGrids();
   UpdateTab();
   HandleInput();
+  MoveVectorWorld();
   return UpdateSideButtons();
 }
 
@@ -228,6 +228,36 @@ bool LevelEditor::UpdateSideButtons()
   }
 
   return false;
+}
+
+/// <summary>
+/// moves the vector world if is needed
+/// </summary>
+void LevelEditor::MoveVectorWorld()
+{
+  Keyboard* keyboard = Keyboard::GetKeyboardInstance();
+  Mouse* mouse = Mouse::GetMouseInstance();
+  int offsetY = mouse->GetScrollY();
+
+  if (offsetY == 0)
+    return;
+
+  offsetY = offsetY > 0 ? 64 : -64;
+
+  int offsetX = 0;
+  Uint8* keyArr = keyboard->GetKeyArray();
+  if (keyArr[SDL_SCANCODE_LSHIFT]) {
+    offsetX = offsetY;
+    offsetY = 0;
+  }
+
+  SDL_Rect* rect = nullptr;
+  for (Button* entity : _btnVec)
+  {
+    rect = entity->GetDstRect();
+    rect->x += offsetX;
+    rect->y += offsetY;
+  }
 }
 
 /// <summary>
