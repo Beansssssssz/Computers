@@ -17,7 +17,7 @@ public:
 
   bool Update();
 private:
-  void UpdateWorldPos();
+  void UpdateWorldOffset();
   void OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst);
   void UpdateWorldEntities();
 

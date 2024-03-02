@@ -15,17 +15,17 @@ public:
   GIF(const char* path, uint8_t len, SDL_Rect srcrect, SDL_Rect dstrect, uint16_t delay);
 
   void Update();
-  void RenderGIF();
+  void RenderGIF(bool isRight);
 
   SDL_Texture* GetCurrentTexture();
   void SetCurrentTexture(SDL_Texture* tex, uint8_t loc);
+  _NODISCARD SDL_Texture*& operator[](size_t index);
 
   SDL_Rect GetDstRect();
   SDL_Rect GetSrcRect();
 
   void SetDstRect(SDL_Rect rect);
   void SetSrcRect(SDL_Rect rect);
-
 private:
   SDL_Texture** _texs; //pointer arrays of sqaures(the pngs)
   uint8_t _loc; //the current iterator of the tex array(aka current tex).

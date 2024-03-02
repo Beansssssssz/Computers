@@ -17,6 +17,7 @@ Square::Square(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool destro
   if (path != "") {
     RenderWindow* window = RenderWindow::GetRenderWindowInstance();
     _tex = window->LoadTexture(path.c_str());
+    _destroytex = destroyTex;
   }
 }
 
@@ -65,7 +66,18 @@ void Square::SetTexture(const char* path, SDL_Rect src)
   _path = path;
   _tex = window->LoadTexture(path);
 
-  if (src.w == -1 && src.h == -1)//width and height cant be negetive
+  if (src.w != -1 && src.h != -1)
+    _src = src;
+}
+
+void Square::SetTexture(SDL_Texture* tex, SDL_Rect src)
+{
+
+  SDL_DestroyTexture(_tex);
+  _path = "";
+  _tex = tex;
+
+  if (src.w != -1 && src.h != -1)
     _src = src;
 };
 

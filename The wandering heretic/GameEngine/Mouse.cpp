@@ -82,7 +82,6 @@ void Mouse::ChangeCursorType()
 /// <param name="ev"></param>
 void Mouse::SetScrollYFromEvent(SDL_Event ev) {
   if (ev.type == SDL_MOUSEWHEEL) {
-    std::cout << ev.wheel.y << std::endl;
     _scrollY = ev.wheel.y;
     _isScrolling = true;
   }

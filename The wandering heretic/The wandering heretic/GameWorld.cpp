@@ -10,16 +10,15 @@ GameWorld::GameWorld(json* data, std::string path)
 {
   _vec = jsonParser::FromJsonToVector<Entity>(*data);
 
-  SDL_Rect src{ 60, 60, 178, 260 - 42 };
-  SDL_Rect dst{ 100, 500, 178 , 218 };
+  SDL_Rect src{ 60, 60, 178, 218 };
+  SDL_Rect dst{ 65, 65, 178 / 2 , 218 / 2 };
   GIF* gif = new GIF("Assets\\Character\\FrogIdle\\FrogIdle_", 12, src, dst, 180);
   _player = new BasePlayer(&gif);
 }
 
 GameWorld::~GameWorld()
 {
-  for (size_t i = 0; i < _vec.size(); i++)
-    delete _vec[i];
+  _vec.clear();//supposed to delete all the vars inside
 
   delete _player;
   delete _settingsBtn;
@@ -28,12 +27,12 @@ GameWorld::~GameWorld()
 bool GameWorld::Update()
 {
 
-  this->UpdateWorldPos();
+  this->UpdateWorldOffset();
   this->UpdateWorldEntities();
   return false;
 }
 
-void GameWorld::UpdateWorldPos()
+void GameWorld::UpdateWorldOffset()
 {
   Vector2f* speed = _player->GetSpeed();
   SDL_Rect* dst = _player->GetDstRect();
@@ -44,8 +43,10 @@ void GameWorld::UpdateWorldPos()
   int w = 0, h = 0;
   RenderWindow::GetWidthHeight(w, h);
 
-  constexpr char div = 16;
+  h -= dst->h;
+  w -= dst->w;
 
+  constexpr char div = 16;
   //check is the player is too far up
   if(dst->y < h / div)
     offsetY = (int)speed->y;

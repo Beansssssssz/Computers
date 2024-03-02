@@ -29,7 +29,7 @@ private:
   GameWorld* _world;
 
   InputText** _inText;
-  ChooseNumber* ch;
+  ChooseNumber* cn;
 
   bool _logUser;
   bool _choosingLevel;

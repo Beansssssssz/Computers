@@ -22,6 +22,8 @@ public:
 
   SDL_Window* GetWindow();
   SDL_Renderer* GetRenderer();
+
+  void FlipAndPrintTexture(SDL_Texture* tex, SDL_Rect src, SDL_Rect dst, bool flip);
 private:
   RenderWindow(const char* title);
   static RenderWindow* _windowPtr;

@@ -39,10 +39,11 @@ void GIF::Update()
   }
 }
 
-void GIF::RenderGIF() {
+void GIF::RenderGIF(bool isRight) {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  Square sqr(_texs[_loc], _src, _dst, false);
-  window->Render(&sqr);
+  SDL_Texture* tex = _texs[_loc];
+
+  window->FlipAndPrintTexture(tex, _src, _dst, !isRight);
 }
 
 SDL_Texture* GIF::GetCurrentTexture()
@@ -54,6 +55,11 @@ void GIF::SetCurrentTexture(SDL_Texture* tex, uint8_t loc)
 {
   SDL_DestroyTexture(_texs[loc]);
   _texs[loc] = tex;
+}
+
+SDL_Texture*& GIF::operator[](size_t index)
+{
+  return _texs[index];
 }
 
 SDL_Rect GIF::GetDstRect()
@@ -74,4 +80,40 @@ void GIF::SetDstRect(SDL_Rect rect)
 void GIF::SetSrcRect(SDL_Rect rect)
 {
   _src = rect;
-};
+}
+
+//void GIF::FlipGif(GIF* gif, SDL_Rect srcRect, SDL_Rect dstRect)
+//{
+//  RenderWindow* win = RenderWindow::GetRenderWindowInstance();
+//  SDL_Renderer* renderer = win->GetRenderer();
+//
+//  int length = gif->_len;
+//  for (size_t i = 0; i < length; i++) {
+//
+//    SDL_Texture* newTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_UNKNOWN, SDL_TEXTUREACCESS_TARGET, dstRect.w, dstRect.h);
+//    if (!newTexture) {
+//      SDL_LogError(SDL_LOG_CATEGORY_RENDER, "failed to create texture. SDL ERROR: %s", SDL_GetError());
+//      continue; 
+//    }
+//
+//    int ret = SDL_SetRenderTarget(renderer, newTexture);
+//    if (ret != 0) {
+//      SDL_LogError(SDL_LOG_CATEGORY_RENDER, "failed to set renderer target. SDL ERROR: %s", SDL_GetError());
+//      SDL_DestroyTexture(newTexture);
+//      continue;
+//    }
+//
+//    ret = SDL_RenderCopyEx(renderer, (*gif)[i], &srcRect, &dstRect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+//    if (ret != 0) {
+//      SDL_LogError(SDL_LOG_CATEGORY_RENDER, "failed to copy texture. SDL ERROR: %s", SDL_GetError());
+//      SDL_DestroyTexture(newTexture);
+//      continue;
+//    }
+//
+//    // Reset the rendering target to NULL
+//    SDL_SetRenderTarget(renderer, nullptr);
+//
+//    SDL_DestroyTexture((*gif)[i]);
+//    (*gif)[i] = newTexture;
+//  }
+//};

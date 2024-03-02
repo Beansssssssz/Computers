@@ -266,6 +266,9 @@ namespace jsonParser {
     int height = data["height"];
 
     std::string path = "Assets/Blocks/image_0.png";
+    SDL_Texture* tex;
+
+    RenderWindow* win = RenderWindow::GetRenderWindowInstance();
 
     std::vector<T*> vec;
     for (int i = 0; i < height; i++)
@@ -279,7 +282,8 @@ namespace jsonParser {
         dst.x = j * 64;
         path[path.size() - 5] = arr[loc] + '0';
 
-        vec.push_back(new T(path, src, dst));
+        tex = win->LoadTexture(path.c_str());
+        vec.push_back(new T(tex, src, dst));
       }
 
     return vec;

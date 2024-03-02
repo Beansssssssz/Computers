@@ -7,7 +7,7 @@
 #include <Keyboard.hpp>
 
 GameScene::GameScene()
-  :_bg(nullptr), _edit(nullptr), ch(nullptr), _world(nullptr),
+  :_bg(nullptr), _edit(nullptr), cn(nullptr), _world(nullptr),
    _logUser(false), _choosingLevel(true), _username("")
 {
   int w, h;
@@ -17,14 +17,19 @@ GameScene::GameScene()
 
   CreateInputTextAreas();
 
-  ch = new ChooseNumber(10);
+  cn = new ChooseNumber(10);
 };
 
 GameScene::~GameScene()
 {
-  delete _edit;
-  delete _world;
+  if (_edit != nullptr) {}
+    delete _edit;
+  if (_world != nullptr)
+    delete _world;
+  
+
   delete _bg;
+  delete cn;
   delete[] _inText;
 };
 
@@ -36,14 +41,14 @@ int GameScene::Update()
 {
   if (_choosingLevel)
   {
-    int num = ch->Update();
+    int num = cn->Update();
     if (num > 0)
     {
       std::string path = "Assets/Levels/Level_" + std::to_string(num) + ".json";
       json data = jsonParser::ReadFromFile(path.c_str());
 
-      //_world = new GameWorld(&data, path);
-      _edit = new LevelEditor(&data, path);
+      _world = new GameWorld(&data, path);
+      //_edit = new LevelEditor(&data, path);
 
       _choosingLevel = false;
     }

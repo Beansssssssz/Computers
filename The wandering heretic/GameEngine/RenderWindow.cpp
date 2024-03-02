@@ -117,3 +117,14 @@ void RenderWindow::DisplayRect(SDL_Rect* rect, SDL_Color color)
   if (err != 0)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Sdl failed to render a rect %s", SDL_GetError());
 }
+
+
+void RenderWindow::FlipAndPrintTexture(SDL_Texture* tex, SDL_Rect src, SDL_Rect dst, bool flip)
+{
+  SDL_RenderCopyEx(renderer, tex, &src, &dst, 0, NULL, (SDL_RendererFlip)flip);
+  //SDL_RenderPresent(renderer); // Present the rendered texture
+}
+
+
+
+

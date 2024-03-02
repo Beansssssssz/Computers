@@ -12,8 +12,8 @@ BasePlayer::BasePlayer(GIF** gifs, bool _collisionEnabled)
 
 BasePlayer::~BasePlayer()
 {
-  //TODO
-  //delete _gifs;
+  for (size_t i = 1; i < GifTypesCount; i++)
+    delete _gifs[i];
 }
 
 /// <summary>
@@ -54,11 +54,15 @@ void BasePlayer::GetInput()
   else
     _isJumping = false;
 
-  if (keyArr[SDL_SCANCODE_D] || keyArr[SDL_SCANCODE_RIGHT])
+  if (keyArr[SDL_SCANCODE_D] || keyArr[SDL_SCANCODE_RIGHT]) {
     _speed.x = MAX_SPEED;
+    _isRight = true;
+  }
 
-  else if (keyArr[SDL_SCANCODE_A] || keyArr[SDL_SCANCODE_LEFT])
+  else if (keyArr[SDL_SCANCODE_A] || keyArr[SDL_SCANCODE_LEFT]) {
     _speed.x = -MAX_SPEED;
+    _isRight = false;
+  }
 }
 
 

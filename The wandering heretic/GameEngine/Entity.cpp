@@ -21,6 +21,7 @@ Entity::Entity(GIF* gif, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabl
 
 Entity::~Entity()
 {
+
   delete _gif;
   _gif = nullptr;
 };
@@ -33,16 +34,16 @@ void Entity::Update()
   if (_gif != nullptr) {
     _gif->SetDstRect(_dst);
     _gif->Update();
-    _gif->RenderGIF();
+    _gif->RenderGIF(_isRight);
   }
 }
 
 /// <summary>
-/// TODO
+/// moves the dst to the desired loc
 /// </summary>
-/// <param name="vec">/param>
-/// <param name="offsetX"></param>
-/// <param name="offsetY"></param>
+/// <param name="offsetX:"> the amount to change in the x axis</param>
+/// <param name="offsetY:"> the amount to change in the y axis</param>
+/// <returns>true if the value did change. otherwise returns false</returns>
 bool Entity::MoveTo(std::vector<Entity*> vec, int8_t offsetX, int8_t offsetY) {
   if (offsetX == 0 && offsetY == 0)
     return true;

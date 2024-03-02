@@ -14,6 +14,7 @@ public:
 
   virtual SDL_Texture* GetTexture();
   void SetTexture(const char* path, SDL_Rect src = { -1,-1,-1,-1 });
+  void SetTexture(SDL_Texture* tex, SDL_Rect src = { -1,-1,-1,-1 });
   std::string GetPath();
 
   SDL_Rect* GetSrcRect();

@@ -26,8 +26,6 @@ LevelEditor::LevelEditor(json* data, std::string path)
 
 LevelEditor::~LevelEditor()
 {
-  for (int i = 0; i < _btnVec.size(); i++)
-    delete _btnVec[i];  
   _btnVec.clear();
 
   while (!_stack.empty()) {
@@ -378,7 +376,7 @@ void LevelEditor::SaveToFile()
   jsonParser::WriteToFile(_path.c_str(), &data);
 
   //restore the original offset
-  SDL_Rect* rect = nullptr;
+  rect = nullptr;
   for (Button* entity : _btnVec)
   {
     rect = entity->GetDstRect();

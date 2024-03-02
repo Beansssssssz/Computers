@@ -7,6 +7,7 @@ Mouse* Mouse::_mousePtr = NULL;
 Keyboard* Keyboard::_keyboardPtr = NULL;
 Audio* Audio::_audioInstance = NULL;
 
+
 int main(int argc, char* argv[]) {
   //initializing the libraries
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
@@ -21,7 +22,7 @@ int main(int argc, char* argv[]) {
   if (Mix_Init(MIX_INIT_OGG | MIX_INIT_MOD) == 0)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error initializing SDL_mixer: %s", Mix_GetError());
 
-  ////singletons
+  //singletons
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   Mouse* mouse = Mouse::GetMouseInstance();
   Keyboard* keyboard = Keyboard::GetKeyboardInstance();
@@ -31,18 +32,16 @@ int main(int argc, char* argv[]) {
 
   SDL_Event event;
   bool running = true;
-
-  //the game loop
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
 
     while (SDL_PollEvent(&event))
     {
-      if (event.type == SDL_QUIT) 
+      if (event.type == SDL_QUIT) {
         running = false;
+        break;
+      }
 
-      if (event.type == SDL_MOUSEWHEEL)
-        std::cout << event.wheel.y << std::endl;
       mouse->SetScrollYFromEvent(event);
       keyboard->BuildText(event);
     }
@@ -75,23 +74,27 @@ int main(int argc, char* argv[]) {
   return 0;
 };
 
+
+
 /*
 TODO
 ========NOW========:
-//create a map
-in tiled create a map for the player
-
 //create enemy
-enemy check if player in the same y ~ish
+go right until hit wall, hit wall then go left, hit wall then go right. <- in loops
+enemy check if player in the same y ~ish and enemy is looking at him
 if yes then go to enemy
-maybe jump if needed
 
-//Add settings to the RealGame
+//Add settings to the RealGame (do in player?)
 when escape is pressed open settings
 
 //change the buttons in settings
 updates the images to the better images
 and change images when pressed
+
+//add snapping
+when u move u dont snap into locations becuase u are going into them
+(add a bool var named snap)
+if is true then snap dst to rects
 
 //create the actuall Player Class(not gameEngine one)
 actuall player creation

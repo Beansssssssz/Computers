@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#define GifTypesCount 1 // all the gif types that there are
+
 enum class GifTypes
 {
   idle,
@@ -22,7 +24,8 @@ public:
   void ChangeType(GifTypes type);
 
   Vector2f* GetSpeed();
-private: //private functions
+
+private:
   void GetInput();
   void UpdateVelocity(std::vector<Entity*> vec);
   void CheckJump(std::vector<Entity*> vec);
