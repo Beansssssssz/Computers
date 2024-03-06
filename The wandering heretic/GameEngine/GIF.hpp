@@ -4,9 +4,6 @@
 #include<SDL_image.h>
 
 #include "Square.hpp"
-/// <summary>
-/// create a new thread where all the textures are being updated to their next cycle
-/// </summary>
 
 class GIF
 {
@@ -27,8 +24,8 @@ public:
   void SetDstRect(SDL_Rect rect);
   void SetSrcRect(SDL_Rect rect);
 private:
-  SDL_Texture** _texs; //pointer arrays of sqaures(the pngs)
-  uint8_t _loc; //the current iterator of the tex array(aka current tex).
+  SDL_Texture** _texs; //pointer arrays of the pngs
+  uint8_t _loc; //the current iterator of the tex array
 
   uint8_t _len; //the length of the array.
   SDL_Rect _src;
