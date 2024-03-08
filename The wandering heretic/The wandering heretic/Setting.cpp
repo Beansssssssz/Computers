@@ -55,12 +55,32 @@ void Settings::UpdateMusic()
   {
     _musicOn = !_musicOn;
     audio->SetMusicState(_musicOn, 0);
+
+    //change image
+    std::string path = "Assets/GUI/";
+    if (_musicOn)
+      path += "on_button";
+    else
+      path += "off_button";
+    path += ".png";
+
+    _btnMusic->SetTexture(path.c_str());
   }
 
   if (_btnEffect->GetIsReleased())
   {
     _effectOn = !_effectOn;
     audio->SetMusicState(_effectOn, 0);
+
+    //change image
+    std::string path = "Assets/GUI/";
+    if (_effectOn)
+      path += "on_button";
+    else
+      path += "off_button";
+    path += ".png";
+
+    _btnEffect->SetTexture(path.c_str());
   }
 
   //updating the buttons
@@ -133,10 +153,11 @@ void Settings::CreateText() {
 /// </summary>
 void Settings::CreateButtons(int marginx, int marginy) {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  SDL_Texture* tex = window->LoadTexture("Assets/GUI/ON_OFF.png");
+  SDL_Texture* texMusic = window->LoadTexture("Assets/GUI/on_button.png");
+  SDL_Texture* texEffect = window->LoadTexture("Assets/GUI/on_button.png");
 
   int w, h;
-  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+  SDL_QueryTexture(texMusic, NULL, NULL, &w, &h);
   SDL_Rect src{ 0, 0, w, h }, dst{ 0, 0, w, h };//{x, y, w, h)
   SDL_Rect temp = PopUpWindow::GetRect();
 
@@ -145,12 +166,12 @@ void Settings::CreateButtons(int marginx, int marginy) {
   //create Music Button:
   dst.x = ( temp.x  + temp.w + _effectText->GetTextWidth()) / 2 ;
   dst.y = temp.y + marginy;
-  _btnMusic = new Button(tex, src, dst);
+  _btnMusic = new Button(texMusic, src, dst);
 
   ///Create Effect Button:
   dst.y += marginy + _marginY;
 
-  _btnEffect = new Button(tex, src, dst);
+  _btnEffect = new Button(texEffect, src, dst);
 };
 
 /// <summary>
@@ -178,7 +199,7 @@ void Settings::CreateSlider(int marginx, int w, int h) {
 /// </summary>
 void Settings::CreateQuitButton() {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  SDL_Texture* tex = window->LoadTexture("Assets/GUI/ON_OFF.png");
+  SDL_Texture* tex = window->LoadTexture("Assets/GUI/on_button.png");
 
   int w, h;
   SDL_QueryTexture(tex, NULL, NULL, &w, &h);
@@ -212,7 +233,7 @@ Settings* Settings::CreateSettings(int marginx, int marginy)
   rect.w = w - marginx * 2;
   rect.h = h - marginy * 2;
 
-  SDL_Color _color{ 255,100,100,100 };
+  SDL_Color _color{255, 100, 100, 100 };
 
   return new Settings(btn, rect, _color);
 }

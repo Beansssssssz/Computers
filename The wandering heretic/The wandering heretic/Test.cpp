@@ -78,17 +78,7 @@ int main(int argc, char* argv[]) {
 /*
 TODO
 ========NOW========:
-//create enemy
-go right until hit wall, hit wall then go left, hit wall then go right. <- in loops
-enemy check if player in the same y ~ish and enemy is looking at him
-if yes then go to enemy
-
-//Add settings to the RealGame (do in player?)
-when escape is pressed open settings
-
-//change the buttons in settings
-updates the images to the better images
-and change images when pressed
+//add enemy to the world
 
 //add snapping
 when u move u dont snap into locations becuase u are going into them
@@ -100,18 +90,20 @@ actuall player creation
 actuall gifs
 attacks and health
 
+
+//
 ========TODO========:
 
-2. add a way to delete and move blocks in the editing world 
+1.sign in -> start in the middle of the 3rd month
 
-2.5 ->add a way to "freeze" stuff ->
+3.learn sql server in c++
+
+3.add a way to "freeze" stuff ->
 a way to tell the mouse to stop the pressing on other buttons
 or -> use the bool as a pointer or ref(ref better) and when u r updating the buttons
 check if the settings is open.
 
-3.sign in -> start in the middle of the 3rd month
-
-4.learn sqlite3 -> how to send to main databse not local(use arduino to do it?)
+2.add a way to delete and move blocks in the editing world 
 
 5.learn socket -> send struct through sockets of players to create a multiplayer game
 

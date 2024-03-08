@@ -4,13 +4,13 @@
 
 #include "Button.hpp"
 
-Button::Button(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect)
-  :Button::Square(tex, srcrect, dstrect), _isPressed(false), _isSelected(false)
+Button::Button(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool deleteTex)
+  :Button::Square(tex, srcrect, dstrect, deleteTex), _isPressed(false), _isSelected(false)
   {}
 
 
-Button::Button(std::string path, SDL_Rect srcrect, SDL_Rect dstrect)
-  :Button::Square(path, srcrect, dstrect), _isPressed(true), _isSelected(false)
+Button::Button(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool deleteTex)
+  :Button::Square(path, srcrect, dstrect, deleteTex), _isPressed(true), _isSelected(false)
   {}
 
 Button::~Button()

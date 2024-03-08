@@ -20,6 +20,7 @@ private:
   void UpdateWorldOffset();
   void OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst);
   void UpdateWorldEntities();
+  bool KeyboardUpdater();
 
   json* _data;
   std::string _path;

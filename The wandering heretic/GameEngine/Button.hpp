@@ -9,8 +9,8 @@
 class Button : public Square
 {
 public:
-  Button(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect);
-  Button(std::string path, SDL_Rect srcrect, SDL_Rect dstrect);
+  Button(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool deleteTex = true);
+  Button(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool deleteTex = true);
   ~Button();
 
   void Update(MouseButtons btn = MouseButtons::mbl);

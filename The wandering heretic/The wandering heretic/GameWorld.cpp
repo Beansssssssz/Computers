@@ -29,7 +29,7 @@ bool GameWorld::Update()
 
   this->UpdateWorldOffset();
   this->UpdateWorldEntities();
-  return false;
+  return this->KeyboardUpdater();
 }
 
 void GameWorld::UpdateWorldOffset()
@@ -107,4 +107,18 @@ void GameWorld::UpdateWorldEntities()
     entity->Update();
     window->Render((Square*)entity);
   }
+}
+
+/// <summary>
+/// updates all the world entities
+/// </summary>
+bool GameWorld::KeyboardUpdater()
+{
+  Keyboard* key = Keyboard::GetKeyboardInstance();
+
+  Uint8* keyarr = key->GetKeyArray();
+
+  if (keyarr[SDL_SCANCODE_ESCAPE])
+    return true;
+  return false;
 }
