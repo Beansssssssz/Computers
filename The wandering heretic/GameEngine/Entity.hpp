@@ -13,7 +13,8 @@ public:
   ~Entity();
 
   virtual void Update();
-  bool MoveTo(std::vector<Entity*> vec, int8_t offsetX, int8_t offsetY);
+  bool MoveTo(std::vector<Entity*> vec, int8_t offsetX, int8_t offsetY, bool snap = false);
+  void SnapToRect(SDL_Rect rect, int8_t offsetX, int8_t offsetY);
 
   GIF* GetGIF();
   void SetGIF(GIF* gif);

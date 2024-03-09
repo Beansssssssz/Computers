@@ -72,14 +72,11 @@ void BasePlayer::GetInput()
 /// <param name="vec"></param>
 void BasePlayer::UpdateVelocity(std::vector<Entity*> vec)
 {
-  //moving the player
-  if (_speed.x != 0) 
-   this->MoveTo(vec, (int8_t)_speed.x, 0);
-  
-  if (_speed.y != 0) 
-    while(!this->MoveTo(vec, 0, (int8_t)_speed.y))
-      _speed.y += (_speed.y > 0 ? -1 : 1);
-  
+  //moving in the x axis
+   this->MoveTo(vec, (int8_t)_speed.x, 0, true);
+
+   //moving in the y axis
+   this->MoveTo(vec, 0, (int8_t)_speed.y, true);
 
   //applying friction and smoothness to the player
   if (_speed.x != 0)

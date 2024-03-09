@@ -79,6 +79,7 @@ int main(int argc, char* argv[]) {
 TODO
 ========NOW========:
 //add enemy to the world
+->the enemy can attack but if they touch each other then damage
 
 //add snapping
 when u move u dont snap into locations becuase u are going into them
@@ -90,8 +91,6 @@ actuall player creation
 actuall gifs
 attacks and health
 
-
-//
 ========TODO========:
 
 1.sign in -> start in the middle of the 3rd month
