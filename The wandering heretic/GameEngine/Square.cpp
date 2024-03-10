@@ -34,17 +34,6 @@ Square::~Square()
 /// <returns></returns>
 bool Square::IsColliding(SDL_Rect rect)
 {
- /* bool TopTobottom, BottomToTop, LeftToright, RightToleft;
-
-  TopTobottom = _dst.y < rect.y + rect.h;
-  LeftToright = _dst.x < rect.x + rect.h;
-  BottomToTop = _dst.y + _dst.h > rect.y;
-  RightToleft = _dst.x + _dst.w > rect.x;*/
-
-
-
-  //return TopTobottom && BottomToTop && LeftToright && RightToleft;
-
   return SDL_HasIntersection(&_dst, &rect);
 }
 

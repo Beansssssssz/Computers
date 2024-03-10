@@ -81,11 +81,6 @@ TODO
 //add enemy to the world
 ->the enemy can attack but if they touch each other then damage
 
-//add snapping
-when u move u dont snap into locations becuase u are going into them
-(add a bool var named snap)
-if is true then snap dst to rects
-
 //create the actuall Player Class(not gameEngine one)
 actuall player creation
 actuall gifs
@@ -95,16 +90,18 @@ attacks and health
 
 1.sign in -> start in the middle of the 3rd month
 
-3.learn sql server in c++
+2.learn sql server in c++
 
 3.add a way to "freeze" stuff ->
 a way to tell the mouse to stop the pressing on other buttons
 or -> use the bool as a pointer or ref(ref better) and when u r updating the buttons
 check if the settings is open.
 
-2.add a way to delete and move blocks in the editing world 
+4.add a way to delete and move blocks in the editing world 
 
 5.learn socket -> send struct through sockets of players to create a multiplayer game
+
+6. add more a more smarter enemy which can attack and what not
 
 ========TRY========:
 1.search for UB and fix bugs -> just play the game
