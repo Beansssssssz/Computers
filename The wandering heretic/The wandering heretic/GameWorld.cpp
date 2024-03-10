@@ -10,8 +10,8 @@ GameWorld::GameWorld(json* data, std::string path)
 {
   _vec = jsonParser::FromJsonToVector<Entity>(*data);
 
-  SDL_Rect src{ 60, 60, 178, 218 };
-  SDL_Rect dst{ 65, 65, 178 / 2 , 218 / 2 };
+  SDL_Rect src{ 60, 60, 178, 216 };
+  SDL_Rect dst{ 65, 65, 178 / 2 , 216 / 2 };
   GIF* gif = new GIF("Assets\\Character\\FrogIdle\\FrogIdle_", 12, src, dst, 180);
   _player = new BasePlayer(&gif);
 }

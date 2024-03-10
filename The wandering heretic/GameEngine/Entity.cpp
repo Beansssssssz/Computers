@@ -64,19 +64,26 @@
     return true;
   }
 
+/// <summary>
+/// snapes the entity into the inputed rect
+/// using the offsetX and offsetY var to find out where to snap
+/// </summary>
+/// <param name="rect"></param>
+/// <param name="offsetX"></param>
+/// <param name="offsetY"></param>
 void Entity::SnapToRect(SDL_Rect rect, int8_t offsetX, int8_t offsetY)
 {
   if (offsetX > 0) //snap to left
     _dst.x = rect.x - _dst.w;
 
   else if (offsetX < 0) //snap to right
-    _dst.x = rect.x + rect.w - _dst.w;
+    _dst.x = rect.x + rect.w;
 
   if (offsetY > 0) //snap to top
     _dst.y = rect.y - _dst.h;
 
   else if (offsetY < 0) //snap to down
-    _dst.y = rect.y + rect.h - _dst.h;
+    _dst.y = rect.y + rect.h;
 }
 
   GIF* Entity::GetGIF()
