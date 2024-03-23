@@ -100,22 +100,20 @@ SDL_Renderer* RenderWindow::GetRenderer()
 
 void RenderWindow::DisplayRect(SDL_Rect* rect, SDL_Color color)
 {
-  SDL_Rect dst = *rect;
-
   SDL_Color oldColor;
   int err = SDL_GetRenderDrawColor(renderer, &oldColor.r,
     &oldColor.g, &oldColor.b, &oldColor.a);
 
   //outline rect
   err += SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-  err += SDL_RenderDrawRect(renderer, &dst);
-  err += SDL_RenderFillRect(renderer, &dst);
+  err += SDL_RenderDrawRect(renderer, rect);
+  err += SDL_RenderFillRect(renderer, rect);
 
   err += SDL_SetRenderDrawColor(renderer, oldColor.r,
     oldColor.g, oldColor.b, oldColor.a);
 
   if (err != 0)
-    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Sdl failed to render a rect %s", SDL_GetError());
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL failed to render a rect %s", SDL_GetError());
 }
 
 

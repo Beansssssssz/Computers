@@ -1,5 +1,6 @@
 //including my own libs
 #include "GameManager.hpp"
+#include "TextSquare.hpp"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -29,6 +30,7 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
 
   GameManager gm;
+  TextSquare text({50, 50, 200, 30}, 1, 12, 50);
 
   SDL_Event event;
   bool running = true;
@@ -53,8 +55,9 @@ int main(int argc, char* argv[]) {
     mouse->Update();
     keyboard->Update();
 
-    if (running && !gm.Update())//if the game is not going to be closed from events
-      running = false;
+    text.Update();
+    //if (running && !gm.Update())//if the game is not going to be closed from events
+    //  running = false;
 
     window->Display();
 
@@ -78,13 +81,23 @@ int main(int argc, char* argv[]) {
 /*
 TODO
 ========NOW========:
+//add sign in as an option
+->  create 2 white squares
+    once u press inside a white sqaure u cant type inside
+    in order to exit u can press anywhere outside the sqaure or press enter
+    add a button which is confirme.
+
+
 //add enemy to the world
-->the enemy can attack but if they touch each other then damage
+-> the enemy can attack but if they touch each other then damage
 
 //create the actuall Player Class(not gameEngine one)
 actuall player creation
 actuall gifs
 attacks and health
+
+//when u reach a certin point in the world then u finish the level mario style,
+then sends u back into the level choosing
 
 ========TODO========:
 

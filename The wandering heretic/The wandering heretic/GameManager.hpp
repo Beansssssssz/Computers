@@ -5,8 +5,7 @@
 #include "GameScene.hpp"
 #include "Setting.hpp"
 
-enum class Scenes
-{
+enum class Scenes {
   welcome,
   home,
   game

@@ -34,6 +34,12 @@ std::string Keyboard::GetText()
 {
   return text;
 }
+
+void Keyboard::SetText(std::string str)
+{
+  text = str;
+}
+
 void Keyboard::EmptyText()
 {
   text.clear();

@@ -155,6 +155,7 @@
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="Square.cpp" />
+    <ClCompile Include="TextSquare.cpp" />
     <ClCompile Include="WindowText.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +176,7 @@
     <ClInclude Include="RenderWindow.hpp" />
     <ClInclude Include="Slider.hpp" />
     <ClInclude Include="Square.hpp" />
+    <ClInclude Include="TextSquare.hpp" />
     <ClInclude Include="Utils.hpp" />
     <ClInclude Include="WindowText.hpp" />
   </ItemGroup>

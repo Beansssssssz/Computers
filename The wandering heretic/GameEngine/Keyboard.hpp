@@ -13,6 +13,7 @@ public:
 
   Uint8* GetKeyArray();
   std::string GetText();
+  void SetText(std::string str);
   void EmptyText();
 
   void StopBuildText(bool clear = true);
