@@ -86,10 +86,10 @@ bool IsMailValid(std::string mail) {
   constexpr char DOMMAIN_COUNT = 2;
 
   for (int i = 0; i < DOMMAIN_COUNT; i++)
-    if (strcmp(domainName, "gmail.com"))
-      return true;
+    if (!strcmp(domainName, "gmail.com"))
+      return false;
 
-  return false;
+  return true;
 }
 
 
