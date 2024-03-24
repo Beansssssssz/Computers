@@ -78,6 +78,40 @@ int main(int argc, char* argv[]) {
 };
 
 
+
+bool IsPasswordStrong(std::string pass) {
+  if (pass.size() < 8)
+    return false;
+
+  bool upper = false;
+  bool lower = false;
+  bool number = false;
+  bool special = false;
+
+  for (const char& letter : pass) {
+    if (letter >= 'A' && letter <= 'Z')
+      upper = true;
+    else if (letter >= 'a' && letter <= 'z')
+      lower = true;
+    else if (letter >= '0' && letter <= '9')
+      number = true;
+    else if(IsLetterSpecial(letter))
+      special = true;
+  }
+
+  return upper & lower & number & special;
+}
+
+static bool IsLetterSpecial(const char& letter) {
+  const char* allLetters = "~!@#$%^&*()-_+={}[]|/:;<>,?";
+  int length = sizeof(allLetters); //its char and char is size of 1
+
+  for (int i = 0; i < length; i++)
+    if (allLetters[i] == letter)
+      return true;
+  return false;
+}
+
 /*
 TODO
 ========NOW========:
