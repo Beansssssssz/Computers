@@ -78,6 +78,21 @@ int main(int argc, char* argv[]) {
 };
 
 
+bool IsMailValid(std::string mail) {
+  int startDomainName = mail.find('@');
+  const char* domainName = mail.substr(startDomainName, mail.size()).c_str();
+
+  const char* allDomainNames[] = { "gmail.com", "nomishemer.ort.org" };
+  constexpr char DOMMAIN_COUNT = 2;
+
+  for (int i = 0; i < DOMMAIN_COUNT; i++)
+    if (strcmp(domainName, "gmail.com"))
+      return true;
+
+  return false;
+}
+
+
 
 bool IsPasswordStrong(std::string pass) {
   if (pass.size() < 8)
