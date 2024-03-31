@@ -9,11 +9,9 @@ class WindowText {
 public:
   WindowText(const char* fontPath = "Assets/Fonts/font.otf",
     int size = 24, std::string startingText = "", int maxSize = 30);
-  ~WindowText();
 
-  void DisplayText(Vector2i pos = { -1,-1 }, SDL_Color color = { 0,0,0,255 });
+  void DisplayText(Vector2i pos = { -1,-1 }, SDL_Color color = { 0,0,0,255 }, bool display = true);
 
-  void RemakeFont();
   void SetCharacterSize(int size);
   int GetCharacterSize();
 
@@ -28,7 +26,6 @@ public:
   int GetTextHeight();
   int GetMaxCharacters();
 private:
-  TTF_Font* _font;
   std::string text;
 
   int _maxLength;
@@ -36,6 +33,6 @@ private:
   const char* _fontPath;
 
   int _width, _height;
-
+    
   Vector2i _pos = Vector2i{ 0,0 };//default value is {0,0}
 };

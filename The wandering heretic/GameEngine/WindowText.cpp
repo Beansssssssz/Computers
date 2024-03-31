@@ -7,18 +7,8 @@
 
 WindowText::WindowText(const char* fontPath, int size, std::string startingText, int Maxsize)
   :_fontPath(fontPath), text(startingText), _characterSize(size),
-  _maxLength(Maxsize), _width(0), _height(0), _font(nullptr)
-{
-  _font = TTF_OpenFont(fontPath, size);
-  if(_font == nullptr)
-    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to get font from path. Error: %s", SDL_GetError());
-}
-
-WindowText::~WindowText()
-{
-  text = "";
-  //TTF_CloseFont(_font); it crashes the program because of a bug in the api
-};
+  _maxLength(Maxsize), _width(0), _height(0)
+{}
 
 
 /// <summary>
@@ -27,7 +17,7 @@ WindowText::~WindowText()
 /// </summary>
 /// <param name="pos">the pos of the text</param>
 /// <param name="color">the color of the text</param>
-void  WindowText::DisplayText(Vector2i pos, SDL_Color color) {
+void  WindowText::DisplayText(Vector2i pos, SDL_Color color, bool display) {
   //you cant create a surfarce from no text
   if (text.size() <= 0)
     return;
@@ -35,9 +25,13 @@ void  WindowText::DisplayText(Vector2i pos, SDL_Color color) {
   if (pos.x == -1 && pos.y == -1)
     pos = _pos;
 
+  TTF_Font* font = TTF_OpenFont(_fontPath, _characterSize);
+  if (font == nullptr)
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to get font from path. Error: %s", SDL_GetError());
+
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
-  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(_font, text.c_str(), color);
+  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, text.c_str(), color);
   SDL_Texture* message = SDL_CreateTextureFromSurface(window->GetRenderer(), surfaceMessage);
 
   _width = surfaceMessage->w;
@@ -55,21 +49,14 @@ void  WindowText::DisplayText(Vector2i pos, SDL_Color color) {
   dst.h = src.h;
 
   Square temp(message, src, dst);
-  window->Render(&temp);
+  if(display)
+    window->Render(&temp);
 
   SDL_FreeSurface(surfaceMessage);
   SDL_DestroyTexture(message);
+  TTF_CloseFont(font);
 };
 
-/// <summary>
-/// remakes the font
-/// </summary>
-void WindowText::RemakeFont()
-{
-  text = "";
-  //TTF_CloseFont(_font); its crashes the program becuase oif a bug in the api
-  _font = TTF_OpenFont(_fontPath, _characterSize);
-};
 
 /// <summary>
 /// changes the character size that the current program is using
@@ -77,7 +64,6 @@ void WindowText::RemakeFont()
 /// <param name="size">the size</param>
 void WindowText::SetCharacterSize(int size) {
   _characterSize = size;
-  RemakeFont();
 }
 
 /// <summary>
@@ -142,44 +128,18 @@ int WindowText::GetTextWidth()
   if(_width > 0 || text.size() < 0)
     return _width;
 
-  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(_font, text.c_str(),
-    { 0,0,0,0 });
-  SDL_Texture* message = SDL_CreateTextureFromSurface(window->GetRenderer(),
-    surfaceMessage);
-
-  _width = surfaceMessage->w;
-  _height = surfaceMessage->h;
-
-  SDL_FreeSurface(surfaceMessage);
-  SDL_DestroyTexture(message);
+  DisplayText({ -1,-1 }, { 0,0,0,255 }, false);
 
   return _width;
 }
 
 /// <summary>
-/// returns the text height
+/// returns the text height which is the same as the character size
 /// </summary>
 /// <returns></returns>
 int WindowText::GetTextHeight()
 {
-  if(!(_height <= 0 && text.size() > 0))
-    return _height;
-
-  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(_font, text.c_str(),
-    { 0,0,0,0 });
-
-  SDL_Texture* message = SDL_CreateTextureFromSurface(window->GetRenderer(),
-    surfaceMessage);
-
-  _width = surfaceMessage->w;
-  _height = surfaceMessage->h;
-
-  SDL_FreeSurface(surfaceMessage);
-  SDL_DestroyTexture(message);
-
-  return _height;
+  return _characterSize;
 }
 
 /// <summary>

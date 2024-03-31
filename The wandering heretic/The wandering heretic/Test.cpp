@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
 
   GameManager gm;
-  TextSquare text({50, 50, 200, 30}, 1, 12, 50);
+  TextSquare* text = new TextSquare({50, 50}, 1, 200, 50);
 
   SDL_Event event;
   bool running = true;
@@ -44,6 +44,7 @@ int main(int argc, char* argv[]) {
     {
       if (event.type == SDL_QUIT) {
         running = false;
+        delete text;
         break;
       }
 
@@ -58,7 +59,8 @@ int main(int argc, char* argv[]) {
     mouse->Update();
     keyboard->Update();
 
-    text.Update();
+    if(running)
+      text->Update();
     //if (running && !gm.Update())//if the game is not going to be closed from events
     //  running = false;
 
@@ -66,6 +68,7 @@ int main(int argc, char* argv[]) {
 
     utils::CapFPS(start, 60);
   };
+
   //deleting singletons
   delete window;
   delete mouse;
@@ -152,8 +155,6 @@ TODO
 then sends u back into the level choosing
 
 ========TODO========:
-
-1.sign in -> start in the middle of the 3rd month
 
 3.add a way to "freeze" stuff ->
 a way to tell the mouse to stop the pressing on other buttons

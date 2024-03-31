@@ -4,8 +4,8 @@
 #include "Keyboard.hpp"
 #include "WindowText.hpp"
 
-TextSquare::TextSquare(SDL_Rect dst, uint8_t outlineSize, uint8_t characterSize, uint8_t maxLength, bool stopBuildText)
-  :_dst(dst), _outlineSize(outlineSize), _winText(nullptr), _stopBuildText(stopBuildText)
+TextSquare::TextSquare(Vector2i pos, uint8_t outlineSize, uint8_t characterSize, uint8_t maxLength, bool stopBuildText)
+  :_outlineSize(outlineSize), _winText(nullptr), _stopBuildText(stopBuildText)
 {
   const char* fontPath = "Assets/Fonts/font.otf";
   _winText = new WindowText(fontPath, characterSize, "", maxLength);
@@ -13,6 +13,11 @@ TextSquare::TextSquare(SDL_Rect dst, uint8_t outlineSize, uint8_t characterSize,
   Keyboard* keyboard = Keyboard::GetKeyboardInstance();
   keyboard->StartBuildText();
   keyboard->SetText("");
+
+  _dst = SDL_Rect{ pos.x, pos.y, 0, 0 };//the 0 is a placeholder
+  _dst.w = (characterSize * maxLength) / 2;
+  _dst.h = characterSize;
+  
 }
 
 TextSquare::~TextSquare() {

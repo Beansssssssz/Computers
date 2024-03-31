@@ -6,7 +6,7 @@
 class TextSquare
 {
 public:
-  TextSquare(SDL_Rect dst, uint8_t outlineSize, uint8_t characterSize, uint8_t maxLength, bool stopBuildText = true);
+  TextSquare(Vector2i dst, uint8_t outlineSize, uint8_t characterSize, uint8_t maxLength, bool stopBuildText = true);
   ~TextSquare();
 
   void Update();
