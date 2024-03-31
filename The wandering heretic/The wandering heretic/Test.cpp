@@ -8,6 +8,9 @@ Mouse* Mouse::_mousePtr = NULL;
 Keyboard* Keyboard::_keyboardPtr = NULL;
 Audio* Audio::_audioInstance = NULL;
 
+bool IsPasswordStrong(std::string password);
+bool IsLetterSpecial(const char& letter);
+
 
 int main(int argc, char* argv[]) {
   //initializing the libraries
@@ -78,7 +81,7 @@ int main(int argc, char* argv[]) {
 };
 
 
-bool IsMailValid(std::string mail) {
+static bool IsMailValid(std::string mail) {
   int startDomainName = mail.find('@');
   const char* domainName = mail.substr(startDomainName, mail.size()).c_str();
 
@@ -94,7 +97,7 @@ bool IsMailValid(std::string mail) {
 
 
 
-bool IsPasswordStrong(std::string pass) {
+static bool IsPasswordStrong(std::string pass) {
   if (pass.size() < 8)
     return false;
 
@@ -113,7 +116,7 @@ bool IsPasswordStrong(std::string pass) {
     else if(IsLetterSpecial(letter))
       special = true;
   }
-
+  
   return upper & lower & number & special;
 }
 
@@ -138,12 +141,12 @@ TODO
 
 
 //add enemy to the world
--> the enemy can attack but if they touch each other then damage
+-> damage is done by touching
 
 //create the actuall Player Class(not gameEngine one)
-actuall player creation
-actuall gifs
-attacks and health
+  actuall player creation
+  actuall gifs
+  attacks and health
 
 //when u reach a certin point in the world then u finish the level mario style,
 then sends u back into the level choosing
@@ -152,18 +155,14 @@ then sends u back into the level choosing
 
 1.sign in -> start in the middle of the 3rd month
 
-2.learn sql server in c++
-
 3.add a way to "freeze" stuff ->
 a way to tell the mouse to stop the pressing on other buttons
 or -> use the bool as a pointer or ref(ref better) and when u r updating the buttons
 check if the settings is open.
 
-4.add a way to delete and move blocks in the editing world 
+4.add a way to delete blocks in the editing world 
 
-5.learn socket -> send struct through sockets of players to create a multiplayer game
-
-6. add more a more smarter enemy which can attack and what not
+6. add more a more smarter enemy which can attack and shoot at u
 
 ========TRY========:
 1.search for UB and fix bugs -> just play the game
@@ -173,4 +172,16 @@ check if the settings is open.
 3.make jump more smooth(like hollow knight smooth)
 
 4.check my scrolling (was very very scuffed)
+*/
+
+
+/*
+  roadmap to finish everything:
+  1.  finish sign in
+  2.  add an hub
+  3.  add a finish line and an animation for it
+  4. create 10 big levels?????, each level has a boss and a finish line which returns u to the hub
+  5. add in the hub a shop
+  6. shop does what??????????
+
 */
