@@ -31,7 +31,7 @@ TextSquare::~TextSquare() {
 }
 
 
-void TextSquare::Update()
+void TextSquare::Update(bool inputOn, SDL_Color color)
 {
   /* print out the rect and its outline */
   DisplaySquare();
@@ -40,7 +40,12 @@ void TextSquare::Update()
   InputText();
 
   /* print out the current buffer */
-  _winText->DisplayText({ _dst.x, _dst.y });
+  _winText->DisplayText({ _dst.x, _dst.y }, color);
+}
+
+WindowText* TextSquare::GetWinText()
+{
+  return _winText;
 }
 
 /// <summary>

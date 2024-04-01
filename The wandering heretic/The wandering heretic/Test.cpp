@@ -1,6 +1,5 @@
 //including my own libs
 #include "GameManager.hpp"
-#include "TextSquare.hpp"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -33,7 +32,6 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
 
   GameManager gm;
-  TextSquare* text = new TextSquare({50, 50}, 1, 200, 50);
 
   SDL_Event event;
   bool running = true;
@@ -44,7 +42,6 @@ int main(int argc, char* argv[]) {
     {
       if (event.type == SDL_QUIT) {
         running = false;
-        delete text;
         break;
       }
 
@@ -59,8 +56,6 @@ int main(int argc, char* argv[]) {
     mouse->Update();
     keyboard->Update();
 
-    if(running)
-      text->Update();
     //if (running && !gm.Update())//if the game is not going to be closed from events
     //  running = false;
 
@@ -68,7 +63,6 @@ int main(int argc, char* argv[]) {
 
     utils::CapFPS(start, 60);
   };
-
   //deleting singletons
   delete window;
   delete mouse;
@@ -86,13 +80,13 @@ int main(int argc, char* argv[]) {
 
 static bool IsMailValid(std::string mail) {
   int startDomainName = mail.find('@');
-  const char* domainName = mail.substr(startDomainName, mail.size()).c_str();
+  std::string domainName = mail.substr(startDomainName, mail.size());
 
   const char* allDomainNames[] = { "gmail.com", "nomishemer.ort.org" };
   constexpr char DOMMAIN_COUNT = 2;
 
   for (int i = 0; i < DOMMAIN_COUNT; i++)
-    if (!strcmp(domainName, "gmail.com"))
+    if (!strcmp(domainName.c_str(), "gmail.com"))
       return false;
 
   return true;
