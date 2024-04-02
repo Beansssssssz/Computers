@@ -11,12 +11,13 @@ public:
 
   void Update(bool inputOn = true, SDL_Color color = BLACK);
   WindowText* GetWinText();
+  SDL_Rect* GetDstRect();
 private:
   void DisplaySquare();
   void InputText();
 
-  constexpr static SDL_Color WHITE{255, 255, 255, 255};
-  constexpr static SDL_Color BLACK{0, 0, 255, 255};
+  constexpr static SDL_Color WHITE{ 255, 255, 255, 255 };
+  constexpr static SDL_Color BLACK{ 0, 0, 255, 255 };
 
   SDL_Rect _dst;
   uint8_t _outlineSize;
@@ -25,4 +26,3 @@ private:
 
   bool _stopBuildText;
 };
-

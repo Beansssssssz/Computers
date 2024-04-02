@@ -17,7 +17,7 @@ TextSquare::TextSquare(Vector2i pos, uint8_t outlineSize, uint8_t characterSize,
   _dst = SDL_Rect{ pos.x, pos.y, 0, 0 };//the 0 is a placeholder
   _dst.w = (characterSize * maxLength) / 2;
   _dst.h = characterSize;
-  
+
 }
 
 TextSquare::~TextSquare() {
@@ -37,7 +37,8 @@ void TextSquare::Update(bool inputOn, SDL_Color color)
   DisplaySquare();
 
   /* check for input */
-  InputText();
+  if(inputOn)
+    InputText();
 
   /* print out the current buffer */
   _winText->DisplayText({ _dst.x, _dst.y }, color);
@@ -46,6 +47,11 @@ void TextSquare::Update(bool inputOn, SDL_Color color)
 WindowText* TextSquare::GetWinText()
 {
   return _winText;
+}
+
+SDL_Rect* TextSquare::GetDstRect()
+{
+  return &_dst;
 }
 
 /// <summary>
@@ -68,17 +74,36 @@ void TextSquare::DisplaySquare()
 }
 
 /// <summary>
-/// get the current inputed text and delets everything after the current max limit
-/// of characters
+/// Get the last letter of the keyboard buffer and emptys it afterwise
+/// if a letterDeleted flag is on then it deletes a letter and clears the flag
 /// </summary>
 void TextSquare::InputText()
 {
   Keyboard* keyboard = Keyboard::GetKeyboardInstance();
-  std::string currentText = keyboard->GetText();
+  std::string currentText;
+  std::string keyboardBuffer = keyboard->GetText();
 
-  int maxLength = _winText->GetMaxCharacters();
-  currentText = currentText.substr(0, maxLength);
+  /*checking if a letter was deleted and clearing the flag if is deleted*/
+  bool& letterDeleted = keyboard->DeletedLetter();
+  if (letterDeleted) {
+    letterDeleted = true;
+    std::string textBuffer = _winText->GetText();
+    if(!textBuffer.empty())
+      textBuffer.pop_back();
 
-  keyboard->SetText(currentText);
-  _winText->SetText(currentText);
+    _winText->SetText(textBuffer);
+    keyboard->SetText(""); // after typing empty the current buffer
+
+    return;
+  }
+
+  /* checking if the buffer was writtin into*/
+  if (keyboardBuffer.length() <= 0)
+    return; 
+
+  /* seting the actull text buffer to the last letter of the keyboard buffer
+  and emptying the keyboard buffer*/
+  char lastLetter = keyboardBuffer[keyboardBuffer.length() - 1];
+  _winText->SetText(_winText->GetText() + lastLetter);
+  keyboard->SetText(""); // after typing empty the current buffer
 }

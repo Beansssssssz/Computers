@@ -32,7 +32,20 @@ void  WindowText::DisplayText(Vector2i pos, SDL_Color color, bool display) {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
   SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, text.c_str(), color);
+  if (surfaceMessage == NULL) {
+    std::cerr << "Failed to create surface for text rendering: " << TTF_GetError() << std::endl;
+
+    TTF_CloseFont(font);
+    return;
+  }
   SDL_Texture* message = SDL_CreateTextureFromSurface(window->GetRenderer(), surfaceMessage);
+  if (message == NULL) {
+    std::cerr << "Failed to create surface for text rendering: " << TTF_GetError() << std::endl;
+
+    delete surfaceMessage;
+    TTF_CloseFont(font);
+    return;
+  }
 
   _width = surfaceMessage->w;
 
@@ -99,9 +112,7 @@ Vector2i WindowText::GetPos()
 /// </summary>
 /// <param name="str">the text</param>
 void WindowText::SetText(std::string str) {
-  if (str.size() > _maxLength)
-    return;
-  text = str;
+  text = str.substr(0, _maxLength);
 };
 
 /// <summary>

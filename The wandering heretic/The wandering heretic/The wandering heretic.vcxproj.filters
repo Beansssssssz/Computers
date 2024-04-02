@@ -45,6 +45,9 @@
     <ClCompile Include="SignIn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SignUp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -95,6 +98,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SignIn.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SignUp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,6 @@
 //including my own libs
 #include "GameManager.hpp"
+#include "SignIn.hpp"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -33,6 +34,8 @@ int main(int argc, char* argv[]) {
 
   GameManager gm;
 
+  SignIn* signIn = new SignIn({ 50,50, 500, 500 }, {100, 100}, 200);
+
   SDL_Event event;
   bool running = true;
   while (running) {
@@ -59,10 +62,15 @@ int main(int argc, char* argv[]) {
     //if (running && !gm.Update())//if the game is not going to be closed from events
     //  running = false;
 
+    signIn->Update();
+
     window->Display();
 
     utils::CapFPS(start, 60);
   };
+  delete signIn;
+
+
   //deleting singletons
   delete window;
   delete mouse;
@@ -77,66 +85,9 @@ int main(int argc, char* argv[]) {
   return 0;
 };
 
-
-static bool IsMailValid(std::string mail) {
-  int startDomainName = mail.find('@');
-  std::string domainName = mail.substr(startDomainName, mail.size());
-
-  const char* allDomainNames[] = { "gmail.com", "nomishemer.ort.org" };
-  constexpr char DOMMAIN_COUNT = 2;
-
-  for (int i = 0; i < DOMMAIN_COUNT; i++)
-    if (!strcmp(domainName.c_str(), "gmail.com"))
-      return false;
-
-  return true;
-}
-
-
-
-static bool IsPasswordStrong(std::string pass) {
-  if (pass.size() < 8)
-    return false;
-
-  bool upper = false;
-  bool lower = false;
-  bool number = false;
-  bool special = false;
-
-  for (const char& letter : pass) {
-    if (letter >= 'A' && letter <= 'Z')
-      upper = true;
-    else if (letter >= 'a' && letter <= 'z')
-      lower = true;
-    else if (letter >= '0' && letter <= '9')
-      number = true;
-    else if(IsLetterSpecial(letter))
-      special = true;
-  }
-  
-  return upper & lower & number & special;
-}
-
-static bool IsLetterSpecial(const char& letter) {
-  const char* allLetters = "~!@#$%^&*()-_+={}[]|/:;<>,?";
-  int length = sizeof(allLetters); //its char and char is size of 1
-
-  for (int i = 0; i < length; i++)
-    if (allLetters[i] == letter)
-      return true;
-  return false;
-}
-
 /*
 TODO
 ========NOW========:
-//add sign in as an option
-->  create 2 white squares
-    once u press inside a white sqaure u cant type inside
-    in order to exit u can press anywhere outside the sqaure or press enter
-    add a button which is confirme.
-
-
 //add enemy to the world
 -> damage is done by touching
 
@@ -172,8 +123,8 @@ check if the settings is open.
 
 /*
   roadmap to finish everything:
-  1.  finish sign in
-  2.  add an hub
+  1.  finish sign in and sign up
+  2.  add an hub??
   3.  add a finish line and an animation for it
   4. create 10 big levels?????, each level has a boss and a finish line which returns u to the hub
   5. add in the hub a shop

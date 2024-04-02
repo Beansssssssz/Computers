@@ -29,6 +29,7 @@
     <ClCompile Include="LevelEditor.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="SignIn.cpp" />
+    <ClCompile Include="SignUp.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="WelcomeScene.cpp" />
   </ItemGroup>
@@ -55,6 +56,7 @@
     <ClInclude Include="LevelEditor.hpp" />
     <ClInclude Include="Setting.hpp" />
     <ClInclude Include="SignIn.hpp" />
+    <ClInclude Include="SignUp.hpp" />
     <ClInclude Include="WelcomeScene.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
