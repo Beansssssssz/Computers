@@ -1,10 +1,12 @@
 #include "SignUp.hpp"
+#include <PopUpWindow.hpp>
 
 SignUp::SignUp(SDL_Rect backgroundRect, Vector2i emailStartPos, int margin)
   :_email(nullptr), _username(nullptr), _password(nullptr), _passwordConfirm(nullptr)
-  , _backgroundRect(backgroundRect)
+  , _background(nullptr)
 {
   CreateTextSquares(emailStartPos, margin);
+  CreateBackground(backgroundRect);
 }
 
 SignUp::~SignUp()
@@ -13,6 +15,62 @@ SignUp::~SignUp()
   delete _username;
   delete _password;
   delete _passwordConfirm;
+
+  delete _background;
+}
+
+void SignUp::Update()
+{
+  _background->Update();
+
+  SelectFlag();
+
+  _email->Update(_currentFlag == EMAIL_FLAG);
+  _username->Update(_currentFlag == USERNAME_FLAG);
+  _password->Update(_currentFlag == PASSWORD_FLAG);
+  _passwordConfirm->Update(_currentFlag == PASSWORD_CONFIRM_FLAG);
+}
+
+/// <summary>
+/// selects the curremt chosen flags
+/// </summary>
+void SignUp::SelectFlag()
+{
+  Mouse* mouse = Mouse::GetMouseInstance();
+  Vector2i pos = mouse->GetPos();
+  const SDL_Rect posRect{ pos.x, pos.y, 1,1 };
+
+  /* if mouse isnt pressed then dont start selecting */
+  if (mouse->GetPressed() != MouseButtons::mbl)
+    return;
+
+  /* if a flag isnt chosen then select a square */
+  if (SDL_HasIntersection(_email->GetDstRect(), &posRect))
+    _currentFlag = EMAIL_FLAG;
+
+  else if (SDL_HasIntersection(_username->GetDstRect(), &posRect))
+    _currentFlag = EMAIL_FLAG;
+
+  if (SDL_HasIntersection(_password->GetDstRect(), &posRect))
+    _currentFlag = EMAIL_FLAG;
+
+  else if (SDL_HasIntersection(_passwordConfirm->GetDstRect(), &posRect))
+    _currentFlag = EMAIL_FLAG;
+
+  else
+    _currentFlag = 0;
+}
+
+void SignUp::CreateBackground(SDL_Rect backgroundRect)
+{
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Xbtn.png");
+
+  int w, h;
+  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+
+  Button* btn = new Button(tex, { 0,0,w,h }, { 0,0,w,h });
+  _background = new PopUpWindow(btn, backgroundRect, BACKGROUND_COLOR, true);
 }
 
 void SignUp::CreateTextSquares(Vector2i emailStartPos, int margin)

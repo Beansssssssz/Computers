@@ -43,8 +43,8 @@ void SignIn::SelectFlag()
   if (SDL_HasIntersection(_email->GetDstRect(), &posRect))
     _currentFlag = EMAIL_FLAG;
 
-  else if (SDL_HasIntersection(_email->GetDstRect(), &posRect))
-    _currentFlag = EMAIL_FLAG;
+  else if (SDL_HasIntersection(_pass->GetDstRect(), &posRect))
+    _currentFlag = PASSWORD_FLAG;
 
   else
     _currentFlag = 0;
@@ -71,6 +71,5 @@ void SignIn::CreateTextSquares(Vector2i& emailStartPos, int& margin)
   emailStartPos.y += margin;
   _pass = new TextSquare(emailStartPos, 1, LETTER_SIZE, 30);
 }
-
 
 

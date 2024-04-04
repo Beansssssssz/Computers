@@ -123,10 +123,15 @@ check if the settings is open.
 
 /*
   roadmap to finish everything:
+  //changes the background to a popUpWindow
+  //add a button that is the finish button
+  -> saves the current strings and throws an error if needed
+
   1.  finish sign in and sign up ->
   flashing cursor?
   text in gray so u know what is what
 
+  this is the post fixing
   2.  add an hub??
   3.  add a finish line and an animation for it
   4. create 10 big levels?????, each level has a boss and a finish line which returns u to the hub
