@@ -1,5 +1,12 @@
 #include "SignUp.hpp"
 
+SignUp::SignUp(SDL_Rect backgroundRect, Vector2i emailStartPos, int margin)
+  :_email(nullptr), _username(nullptr), _password(nullptr), _passwordConfirm(nullptr)
+  , _backgroundRect(backgroundRect)
+{
+  CreateTextSquares(emailStartPos, margin);
+}
+
 SignUp::~SignUp()
 {
   delete _email;
@@ -8,9 +15,18 @@ SignUp::~SignUp()
   delete _passwordConfirm;
 }
 
-void SignUp::CreateTextSquares()
+void SignUp::CreateTextSquares(Vector2i emailStartPos, int margin)
 {
+  _email = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
+  emailStartPos.y += margin;
 
+  _username = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
+  emailStartPos.y += margin;
+
+  _password = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
+  emailStartPos.y += margin;
+
+  _passwordConfirm = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
 }
 
 bool SignUp::IsMailValid(std::string& mail)
@@ -38,7 +54,7 @@ bool SignUp::IsPasswordStrong(std::string& password)
   bool number = false;
   bool special = false;
 
-  for (const char& letter : pass) {
+  for (const char& letter : password) {
     if (letter >= 'A' && letter <= 'Z')
       upper = true;
     else if (letter >= 'a' && letter <= 'z')

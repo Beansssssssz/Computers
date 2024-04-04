@@ -123,7 +123,10 @@ check if the settings is open.
 
 /*
   roadmap to finish everything:
-  1.  finish sign in and sign up
+  1.  finish sign in and sign up ->
+  flashing cursor?
+  text in gray so u know what is what
+
   2.  add an hub??
   3.  add a finish line and an animation for it
   4. create 10 big levels?????, each level has a boss and a finish line which returns u to the hub
