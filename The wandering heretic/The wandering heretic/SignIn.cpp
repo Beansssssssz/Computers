@@ -67,9 +67,9 @@ void SignIn::DisplayBackground()
 /// <param name="margin"></param>
 void SignIn::CreateTextSquares(Vector2i& emailStartPos, int& margin)
 {
-  _email = new TextSquare(emailStartPos, 1, LETTER_SIZE, 30);
+  _email = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
   emailStartPos.y += margin;
-  _pass = new TextSquare(emailStartPos, 1, LETTER_SIZE, 30);
+  _pass = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
 }
 
 

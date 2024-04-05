@@ -161,3 +161,49 @@ int WindowText::GetMaxCharacters()
 {
     return _maxLength;
 }
+
+void WindowText::DisplayStaticText(std::string text, Vector2i pos, SDL_Color color, uint8_t letterSize, const char* fontPath)
+{
+
+  TTF_Font* font = TTF_OpenFont(fontPath, letterSize);
+  if (font == nullptr)
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to get font from path. Error: %s", SDL_GetError());
+
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+
+  SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, text.c_str(), color);
+  if (surfaceMessage == NULL) {
+    std::cerr << "Failed to create surface for text rendering: " << TTF_GetError() << std::endl;
+
+    TTF_CloseFont(font);
+    return;
+  }
+
+  SDL_Texture* message = SDL_CreateTextureFromSurface(window->GetRenderer(), surfaceMessage);
+  if (message == NULL) {
+    std::cerr << "Failed to create surface for text rendering: " << TTF_GetError() << std::endl;
+
+    delete surfaceMessage;
+    TTF_CloseFont(font);
+    return;
+  }
+
+  SDL_Rect src;
+  src.x = 0;
+  src.y = 0;
+  src.w = surfaceMessage->w;
+  src.h = surfaceMessage->h;
+
+  SDL_Rect dst;
+  dst.x = pos.x;
+  dst.y = pos.y;
+  dst.w = src.w;
+  dst.h = src.h;
+
+  Square temp(message, src, dst);
+  window->Render(&temp);
+
+  SDL_FreeSurface(surfaceMessage);
+  SDL_DestroyTexture(message);
+  TTF_CloseFont(font);
+}

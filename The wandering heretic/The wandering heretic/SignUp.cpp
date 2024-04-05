@@ -1,12 +1,18 @@
 #include "SignUp.hpp"
 #include <PopUpWindow.hpp>
 
-SignUp::SignUp(SDL_Rect backgroundRect, Vector2i emailStartPos, int margin)
+#define EMAIL_GRAY_TEXT "email"
+#define USERNAME_GRAY_TEXT "username"
+#define PASSWORD_GRAY_TEXT "password"
+#define PASSWORD_CONFIRM_GRAY_TEXT "confirm password"
+
+//maybe remove startPos
+SignUp::SignUp(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
   :_email(nullptr), _username(nullptr), _password(nullptr), _passwordConfirm(nullptr)
   , _background(nullptr)
 {
   CreateTextSquares(emailStartPos, margin);
-  CreateBackground(backgroundRect);
+  CreateBackground(backgroundPos, margin);
 }
 
 SignUp::~SignUp()
@@ -23,12 +29,57 @@ void SignUp::Update()
 {
   _background->Update();
 
+  if (!_background->GetTabOpen())
+    return;
+
   SelectFlag();
 
   _email->Update(_currentFlag == EMAIL_FLAG);
   _username->Update(_currentFlag == USERNAME_FLAG);
   _password->Update(_currentFlag == PASSWORD_FLAG);
   _passwordConfirm->Update(_currentFlag == PASSWORD_CONFIRM_FLAG);
+
+  DisplaySquareNames();
+
+}
+
+void SignUp::DisplaySquareNames()
+{
+  SDL_Rect* tempRect;
+  Vector2i pos;
+  constexpr SDL_Color GRAY{ 128, 128, 128, 128 };
+
+  /* email */
+  if (_email->GetWinText()->GetText() == "") {
+    tempRect = _email->GetDstRect();
+    pos.x = tempRect->x;
+    pos.y = tempRect->y;
+    WindowText::DisplayStaticText(EMAIL_GRAY_TEXT, pos, GRAY, LETTER_SIZE);
+  }
+
+  /* username */
+  if (_username->GetWinText()->GetText() == "") {
+    tempRect = _username->GetDstRect();
+    pos.x = tempRect->x;
+    pos.y = tempRect->y;
+    WindowText::DisplayStaticText(USERNAME_GRAY_TEXT, pos, GRAY, LETTER_SIZE);
+  }
+
+  /* password */
+  if (_password->GetWinText()->GetText() == "") {
+    tempRect = _password->GetDstRect();
+    pos.x = tempRect->x;
+    pos.y = tempRect->y;
+    WindowText::DisplayStaticText(PASSWORD_GRAY_TEXT, pos, GRAY, LETTER_SIZE);
+  }
+
+  /* confirm password */
+  if (_passwordConfirm->GetWinText()->GetText() == "") {
+    tempRect = _passwordConfirm->GetDstRect();
+    pos.x = tempRect->x;
+    pos.y = tempRect->y;
+    WindowText::DisplayStaticText(PASSWORD_CONFIRM_GRAY_TEXT, pos, GRAY, LETTER_SIZE);
+  }
 }
 
 /// <summary>
@@ -51,7 +102,7 @@ void SignUp::SelectFlag()
   else if (SDL_HasIntersection(_username->GetDstRect(), &posRect))
     _currentFlag = EMAIL_FLAG;
 
-  if (SDL_HasIntersection(_password->GetDstRect(), &posRect))
+  else if (SDL_HasIntersection(_password->GetDstRect(), &posRect))
     _currentFlag = EMAIL_FLAG;
 
   else if (SDL_HasIntersection(_passwordConfirm->GetDstRect(), &posRect))
@@ -61,7 +112,7 @@ void SignUp::SelectFlag()
     _currentFlag = 0;
 }
 
-void SignUp::CreateBackground(SDL_Rect backgroundRect)
+void SignUp::CreateBackground(Vector2i backgroundPos, int margin)
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   SDL_Texture* tex = window->LoadTexture("Assets/GUI/Xbtn.png");
@@ -70,19 +121,27 @@ void SignUp::CreateBackground(SDL_Rect backgroundRect)
   SDL_QueryTexture(tex, NULL, NULL, &w, &h);
 
   Button* btn = new Button(tex, { 0,0,w,h }, { 0,0,w,h });
+
+  SDL_Rect backgroundRect{ backgroundPos.x, backgroundPos.y, 0, 0 };
+  backgroundRect.w = (_email->GetDstRect()->x - backgroundPos.x) * 2 + _email->GetDstRect()->w;
+  backgroundRect.h = _email->GetDstRect()->h * 4 + margin * 4;
+  
   _background = new PopUpWindow(btn, backgroundRect, BACKGROUND_COLOR, true);
 }
 
 void SignUp::CreateTextSquares(Vector2i emailStartPos, int margin)
 {
+  int SquareHeight = 0;
+
   _email = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
-  emailStartPos.y += margin;
+  emailStartPos.y += margin + SquareHeight;
+  SquareHeight = _email->GetDstRect()->h;
 
   _username = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
-  emailStartPos.y += margin;
+  emailStartPos.y += margin + SquareHeight;
 
   _password = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
-  emailStartPos.y += margin;
+  emailStartPos.y += margin + SquareHeight;
 
   _passwordConfirm = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
 }
@@ -136,3 +195,8 @@ bool SignUp::IsLetterSpecial(const char& letter)
       return true;
   return false;
 }
+
+#undef EMAIL_GRAY_TEXT 
+#undef USERNAME_GRAY_TEXT 
+#undef PASSWORD_GRAY_TEXT 
+#undef PASSWORD_CONFIRM_GRAY_TEXT 

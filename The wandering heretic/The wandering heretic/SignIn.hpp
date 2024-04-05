@@ -26,6 +26,7 @@ private:
   SDL_Rect _backgroundRect;
 
 
+  constexpr static uint8_t MAX_LETTERS = 35;
   constexpr static uint8_t LETTER_SIZE = 20;
   constexpr static SDL_Color BACKGROUND_COLOR{ 255,0,0,255 };
 };

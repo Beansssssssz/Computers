@@ -65,12 +65,6 @@ void Keyboard::BuildText(SDL_Event event)
   if (!_input)
     return;
 
-  if (event.type == SDL_KEYDOWN)
-  {
-
-    std::cout << "aa\n";
-  }
-
   if (event.type == SDL_TEXTINPUT && text.size() < LIMIT)
     text += event.text.text;
 

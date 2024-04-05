@@ -1,16 +1,12 @@
 //including my own libs
 #include "GameManager.hpp"
-#include "SignIn.hpp"
+#include "SignUp.hpp"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
 Mouse* Mouse::_mousePtr = NULL;
 Keyboard* Keyboard::_keyboardPtr = NULL;
 Audio* Audio::_audioInstance = NULL;
-
-bool IsPasswordStrong(std::string password);
-bool IsLetterSpecial(const char& letter);
-
 
 int main(int argc, char* argv[]) {
   //initializing the libraries
@@ -33,8 +29,7 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
 
   GameManager gm;
-
-  SignIn* signIn = new SignIn({ 50,50, 500, 500 }, {100, 100}, 200);
+  SignUp* signUp = new SignUp({ 50, 50}, { 100, 100 }, 100);
 
   SDL_Event event;
   bool running = true;
@@ -62,13 +57,13 @@ int main(int argc, char* argv[]) {
     //if (running && !gm.Update())//if the game is not going to be closed from events
     //  running = false;
 
-    signIn->Update();
+    signUp->Update();
 
     window->Display();
 
     utils::CapFPS(start, 60);
   };
-  delete signIn;
+  delete signUp;
 
 
   //deleting singletons
@@ -123,13 +118,12 @@ check if the settings is open.
 
 /*
   roadmap to finish everything:
-  //changes the background to a popUpWindow
+  //set SignIn class to be better like SignUp class
   //add a button that is the finish button
   -> saves the current strings and throws an error if needed
 
-  1.  finish sign in and sign up ->
+  1. finish sign in and sign up ->
   flashing cursor?
-  text in gray so u know what is what
 
   this is the post fixing
   2.  add an hub??

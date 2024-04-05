@@ -11,18 +11,19 @@
 class SignUp
 {
 public:
-  SignUp(SDL_Rect backgroundRect, Vector2i emailStartPos, int margin);
+  SignUp(Vector2i backgroundPos, Vector2i emailStartPos, int margin);
   ~SignUp();
 
   void Update();
 private:
+  void DisplaySquareNames();
   void SelectFlag();
 
   bool IsMailValid(std::string& mail);
   bool IsPasswordStrong(std::string& password);
   bool IsLetterSpecial(const char& letter);
 
-  void CreateBackground(SDL_Rect backgroundRect);
+  void CreateBackground(Vector2i backgroundPos, int margin);
   void CreateTextSquares(Vector2i emailStartPos, int margin);
  
   uint8_t _currentFlag;
@@ -34,7 +35,7 @@ private:
   PopUpWindow* _background;
 
   constexpr static uint8_t LETTER_SIZE = 20;
-  constexpr static uint8_t MAX_LETTERS = 30;
+  constexpr static uint8_t MAX_LETTERS = 35;
   constexpr static SDL_Color BACKGROUND_COLOR{ 255,0,0,255 };
 };
 
