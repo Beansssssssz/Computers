@@ -4,8 +4,8 @@
 
 SignIn::SignIn(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
   :_background(nullptr), _email(nullptr), _pass(nullptr)
-  ,_currentFlag(0), currentTimer(0), _nowDisplay(false)
-  , _oldTimer(0)
+  , _currentSquare(Squares::none), currentTimer(0),
+  _nowDisplay(false), _oldTimer(0)
 {
   CreateTextSquares(emailStartPos, margin);
   CreateBackground(backgroundPos, margin);
@@ -26,8 +26,8 @@ void SignIn::Update()
 
   SelectFlag();
 
-  _email->Update(_currentFlag == EMAIL_FLAG);
-  _pass->Update(_currentFlag == PASSWORD_FLAG);
+  _email->Update(_currentSquare == Squares::email);
+  _pass->Update(_currentSquare == Squares::password);
 
   DisplaySquareNames();
   UpdateCursor();
@@ -40,7 +40,7 @@ void SignIn::DisplaySquareNames()
   constexpr SDL_Color GRAY{ 128, 128, 128, 128 };
 
   /* email */
-  if (_email->GetWinText()->GetText() == "" && _currentFlag != EMAIL_FLAG) {
+  if (_email->GetWinText()->GetText() == "" && _currentSquare != Squares::email) {
     tempRect = _email->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -48,7 +48,7 @@ void SignIn::DisplaySquareNames()
   }
 
   /* password */
-  if (_pass->GetWinText()->GetText() == "" && _currentFlag != PASSWORD_FLAG) {
+  if (_pass->GetWinText()->GetText() == "" && _currentSquare != Squares::password) {
     tempRect = _pass->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -70,13 +70,13 @@ void SignIn::SelectFlag()
     return;
 
   if (SDL_HasIntersection(_email->GetDstRect(), &posRect))
-    _currentFlag = EMAIL_FLAG;
+    _currentSquare = Squares::email;
 
   else if (SDL_HasIntersection(_pass->GetDstRect(), &posRect))
-    _currentFlag = PASSWORD_FLAG;
+    _currentSquare = Squares::password;
 
   else
-    _currentFlag = 0;
+    _currentSquare = Squares::none;
 }
 
 /// <summary>
@@ -91,20 +91,20 @@ void SignIn::UpdateCursor()
   Vector2i pos = mouse->GetPos();
   const SDL_Rect posRect{ pos.x, pos.y, 3, 1 };
 
-  if (_currentFlag == 0)
+  if (_currentSquare == Squares::none)
     return;
 
   SDL_Rect cursorRect{ 0, 0, 2, LETTER_SIZE};
   cursorRect.y += 1; // so that it wouldnt start from the square outlines
   cursorRect.h -= 2; // so that it wouldnt start from the square outlines
 
-  if (_currentFlag == EMAIL_FLAG) {
+  if (_currentSquare == Squares::email) {
     SDL_Rect* rect = _email->GetDstRect();
     cursorRect.x += rect->x + _email->GetWinText()->GetTextWidth();
     cursorRect.y += rect->y;
   }
 
-  else if (_currentFlag == PASSWORD_FLAG) {
+  else if (_currentSquare == Squares::password) {
     SDL_Rect* rect = _pass->GetDstRect();
     cursorRect.x = rect->x + _pass->GetWinText()->GetTextWidth();
     cursorRect.y += rect->y;

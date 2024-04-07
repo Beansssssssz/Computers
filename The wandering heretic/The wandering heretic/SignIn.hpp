@@ -4,6 +4,13 @@
 #include "PopUpWindow.hpp"
 
 
+enum class Squares
+{
+  none = 0,
+  email = 1,
+  password = 1
+};
+
 #define EMAIL_FLAG 1
 #define PASSWORD_FLAG 2
 
@@ -26,7 +33,7 @@ private:
   void CreateTextSquares(Vector2i& emailStartPos, int& margin);
   void CreateBackground(Vector2i backgroundPos, int margin);
 
-  uint8_t _currentFlag;
+  Squares _currentSquare;
   TextSquare* _email; //can be or email or username
   TextSquare* _pass;
 

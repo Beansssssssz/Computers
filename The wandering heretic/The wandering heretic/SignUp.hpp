@@ -26,7 +26,7 @@ private:
   void CreateBackground(Vector2i backgroundPos, int margin);
   void CreateTextSquares(Vector2i emailStartPos, int margin);
  
-  uint8_t _currentFlag;
+  uint8_t _currentSquare;
   TextSquare* _email;
   TextSquare* _username;
   TextSquare* _password;
