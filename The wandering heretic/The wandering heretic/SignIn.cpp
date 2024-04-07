@@ -2,11 +2,13 @@
 
 #include "Keyboard.hpp"
 
-SignIn::SignIn(SDL_Rect backgroundRect, Vector2i emailStartPos, int margin)
-  :_backgroundRect(backgroundRect), _email(nullptr), _pass(nullptr)
-  , _currentFlag(0)
+SignIn::SignIn(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
+  :_background(nullptr), _email(nullptr), _pass(nullptr)
+  ,_currentFlag(0), currentTimer(0), _nowDisplay(false)
+  , _oldTimer(0)
 {
   CreateTextSquares(emailStartPos, margin);
+  CreateBackground(backgroundPos, margin);
 }
 
 SignIn::~SignIn()
@@ -18,12 +20,40 @@ SignIn::~SignIn()
 
 void SignIn::Update()
 {
-  DisplayBackground();
+  _background->Update();
+  if (!_background->GetTabOpen())
+    return;
 
   SelectFlag();
 
   _email->Update(_currentFlag == EMAIL_FLAG);
   _pass->Update(_currentFlag == PASSWORD_FLAG);
+
+  DisplaySquareNames();
+  UpdateCursor();
+}
+
+void SignIn::DisplaySquareNames()
+{
+  SDL_Rect* tempRect;
+  Vector2i pos;
+  constexpr SDL_Color GRAY{ 128, 128, 128, 128 };
+
+  /* email */
+  if (_email->GetWinText()->GetText() == "" && _currentFlag != EMAIL_FLAG) {
+    tempRect = _email->GetDstRect();
+    pos.x = tempRect->x;
+    pos.y = tempRect->y;
+    WindowText::DisplayStaticText(EMAIL_GRAY_TEXT, pos, GRAY, LETTER_SIZE);
+  }
+
+  /* password */
+  if (_pass->GetWinText()->GetText() == "" && _currentFlag != PASSWORD_FLAG) {
+    tempRect = _pass->GetDstRect();
+    pos.x = tempRect->x;
+    pos.y = tempRect->y;
+    WindowText::DisplayStaticText(PASSWORD_GRAY_TEXT, pos, GRAY, LETTER_SIZE);
+  }
 }
 
 /// <summary>
@@ -39,7 +69,6 @@ void SignIn::SelectFlag()
   if (mouse->GetPressed() != MouseButtons::mbl)
     return;
 
-  /* if a flag isnt chosen then select a square */
   if (SDL_HasIntersection(_email->GetDstRect(), &posRect))
     _currentFlag = EMAIL_FLAG;
 
@@ -51,13 +80,44 @@ void SignIn::SelectFlag()
 }
 
 /// <summary>
-/// displays the background rect.
+/// updtes the flashing cursor
 /// </summary>
-void SignIn::DisplayBackground()
+void SignIn::UpdateCursor()
 {
-  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  currentTimer = SDL_GetTicks();
 
-  window->DisplayRect(&_backgroundRect, BACKGROUND_COLOR);
+  Mouse* mouse = Mouse::GetMouseInstance();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  Vector2i pos = mouse->GetPos();
+  const SDL_Rect posRect{ pos.x, pos.y, 3, 1 };
+
+  if (_currentFlag == 0)
+    return;
+
+  SDL_Rect cursorRect{ 0, 0, 2, LETTER_SIZE};
+  cursorRect.y += 1; // so that it wouldnt start from the square outlines
+  cursorRect.h -= 2; // so that it wouldnt start from the square outlines
+
+  if (_currentFlag == EMAIL_FLAG) {
+    SDL_Rect* rect = _email->GetDstRect();
+    cursorRect.x += rect->x + _email->GetWinText()->GetTextWidth();
+    cursorRect.y += rect->y;
+  }
+
+  else if (_currentFlag == PASSWORD_FLAG) {
+    SDL_Rect* rect = _pass->GetDstRect();
+    cursorRect.x = rect->x + _pass->GetWinText()->GetTextWidth();
+    cursorRect.y += rect->y;
+
+  }
+
+  if(_nowDisplay)
+    window->DisplayRect(&cursorRect, BLACK_COLOR);
+
+  if (currentTimer - _oldTimer >= CURSOR_COUNTER) {
+    _oldTimer = currentTimer;
+    _nowDisplay = !_nowDisplay;
+  }
 }
 
 /// <summary>
@@ -72,4 +132,22 @@ void SignIn::CreateTextSquares(Vector2i& emailStartPos, int& margin)
   _pass = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
 }
 
+void SignIn::CreateBackground(Vector2i backgroundPos, int margin)
+{
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Xbtn.png");
 
+  int w, h;
+  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+
+  Button* btn = new Button(tex, { 0,0,w,h }, { 0,0,w,h });
+
+  SDL_Rect backgroundRect{ backgroundPos.x, backgroundPos.y, 0, 0 };
+  backgroundRect.w = (_email->GetDstRect()->x - backgroundPos.x) * 2 + _email->GetDstRect()->w;
+  backgroundRect.h = _email->GetDstRect()->h * 2 + margin * 2;
+
+  _background = new PopUpWindow(btn, backgroundRect, BACKGROUND_COLOR, true);
+}
+
+#undef EMAIL_GRAY_TEXT 
+#undef PASSWORD_GRAY_TEXT 

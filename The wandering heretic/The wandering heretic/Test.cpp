@@ -1,6 +1,7 @@
 //including my own libs
 #include "GameManager.hpp"
 #include "SignUp.hpp"
+#include "SignIn.hpp"
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = NULL;
@@ -30,6 +31,7 @@ int main(int argc, char* argv[]) {
 
   GameManager gm;
   SignUp* signUp = new SignUp({ 50, 50}, { 100, 100 }, 100);
+  SignIn* signin = new SignIn({ 50, 50}, { 100, 100 }, 100);
 
   SDL_Event event;
   bool running = true;
@@ -57,13 +59,15 @@ int main(int argc, char* argv[]) {
     //if (running && !gm.Update())//if the game is not going to be closed from events
     //  running = false;
 
-    signUp->Update();
+    //signUp->Update();
+    signin->Update();
 
     window->Display();
 
     utils::CapFPS(start, 60);
   };
   delete signUp;
+  delete signin;
 
 
   //deleting singletons
@@ -83,6 +87,13 @@ int main(int argc, char* argv[]) {
 /*
 TODO
 ========NOW========:
+//fix WindowText:
+  add flashing cursor
+  add space
+  add a working delete
+
+
+
 //add enemy to the world
 -> damage is done by touching
 
@@ -96,14 +107,12 @@ then sends u back into the level choosing
 
 ========TODO========:
 
-3.add a way to "freeze" stuff ->
+1.add a way to "freeze" stuff ->
 a way to tell the mouse to stop the pressing on other buttons
 or -> use the bool as a pointer or ref(ref better) and when u r updating the buttons
 check if the settings is open.
 
-4.add a way to delete blocks in the editing world 
-
-6. add more a more smarter enemy which can attack and shoot at u
+2.add a way to delete blocks in the editing world 
 
 ========TRY========:
 1.search for UB and fix bugs -> just play the game
@@ -118,18 +127,25 @@ check if the settings is open.
 
 /*
   roadmap to finish everything:
-  //set SignIn class to be better like SignUp class
   //add a button that is the finish button
   -> saves the current strings and throws an error if needed
 
+  //after thats retuns the true vals
+
   1. finish sign in and sign up ->
-  flashing cursor?
+  flashing cursor :
+  ummmmm, create timer;
 
-  this is the post fixing
-  2.  add an hub??
+
+
+
+
   3.  add a finish line and an animation for it
-  4. create 10 big levels?????, each level has a boss and a finish line which returns u to the hub
-  5. add in the hub a shop
-  6. shop does what??????????
 
+  4. add a boss type moster which has diffrante health size and damage
+     save as a var in the json file
+
+  5. add in the hub a shop
+
+  6. shop does what
 */

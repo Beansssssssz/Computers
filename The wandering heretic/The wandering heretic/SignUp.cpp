@@ -40,9 +40,11 @@ void SignUp::Update()
   _passwordConfirm->Update(_currentFlag == PASSWORD_CONFIRM_FLAG);
 
   DisplaySquareNames();
-
 }
 
+/// <summary>
+/// displays the names of each square 
+/// </summary>
 void SignUp::DisplaySquareNames()
 {
   SDL_Rect* tempRect;
@@ -50,7 +52,7 @@ void SignUp::DisplaySquareNames()
   constexpr SDL_Color GRAY{ 128, 128, 128, 128 };
 
   /* email */
-  if (_email->GetWinText()->GetText() == "") {
+  if (_email->GetWinText()->GetText() == "" && _currentFlag == EMAIL_FLAG) {
     tempRect = _email->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -58,7 +60,7 @@ void SignUp::DisplaySquareNames()
   }
 
   /* username */
-  if (_username->GetWinText()->GetText() == "") {
+  if (_username->GetWinText()->GetText() == "" && _currentFlag == USERNAME_FLAG) {
     tempRect = _username->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -66,7 +68,7 @@ void SignUp::DisplaySquareNames()
   }
 
   /* password */
-  if (_password->GetWinText()->GetText() == "") {
+  if (_password->GetWinText()->GetText() == "" && _currentFlag == PASSWORD_FLAG) {
     tempRect = _password->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -74,7 +76,7 @@ void SignUp::DisplaySquareNames()
   }
 
   /* confirm password */
-  if (_passwordConfirm->GetWinText()->GetText() == "") {
+  if (_passwordConfirm->GetWinText()->GetText() == "" && _currentFlag == PASSWORD_CONFIRM_FLAG) {
     tempRect = _passwordConfirm->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
