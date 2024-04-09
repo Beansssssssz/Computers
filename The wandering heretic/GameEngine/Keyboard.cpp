@@ -7,7 +7,6 @@
 
 Keyboard::Keyboard()
   :_keysArray(NULL), _input(false), _keyPressed(false)
-  ,_keyDeleted(false)
 {};
 
 Keyboard* Keyboard::GetKeyboardInstance()
@@ -68,17 +67,11 @@ void Keyboard::BuildText(SDL_Event event)
   if (event.type == SDL_TEXTINPUT && text.size() < LIMIT)
     text += event.text.text;
 
-  else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE) {
-    _keyDeleted = true; 
-    if (!text.empty())
-      text.pop_back();
-  }
-  else if (event.type == SDL_KEYDOWN)
-    _keyDeleted = false;
+  else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE) 
+    text += '\b';
 
-  // removes the first element if its space
-  if(text.c_str()[0] == ' ')
-    text.erase(text.begin());
+  else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
+      text += ' ';
 };
 
 void Keyboard::Update()
@@ -100,13 +93,3 @@ bool Keyboard::IsKeyPressed()
 {
   return _keyPressed;
 }
-
-/// <summary>
-/// returns true if the last action was deleteing a letter
-/// otherwise returns true
-/// </summary>
-/// <returns></returns>
-bool& Keyboard::DeletedLetter()
-{
-  return _keyDeleted;
-};

@@ -18,7 +18,7 @@ PopUpWindow::~PopUpWindow()
 
 void PopUpWindow::Update()
 {
-  if (!_tabOpen)
+   if (!_tabOpen)
     return;
 
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();

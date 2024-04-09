@@ -83,27 +83,25 @@ void TextSquare::InputText()
   std::string currentText;
   std::string keyboardBuffer = keyboard->GetText();
 
-  /*checking if a letter was deleted and clearing the flag if is deleted*/
-  bool& letterDeleted = keyboard->DeletedLetter();
-  if (letterDeleted) {
-    letterDeleted = true;
+  /* checking if the buffer was writtin into*/
+  if (keyboardBuffer.length() <= 0)
+    return;
+
+  /*checking if a letter was deleted and clearing the flag if is deleted */
+  char lastLetter = keyboardBuffer[keyboardBuffer.length() - 1];
+  if (lastLetter == '\b') {
     std::string textBuffer = _winText->GetText();
     if(!textBuffer.empty())
       textBuffer.pop_back();
 
     _winText->SetText(textBuffer);
-    keyboard->SetText(""); // after typing empty the current buffer
+    keyboard->SetText("");
 
     return;
   }
 
-  /* checking if the buffer was writtin into*/
-  if (keyboardBuffer.length() <= 0)
-    return; 
-
-  /* seting the actull text buffer to the last letter of the keyboard buffer
+  /* seting the actuall text buffer to the last letter of the keyboard buffer
   and emptying the keyboard buffer*/
-  char lastLetter = keyboardBuffer[keyboardBuffer.length() - 1];
   _winText->SetText(_winText->GetText() + lastLetter);
   keyboard->SetText(""); // after typing empty the current buffer
 }

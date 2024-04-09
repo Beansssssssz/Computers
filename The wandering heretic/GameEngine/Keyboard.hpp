@@ -23,7 +23,6 @@ public:
 
   void Update();
   bool IsKeyPressed();
-  bool& DeletedLetter();
 private:
   Keyboard();
   static Keyboard* _keyboardPtr;
@@ -32,5 +31,4 @@ private:
   std::string text;
   bool _input;
   bool _keyPressed;
-  bool _keyDeleted;
 };

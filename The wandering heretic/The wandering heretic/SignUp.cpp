@@ -34,10 +34,10 @@ void SignUp::Update()
 
   SelectFlag();
 
-  _email->Update(_currentFlag == EMAIL_FLAG);
-  _username->Update(_currentFlag == USERNAME_FLAG);
-  _password->Update(_currentFlag == PASSWORD_FLAG);
-  _passwordConfirm->Update(_currentFlag == PASSWORD_CONFIRM_FLAG);
+  _email->Update(_currentSquare == SignUpSquares::email);
+  _username->Update(_currentSquare == SignUpSquares::username);
+  _password->Update(_currentSquare == SignUpSquares::password);
+  _passwordConfirm->Update(_currentSquare == SignUpSquares::passwordConfirm);
 
   DisplaySquareNames();
 }
@@ -52,7 +52,7 @@ void SignUp::DisplaySquareNames()
   constexpr SDL_Color GRAY{ 128, 128, 128, 128 };
 
   /* email */
-  if (_email->GetWinText()->GetText() == "" && _currentFlag == EMAIL_FLAG) {
+  if (_email->GetWinText()->GetText() == "" && _currentSquare==SignUpSquares::email) {
     tempRect = _email->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -60,7 +60,7 @@ void SignUp::DisplaySquareNames()
   }
 
   /* username */
-  if (_username->GetWinText()->GetText() == "" && _currentFlag == USERNAME_FLAG) {
+  if (_username->GetWinText()->GetText() == "" && _currentSquare == SignUpSquares::username) {
     tempRect = _username->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -68,7 +68,7 @@ void SignUp::DisplaySquareNames()
   }
 
   /* password */
-  if (_password->GetWinText()->GetText() == "" && _currentFlag == PASSWORD_FLAG) {
+  if (_password->GetWinText()->GetText() == "" && _currentSquare == SignUpSquares::password) {
     tempRect = _password->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -76,7 +76,7 @@ void SignUp::DisplaySquareNames()
   }
 
   /* confirm password */
-  if (_passwordConfirm->GetWinText()->GetText() == "" && _currentFlag == PASSWORD_CONFIRM_FLAG) {
+  if (_passwordConfirm->GetWinText()->GetText() == "" && _currentSquare == SignUpSquares::passwordConfirm) {
     tempRect = _passwordConfirm->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -99,19 +99,19 @@ void SignUp::SelectFlag()
 
   /* if a flag isnt chosen then select a square */
   if (SDL_HasIntersection(_email->GetDstRect(), &posRect))
-    _currentFlag = EMAIL_FLAG;
+    _currentSquare = SignUpSquares::email;
 
   else if (SDL_HasIntersection(_username->GetDstRect(), &posRect))
-    _currentFlag = EMAIL_FLAG;
+    _currentSquare = SignUpSquares::username;
 
   else if (SDL_HasIntersection(_password->GetDstRect(), &posRect))
-    _currentFlag = EMAIL_FLAG;
+    _currentSquare = SignUpSquares::password;
 
   else if (SDL_HasIntersection(_passwordConfirm->GetDstRect(), &posRect))
-    _currentFlag = EMAIL_FLAG;
+    _currentSquare = SignUpSquares::passwordConfirm;
 
   else
-    _currentFlag = 0;
+    _currentSquare = SignUpSquares::none;
 }
 
 void SignUp::CreateBackground(Vector2i backgroundPos, int margin)

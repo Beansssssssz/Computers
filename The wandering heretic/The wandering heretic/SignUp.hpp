@@ -3,10 +3,14 @@
 #include "TextSquare.hpp"
 #include "PopUpWindow.hpp"
 
-#define EMAIL_FLAG 1
-#define USERNAME_FLAG 2
-#define PASSWORD_FLAG 3
-#define PASSWORD_CONFIRM_FLAG 4
+enum class SignUpSquares
+{
+  none = 0,
+  email = 1,
+  username = 2,
+  password = 3,
+  passwordConfirm = 4
+};
 
 class SignUp
 {
@@ -26,13 +30,14 @@ private:
   void CreateBackground(Vector2i backgroundPos, int margin);
   void CreateTextSquares(Vector2i emailStartPos, int margin);
  
-  uint8_t _currentSquare;
+  SignUpSquares _currentSquare;
   TextSquare* _email;
   TextSquare* _username;
   TextSquare* _password;
   TextSquare* _passwordConfirm;
 
   PopUpWindow* _background;
+  
 
   constexpr static uint8_t LETTER_SIZE = 20;
   constexpr static uint8_t MAX_LETTERS = 35;

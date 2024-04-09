@@ -108,7 +108,6 @@ void SignIn::UpdateCursor()
     SDL_Rect* rect = _pass->GetDstRect();
     cursorRect.x = rect->x + _pass->GetWinText()->GetTextWidth();
     cursorRect.y += rect->y;
-
   }
 
   if(_nowDisplay)

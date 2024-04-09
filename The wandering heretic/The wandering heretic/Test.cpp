@@ -88,11 +88,7 @@ int main(int argc, char* argv[]) {
 TODO
 ========NOW========:
 //fix WindowText:
-  add flashing cursor
-  add space
-  add a working delete
-
-
+  add flashing cursor -> cursor has a bug in which is doest go back all the way
 
 //add enemy to the world
 -> damage is done by touching
@@ -133,9 +129,7 @@ check if the settings is open.
   //after thats retuns the true vals
 
   1. finish sign in and sign up ->
-  flashing cursor :
-  ummmmm, create timer;
-
+  add button to finish
 
 
 
