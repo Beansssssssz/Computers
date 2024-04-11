@@ -2,13 +2,17 @@
 
 #include "Keyboard.hpp"
 
+#define EMAIL_GRAY_TEXT "Enter email or username here"
+#define PASSWORD_GRAY_TEXT "Enter your password here"
+
 SignIn::SignIn(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
-  :_background(nullptr), _email(nullptr), _pass(nullptr)
+  :_background(nullptr), _email(nullptr), _pass(nullptr), _doneBtn(nullptr)
   , _currentSquare(Squares::none), currentTimer(0),
   _nowDisplay(false), _oldTimer(0)
 {
   CreateTextSquares(emailStartPos, margin);
   CreateBackground(backgroundPos, margin);
+  CreateDoneButton();
 }
 
 SignIn::~SignIn()
@@ -31,6 +35,12 @@ void SignIn::Update()
 
   DisplaySquareNames();
   UpdateCursor();
+}
+
+void SignIn::GetData(std::string* email, std::string* password)
+{
+  *email = _email->GetWinText()->GetText();
+  *password = _pass->GetWinText()->GetText();
 }
 
 void SignIn::DisplaySquareNames()
@@ -94,7 +104,7 @@ void SignIn::UpdateCursor()
   if (_currentSquare == Squares::none)
     return;
 
-  SDL_Rect cursorRect{ 0, 0, 2, LETTER_SIZE};
+  SDL_Rect cursorRect{ 0, 0, 2, LETTER_SIZE };
   cursorRect.y += 1; // so that it wouldnt start from the square outlines
   cursorRect.h -= 2; // so that it wouldnt start from the square outlines
 
@@ -110,13 +120,18 @@ void SignIn::UpdateCursor()
     cursorRect.y += rect->y;
   }
 
-  if(_nowDisplay)
+  if (_nowDisplay)
     window->DisplayRect(&cursorRect, BLACK_COLOR);
 
   if (currentTimer - _oldTimer >= CURSOR_COUNTER) {
     _oldTimer = currentTimer;
     _nowDisplay = !_nowDisplay;
   }
+}
+
+bool SignIn::UpdatedDoneButton()
+{
+  return false;
 }
 
 /// <summary>
@@ -131,6 +146,11 @@ void SignIn::CreateTextSquares(Vector2i& emailStartPos, int& margin)
   _pass = new TextSquare(emailStartPos, 1, LETTER_SIZE, MAX_LETTERS);
 }
 
+/// <summary>
+/// creates the background
+/// </summary>
+/// <param name="backgroundPos"></param>
+/// <param name="margin"></param>
 void SignIn::CreateBackground(Vector2i backgroundPos, int margin)
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -148,5 +168,14 @@ void SignIn::CreateBackground(Vector2i backgroundPos, int margin)
   _background = new PopUpWindow(btn, backgroundRect, BACKGROUND_COLOR, true);
 }
 
-#undef EMAIL_GRAY_TEXT 
-#undef PASSWORD_GRAY_TEXT 
+void SignIn::CreateDoneButton()
+{
+  SDL_Rect src{ 0,0,51,51 }, dst{ 0,0,51,51 };
+
+  const char* path = "Assets/GUI/DoneButton.png";
+  SDL_Rect backgroundRect = _background->GetRect();
+  dst.x = ((backgroundRect.x + backgroundRect.w) / 2) + (dst.w / 2);
+  dst.y = ((backgroundRect.y + backgroundRect.h) / 2) + (dst.h / 2);
+
+  _doneBtn = new Button(path, src, dst);
+}

@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
 
   GameManager gm;
-  SignUp* signUp = new SignUp({ 50, 50}, { 100, 100 }, 100);
-  SignIn* signin = new SignIn({ 50, 50}, { 100, 100 }, 100);
+  SignUp* signUp = new SignUp({ 50, 50 }, { 100, 100 }, 100);
+  SignIn* signin = new SignIn({ 50, 50 }, { 100, 100 }, 100);
 
   SDL_Event event;
   bool running = true;
@@ -108,7 +108,7 @@ a way to tell the mouse to stop the pressing on other buttons
 or -> use the bool as a pointer or ref(ref better) and when u r updating the buttons
 check if the settings is open.
 
-2.add a way to delete blocks in the editing world 
+2.add a way to delete blocks in the editing world
 
 ========TRY========:
 1.search for UB and fix bugs -> just play the game
@@ -126,12 +126,8 @@ check if the settings is open.
   //add a button that is the finish button
   -> saves the current strings and throws an error if needed
 
-  //after thats retuns the true vals
 
-  1. finish sign in and sign up ->
-  add button to finish
-
-
+  //ADD SIGN IN OR SIGN UP TO menu
 
 
   3.  add a finish line and an animation for it

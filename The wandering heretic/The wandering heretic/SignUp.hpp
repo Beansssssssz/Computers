@@ -29,12 +29,14 @@ private:
 
   void CreateBackground(Vector2i backgroundPos, int margin);
   void CreateTextSquares(Vector2i emailStartPos, int margin);
+  void CreateDoneButton();
  
   SignUpSquares _currentSquare;
   TextSquare* _email;
   TextSquare* _username;
   TextSquare* _password;
   TextSquare* _passwordConfirm;
+  Button* _doneBtn;
 
   PopUpWindow* _background;
   
