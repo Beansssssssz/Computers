@@ -7,7 +7,7 @@
 
 SignIn::SignIn(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
   :_background(nullptr), _email(nullptr), _pass(nullptr), _doneBtn(nullptr)
-  , _currentSquare(Squares::none), currentTimer(0),
+  , _currentSquare(Squares::none), _currentTimer(0),
   _nowDisplay(false), _oldTimer(0)
 {
   CreateTextSquares(emailStartPos, margin);
@@ -21,12 +21,16 @@ SignIn::~SignIn()
   delete _pass;
 }
 
-
-void SignIn::Update()
+/// <summary>
+/// the SignIn main function, updates everything inside the fucntion and
+/// true if the done button was pressed and if the password and email where valid
+/// </summary>
+/// <returns></returns>
+bool SignIn::Update()
 {
   _background->Update();
   if (!_background->GetTabOpen())
-    return;
+    return false;
 
   SelectFlag();
 
@@ -35,14 +39,23 @@ void SignIn::Update()
 
   DisplaySquareNames();
   UpdateCursor();
+  return UpdatedDoneButton();
 }
 
+/// <summary>
+/// retuns the data using out paramaters
+/// </summary>
+/// <param name="email">OUT the passsword the user inputed</param>
+/// <param name="password">OUT the email or usernames the user inputed</param>
 void SignIn::GetData(std::string* email, std::string* password)
 {
   *email = _email->GetWinText()->GetText();
   *password = _pass->GetWinText()->GetText();
 }
 
+/// <summary>
+/// dispalyes the names of the squares and what to do in each one
+/// </summary>
 void SignIn::DisplaySquareNames()
 {
   SDL_Rect* tempRect;
@@ -94,7 +107,7 @@ void SignIn::SelectFlag()
 /// </summary>
 void SignIn::UpdateCursor()
 {
-  currentTimer = SDL_GetTicks();
+  _currentTimer = SDL_GetTicks();
 
   Mouse* mouse = Mouse::GetMouseInstance();
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -123,15 +136,32 @@ void SignIn::UpdateCursor()
   if (_nowDisplay)
     window->DisplayRect(&cursorRect, BLACK_COLOR);
 
-  if (currentTimer - _oldTimer >= CURSOR_COUNTER) {
-    _oldTimer = currentTimer;
+  if (_currentTimer - _oldTimer >= CURSOR_COUNTER) {
+    _oldTimer = _currentTimer;
     _nowDisplay = !_nowDisplay;
   }
 }
 
+/// <summary>
+/// updates and displays the done button and check if it was pressed
+/// if yes then check whether or not the email/username
+/// with the password where valid
+/// </summary>
+    /// <returns></returns>
 bool SignIn::UpdatedDoneButton()
 {
-  return false;
+  _doneBtn->Update();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  window->Render((Square*)_doneBtn);
+
+  if (!_doneBtn->GetIsPressed())
+    return false;
+
+  std::string email = _email->GetWinText()->GetText();
+  std::string pass = _pass->GetWinText()->GetText();
+  /* check if email and password are valid */
+
+  return true;
 }
 
 /// <summary>
@@ -168,14 +198,17 @@ void SignIn::CreateBackground(Vector2i backgroundPos, int margin)
   _background = new PopUpWindow(btn, backgroundRect, BACKGROUND_COLOR, true);
 }
 
+/// <summary>
+/// creates the done button at the bottom middle of the screen
+/// </summary>
 void SignIn::CreateDoneButton()
 {
   SDL_Rect src{ 0,0,51,51 }, dst{ 0,0,51,51 };
 
   const char* path = "Assets/GUI/DoneButton.png";
   SDL_Rect backgroundRect = _background->GetRect();
-  dst.x = ((backgroundRect.x + backgroundRect.w) / 2) + (dst.w / 2);
-  dst.y = ((backgroundRect.y + backgroundRect.h) / 2) + (dst.h / 2);
+  dst.y = backgroundRect.y + backgroundRect.h - dst.h;
+  dst.x = ((backgroundRect.x + backgroundRect.w) / 2) - (dst.w / 2);
 
   _doneBtn = new Button(path, src, dst);
 }

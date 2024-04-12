@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
 
   GameManager gm;
-  SignUp* signUp = new SignUp({ 50, 50 }, { 100, 100 }, 100);
+  SignUp* signup = new SignUp({ 50, 50 }, { 100, 100 }, 100);
   SignIn* signin = new SignIn({ 50, 50 }, { 100, 100 }, 100);
 
   SDL_Event event;
@@ -59,16 +59,27 @@ int main(int argc, char* argv[]) {
     //if (running && !gm.Update())//if the game is not going to be closed from events
     //  running = false;
 
-    //signUp->Update();
-    signin->Update();
+    if (signup->Update()) {
+      std::string email, username, password;
+      signup->GetData(&email, &username, &password);
+      std::cout << "your email is: " << email << "\nyour username is: " <<
+        username << "\nyour password is: " << password << std::endl;
+      break;
+    }
+    //if (signin->Update()) {
+    //  std::string email, password;
+    //  signin->GetData(&email, &password);
+    //  std::cout << "your email is: " << email << "\nyour password is: " <<
+    //    password << std::endl;
+    //  break;
+    //}
 
     window->Display();
 
     utils::CapFPS(start, 60);
   };
-  delete signUp;
+  delete signup;
   delete signin;
-
 
   //deleting singletons
   delete window;
@@ -85,6 +96,15 @@ int main(int argc, char* argv[]) {
 };
 
 /*
+* VACATION: 
+* after that start working on the server
+* finish finish the server
+* 
+* check if email and password are valid in SignIn
+* check if email user name password and password confirm are valid
+* 
+* Add sign in and sign up to the menu
+* add enemy to the world
 TODO
 ========NOW========:
 //fix WindowText:

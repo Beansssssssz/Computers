@@ -91,7 +91,7 @@ void TextSquare::InputText()
   char lastLetter = keyboardBuffer[keyboardBuffer.length() - 1];
   if (lastLetter == '\b') {
     std::string textBuffer = _winText->GetText();
-    if(!textBuffer.empty())
+    if (!textBuffer.empty())
       textBuffer.pop_back();
 
     _winText->SetText(textBuffer);
@@ -99,6 +99,9 @@ void TextSquare::InputText()
 
     return;
   }
+
+  else if (_winText->GetText().empty() && lastLetter == ' ')
+    return;
 
   /* seting the actuall text buffer to the last letter of the keyboard buffer
   and emptying the keyboard buffer*/

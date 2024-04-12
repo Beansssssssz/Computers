@@ -7,16 +7,15 @@ enum class Squares
 {
   none = 0,
   email = 1,
-  password = 1
+  password = 2
 };
 
-class SignIn
-{
+class SignIn {
 public:
   SignIn(Vector2i backgroundRect, Vector2i emailStartPos, int margin);
   ~SignIn();
 
-  void Update();
+  bool Update();
   void GetData(std::string* email, std::string* password);
 
 private:
@@ -35,7 +34,7 @@ private:
   Button* _doneBtn;
 
   PopUpWindow* _background;
-  uint32_t currentTimer;
+  uint32_t _currentTimer;
   uint32_t _oldTimer;
   bool _nowDisplay;
 

@@ -14,7 +14,8 @@
 //maybe remove startPos
 SignUp::SignUp(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
   :_email(nullptr), _username(nullptr), _password(nullptr), _passwordConfirm(nullptr)
-  , _background(nullptr), _doneBtn(nullptr)
+  , _background(nullptr), _doneBtn(nullptr),
+  _currentTimer(0), _oldTimer(0), _nowDisplay(0)
 {
   CreateTextSquares(emailStartPos, margin);
   CreateBackground(backgroundPos, margin);
@@ -31,14 +32,12 @@ SignUp::~SignUp()
   delete _background;
 }
 
-void SignUp::Update()
+bool SignUp::Update()
 {
   _background->Update();
 
-  if (!_background->GetTabOpen()) {
-    
-    return;
-  }
+  if (!_background->GetTabOpen()) 
+    return false;
 
   SelectFlag();
 
@@ -48,6 +47,15 @@ void SignUp::Update()
   _passwordConfirm->Update(_currentSquare == SignUpSquares::passwordConfirm);
 
   DisplaySquareNames();
+  UpdateCursor();
+  return UpdatedDoneButton();
+}
+
+void SignUp::GetData(std::string* email, std::string* username, std::string* password)
+{
+  *email = _email->GetWinText()->GetText();
+  *username = _username->GetWinText()->GetText();
+  *password = _password->GetWinText()->GetText();
 }
 
 /// <summary>
@@ -60,7 +68,7 @@ void SignUp::DisplaySquareNames()
   constexpr SDL_Color GRAY{ 128, 128, 128, 128 };
 
   /* email */
-  if (_email->GetWinText()->GetText() == "" && _currentSquare==SignUpSquares::email) {
+  if (_email->GetWinText()->GetText() == "" && _currentSquare != SignUpSquares::email) {
     tempRect = _email->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -68,7 +76,7 @@ void SignUp::DisplaySquareNames()
   }
 
   /* username */
-  if (_username->GetWinText()->GetText() == "" && _currentSquare == SignUpSquares::username) {
+  if (_username->GetWinText()->GetText() == "" && _currentSquare != SignUpSquares::username) {
     tempRect = _username->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -76,7 +84,7 @@ void SignUp::DisplaySquareNames()
   }
 
   /* password */
-  if (_password->GetWinText()->GetText() == "" && _currentSquare == SignUpSquares::password) {
+  if (_password->GetWinText()->GetText() == "" && _currentSquare != SignUpSquares::password) {
     tempRect = _password->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -84,7 +92,7 @@ void SignUp::DisplaySquareNames()
   }
 
   /* confirm password */
-  if (_passwordConfirm->GetWinText()->GetText() == "" && _currentSquare == SignUpSquares::passwordConfirm) {
+  if (_passwordConfirm->GetWinText()->GetText() == "" && _currentSquare != SignUpSquares::passwordConfirm) {
     tempRect = _passwordConfirm->GetDstRect();
     pos.x = tempRect->x;
     pos.y = tempRect->y;
@@ -120,6 +128,75 @@ void SignUp::SelectFlag()
 
   else
     _currentSquare = SignUpSquares::none;
+}
+
+void SignUp::UpdateCursor()
+{
+  _currentTimer = SDL_GetTicks();
+
+  Mouse* mouse = Mouse::GetMouseInstance();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  Vector2i pos = mouse->GetPos();
+  const SDL_Rect posRect{ pos.x, pos.y, 3, 1 };
+
+  if (_currentSquare == SignUpSquares::none)
+    return;
+
+  SDL_Rect cursorRect{ 0, 0, 2, LETTER_SIZE };
+  cursorRect.y += 1; // so that it wouldnt start from the square outlines
+  cursorRect.h -= 2; // so that it wouldnt start from the square outlines
+
+  if (_currentSquare == SignUpSquares::email) {
+    SDL_Rect* rect = _email->GetDstRect();
+    cursorRect.x += rect->x + _email->GetWinText()->GetTextWidth();
+    cursorRect.y += rect->y;
+  }
+
+  else if (_currentSquare == SignUpSquares::username) {
+    SDL_Rect* rect = _username->GetDstRect();
+    cursorRect.x = rect->x + _username->GetWinText()->GetTextWidth();
+    cursorRect.y += rect->y;
+  }
+
+  else if (_currentSquare == SignUpSquares::password) {
+    SDL_Rect* rect = _password->GetDstRect();
+    cursorRect.x = rect->x + _password->GetWinText()->GetTextWidth();
+    cursorRect.y += rect->y;
+  }\
+  else if (_currentSquare == SignUpSquares::passwordConfirm) {
+    SDL_Rect* rect = _passwordConfirm->GetDstRect();
+    cursorRect.x = rect->x + _passwordConfirm->GetWinText()->GetTextWidth();
+    cursorRect.y += rect->y;
+  }
+
+  if (_nowDisplay)
+    window->DisplayRect(&cursorRect, BLACK_COLOR);
+
+  if (_currentTimer - _oldTimer >= CURSOR_COUNTER) {
+    _oldTimer = _currentTimer;
+    _nowDisplay = !_nowDisplay;
+  }
+}
+
+bool SignUp::UpdatedDoneButton()
+{
+  _doneBtn->Update();
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  window->Render((Square*)_doneBtn);
+
+  if (!_doneBtn->GetIsPressed())
+    return false;
+
+  std::string email = _email->GetWinText()->GetText();
+  std::string username = _username->GetWinText()->GetText();
+  std::string password = _password->GetWinText()->GetText();
+  std::string passwordConfirm = _passwordConfirm->GetWinText()->GetText();
+  if (password != passwordConfirm)
+    return false;
+
+  /* check if email user and password are valid */
+
+  return true;
 }
 
 /// <summary>
@@ -176,8 +253,8 @@ void SignUp::CreateDoneButton()
 
   const char* path = "Assets/GUI/DoneButton.png";
   SDL_Rect backgroundRect = _background->GetRect();
-  dst.x = ((backgroundRect.x + backgroundRect.w) / 2) + (dst.w / 2);
-  dst.y = ((backgroundRect.y + backgroundRect.h) / 2) + (dst.h / 2);
+  dst.y = backgroundRect.y + backgroundRect.h - dst.h;
+  dst.x = ((backgroundRect.x + backgroundRect.w) / 2) - (dst.w / 2);
 
   _doneBtn = new Button(path, src, dst);
 }

@@ -113,6 +113,7 @@ Vector2i WindowText::GetPos()
 /// <param name="str">the text</param>
 void WindowText::SetText(std::string str) {
   text = str.substr(0, _maxLength);
+  _width = 0;
 };
 
 /// <summary>
@@ -136,7 +137,10 @@ void WindowText::ClearText() {
 /// <returns></returns>
 int WindowText::GetTextWidth()
 {
-  if(_width > 0 || text.size() < 0)
+  if (text.size() <= 0)
+    return 0;
+
+  if(_width != 0)
     return _width;
 
   DisplayText({ -1,-1 }, { 0,0,0,255 }, false);
