@@ -32,7 +32,7 @@ RenderWindow::~RenderWindow() {
 };
 
 RenderWindow* RenderWindow::GetRenderWindowInstance() {
-  if (_windowPtr == NULL)
+  if (_windowPtr == nullptr)
     _windowPtr = new RenderWindow("Game");
   return _windowPtr;
 }

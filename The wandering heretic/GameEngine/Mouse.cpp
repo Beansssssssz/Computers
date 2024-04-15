@@ -22,7 +22,7 @@ Mouse::~Mouse()
 
 Mouse* Mouse::GetMouseInstance()
 {
-  if (_mousePtr == NULL)
+  if (_mousePtr == nullptr)
     _mousePtr = new Mouse(Vector2i{ 0,0 });
   return _mousePtr;
 };

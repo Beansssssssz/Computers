@@ -23,7 +23,7 @@ Audio::Audio()
 /// <returns></returns>
 Audio* Audio::GetAudioInstance()
 {
-  if (_audioInstance == NULL)
+  if (_audioInstance == nullptr)
     _audioInstance = new Audio();
 
   return _audioInstance;

@@ -1,13 +1,15 @@
 //including my own libs
 #include "GameManager.hpp"
+#include "Server.hpp"
 #include "SignUp.hpp"
 #include "SignIn.hpp"
 
 //initializing singletons
-RenderWindow* RenderWindow::_windowPtr = NULL;
-Mouse* Mouse::_mousePtr = NULL;
-Keyboard* Keyboard::_keyboardPtr = NULL;
-Audio* Audio::_audioInstance = NULL;
+RenderWindow* RenderWindow::_windowPtr = nullptr;
+Mouse* Mouse::_mousePtr = nullptr;
+Keyboard* Keyboard::_keyboardPtr = nullptr;
+Audio* Audio::_audioInstance = nullptr;
+Server* Server::_serverPtr = nullptr;
 
 int main(int argc, char* argv[]) {
   //initializing the libraries
@@ -28,6 +30,22 @@ int main(int argc, char* argv[]) {
   Mouse* mouse = Mouse::GetMouseInstance();
   Keyboard* keyboard = Keyboard::GetKeyboardInstance();
   Audio* audio = Audio::GetAudioInstance();
+  Server* server = Server::GetServerInstance();
+
+  server->InsertData({ "myemail", "myusername", "mypassword" });
+  std::vector<UserData> data = server->GetUserData();
+
+  for (size_t i = 0; i < data.size(); i++)
+  {
+      /* print user data */
+      std::cout << "email: " << data[i].email << ", username: "
+        << data[i].username << ", password: " << data[i].password;
+
+      /* print game data */
+      std::cout << ", money: " << data[i].gameData->money << ", items flags: "
+        << data[i].gameData->items << ", max level: " << data[i].gameData->MaxLevel
+        << std::endl;
+  }
 
   GameManager gm;
   SignUp* signup = new SignUp({ 50, 50 }, { 100, 100 }, 100);
@@ -59,13 +77,14 @@ int main(int argc, char* argv[]) {
     //if (running && !gm.Update())//if the game is not going to be closed from events
     //  running = false;
 
-    if (signup->Update()) {
-      std::string email, username, password;
-      signup->GetData(&email, &username, &password);
-      std::cout << "your email is: " << email << "\nyour username is: " <<
-        username << "\nyour password is: " << password << std::endl;
-      break;
-    }
+    //if (signup->Update()) {
+    //  std::string email, username, password;
+    //  signup->GetData(&email, &username, &password);
+    //  std::cout << "your email is: " << email << "\nyour username is: " <<
+    //    username << "\nyour password is: " << password << std::endl;
+    //  break;
+    //}
+    
     //if (signin->Update()) {
     //  std::string email, password;
     //  signin->GetData(&email, &password);
@@ -97,7 +116,7 @@ int main(int argc, char* argv[]) {
 
 /*
 * VACATION: 
-* after that start working on the server
+* talk with the server server
 * finish finish the server
 * 
 * check if email and password are valid in SignIn

@@ -6,12 +6,12 @@
 #include "Keyboard.hpp"
 
 Keyboard::Keyboard()
-  :_keysArray(NULL), _input(false), _keyPressed(false)
+  :_keysArray(nullptr), _input(false), _keyPressed(false)
 {};
 
 Keyboard* Keyboard::GetKeyboardInstance()
 {
-	if (_keyboardPtr == NULL)
+	if (_keyboardPtr == nullptr)
 	{
     _keyboardPtr = new Keyboard();
 		return _keyboardPtr;
