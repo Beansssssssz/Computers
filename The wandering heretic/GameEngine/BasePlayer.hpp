@@ -18,7 +18,7 @@ class BasePlayer : public Entity
 {
 public:
   BasePlayer(GIF** gifs, bool _collisionEnabled = true);
-  ~BasePlayer();
+  virtual ~BasePlayer();
 
   void Update(std::vector<Entity*> vec);
   void ChangeType(GifTypes type);

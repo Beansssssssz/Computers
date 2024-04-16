@@ -10,7 +10,7 @@ public:
   Square(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool destroyTex = true);
   Square(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool destroyTex = true);
 
-  ~Square();
+  virtual ~Square();
 
   virtual SDL_Texture* GetTexture();
   void SetTexture(const char* path, SDL_Rect src = { -1,-1,-1,-1 });

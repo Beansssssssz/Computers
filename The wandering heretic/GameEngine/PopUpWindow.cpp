@@ -32,7 +32,7 @@ void PopUpWindow::Update()
   window->Render((Square*)_btnExit);
   _btnExit->Update();
   if (_btnExit->GetIsPressed())
-    SetTab(false);
+    SetTabOpen(false);
 };
 
 /// <summary>
@@ -41,6 +41,20 @@ void PopUpWindow::Update()
 /// <returns></returns>
 SDL_Rect PopUpWindow::GetRect() {
   return _tab;
+}
+
+/// <summary>
+/// sets the tab rect as the new Inputed rect and
+/// also changes the button rect to fit in the new rect
+/// </summary>
+/// <param name="rect"></param>
+void PopUpWindow::SetTabRect(SDL_Rect rect)
+{
+  _tab = rect;
+
+  SDL_Rect* btnRect = _btnExit->GetDstRect();
+  btnRect->x = _tab.x + _tab.w - btnRect->w;
+  btnRect->y = _tab.y + _tab.h - btnRect->h;
 }
 
 /// <summary>
@@ -54,7 +68,7 @@ SDL_Color PopUpWindow::GetColor() {
 /// <summary>
 /// Sets the tab open in val is true, otherwise closes the tabs
 /// </summary>
-void PopUpWindow::SetTab(bool val)
+void PopUpWindow::SetTabOpen(bool val)
 {
   _tabOpen = val;
 };
@@ -66,7 +80,6 @@ bool PopUpWindow::GetTabOpen()
 {
   return _tabOpen;
 };
-
 
 /// <summary>
 /// corrects the placement of the button in "tab" that opens

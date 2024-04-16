@@ -40,15 +40,6 @@ namespace utils {
     //delay-elapsedMS is there incase of losing frames due to loading times in the pc.
   };
 
-  inline Button CreateButton(SDL_Texture* tex, int w, int h, Vector2i pos) {
-    SDL_Rect src, dst;
-    dst.x = 0; dst.y = 0, dst.w = w; dst.h = h;
-    src.x = 0; src.y = 0, src.w = w; src.h = h;
-    Button button(tex, src, dst);
-
-    return button;
-  };
-
   /// <summary>
   /// return a texture which is widely used in the game
   /// </summary>

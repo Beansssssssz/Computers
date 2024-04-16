@@ -32,27 +32,9 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
   Server* server = Server::GetServerInstance();
 
-  server->InsertData({ "myemail", "myusername", "mypassword" });
-  std::vector<UserData> data = server->GetUserData();
-
-  for (size_t i = 0; i < data.size(); i++)
-  {
-      /* print user data */
-      std::cout << "email: " << data[i].email << ", username: "
-        << data[i].username << ", password: " << data[i].password;
-
-      /* print game data */
-      std::cout << ", money: " << data[i].gameData->money << ", items flags: "
-        << data[i].gameData->items << ", max level: " << data[i].gameData->MaxLevel
-        << std::endl;
-  }
-
   GameManager gm;
   SignUp* signup = new SignUp({ 50, 50 }, { 100, 100 }, 100);
   SignIn* signin = new SignIn({ 50, 50 }, { 100, 100 }, 100);
-
-  UserData singleData {"myemail", "myusername", "mypassword", nullptr};
-  std::cout << server->DoesUserExist(singleData) << std::endl;
 
   SDL_Event event;
   bool running = true;
@@ -87,14 +69,14 @@ int main(int argc, char* argv[]) {
     //    username << "\nyour password is: " << password << std::endl;
     //  break;
     //}
-    
-    //if (signin->Update()) {
-    //  std::string email, password;
-    //  signin->GetData(&email, &password);
-    //  std::cout << "your email is: " << email << "\nyour password is: " <<
-    //    password << std::endl;
-    //  break;
-    //}
+    //
+    if (signin->Update()) {
+      std::string email, password;
+      signin->GetData(&email, &password);
+      std::cout << "your email is: " << email << "\nyour password is: " <<
+        password << std::endl;
+      break;
+    }
 
     window->Display();
 
@@ -109,6 +91,7 @@ int main(int argc, char* argv[]) {
   delete mouse;
   delete keyboard;
   delete audio;
+  delete server;
 
   //quit sdl services
   Mix_Quit();
@@ -119,16 +102,12 @@ int main(int argc, char* argv[]) {
 };
 
 /*
-* VACATION: 
-* talk with the server server
-* finish finish the server
-* 
+* VACATION:
 * check if email and password are valid in SignIn
 * check if email user name password and password confirm are valid
 * 
 * Add sign in and sign up to the menu
 * add enemy to the world
-TODO
 ========NOW========:
 //fix WindowText:
   add flashing cursor -> cursor has a bug in which is doest go back all the way
@@ -166,19 +145,9 @@ check if the settings is open.
 
 /*
   roadmap to finish everything:
-  //add a button that is the finish button
-  -> saves the current strings and throws an error if needed
-
-
-  //ADD SIGN IN OR SIGN UP TO menu
-
+  2. add sign in and sign up to menu
 
   3.  add a finish line and an animation for it
 
-  4. add a boss type moster which has diffrante health size and damage
-     save as a var in the json file
-
   5. add in the hub a shop
-
-  6. shop does what
 */

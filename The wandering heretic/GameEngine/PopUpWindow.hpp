@@ -7,13 +7,14 @@ class PopUpWindow
 {
 public:
   PopUpWindow(Button* btnExit, SDL_Rect tab, SDL_Color color, bool open = false);
-  ~PopUpWindow();
+  virtual ~PopUpWindow();
   void Update();
 
   SDL_Rect GetRect();
+  void SetTabRect(SDL_Rect rect);
   SDL_Color GetColor();
 
-  void SetTab(bool val);
+  void SetTabOpen(bool val);
   bool GetTabOpen();
 private:
   Button* _btnExit;

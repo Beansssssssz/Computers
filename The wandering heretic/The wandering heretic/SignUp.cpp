@@ -191,8 +191,9 @@ bool SignUp::UpdatedDoneButton()
   std::string username = _username->GetWinText()->GetText();
   std::string password = _password->GetWinText()->GetText();
   std::string passwordConfirm = _passwordConfirm->GetWinText()->GetText();
-  if (password != passwordConfirm)
+  if (password != passwordConfirm) {
     return false;
+  }
 
   /* check if email user and password are valid */
 
@@ -260,14 +261,33 @@ void SignUp::CreateDoneButton()
 }
 
 /// <summary>
+/// returns true if a username is valid
+/// otherwise returns false
+/// a username can only have a - z || A - Z || 0 - 9 || .
+/// </summary>
+/// <param name="username"></param>
+/// <returns></returns>
+bool SignUp::IsUserNameValid(std::string& username)
+{
+  for (char& var : username)
+    if (var > 'z' && var < 'a' && // a- z
+      var > 'Z' && var < 'A' && // A - Z
+      var > '9' && var < '0' &&
+      var != '.')//     
+      return false;
+
+  return true;
+}
+
+/// <summary>
 /// checks if the mail is valid based on the array of domain names
 /// </summary>
 /// <param name="mail"></param>
 /// <returns></returns>
 bool SignUp::IsMailValid(std::string& mail)
 {
-  int startDomainName = mail.find('@');
-  std::string domainName = mail.substr(startDomainName, mail.size());
+  int startDomainName = mail.find('@') + 1;
+  std::string domainName = mail.substr(startDomainName, mail.length() - startDomainName);
 
   const char* allDomainNames[] = { "gmail.com", "nomishemer.ort.org" };
   constexpr char DOMMAIN_COUNT = 2;

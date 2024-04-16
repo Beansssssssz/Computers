@@ -26,6 +26,7 @@ private:
   void UpdateCursor();
   bool UpdatedDoneButton();
 
+  bool IsUserNameValid(std::string& username);
   bool IsMailValid(std::string& mail);
   bool IsPasswordStrong(std::string& password);
   bool IsLetterSpecial(const char& letter);

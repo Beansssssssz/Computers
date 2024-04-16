@@ -10,7 +10,7 @@ public:
   Entity(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled = true);
   Entity(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled = true);
   Entity(GIF* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool collisionEnabled = true);
-  ~Entity();
+  virtual ~Entity();
 
   virtual void Update();
   bool MoveTo(std::vector<Entity*> vec, int8_t offsetX, int8_t offsetY, bool snap = false);

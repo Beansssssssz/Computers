@@ -2,6 +2,7 @@
 
 #include "TextSquare.hpp"
 #include "PopUpWindow.hpp"
+#include "PopUpMessageBox.hpp"
 
 enum class Squares
 {
@@ -23,10 +24,12 @@ private:
   void SelectFlag();
   void UpdateCursor();
   bool UpdatedDoneButton();
+  bool CheckIfDataIsValid();
 
   void CreateTextSquares(Vector2i& emailStartPos, int& margin);
   void CreateBackground(Vector2i backgroundPos, int margin);
   void CreateDoneButton();
+  void CreateErrorBox();
 
   Squares _currentSquare;
   TextSquare* _email; //can be or email or username
@@ -37,6 +40,8 @@ private:
   uint32_t _currentTimer;
   uint32_t _oldTimer;
   bool _nowDisplay;
+
+  PopUpMessageBox* _ErrorBox;
 
   constexpr static uint16_t CURSOR_COUNTER = 500;
   constexpr static uint8_t MAX_LETTERS = 35;

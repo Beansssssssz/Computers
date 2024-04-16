@@ -1,6 +1,7 @@
 #include "SignIn.hpp"
 
 #include "Keyboard.hpp"
+#include "Server.hpp"
 
 #define EMAIL_GRAY_TEXT "Enter email or username here"
 #define PASSWORD_GRAY_TEXT "Enter your password here"
@@ -13,6 +14,7 @@ SignIn::SignIn(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
   CreateTextSquares(emailStartPos, margin);
   CreateBackground(backgroundPos, margin);
   CreateDoneButton();
+  CreateErrorBox();
 }
 
 SignIn::~SignIn()
@@ -28,17 +30,20 @@ SignIn::~SignIn()
 /// <returns></returns>
 bool SignIn::Update()
 {
+  bool errorBoxOn = _ErrorBox->GetTabOpen();
+
   _background->Update();
   if (!_background->GetTabOpen())
     return false;
 
   SelectFlag();
 
-  _email->Update(_currentSquare == Squares::email);
-  _pass->Update(_currentSquare == Squares::password);
+  _email->Update(_currentSquare == Squares::email & !errorBoxOn);
+  _pass->Update(_currentSquare == Squares::password & !errorBoxOn);
 
   DisplaySquareNames();
   UpdateCursor();
+
   return UpdatedDoneButton();
 }
 
@@ -157,11 +162,31 @@ bool SignIn::UpdatedDoneButton()
   if (!_doneBtn->GetIsPressed())
     return false;
 
+
+  if(this->CheckIfDataIsValid())
+    return true;
+
+  /* display bad message */
+
+
+  return false;
+}
+
+bool SignIn::CheckIfDataIsValid()
+{
+  Server* server = Server::GetServerInstance();
   std::string email = _email->GetWinText()->GetText();
   std::string pass = _pass->GetWinText()->GetText();
-  /* check if email and password are valid */
+  UserData data{ "", "", pass, nullptr };
+  /* check if the inputed field was username or email */
+  //if there is a @ then the username is invalid thus its an email
+  int domainStartLoc = email.find('@');
+  if (domainStartLoc != -1)
+    data.email = email;
+  else
+    data.username = email;
 
-  return true;
+  return server->DoesUserExist(data);
 }
 
 /// <summary>
@@ -211,4 +236,17 @@ void SignIn::CreateDoneButton()
   dst.x = ((backgroundRect.x + backgroundRect.w) / 2) - (dst.w / 2);
 
   _doneBtn = new Button(path, src, dst);
+}
+
+void SignIn::CreateErrorBox()
+{
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  constexpr SDL_Color COLOR{ 255,255,255, 100 };
+
+  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Xbtn.png");
+  int w, h;
+  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+  Button* exitBtn = new Button(tex, { 0,0,w,h }, { 0,0,w,h });
+
+  _ErrorBox = new PopUpMessageBox(exitBtn, { 0,0,0,0 }, COLOR, "", false);
 }
