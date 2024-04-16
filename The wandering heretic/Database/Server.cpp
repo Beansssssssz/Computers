@@ -95,6 +95,40 @@ GameData Server::GetGameData(int PM)
   return gameData;
 }
 
+/// <summary>
+/// checks if the users exist in the database
+/// returns true if user exist otherwise returns false
+/// </summary>
+/// <param name="data"></param>
+/// <returns></returns>
+bool Server::DoesUserExist(UserData data)
+{
+  sqlite3_stmt* stmt;
+  int rc = 0;
+
+
+  std::string FindUserStatment =  "SELECT * FROM Users\
+    WHERE ";
+
+  if (data.email.empty()) //if the user inputed username
+    FindUserStatment += "UserName = '" + data.username + "' ";
+  else //if the user inputed email
+    FindUserStatment += "UserMail = '" + data.email + "' ";
+  
+  FindUserStatment += "AND UserPassword = '" + data.password + "';";
+
+  rc = sqlite3_prepare_v2(_db, FindUserStatment.c_str(), -1, &stmt, nullptr);
+  if (rc != SQLITE_OK) {
+    std::cerr << "Failed in Selecting data. SQL error: " << sqlite3_errmsg(_db) << std::endl;
+    return false;
+  }
+
+  if (sqlite3_step(stmt) == SQLITE_DONE) 
+    return false;
+
+  return true;
+}
+
 std::vector<UserData> Server::GetUserData()
 {
   std::vector<UserData> dataVec;
@@ -242,6 +276,3 @@ int Server::GetLastPrimaryKey() {
 
   return lastPrimaryKey;
 }
-
-
-

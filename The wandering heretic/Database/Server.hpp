@@ -27,6 +27,7 @@ public:
   int InsertData(UserData data);
   std::vector<UserData> GetUserData();
   GameData GetGameData(int PM);
+  bool DoesUserExist(UserData data);
 private:
   static Server* _serverPtr;
   Server();

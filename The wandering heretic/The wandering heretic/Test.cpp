@@ -51,6 +51,9 @@ int main(int argc, char* argv[]) {
   SignUp* signup = new SignUp({ 50, 50 }, { 100, 100 }, 100);
   SignIn* signin = new SignIn({ 50, 50 }, { 100, 100 }, 100);
 
+  UserData singleData {"myemail", "myusername", "mypassword", nullptr};
+  std::cout << server->DoesUserExist(singleData) << std::endl;
+
   SDL_Event event;
   bool running = true;
   while (running) {
@@ -97,6 +100,7 @@ int main(int argc, char* argv[]) {
 
     utils::CapFPS(start, 60);
   };
+
   delete signup;
   delete signin;
 
