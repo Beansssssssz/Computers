@@ -23,6 +23,11 @@ Server* Server::GetServerInstance()
   return _serverPtr;
 }
 
+Server::~Server()
+{
+  sqlite3_close(_db);
+}
+
 /// <summary>
 /// insert the UserData into the tables
 /// if the game data is a nullptr then it inserts base values
@@ -69,6 +74,12 @@ int Server::InsertData(UserData data)
   return 0;
 }
 
+/// <summary>
+/// returns the gameData that has the same ID
+/// if no gameData exists returns an empty data
+/// </summary>
+/// <param name="PM"></param>
+/// <returns></returns>
 GameData Server::GetGameData(int PM)
 {
   sqlite3_stmt* stmt;
@@ -99,7 +110,8 @@ GameData Server::GetGameData(int PM)
 /// checks if the users exist in the database
 /// returns true if user exist otherwise returns false
 /// </summary>
-/// <param name="data"></param>
+/// <param name="data">gameData isnt used, email or username is must
+/// and so is password</param>
 /// <returns></returns>
 bool Server::DoesUserExist(UserData data)
 {
@@ -129,6 +141,10 @@ bool Server::DoesUserExist(UserData data)
   return true;
 }
 
+/// <summary>
+/// returns all the users as a vector
+/// </summary>
+/// <returns></returns>
 std::vector<UserData> Server::GetUserData()
 {
   std::vector<UserData> dataVec;
@@ -218,7 +234,11 @@ int Server::CreateTables() {
   return 0;
 }
 
-int Server::DropTablesData()
+/// <summary>
+/// deletes all the data from the tables
+/// </summary>
+/// <returns></returns>
+int Server::DeleteTablesData()
 {
   const char* deleteStmtUsers = "DELETE FROM Users";
   const char* deleteStmtGameData = "DELETE FROM GameData";

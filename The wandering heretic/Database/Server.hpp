@@ -23,6 +23,7 @@ class Server
 {
 public:
   static Server* GetServerInstance();
+  ~Server();
 
   int InsertData(UserData data);
   std::vector<UserData> GetUserData();
@@ -33,7 +34,7 @@ private:
   Server();
 
   int CreateTables();
-  int DropTablesData();
+  int DeleteTablesData();
   int GetLastPrimaryKey();
 
   sqlite3* _db;
