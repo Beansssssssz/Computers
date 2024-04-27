@@ -2,7 +2,7 @@
 
 #include "TextSquare.hpp"
 #include "PopUpWindow.hpp"
-#include "PopUpMessageBox.hpp"
+#include "Server.hpp"
 
 enum class Squares
 {
@@ -17,19 +17,20 @@ public:
   ~SignIn();
 
   bool Update();
-  void GetData(std::string* email, std::string* password);
+  UserData GetData();
 
 private:
   void DisplaySquareNames();
+  void DisplaySquareTitles();
   void SelectFlag();
   void UpdateCursor();
+  void DisplayErrorMessage();
   bool UpdatedDoneButton();
   bool CheckIfDataIsValid();
 
   void CreateTextSquares(Vector2i& emailStartPos, int& margin);
   void CreateBackground(Vector2i backgroundPos, int margin);
   void CreateDoneButton();
-  void CreateErrorBox();
 
   Squares _currentSquare;
   TextSquare* _email; //can be or email or username
@@ -41,12 +42,17 @@ private:
   uint32_t _oldTimer;
   bool _nowDisplay;
 
-  PopUpMessageBox* _ErrorBox;
+  std::string _errorMsg;
 
   constexpr static uint16_t CURSOR_COUNTER = 500;
   constexpr static uint8_t MAX_LETTERS = 35;
   constexpr static uint8_t LETTER_SIZE = 20;
-  constexpr static SDL_Color BACKGROUND_COLOR{ 255,0,0,255 };
+  constexpr static uint8_t TITLE_LETTER_SIZE = 30;
+
+  constexpr static SDL_Color BACKGROUND_COLOR{ 0,0,0,170 };
   constexpr static SDL_Color BLACK_COLOR{ 0,0,0,255 };
+
+  constexpr static SDL_Color ERROR_LETTER_COLOR{ 255,0,0,255 };
+  constexpr static uint8_t ERROR_LETTER_SIZE = 10;
 };
 

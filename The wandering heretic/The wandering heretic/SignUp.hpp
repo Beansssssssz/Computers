@@ -2,6 +2,7 @@
 
 #include "TextSquare.hpp"
 #include "PopUpWindow.hpp"
+#include "Server.hpp"
 
 enum class SignUpSquares
 {
@@ -18,12 +19,14 @@ public:
   ~SignUp();
 
   bool Update();
-  void GetData(std::string* email, std::string* username, std::string* password);
+  UserData GetData();
 
 private:
   void DisplaySquareNames();
+  void DisplaySquareTitles();
   void SelectFlag();
   void UpdateCursor();
+  void DisplayErrorMessage();
   bool UpdatedDoneButton();
 
   bool IsUserNameValid(std::string& username);
@@ -47,10 +50,17 @@ private:
   uint32_t _oldTimer;
   bool _nowDisplay;
 
+  std::string _errorMsg;
+
   constexpr static uint16_t CURSOR_COUNTER = 500;
   constexpr static uint8_t LETTER_SIZE = 20;
+  constexpr static uint8_t TITLE_LETTER_SIZE = 30;
   constexpr static uint8_t MAX_LETTERS = 35;
-  constexpr static SDL_Color BACKGROUND_COLOR{ 255,0,0,255 };
+
+  constexpr static SDL_Color BACKGROUND_COLOR{ 0,0,0,170 };
   constexpr static SDL_Color BLACK_COLOR{ 0,0,0,255 };
+
+  constexpr static SDL_Color ERROR_LETTER_COLOR{ 255,0,0,255 };
+  constexpr static uint8_t ERROR_LETTER_SIZE = 10;
 };
 

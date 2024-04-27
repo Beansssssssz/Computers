@@ -47,15 +47,22 @@ bool SignUp::Update()
   _passwordConfirm->Update(_currentSquare == SignUpSquares::passwordConfirm);
 
   DisplaySquareNames();
+  DisplaySquareTitles();
   UpdateCursor();
+  DisplayErrorMessage();
+
   return UpdatedDoneButton();
 }
 
-void SignUp::GetData(std::string* email, std::string* username, std::string* password)
+UserData SignUp::GetData()
 {
-  *email = _email->GetWinText()->GetText();
-  *username = _username->GetWinText()->GetText();
-  *password = _password->GetWinText()->GetText();
+  UserData data{"", "", "", nullptr};
+
+  data.email = _email->GetWinText()->GetText();
+  data.username = _username->GetWinText()->GetText();
+  data.password = _password->GetWinText()->GetText();
+
+  return data;
 }
 
 /// <summary>
@@ -98,6 +105,41 @@ void SignUp::DisplaySquareNames()
     pos.y = tempRect->y;
     WindowText::DisplayStaticText(PASSWORD_CONFIRM_GRAY_TEXT, pos, GRAY, LETTER_SIZE);
   }
+}
+
+/// <summary>
+/// displays each of the sqaures titles
+/// </summary>
+void SignUp::DisplaySquareTitles()
+{
+  SDL_Rect tempRect;
+  Vector2i pos;
+  constexpr SDL_Color WHITE{ 255, 255, 255, 255 };
+  std::string currentText;
+
+  /* email */
+  currentText = "Email:";
+  tempRect = *_email->GetDstRect();
+  tempRect.y -= TITLE_LETTER_SIZE;
+  WindowText::DisplayStaticText(currentText, { tempRect.x , tempRect.y }, WHITE, TITLE_LETTER_SIZE);
+
+  /* username */
+  currentText = "Username:";
+  tempRect = *_username->GetDstRect();
+  tempRect.y -= TITLE_LETTER_SIZE;
+  WindowText::DisplayStaticText(currentText, { tempRect.x , tempRect.y }, WHITE, TITLE_LETTER_SIZE);
+
+  /* password */
+  currentText = "Password:";
+  tempRect = *_password->GetDstRect();
+  tempRect.y -= TITLE_LETTER_SIZE;
+  WindowText::DisplayStaticText(currentText, { tempRect.x , tempRect.y }, WHITE, TITLE_LETTER_SIZE);
+
+  /* password confirm */
+  currentText = "Confirm password:";
+  tempRect = *_passwordConfirm->GetDstRect();
+  tempRect.y -= TITLE_LETTER_SIZE;
+  WindowText::DisplayStaticText(currentText, { tempRect.x , tempRect.y }, WHITE, TITLE_LETTER_SIZE);
 }
 
 /// <summary>
@@ -178,10 +220,25 @@ void SignUp::UpdateCursor()
   }
 }
 
+/// <summary>
+/// displays the current error message
+/// </summary>
+void SignUp::DisplayErrorMessage()
+{
+  Vector2i pos{ 0,0 };
+  pos.y = _doneBtn->GetDstRect()->y;
+  pos.x = _background->GetRect().x;
+
+  WindowText::DisplayStaticText(_errorMsg, pos, ERROR_LETTER_COLOR, ERROR_LETTER_SIZE);
+}
+
+
 bool SignUp::UpdatedDoneButton()
 {
-  _doneBtn->Update();
+  Server* server = Server::GetServerInstance();
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+
+  _doneBtn->Update();
   window->Render((Square*)_doneBtn);
 
   if (!_doneBtn->GetIsPressed())
@@ -191,12 +248,50 @@ bool SignUp::UpdatedDoneButton()
   std::string username = _username->GetWinText()->GetText();
   std::string password = _password->GetWinText()->GetText();
   std::string passwordConfirm = _passwordConfirm->GetWinText()->GetText();
-  if (password != passwordConfirm) {
+
+  if (email.empty() || username.empty() || password.empty() || passwordConfirm.empty()) {
+    _errorMsg = "one or more fields is missing.";
     return false;
   }
 
-  /* check if email user and password are valid */
+  /* check if password and confirm password are the same */
+  if (password != passwordConfirm) {
+    _errorMsg = "password and confirm password are not the same.";
+    return false;
+  }
 
+  /* iis email valid */
+  if (!this->IsMailValid(email)) {
+    _errorMsg = "email isnt a valid email address.";
+    return false;
+  }
+
+  /* is username taken */
+  if(server->DoesUsernameExist(username)){
+    _errorMsg = "";
+    return false;
+  }
+
+  /* is username valid */
+  if (!this->IsUserNameValid(username)) {
+    _errorMsg = "username isnt a valid username";
+    return false;
+  }
+
+  /* is password strong enough */
+  if (!this->IsPasswordStrong(password)) {
+    _errorMsg = "password inst strong enough.";
+    return false;
+  }
+
+  UserData data{ email, username, password, nullptr};
+
+  if (server->DoesUserExist(data)) {
+    _errorMsg = "user already exists.";
+    return false;
+  }
+
+  server->InsertData(data);
   return true;
 }
 
@@ -269,12 +364,18 @@ void SignUp::CreateDoneButton()
 /// <returns></returns>
 bool SignUp::IsUserNameValid(std::string& username)
 {
-  for (char& var : username)
-    if (var > 'z' && var < 'a' && // a- z
-      var > 'Z' && var < 'A' && // A - Z
-      var > '9' && var < '0' &&
-      var != '.')//     
-      return false;
+  for (char& var : username) {
+    if (var <= 'z' && var >= 'a')
+      continue;
+    else if (var <= 'Z' && var >= 'A')
+      continue;
+    else if (var <= '9' && var >= '0')
+      continue;
+    if (var == '.' || var == '_')
+      continue;
+
+    return false;
+  }
 
   return true;
 }
@@ -287,16 +388,18 @@ bool SignUp::IsUserNameValid(std::string& username)
 bool SignUp::IsMailValid(std::string& mail)
 {
   int startDomainName = mail.find('@') + 1;
-  std::string domainName = mail.substr(startDomainName, mail.length() - startDomainName);
+  if (startDomainName == std::string::npos + 1)
+    return false;
 
   const char* allDomainNames[] = { "gmail.com", "nomishemer.ort.org" };
-  constexpr char DOMMAIN_COUNT = 2;
+  int domainCount = sizeof(allDomainNames) / sizeof(allDomainNames[0]);
 
-  for (int i = 0; i < DOMMAIN_COUNT; i++)
-    if (!strcmp(domainName.c_str(), "gmail.com"))
-      return false;
+  std::string domainName = mail.substr(startDomainName, mail.length() - startDomainName);
+  for (int i = 0; i < domainCount; i++)
+    if (strcmp(domainName.c_str(), "gmail.com") == 0)
+      return true;
 
-  return true;
+  return false;
 }
 
 /// <summary>
@@ -317,10 +420,13 @@ bool SignUp::IsPasswordStrong(std::string& password)
   for (const char& letter : password) {
     if (letter >= 'A' && letter <= 'Z')
       upper = true;
+
     else if (letter >= 'a' && letter <= 'z')
       lower = true;
+
     else if (letter >= '0' && letter <= '9')
       number = true;
+
     else if (IsLetterSpecial(letter))
       special = true;
   }
@@ -336,11 +442,12 @@ bool SignUp::IsPasswordStrong(std::string& password)
 bool SignUp::IsLetterSpecial(const char& letter)
 {
   const char* allLetters = "~!@#$%^&*()-_+={}[]|/:;<>,?";
-  int length = sizeof(allLetters); //its char and char is size of 1
+  int length = strlen(allLetters);
 
   for (int i = 0; i < length; i++)
     if (allLetters[i] == letter)
       return true;
+
   return false;
 }
 

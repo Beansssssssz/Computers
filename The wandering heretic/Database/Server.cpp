@@ -5,7 +5,7 @@
 Server::Server()
   :_db(nullptr)
 {
-  int rc = sqlite3_open("example.db", &_db); // Use a file name for disk-based database
+  int rc = sqlite3_open("Assets/DataBases/database.db", &_db); // Use a file name for disk-based database
 
   if (rc) {
     std::cerr << "Can't open database: " << sqlite3_errmsg(_db) << std::endl;
@@ -118,7 +118,6 @@ bool Server::DoesUserExist(UserData data)
   sqlite3_stmt* stmt;
   int rc = 0;
 
-
   std::string FindUserStatment =  "SELECT * FROM Users\
     WHERE ";
 
@@ -136,6 +135,25 @@ bool Server::DoesUserExist(UserData data)
   }
 
   if (sqlite3_step(stmt) == SQLITE_DONE) 
+    return false;
+
+  return true;
+}
+
+bool Server::DoesUsernameExist(std::string username) {
+  sqlite3_stmt* stmt;
+  int rc = 0;
+
+  std::string FindUserStatment = "SELECT * FROM Users\
+    WHERE UserName = '" + username + "';";
+
+  rc = sqlite3_prepare_v2(_db, FindUserStatment.c_str(), -1, &stmt, nullptr);
+  if (rc != SQLITE_OK) {
+    std::cerr << "Failed in Selecting data. SQL error: " << sqlite3_errmsg(_db) << std::endl;
+    return false;
+  }
+
+  if (sqlite3_step(stmt) == SQLITE_DONE)
     return false;
 
   return true;
@@ -185,7 +203,7 @@ int Server::CreateTables() {
   const char* createUsersTable =
     "CREATE TABLE IF NOT EXISTS Users(\
       UserId INTEGER AUTO_INCREMENT PRIMARY KEY,\
-      UserMail VARCHAR(50) NOT NULL UNIQUE,\
+      UserMail VARCHAR(50) NOT NULL,\
       UserName VARCHAR(50) NOT NULL UNIQUE,\
       UserPassword VARCHAR(50) NOT NULL\
     );";

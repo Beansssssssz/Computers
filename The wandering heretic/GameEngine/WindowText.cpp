@@ -168,6 +168,8 @@ int WindowText::GetMaxCharacters()
 
 void WindowText::DisplayStaticText(std::string text, Vector2i pos, SDL_Color color, uint8_t letterSize, const char* fontPath)
 {
+  if (text.empty())
+    return;
 
   TTF_Font* font = TTF_OpenFont(fontPath, letterSize);
   if (font == nullptr)

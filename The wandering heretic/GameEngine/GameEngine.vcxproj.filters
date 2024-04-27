@@ -63,9 +63,6 @@
     <ClCompile Include="TextSquare.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PopUpMessageBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.hpp">
@@ -123,9 +120,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextSquare.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PopUpMessageBox.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -151,7 +151,6 @@
     <ClCompile Include="InputText.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="PopUpMessageBox.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="Slider.cpp" />
@@ -172,7 +171,6 @@
     <ClInclude Include="Keyboard.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="Mouse.hpp" />
-    <ClInclude Include="PopUpMessageBox.hpp" />
     <ClInclude Include="PopUpWindow.hpp" />
     <ClInclude Include="RenderWindow.hpp" />
     <ClInclude Include="Slider.hpp" />

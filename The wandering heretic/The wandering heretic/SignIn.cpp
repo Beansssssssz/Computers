@@ -14,7 +14,6 @@ SignIn::SignIn(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
   CreateTextSquares(emailStartPos, margin);
   CreateBackground(backgroundPos, margin);
   CreateDoneButton();
-  CreateErrorBox();
 }
 
 SignIn::~SignIn()
@@ -30,33 +29,47 @@ SignIn::~SignIn()
 /// <returns></returns>
 bool SignIn::Update()
 {
-  bool errorBoxOn = _ErrorBox->GetTabOpen();
-
   _background->Update();
   if (!_background->GetTabOpen())
     return false;
 
   SelectFlag();
 
-  _email->Update(_currentSquare == Squares::email & !errorBoxOn);
-  _pass->Update(_currentSquare == Squares::password & !errorBoxOn);
+  _email->Update(_currentSquare == Squares::email);
+  _pass->Update(_currentSquare == Squares::password);
 
   DisplaySquareNames();
+  DisplaySquareTitles();
   UpdateCursor();
+  DisplayErrorMessage();
 
   return UpdatedDoneButton();
 }
 
 /// <summary>
-/// retuns the data using out paramaters
+/// retuns the data inputed into signIn by the user
+/// </summary>
+/// <returns></returns>
+UserData SignIn::GetData()
+{
+  UserData data{ "", "", _pass->GetWinText()->GetText(), nullptr};
+
+  std::string email = _email->GetWinText()->GetText();
+
+  if (email.find('@') == std::string::npos)
+    data.username = email;
+  else
+    data.email = email;
+
+  return data;
+}
+
+/// <summary>
+
 /// </summary>
 /// <param name="email">OUT the passsword the user inputed</param>
 /// <param name="password">OUT the email or usernames the user inputed</param>
-void SignIn::GetData(std::string* email, std::string* password)
-{
-  *email = _email->GetWinText()->GetText();
-  *password = _pass->GetWinText()->GetText();
-}
+
 
 /// <summary>
 /// dispalyes the names of the squares and what to do in each one
@@ -70,18 +83,38 @@ void SignIn::DisplaySquareNames()
   /* email */
   if (_email->GetWinText()->GetText() == "" && _currentSquare != Squares::email) {
     tempRect = _email->GetDstRect();
-    pos.x = tempRect->x;
-    pos.y = tempRect->y;
-    WindowText::DisplayStaticText(EMAIL_GRAY_TEXT, pos, GRAY, LETTER_SIZE);
+    WindowText::DisplayStaticText(EMAIL_GRAY_TEXT, { tempRect->x , tempRect->y }, GRAY, LETTER_SIZE);
   }
 
   /* password */
   if (_pass->GetWinText()->GetText() == "" && _currentSquare != Squares::password) {
     tempRect = _pass->GetDstRect();
-    pos.x = tempRect->x;
-    pos.y = tempRect->y;
-    WindowText::DisplayStaticText(PASSWORD_GRAY_TEXT, pos, GRAY, LETTER_SIZE);
+    WindowText::DisplayStaticText(PASSWORD_GRAY_TEXT, { tempRect->x , tempRect->y }, GRAY, LETTER_SIZE);
   }
+}
+
+/// <summary>
+/// displays each of the sqaures titles
+/// </summary>
+void SignIn::DisplaySquareTitles()
+{
+  SDL_Rect tempRect;
+  Vector2i pos;
+  constexpr SDL_Color WHITE{ 255, 255, 255, 255 };
+  std::string currentText;
+
+  /* email */
+  currentText = "Login:";
+  tempRect = *_email->GetDstRect();
+  tempRect.y -= TITLE_LETTER_SIZE;
+  WindowText::DisplayStaticText(currentText, { tempRect.x , tempRect.y }, WHITE, TITLE_LETTER_SIZE);
+
+
+  /* password */
+  currentText = "Password:";
+  tempRect = *_pass->GetDstRect();
+  tempRect.y -= TITLE_LETTER_SIZE;
+  WindowText::DisplayStaticText(currentText, {tempRect.x , tempRect.y}, WHITE, TITLE_LETTER_SIZE);
 }
 
 /// <summary>
@@ -148,6 +181,19 @@ void SignIn::UpdateCursor()
 }
 
 /// <summary>
+/// displays the current error message
+/// </summary>
+void SignIn::DisplayErrorMessage()
+{
+  /* check */
+  Vector2i pos{ 0,0 };
+  pos.y = _doneBtn->GetDstRect()->y;//the 2 is there for spacing
+  pos.x = _background->GetRect().x + 2;
+
+  WindowText::DisplayStaticText(_errorMsg, pos, ERROR_LETTER_COLOR, ERROR_LETTER_SIZE);
+}
+
+/// <summary>
 /// updates and displays the done button and check if it was pressed
 /// if yes then check whether or not the email/username
 /// with the password where valid
@@ -163,15 +209,25 @@ bool SignIn::UpdatedDoneButton()
     return false;
 
 
+  /* check if all fields are full */
+  if (_pass->GetWinText()->GetText().empty() || _email->GetWinText()->GetText().empty()) {
+    _errorMsg = "one or more fields is missing.";
+    return false;
+  }
+
   if(this->CheckIfDataIsValid())
     return true;
 
   /* display bad message */
-
-
+  _errorMsg = "password or login is incorrect.";
   return false;
 }
 
+/// <summary>
+/// checks whether not a email or a username was inputed
+/// afterwise returns true if the user exists in the database
+/// </summary>
+/// <returns></returns>
 bool SignIn::CheckIfDataIsValid()
 {
   Server* server = Server::GetServerInstance();
@@ -218,7 +274,7 @@ void SignIn::CreateBackground(Vector2i backgroundPos, int margin)
 
   SDL_Rect backgroundRect{ backgroundPos.x, backgroundPos.y, 0, 0 };
   backgroundRect.w = (_email->GetDstRect()->x - backgroundPos.x) * 2 + _email->GetDstRect()->w;
-  backgroundRect.h = _email->GetDstRect()->h * 2 + margin * 2;
+  backgroundRect.h = _email->GetDstRect()->h * 2 + margin * 2 + ERROR_LETTER_SIZE * 1.5;
 
   _background = new PopUpWindow(btn, backgroundRect, BACKGROUND_COLOR, true);
 }
@@ -236,17 +292,4 @@ void SignIn::CreateDoneButton()
   dst.x = ((backgroundRect.x + backgroundRect.w) / 2) - (dst.w / 2);
 
   _doneBtn = new Button(path, src, dst);
-}
-
-void SignIn::CreateErrorBox()
-{
-  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  constexpr SDL_Color COLOR{ 255,255,255, 100 };
-
-  SDL_Texture* tex = window->LoadTexture("Assets/GUI/Xbtn.png");
-  int w, h;
-  SDL_QueryTexture(tex, NULL, NULL, &w, &h);
-  Button* exitBtn = new Button(tex, { 0,0,w,h }, { 0,0,w,h });
-
-  _ErrorBox = new PopUpMessageBox(exitBtn, { 0,0,0,0 }, COLOR, "", false);
 }

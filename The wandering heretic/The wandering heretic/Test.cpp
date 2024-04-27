@@ -1,6 +1,5 @@
 //including my own libs
 #include "GameManager.hpp"
-#include "Server.hpp"
 #include "SignUp.hpp"
 #include "SignIn.hpp"
 
@@ -59,29 +58,24 @@ int main(int argc, char* argv[]) {
     mouse->Update();
     keyboard->Update();
 
-    //if (running && !gm.Update())//if the game is not going to be closed from events
-    //  running = false;
+    if (running && !gm.Update())//if the game is not going to be closed from events
+      running = false;
 
     //if (signup->Update()) {
     //  std::string email, username, password;
-    //  signup->GetData(&email, &username, &password);
-    //  std::cout << "your email is: " << email << "\nyour username is: " <<
-    //    username << "\nyour password is: " << password << std::endl;
     //  break;
     //}
-    //
-    if (signin->Update()) {
-      std::string email, password;
-      signin->GetData(&email, &password);
-      std::cout << "your email is: " << email << "\nyour password is: " <<
-        password << std::endl;
-      break;
-    }
+    
+    //if (signin->Update()) {
+    //  std::string email, password;
+    //  break;
+    //}
 
     window->Display();
 
     utils::CapFPS(start, 60);
   };
+
 
   delete signup;
   delete signin;
@@ -92,7 +86,7 @@ int main(int argc, char* argv[]) {
   delete keyboard;
   delete audio;
   delete server;
-
+  
   //quit sdl services
   Mix_Quit();
   TTF_Quit();
@@ -103,11 +97,12 @@ int main(int argc, char* argv[]) {
 
 /*
 * VACATION:
-* check if email and password are valid in SignIn
-* check if email user name password and password confirm are valid
+* user already exist
+*
 * 
-* Add sign in and sign up to the menu
+* Add sign in and sign up to the menu 
 * add enemy to the world
+ 
 ========NOW========:
 //fix WindowText:
   add flashing cursor -> cursor has a bug in which is doest go back all the way

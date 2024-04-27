@@ -52,6 +52,9 @@ void PopUpWindow::SetTabRect(SDL_Rect rect)
 {
   _tab = rect;
 
+  if (_btnExit == nullptr)
+    return;
+
   SDL_Rect* btnRect = _btnExit->GetDstRect();
   btnRect->x = _tab.x + _tab.w - btnRect->w;
   btnRect->y = _tab.y + _tab.h - btnRect->h;

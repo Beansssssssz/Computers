@@ -29,6 +29,7 @@ public:
   std::vector<UserData> GetUserData();
   GameData GetGameData(int PM);
   bool DoesUserExist(UserData data);
+  bool DoesUsernameExist(std::string username);
 private:
   static Server* _serverPtr;
   Server();
