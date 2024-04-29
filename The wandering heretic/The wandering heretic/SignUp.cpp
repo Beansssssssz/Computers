@@ -11,7 +11,6 @@
 #define PASSWORD_WEAK "Password is too weak"
 #define EMAIL_INVALID "your email is invalid"
 
-//maybe remove startPos
 SignUp::SignUp(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
   :_email(nullptr), _username(nullptr), _password(nullptr), _passwordConfirm(nullptr)
   , _background(nullptr), _doneBtn(nullptr),
@@ -32,6 +31,10 @@ SignUp::~SignUp()
   delete _background;
 }
 
+/// <summary>
+/// updates and displays the entire SignUp object
+/// </summary>
+/// <returns>returns true if the sign Up was done successfully</returns>
 bool SignUp::Update()
 {
   _background->Update();
@@ -54,6 +57,10 @@ bool SignUp::Update()
   return UpdatedDoneButton();
 }
 
+/// <summary>
+/// returns the user data
+/// </summary>
+/// <returns></returns>
 UserData SignUp::GetData()
 {
   UserData data{"", "", "", nullptr};
@@ -172,6 +179,9 @@ void SignUp::SelectFlag()
     _currentSquare = SignUpSquares::none;
 }
 
+/// <summary>
+/// updtates the cursor so that it would flash correctly
+/// </summary>
 void SignUp::UpdateCursor()
 {
   _currentTimer = SDL_GetTicks();
@@ -232,7 +242,10 @@ void SignUp::DisplayErrorMessage()
   WindowText::DisplayStaticText(_errorMsg, pos, ERROR_LETTER_COLOR, ERROR_LETTER_SIZE);
 }
 
-
+/// <summary>
+/// updtes the done button and throws the correct error message if needed
+/// </summary>
+/// <returns></returns>
 bool SignUp::UpdatedDoneButton()
 {
   Server* server = Server::GetServerInstance();
@@ -268,7 +281,7 @@ bool SignUp::UpdatedDoneButton()
 
   /* is username taken */
   if(server->DoesUsernameExist(username)){
-    _errorMsg = "";
+    _errorMsg = "user name already exist in the database";
     return false;
   }
 
@@ -350,7 +363,7 @@ void SignUp::CreateDoneButton()
   const char* path = "Assets/GUI/DoneButton.png";
   SDL_Rect backgroundRect = _background->GetRect();
   dst.y = backgroundRect.y + backgroundRect.h - dst.h;
-  dst.x = ((backgroundRect.x + backgroundRect.w) / 2) - (dst.w / 2);
+  dst.x = backgroundRect.x + backgroundRect.w / 2 - dst.w / 2;
 
   _doneBtn = new Button(path, src, dst);
 }
@@ -387,7 +400,7 @@ bool SignUp::IsUserNameValid(std::string& username)
 /// <returns></returns>
 bool SignUp::IsMailValid(std::string& mail)
 {
-  int startDomainName = mail.find('@') + 1;
+  size_t startDomainName = mail.find('@') + 1u;
   if (startDomainName == std::string::npos + 1)
     return false;
 
@@ -442,7 +455,7 @@ bool SignUp::IsPasswordStrong(std::string& password)
 bool SignUp::IsLetterSpecial(const char& letter)
 {
   const char* allLetters = "~!@#$%^&*()-_+={}[]|/:;<>,?";
-  int length = strlen(allLetters);
+  size_t length = strlen(allLetters);
 
   for (int i = 0; i < length; i++)
     if (allLetters[i] == letter)

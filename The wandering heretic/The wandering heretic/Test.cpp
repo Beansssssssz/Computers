@@ -32,14 +32,11 @@ int main(int argc, char* argv[]) {
   Server* server = Server::GetServerInstance();
 
   GameManager gm;
-  SignUp* signup = new SignUp({ 50, 50 }, { 100, 100 }, 100);
-  SignIn* signin = new SignIn({ 50, 50 }, { 100, 100 }, 100);
 
   SDL_Event event;
   bool running = true;
   while (running) {
     Uint64 start = SDL_GetPerformanceCounter();
-
     while (SDL_PollEvent(&event))
     {
       if (event.type == SDL_QUIT) {
@@ -61,24 +58,10 @@ int main(int argc, char* argv[]) {
     if (running && !gm.Update())//if the game is not going to be closed from events
       running = false;
 
-    //if (signup->Update()) {
-    //  std::string email, username, password;
-    //  break;
-    //}
-    
-    //if (signin->Update()) {
-    //  std::string email, password;
-    //  break;
-    //}
-
     window->Display();
 
     utils::CapFPS(start, 60);
   };
-
-
-  delete signup;
-  delete signin;
 
   //deleting singletons
   delete window;
@@ -92,23 +75,22 @@ int main(int argc, char* argv[]) {
   TTF_Quit();
   IMG_Quit();
   SDL_Quit();
+
   return 0;
 };
 
 /*
 * VACATION:
-* user already exist
+* Add sign in and sign up to the menu
+* -> add a button whihc is LogIn.png
+* ->once button is pressed it opens a 
 *
 * 
-* Add sign in and sign up to the menu 
 * add enemy to the world
- 
+  
 ========NOW========:
-//fix WindowText:
-  add flashing cursor -> cursor has a bug in which is doest go back all the way
-
-//add enemy to the world
--> damage is done by touching
+//Add enemy to the world
+ add an enemy vector from the json
 
 //create the actuall Player Class(not gameEngine one)
   actuall player creation

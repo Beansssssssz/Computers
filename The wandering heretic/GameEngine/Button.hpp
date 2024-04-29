@@ -13,7 +13,7 @@ public:
   Button(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool deleteTex = true);
   ~Button();
 
-  void Update(MouseButtons btn = MouseButtons::mbl);
+  void Update(MouseButtons btn = MouseButtons::mbl, bool settingOpen = false);
 
   bool GetIsSelected();
   bool GetIsPressed();

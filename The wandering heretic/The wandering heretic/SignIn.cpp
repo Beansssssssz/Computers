@@ -236,7 +236,7 @@ bool SignIn::CheckIfDataIsValid()
   UserData data{ "", "", pass, nullptr };
   /* check if the inputed field was username or email */
   //if there is a @ then the username is invalid thus its an email
-  int domainStartLoc = email.find('@');
+  size_t domainStartLoc = email.find('@');
   if (domainStartLoc != -1)
     data.email = email;
   else
@@ -274,7 +274,7 @@ void SignIn::CreateBackground(Vector2i backgroundPos, int margin)
 
   SDL_Rect backgroundRect{ backgroundPos.x, backgroundPos.y, 0, 0 };
   backgroundRect.w = (_email->GetDstRect()->x - backgroundPos.x) * 2 + _email->GetDstRect()->w;
-  backgroundRect.h = _email->GetDstRect()->h * 2 + margin * 2 + ERROR_LETTER_SIZE * 1.5;
+  backgroundRect.h = _email->GetDstRect()->h * 2 + margin * 2 + (int)(ERROR_LETTER_SIZE * 1.5);
 
   _background = new PopUpWindow(btn, backgroundRect, BACKGROUND_COLOR, true);
 }
@@ -289,7 +289,7 @@ void SignIn::CreateDoneButton()
   const char* path = "Assets/GUI/DoneButton.png";
   SDL_Rect backgroundRect = _background->GetRect();
   dst.y = backgroundRect.y + backgroundRect.h - dst.h;
-  dst.x = ((backgroundRect.x + backgroundRect.w) / 2) - (dst.w / 2);
+  dst.x = backgroundRect.x + backgroundRect.w / 2 - dst.w / 2;
 
   _doneBtn = new Button(path, src, dst);
 }

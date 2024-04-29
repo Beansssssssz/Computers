@@ -16,14 +16,14 @@ Button::Button(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool delete
 Button::~Button()
 {};
 
-void Button::Update(MouseButtons btn)
+void Button::Update(MouseButtons btn, bool settingOpen)
 {
   Mouse* mouse = Mouse::GetMouseInstance();
 
   _isPressed = false;
   _isSelected = false;
 
-  if (mouse->IsMouseColliding(_dst)) {
+  if (mouse->IsMouseColliding(_dst) && !settingOpen) {
     _isSelected = true;
     if (mouse->GetPressed() == btn) 
       _isPressed = true;

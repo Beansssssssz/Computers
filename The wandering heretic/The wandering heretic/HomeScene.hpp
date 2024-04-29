@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Button.hpp"
+#include "SignIn.hpp"
+#include "SignUp.hpp"
 
 #define BUTTON_ARR_SIZE 4
 
@@ -21,6 +23,7 @@ public:
   int Update();
 private:
   void UpdateButtons();
+  void UpdateLogins();
   void AboutWindowUpdate();
 
   void HandleInput();
@@ -30,6 +33,7 @@ private:
   void CreateButtons();
   void CreateArrows();
   void CreateAboutWindow();
+  void CreateLoginsWindows();
 
   HomeButtons _current;
 
@@ -39,6 +43,9 @@ private:
 
   Square* _aboutTex;
   Button* _aboutExit;
+
+  SignIn* _signIn;
+  SignUp* _signUp;
 
   bool* _keyPressed;
 

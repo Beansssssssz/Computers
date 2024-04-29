@@ -28,15 +28,18 @@ public:
   int InsertData(UserData data);
   std::vector<UserData> GetUserData();
   GameData GetGameData(int PM);
+  GameData GetGameData(UserData data);
   bool DoesUserExist(UserData data);
   bool DoesUsernameExist(std::string username);
+  void DisplayAllUsers();
+  int GetLastPrimaryKey();
+  
 private:
   static Server* _serverPtr;
   Server();
 
   int CreateTables();
   int DeleteTablesData();
-  int GetLastPrimaryKey();
 
   sqlite3* _db;
 };

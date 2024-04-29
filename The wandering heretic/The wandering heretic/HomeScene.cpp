@@ -8,7 +8,8 @@
 #include "Utils.hpp"
 
 HomeScene::HomeScene()
-  :_buttons(NULL), _bg(NULL), _aboutTex(NULL), _aboutExit(NULL),
+  :_buttons(nullptr), _bg(nullptr), _aboutTex(nullptr),
+  _aboutExit(nullptr), _signIn(nullptr), _signUp(nullptr),
   _current(HomeButtons::Play), _mousePr(false), _aboutOpen(false)
 {
   //creating the background image for the current sence
@@ -25,11 +26,11 @@ HomeScene::HomeScene()
                                                //and Esc(only for about)
 
   _buttons = (Button**)malloc(sizeof(Button*) * BUTTON_ARR_SIZE);
-  if (_buttons == NULL)
-    perror(NULL);
+  if (_buttons == nullptr)
+    perror(nullptr);
   _arrows = (Square**)malloc(sizeof(Button*) * BUTTON_ARR_SIZE * 2);//there are 2 arrows for each button
-  if (_buttons == NULL)
-    perror(NULL);
+  if (_buttons == nullptr)
+    perror(nullptr);
 
   CreateButtons();
   CreateArrows();
@@ -77,6 +78,11 @@ int HomeScene::Update()
 /// </summary>
 void HomeScene::UpdateButtons()
 {
+  if (_signIn != nullptr) {
+    UpdateLogins();
+    return;
+  }
+
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
   ButtonResized(); //needs to applay the resizing before rending
@@ -95,6 +101,30 @@ void HomeScene::UpdateButtons()
   for (int i = 0; i < BUTTON_ARR_SIZE * 2; i++)
     window->Render(_arrows[i]);
 
+}
+
+/// <summary>
+/// updates the login sqaures
+/// and it aquire from the server the user game data
+/// </summary>
+void HomeScene::UpdateLogins()
+{
+  UserData data{ "", "" , "", nullptr};
+  Server* server = Server::GetServerInstance();
+
+  if (_signIn->Update()) 
+    data = _signIn->GetData();
+  
+  else if (_signUp->Update()) 
+    data = _signIn->GetData();
+
+  /* build the user itself */
+  if (data.email != "" || data.username != "") {
+    std::cout << "hey it workeed" << std::endl;
+
+    GameData gData = server->GetGameData(data);
+    std::cout << "money: " << gData.money << std::endl;
+  }
 };
 
 /// <summary>
@@ -330,4 +360,18 @@ void HomeScene::CreateAboutWindow()
   dst = SDL_Rect{ Xstart, Ystart, w,h };
 
   _aboutExit = new Button(tex, src, dst);
+}
+
+void HomeScene::CreateLoginsWindows()
+{
+  Vector2i backgroundStart{ 400, 220 };
+  Vector2i inputStartPos{ backgroundStart.x + 50, backgroundStart.y + 50 };
+  constexpr int margin = 100;
+  
+  _signUp = new SignUp(backgroundStart, inputStartPos, margin);
+
+  backgroundStart.x += margin * 5;
+  inputStartPos.x += margin * 5;
+
+  _signIn = new SignIn(backgroundStart, inputStartPos, margin);
 }

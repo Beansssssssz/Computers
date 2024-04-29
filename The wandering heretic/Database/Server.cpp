@@ -38,21 +38,19 @@ int Server::InsertData(UserData data)
 {
   char* errMsg = nullptr;
   int rc;
-  int PM = this->GetLastPrimaryKey() + 1; 
-  if (PM == 0) {
+  std::string PM = std::to_string(this->GetLastPrimaryKey() + 1);
+  if (PM == "0")
     return 1;
-  }
-
-  std::string UsersInsert = "INSERT INTO Users(UserMail, UserName, UserPassword) \
-    VALUES ('" + data.email + "', '" + data.username + "', '" + data.password + "');";
+  
+  std::string UsersInsert = "INSERT INTO Users(UserId, UserMail, UserName, UserPassword) \
+    VALUES ('" + PM + "', '" + data.email + "', '" + data.username + "', '" + data.password + "');";
 
   GameData gameData = { 0,0,1 };
   if (data.gameData != nullptr)
     gameData = *data.gameData;
-  std::string currentPM = std::to_string(PM);
 
   std::string GameDataInsert = "Insert Into GameData(UserId, Money, Items, MaxLevel)\
-    VALUES('" + currentPM + "', '" + std::to_string(gameData.money) +
+    VALUES('" + PM + "', '" + std::to_string(gameData.money) +
     "', '" + std::to_string(gameData.items) + "', '" + std::to_string(gameData.MaxLevel) + "');";
 
   /* inserting a user into the Users table */
@@ -107,6 +105,42 @@ GameData Server::GetGameData(int PM)
 }
 
 /// <summary>
+/// returns the GameData using the password and ethier email or username
+/// </summary>
+/// <param name="data"></param>
+/// <returns></returns>
+GameData Server::GetGameData(UserData data)
+{
+  sqlite3_stmt* stmt;
+  int rc = 0, PM = -1;
+
+  std::string selectStmt = "SELECT * FROM Users WHERE ";
+
+  if (data.email != "") //if there is email
+    selectStmt += "UserMail = '" + data.email + "' AND ";
+  else //if there is username
+    selectStmt += "UserName = '" + data.username + "' AND ";
+
+  selectStmt += "UserPassword = '" + data.password + "';";
+
+  rc = sqlite3_prepare_v2(_db, selectStmt.c_str(), -1, &stmt, nullptr);
+  if (rc != SQLITE_OK) {
+    std::cerr << "Failed in Selecting data. SQL error: " << sqlite3_errmsg(_db) << std::endl;
+    return {};
+  }
+
+  if (sqlite3_step(stmt) == SQLITE_DONE) {
+    std::cerr << "No user data in server was found the is matching user data " << std::endl;
+    return {};
+  }
+
+  PM = sqlite3_column_int(stmt, 0);
+  GameData gameData = this->GetGameData(PM);
+
+  return gameData;
+}
+
+/// <summary>
 /// checks if the users exist in the database
 /// returns true if user exist otherwise returns false
 /// </summary>
@@ -121,10 +155,12 @@ bool Server::DoesUserExist(UserData data)
   std::string FindUserStatment =  "SELECT * FROM Users\
     WHERE ";
 
-  if (data.email.empty()) //if the user inputed username
-    FindUserStatment += "UserName = '" + data.username + "' ";
+  if(!data.email.empty() && !data.username.empty())
+    FindUserStatment += "UserMail = '" + data.email + "' UserName = '" + data.username + "' ";
+  else if (!data.email.empty()) //if the user inputed username
+    FindUserStatment += "UserName = '" + data.email + "' ";
   else //if the user inputed email
-    FindUserStatment += "UserMail = '" + data.email + "' ";
+    FindUserStatment += "UserName = '" + data.username + "' ";
   
   FindUserStatment += "AND UserPassword = '" + data.password + "';";
 
@@ -140,6 +176,11 @@ bool Server::DoesUserExist(UserData data)
   return true;
 }
 
+/// <summary>
+/// returns true if the username exist in the database
+/// </summary>
+/// <param name="username"></param>
+/// <returns></returns>
 bool Server::DoesUsernameExist(std::string username) {
   sqlite3_stmt* stmt;
   int rc = 0;
@@ -183,7 +224,7 @@ std::vector<UserData> Server::GetUserData()
     username = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
     password = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
 
-    GameData* gameData = new GameData(this->GetGameData(dataVec.size() + 1));
+    GameData* gameData = new GameData(this->GetGameData((int)dataVec.size() + 1));
     dataVec.push_back(UserData{ email, username, password, gameData});
   }
 
@@ -202,9 +243,9 @@ int Server::CreateTables() {
 
   const char* createUsersTable =
     "CREATE TABLE IF NOT EXISTS Users(\
-      UserId INTEGER AUTO_INCREMENT PRIMARY KEY,\
+      UserId INTEGER AUTO INCREMENT PRIMARY KEY,\
       UserMail VARCHAR(50) NOT NULL,\
-      UserName VARCHAR(50) NOT NULL UNIQUE,\
+      UserName VARCHAR(50) NOT NULL,\
       UserPassword VARCHAR(50) NOT NULL\
     );";
 
@@ -313,4 +354,17 @@ int Server::GetLastPrimaryKey() {
   sqlite3_finalize(stmt);
 
   return lastPrimaryKey;
+}
+
+void Server::DisplayAllUsers() {
+  std::vector<UserData> vec = this->GetUserData();
+  int PM = 1;
+
+  for (UserData data : vec) {
+    std::cout << "user id: " << PM << ", " <<
+      "email: " << data.email << ", " <<
+      "username: " << data.username << ", " <<
+      "password: " << data.password << ", " <<
+      std::endl;
+  }
 }
