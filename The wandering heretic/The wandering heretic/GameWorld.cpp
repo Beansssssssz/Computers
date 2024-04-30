@@ -13,12 +13,14 @@ GameWorld::GameWorld(json* data, std::string path)
   SDL_Rect src{ 60, 60, 178, 216 };
   SDL_Rect dst{ 65, 65, 178 / 2 , 216 / 2 };
   GIF* gif = new GIF("Assets\\Character\\FrogIdle\\FrogIdle_", 12, src, dst, 180);
-  _player = new BasePlayer(&gif);
+  _player = new GamePlayer({ gif });
 }
 
 GameWorld::~GameWorld()
 {
-  _vec.clear();//supposed to delete all the vars inside
+  for (Entity* entity: _vec)
+    delete entity;
+  _vec.clear();
 
   delete _player;
   delete _settingsBtn;
@@ -26,7 +28,6 @@ GameWorld::~GameWorld()
 
 bool GameWorld::Update()
 {
-
   this->UpdateWorldOffset();
   this->UpdateWorldEntities();
   return this->KeyboardUpdater();
@@ -60,7 +61,7 @@ void GameWorld::UpdateWorldOffset()
     offsetX = (int)speed->x;
 
   //check is the player is too far right
-  if (dst->x > w - w / div)
+  if (dst->x > w / div)
     offsetX = (int)speed->x;
 
   //updates vector

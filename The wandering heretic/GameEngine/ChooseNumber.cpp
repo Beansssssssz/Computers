@@ -17,7 +17,7 @@ ChooseNumber::~ChooseNumber()
 }
 
 /// <summary>
-/// returns a number between 1 - 128 if the player chose a button.
+/// returns a number between 1 - 128 if the user chose a button.
 /// if no number was chossen then returns 0.
 /// if the window was closed then returns a -1;
 /// </summary>

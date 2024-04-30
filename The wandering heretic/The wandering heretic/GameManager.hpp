@@ -24,6 +24,7 @@ public:
   void UpdateWelcomeScene();
   bool UpdateHomeScene();
   void UpdateGameScene();
+
 private:
   Scenes _currentScene = Scenes::welcome;//You always start at the welcome Scene
 

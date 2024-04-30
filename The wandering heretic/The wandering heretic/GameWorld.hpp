@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BasePlayer.hpp"
+#include "GamePlayer.hpp"
 #include "Entity.hpp"
 #include "Button.hpp"
 
@@ -25,7 +25,7 @@ private:
   json* _data;
   std::string _path;
 
-  BasePlayer* _player;
+  GamePlayer* _player;
   Button* _settingsBtn;
   std::vector<Entity*> _vec;
 };

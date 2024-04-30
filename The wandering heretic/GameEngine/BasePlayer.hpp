@@ -3,8 +3,6 @@
 
 #include <vector>
 
-#define GifTypesCount 1 // all the gif types that there are
-
 enum class GifTypes
 {
   idle,
@@ -17,21 +15,21 @@ enum class GifTypes
 class BasePlayer : public Entity
 {
 public:
-  BasePlayer(GIF** gifs, bool _collisionEnabled = true);
+  BasePlayer(std::vector<GIF*> gifs, bool _collisionEnabled = true);
   virtual ~BasePlayer();
 
   void Update(std::vector<Entity*> vec);
-  void ChangeType(GifTypes type);
 
   Vector2f* GetSpeed();
-
 private:
-  void GetInput();
+  void UpdateCurrentGif();
   void UpdateVelocity(std::vector<Entity*> vec);
   void CheckJump(std::vector<Entity*> vec);
 
+  void GetInput();
+
 private: //private members
-  GIF** _gifs;
+  std::vector<GIF*> _gifs;
   GifTypes _currentType;
 
   bool _canJump;

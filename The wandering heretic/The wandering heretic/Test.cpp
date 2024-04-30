@@ -3,8 +3,8 @@
 #include "SignUp.hpp"
 #include "SignIn.hpp"
 
-bool RenderWindow::GLOBAL_SETTING_OPEN = false; //i need to initialze it
-
+//initializing a global variable 
+bool RenderWindow::GLOBAL_SETTING_OPEN = false;
 
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = nullptr;
@@ -98,21 +98,19 @@ then sends u back into the level choosing
 ========TRY========:
 0.bug -> when pressing done button in signIn it also presses settings
 
+1.check my scrolling (was very very scuffed)
 
-1.search for UB and fix bugs -> just play the game
+2.make jump more smooth(like hollow knight smooth)
 
-2.fix the save game function in editing
+3.fix the save game function in editing
 
-3.make jump more smooth(like hollow knight smooth)
+4.search for UB and fix bugs -> just play the game
 
-4.check my scrolling (was very very scuffed)
 */
 
 
 /*
   roadmap to finish everything:
-  2. add sign in and sign up to menu
-
   3.  add a finish line and an animation for it
 
   5. add in the hub a shop

@@ -4,16 +4,18 @@
 #include <vector>
 #include <iostream>
 
-BasePlayer::BasePlayer(GIF** gifs, bool _collisionEnabled)
-  :BasePlayer::Entity(gifs[0], gifs[0]->GetSrcRect(), gifs[0]->GetDstRect()),
+BasePlayer::BasePlayer(std::vector<GIF*> gifs, bool _collisionEnabled)
+  :BasePlayer::Entity((GIF*)nullptr, gifs[0]->GetSrcRect(), gifs[0]->GetDstRect()),
   _gifs(gifs), _currentType(GifTypes::idle), _canJump(true), _isJumping(false)
 {
 }
 
 BasePlayer::~BasePlayer()
 {
-  for (size_t i = 1; i < GifTypesCount; i++)
-    delete _gifs[i];
+  for (GIF* gif: _gifs)
+    delete gif;
+  _gifs.clear();
+
 }
 
 /// <summary>
@@ -23,16 +25,16 @@ void BasePlayer::Update(std::vector<Entity*> vec)
 {
   Entity::Update();
 
+  this->UpdateCurrentGif();
   this->CheckJump(vec);
   this->GetInput();
   this->UpdateVelocity(vec);
 }
 
-void BasePlayer::ChangeType(GifTypes type)
-{
-  _currentType = type;
-}
-
+/// <summary>
+/// returns the pointer to the speed variable
+/// </summary>
+/// <returns></returns>
 Vector2f* BasePlayer::GetSpeed()
 {
   return &_speed;
@@ -65,9 +67,20 @@ void BasePlayer::GetInput()
   }
 }
 
+/// <summary>
+/// updtates the current gif and renders it
+/// </summary>
+void BasePlayer::UpdateCurrentGif()
+{
+  GIF* currentGif = _gifs[(int)_currentType];
+
+  currentGif->SetDstRect(_dst);
+  currentGif->Update();
+  currentGif->RenderGIF(_isRight);
+}
 
 /// <summary>
-/// updates the plater velocity including moving the player
+/// updates the player velocity including moving the player
 /// </summary>
 /// <param name="vec"></param>
 void BasePlayer::UpdateVelocity(std::vector<Entity*> vec)
@@ -92,6 +105,11 @@ void BasePlayer::UpdateVelocity(std::vector<Entity*> vec)
   }
 }
 
+/// <summary>
+/// checks wether or not the player can jump
+/// by check if there is a block right underneath him
+/// </summary>
+/// <param name="vec"></param>
 void BasePlayer::CheckJump(std::vector<Entity*> vec)
 {
   SDL_Rect check{ _dst.x, _dst.y + _dst.h , _dst.w, 1 };

@@ -1,28 +1,37 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect)
-  :Entity(tex, srcrect, dstrect), foundPlayer(false)
+
+Enemy::Enemy(std::vector<GIF*> gifs, SDL_Rect srcrect, SDL_Rect dstrect)
+ :Entity((GIF*)nullptr, srcrect, dstrect), _gifs(gifs),
+  foundPlayer(false), _currentType(GifTypes::idle)
 {
 }
-
-Enemy::Enemy(std::string path, SDL_Rect srcrect, SDL_Rect dstrect)
-  : Entity(path, srcrect, dstrect), foundPlayer(false)
-{
-}
-
-Enemy::Enemy(GIF** gif, SDL_Rect srcrect, SDL_Rect dstrect)
- :Entity(gif[0], srcrect, dstrect), foundPlayer(false)
-{
-}
-
 
 void Enemy::Update(std::vector<Entity*> vec, BasePlayer player)
 {
-  Entity::Update();
+  UpdateCurrentGif();
 
   //move to right or left
   UpdateMovment(vec, player);
 }
+
+/// <summary>
+/// updates and renders the current gif
+/// </summary>
+void Enemy::UpdateCurrentGif()
+{
+  GIF* currentGif = _gifs[(int)_currentType];
+
+  currentGif->SetDstRect(_dst);
+  currentGif->Update();
+  currentGif->RenderGIF(_isRight);
+}
+
+/// <summary>
+/// updtes where the enemy needs to move to
+/// </summary>
+/// <param name="vec"></param>
+/// <param name="player"></param>
 void Enemy::UpdateMovment(std::vector<Entity*> vec, BasePlayer player)
 {
   //check if this enemy is going right or left
@@ -45,6 +54,13 @@ void Enemy::UpdateMovment(std::vector<Entity*> vec, BasePlayer player)
     _isRight = !_isRight;
 }
 
+/// <summary>
+/// makes the enemy search for the player
+/// if found it will go to him
+/// </summary>
+/// <param name="vec"></param>
+/// <param name="player"></param>
+/// <returns></returns>
 bool Enemy::SearchForPlayer(std::vector<Entity*> vec, BasePlayer player)
 {
   SDL_Rect* playerDst = GetDstRect();
