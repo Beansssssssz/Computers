@@ -9,7 +9,6 @@ class Enemy : public Entity
 public :
   Enemy(std::vector<GIF*> gifs, SDL_Rect srcrect, SDL_Rect dstrect);
 
-
   void Update(std::vector<Entity*> vec, BasePlayer player);
 private:
   void UpdateCurrentGif();
