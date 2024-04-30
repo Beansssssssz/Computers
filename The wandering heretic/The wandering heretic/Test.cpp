@@ -111,7 +111,7 @@ then sends u back into the level choosing
 
 /*
   roadmap to finish everything:
-  3.  add a finish line and an animation for it
+  1.  add a finish line and an animation for it
 
-  5. add in the hub a shop
+  2. add in the hub a shop
 */ 
