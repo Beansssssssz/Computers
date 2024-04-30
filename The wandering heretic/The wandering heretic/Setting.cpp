@@ -33,12 +33,17 @@ bool Settings::Update(bool NeedExitGame)
     return false;
 
   Settings::PopUpWindow::Update();
+  if (!this->GetTabOpen()) {
+    RenderWindow::GLOBAL_SETTING_OPEN = false;
+    return false;
+  }
+
   UpdateText();
   UpdateMusic();
 
-
   if (NeedExitGame)
     return UpdateQuitBtn();
+
   return false;
 };
 

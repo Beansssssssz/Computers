@@ -18,6 +18,7 @@ public:
 
   bool Update();
   UserData GetData();
+  bool IsOpen();
 
 private:
   void DisplaySquareNames();

@@ -33,16 +33,3 @@ private:
 
   Settings* _settings;
 };
-
-
-//
-//{
-//  if (keyboard.GetKeyArray()[SDL_SCANCODE_B] || listen) {
-//    listen = true;
-//    keyboard.StartBuildText();
-//  }
-//  if (keyboard.GetKeyArray()[SDL_SCANCODE_X] && listen) {
-//    listen = false;
-//    keyboard.StopBuildText(false);
-//  }
-//}

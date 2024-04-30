@@ -3,6 +3,9 @@
 #include "SignUp.hpp"
 #include "SignIn.hpp"
 
+bool RenderWindow::GLOBAL_SETTING_OPEN = false; //i need to initialze it
+
+
 //initializing singletons
 RenderWindow* RenderWindow::_windowPtr = nullptr;
 Mouse* Mouse::_mousePtr = nullptr;
@@ -79,15 +82,7 @@ int main(int argc, char* argv[]) {
   return 0;
 };
 
-/*
-* VACATION:
-* Add sign in and sign up to the menu
-* -> add a button whihc is LogIn.png
-* ->once button is pressed it opens a 
-*
-* 
-* add enemy to the world
-  
+/* 
 ========NOW========:
 //Add enemy to the world
  add an enemy vector from the json
@@ -100,16 +95,10 @@ int main(int argc, char* argv[]) {
 //when u reach a certin point in the world then u finish the level mario style,
 then sends u back into the level choosing
 
-========TODO========:
-
-1.add a way to "freeze" stuff ->
-a way to tell the mouse to stop the pressing on other buttons
-or -> use the bool as a pointer or ref(ref better) and when u r updating the buttons
-check if the settings is open.
-
-2.add a way to delete blocks in the editing world
-
 ========TRY========:
+0.bug -> when pressing done button in signIn it also presses settings
+
+
 1.search for UB and fix bugs -> just play the game
 
 2.fix the save game function in editing
@@ -127,4 +116,4 @@ check if the settings is open.
   3.  add a finish line and an animation for it
 
   5. add in the hub a shop
-*/
+*/ 

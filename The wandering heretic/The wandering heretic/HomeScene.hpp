@@ -46,6 +46,7 @@ private:
 
   SignIn* _signIn;
   SignUp* _signUp;
+  Button* _logins;
 
   bool* _keyPressed;
 

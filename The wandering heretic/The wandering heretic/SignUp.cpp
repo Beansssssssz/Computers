@@ -73,6 +73,15 @@ UserData SignUp::GetData()
 }
 
 /// <summary>
+/// return true if the background of the SignUp is closed
+/// </summary>
+/// <returns></returns>
+bool SignUp::IsOpen()
+{
+  return _background->GetTabOpen();
+}
+
+/// <summary>
 /// displays the names of each square 
 /// </summary>
 void SignUp::DisplaySquareNames()

@@ -9,7 +9,7 @@
 
 HomeScene::HomeScene()
   :_buttons(nullptr), _bg(nullptr), _aboutTex(nullptr),
-  _aboutExit(nullptr), _signIn(nullptr), _signUp(nullptr),
+  _aboutExit(nullptr), _signIn(nullptr), _signUp(nullptr), _logins(nullptr),
   _current(HomeButtons::Play), _mousePr(false), _aboutOpen(false)
 {
   //creating the background image for the current sence
@@ -62,13 +62,16 @@ int HomeScene::Update()
   //render background
   window->Render(_bg);
 
-  if (!_aboutOpen) 
-    UpdateButtons();
-  else {
+  if (_signIn != nullptr) {
+    UpdateLogins();
+    return -1; //no need to go on other iteration
+  }
+  else if(_aboutOpen){
     AboutWindowUpdate();
-    return -1;//no need to go on other iterations 
+    return -1;
   }
 
+  UpdateButtons();
   HandleInput();
   return CheckButtons();
 }
@@ -78,11 +81,6 @@ int HomeScene::Update()
 /// </summary>
 void HomeScene::UpdateButtons()
 {
-  if (_signIn != nullptr) {
-    UpdateLogins();
-    return;
-  }
-
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
   ButtonResized(); //needs to applay the resizing before rending
@@ -91,7 +89,7 @@ void HomeScene::UpdateButtons()
   //Buttons Update and render
   for (int i = 0; i < BUTTON_ARR_SIZE; i++)
   {
-    _buttons[i]->Update();
+    _buttons[i]->Update(MouseButtons::mbl, RenderWindow::GLOBAL_SETTING_OPEN);
     window->Render((Square*)_buttons[i]);
     if (_buttons[i]->GetIsSelected())
       _mousePr = true;
@@ -101,6 +99,12 @@ void HomeScene::UpdateButtons()
   for (int i = 0; i < BUTTON_ARR_SIZE * 2; i++)
     window->Render(_arrows[i]);
 
+  /* check if to start login */
+  _logins->Update();
+  window->Render(_logins);
+
+  if (_logins->GetIsPressed())
+    CreateLoginsWindows();
 }
 
 /// <summary>
@@ -118,12 +122,29 @@ void HomeScene::UpdateLogins()
   else if (_signUp->Update()) 
     data = _signIn->GetData();
 
+  /* check if both logins are closed */
+  if (!_signIn->IsOpen() && !_signUp->IsOpen())
+  {
+    delete _signIn;
+    _signIn = nullptr;
+
+    delete _signUp;
+    _signUp = nullptr;
+  }
+
   /* build the user itself */
   if (data.email != "" || data.username != "") {
     std::cout << "hey it workeed" << std::endl;
 
     GameData gData = server->GetGameData(data);
     std::cout << "money: " << gData.money << std::endl;
+
+    /* deleting the old values */
+    delete _signIn;
+    _signIn = nullptr;
+
+    delete _signUp;
+    _signUp = nullptr;
   }
 };
 
@@ -161,6 +182,7 @@ void HomeScene::HandleInput()
 {
   if (_mousePr)//basicly means if the mouse is selecting dont do nothing
     return;
+
   _buttons[(int)_current]->SetIsSelected(false);
   _buttons[(int)_current]->SetIsPressed(false);
 
@@ -292,7 +314,11 @@ void HomeScene::CreateButtons()
     _buttons[i] = new Button(tex, src, dst);
   }
 
-  //56+7 is the size of an arrow and the empty space
+  /* creating the login button: */
+  dst = SDL_Rect{ 0, 1080 - 146, 146, 148 }; ///bottom left
+  src = SDL_Rect{ 0, 0, 146, 148 };
+  std::string path = "Assets/GUI/loginBtn.png";
+  _logins = new Button(path, src, dst);
 };
 
 /// <summary>

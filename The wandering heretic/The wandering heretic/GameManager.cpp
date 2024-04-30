@@ -45,7 +45,9 @@ bool GameManager::Update()
   if (_settings->Update(_currentScene != Scenes::home)) {
     _currentScene = Scenes::welcome;
     _settings->SetTabOpen(false);
+    RenderWindow::GLOBAL_SETTING_OPEN = false;
   }
+
   return true;
 };
 
@@ -69,8 +71,10 @@ bool GameManager::UpdateHomeScene()
   if (ret == (int)HomeButtons::Play) 
     _currentScene = Scenes::game;
 
-  else if (ret == (int)HomeButtons::Settings)
+  else if (ret == (int)HomeButtons::Settings) {
     _settings->SetTabOpen(true);
+    RenderWindow::GLOBAL_SETTING_OPEN = true;
+  }
 
   else if (ret == (int)HomeButtons::Quit)
     return false;
@@ -83,6 +87,8 @@ bool GameManager::UpdateHomeScene()
 /// </summary>
 void GameManager::UpdateGameScene()
 {
-  if (_gameScene->Update())
+  if (_gameScene->Update()) {
     _settings->SetTabOpen(true);
+    RenderWindow::GLOBAL_SETTING_OPEN = true;
+  }
 }

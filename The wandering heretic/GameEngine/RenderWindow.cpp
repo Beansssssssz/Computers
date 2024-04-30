@@ -122,7 +122,3 @@ void RenderWindow::FlipAndPrintTexture(SDL_Texture* tex, SDL_Rect src, SDL_Rect 
   SDL_RenderCopyEx(renderer, tex, &src, &dst, 0, NULL, (SDL_RendererFlip)flip);
   //SDL_RenderPresent(renderer); // Present the rendered texture
 }
-
-
-
-

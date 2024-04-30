@@ -65,6 +65,15 @@ UserData SignIn::GetData()
 }
 
 /// <summary>
+/// return true if the background of the SignIn is closed
+/// </summary>
+/// <returns></returns>
+bool SignIn::IsOpen()
+{
+	return _background->GetTabOpen();
+}
+
+/// <summary>
 
 /// </summary>
 /// <param name="email">OUT the passsword the user inputed</param>
