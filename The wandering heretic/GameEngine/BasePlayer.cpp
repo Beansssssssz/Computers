@@ -65,6 +65,9 @@ void BasePlayer::GetInput()
     _speed.x = -MAX_SPEED;
     _isRight = false;
   }
+
+  else
+    _speed.x = 0; //if the user isnt moving the player
 }
 
 /// <summary>
@@ -86,36 +89,44 @@ void BasePlayer::UpdateCurrentGif()
 void BasePlayer::UpdateVelocity(std::vector<Entity*> vec)
 {
   //moving in the x axis
-   this->MoveTo(vec, (int8_t)_speed.x, 0, true);
+  if (!this->MoveTo(vec, (int8_t)_speed.x, 0, true))
+    _speed.x = 0; // if u cant move then remove the speed
 
    //moving in the y axis
-   this->MoveTo(vec, 0, (int8_t)_speed.y, true);
-
-  //resting the speed;
-  _speed.x = 0;
-
-  //applying gravity
-  if (_speed.y < MAX_GRAVITY)
-    _speed.y += GRAVITY;
-
-  //checking is player can still jump
-  if (_isJumping && _speed.y <= MAX_JUMP) {
-    _isJumping = false;
-    _speed.y = MAX_JUMP;
-  }
+   if (!this->MoveTo(vec, 0, (int8_t)_speed.y, true))
+     _speed.y = 0; // if u cant move then remove the speeds
 }
 
 /// <summary>
 /// checks wether or not the player can jump
 /// by check if there is a block right underneath him
+/// and it also applies gravity 
 /// </summary>
 /// <param name="vec"></param>
 void BasePlayer::CheckJump(std::vector<Entity*> vec)
 {
-  SDL_Rect check{ _dst.x, _dst.y + _dst.h , _dst.w, 1 };
-  for(Entity* entity: vec)
-    if (entity->IsColliding(check)) {
+  //checking is player can still jump
+  if (_isJumping && _speed.y <= MAX_JUMP) {
+    _isJumping = false;
+    _speed.y = MAX_JUMP;
+  }
+
+  SDL_Rect checkUnder{ _dst.x, _dst.y + _dst.h , _dst.w, 1 };
+  SDL_Rect checkAbove{ _dst.x, _dst.y - 1, _dst.w, 1 };
+
+  for (Entity* entity : vec) {
+    if (entity->IsColliding(checkAbove)) {
+      _isJumping = false;
+      _speed.y += GRAVITY;
+    }
+
+    if (entity->IsColliding(checkUnder)) {
       _canJump = true;
       return;
     }
+  }
+
+  //applying gravity(no need to apply gravity if there a block underneath)
+  if (_speed.y < MAX_GRAVITY)
+    _speed.y += GRAVITY;
 }

@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
   Audio* audio = Audio::GetAudioInstance();
   Server* server = Server::GetServerInstance();
 
-  GameManager gm;
+  GameManager* gm = new GameManager();
 
   SDL_Event event;
   bool running = true;
@@ -58,13 +58,16 @@ int main(int argc, char* argv[]) {
     mouse->Update();
     keyboard->Update();
 
-    if (running && !gm.Update())//if the game is not going to be closed from events
+    if (running && !gm->Update())//if the game is not going to be closed from events
       running = false;
 
     window->Display();
 
     utils::CapFPS(start, 60);
   };
+
+  //deleting the game manager aka the game itselfs
+  delete gm;
 
   //deleting singletons
   delete window;
@@ -98,14 +101,9 @@ then sends u back into the level choosing
 ========TRY========:
 0.bug -> when pressing done button in signIn it also presses settings
 
-1.check my scrolling (was very very scuffed)
-
-2.make jump more smooth(like hollow knight smooth)
-
 3.fix the save game function in editing
 
 4.search for UB and fix bugs -> just play the game
-
 */
 
 

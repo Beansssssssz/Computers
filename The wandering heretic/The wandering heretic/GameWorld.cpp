@@ -11,7 +11,7 @@ GameWorld::GameWorld(json* data, std::string path)
   _vec = jsonParser::FromJsonToVector<Entity>(*data);
 
   SDL_Rect src{ 60, 60, 178, 216 };
-  SDL_Rect dst{ 65, 65, 178 / 2 , 216 / 2 };
+  SDL_Rect dst{ 65 + 200, 65, 178 / 2 , 216 / 2 };
   GIF* gif = new GIF("Assets\\Character\\FrogIdle\\FrogIdle_", 12, src, dst, 180);
   _player = new GamePlayer({ gif });
 }
@@ -43,25 +43,23 @@ void GameWorld::UpdateWorldOffset()
 
   int w = 0, h = 0;
   RenderWindow::GetWidthHeight(w, h);
+  constexpr int startEndX = 200;
+  constexpr int startEndY = 200;
 
-  h -= dst->h;
-  w -= dst->w;
-
-  constexpr char div = 16;
   //check is the player is too far up
-  if(dst->y < h / div)
-    offsetY = (int)speed->y;
+  //if(dst->y <= startEndY)
+  //  offsetY = (int)speed->y;
 
   //check is the player is too far down
-  if(dst->y >  h - h / div)
+  if(dst->y + dst->h >= h - startEndY)
     offsetY = (int)speed->y;
 
   //check is the player is too far left
-  if(dst->x < w / div)
-    offsetX = (int)speed->x;
+  if(dst->x <= startEndX)
+     offsetX = (int)speed->x;
 
   //check is the player is too far right
-  if (dst->x > w / div)
+  if (dst->x + dst->w >= w - startEndX)
     offsetX = (int)speed->x;
 
   //updates vector
@@ -77,7 +75,7 @@ void GameWorld::UpdateWorldOffset()
 /// <param name="dst"></param>
 void GameWorld::OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst)
 {
-  if (!offsetX && !offsetY)
+  if (offsetX == 0 && offsetY == 0)
     return;
 
   SDL_Rect* rect = nullptr;

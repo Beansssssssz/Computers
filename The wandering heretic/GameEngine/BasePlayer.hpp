@@ -40,8 +40,6 @@ private: //private members
   constexpr static int MAX_JUMP = -10;
   constexpr static float MAX_GRAVITY = 10.0f;
 
-  constexpr static float JUMP = -2.0f;
+  constexpr static float JUMP = -5.0f;
   constexpr static float GRAVITY = 0.3f;
 };
-
-

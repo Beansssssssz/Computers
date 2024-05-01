@@ -40,6 +40,8 @@
 
   /// <summary>
   /// moves the dst to the desired loc
+  /// return true if the entity moved said offset
+  /// otherwise returns false
   /// </summary>
   /// <param name="offsetX:"> the amount to change in the x axis</param>
   /// <param name="offsetY:"> the amount to change in the y axis</param>
