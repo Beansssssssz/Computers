@@ -54,7 +54,7 @@ HomeScene::~HomeScene()
 /// the return value is the current action,the action is play:0,quit:3 or none:-1
 /// </summary>
 /// <returns>return the current action if no action is happing
-/// then -1 is returned</returns>
+/// then 0 is returned</returns>
 int HomeScene::Update()
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();

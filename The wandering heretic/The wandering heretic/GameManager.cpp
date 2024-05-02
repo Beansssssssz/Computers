@@ -4,8 +4,8 @@
 
 GameManager::GameManager()
   :_wcScene(new WelcomeScene()),
-  _homeScene(new HomeScene()),
-  _gameScene(new GameScene())
+  _homeScene(nullptr),
+  _gameScene(nullptr)
 {
   _settings = Settings::CreateSettings();
 };
@@ -57,8 +57,10 @@ bool GameManager::Update()
 /// </summary>
 void GameManager::UpdateWelcomeScene()
 {
-  if (_wcScene->Update())
+  if (_wcScene->Update()) {
     _currentScene = Scenes::home;
+    _homeScene = new HomeScene;
+  }
 }
 
 /// <summary>
@@ -67,17 +69,26 @@ void GameManager::UpdateWelcomeScene()
 /// <returns></returns>
 bool GameManager::UpdateHomeScene()
 {
-  int ret = _homeScene->Update();
-  if (ret == (int)HomeButtons::Play) 
+  HomeButtons ret = (HomeButtons)_homeScene->Update();
+  switch (ret)
+  {
+  case HomeButtons::Play:
     _currentScene = Scenes::game;
 
-  else if (ret == (int)HomeButtons::Settings) {
+    _gameScene = new GameScene();
+    delete _homeScene;
+    _homeScene = nullptr;
+    break;
+
+  case HomeButtons::Settings:
     _settings->SetTabOpen(true);
     RenderWindow::GLOBAL_SETTING_OPEN = true;
-  }
+    break;
 
-  else if (ret == (int)HomeButtons::Quit)
+  case HomeButtons::Quit:
     return false;
+    break;
+  }
 
   return true;
 };
@@ -87,8 +98,23 @@ bool GameManager::UpdateHomeScene()
 /// </summary>
 void GameManager::UpdateGameScene()
 {
-  if (_gameScene->Update()) {
+  GameReturnValues ret = _gameScene->Update();
+  switch (ret)
+  {
+  case GameReturnValues::Settings:
     _settings->SetTabOpen(true);
     RenderWindow::GLOBAL_SETTING_OPEN = true;
+    break;
+
+  case GameReturnValues::Home:
+    _currentScene = Scenes::home;
+
+    delete _gameScene;
+    _homeScene = new HomeScene();
+    break;
+
+  default:
+    break;
   }
 }
+

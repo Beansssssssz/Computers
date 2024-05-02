@@ -1,4 +1,5 @@
 #pragma once
+
 #include <SDL.h>
 #include <iostream>
 
@@ -87,4 +88,10 @@ namespace utils {
     return rect1.x == rect2.x && rect1.y == rect2.y
       && rect1.w == rect2.w && rect1.h == rect2.h;
   }
+};
+
+enum class GameReturnValues {
+  None = 0,
+  Settings = 1,
+  Home = 2
 };

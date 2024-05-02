@@ -16,22 +16,11 @@ public:
   GameScene();
   ~GameScene();
 
-  int Update();
+  GameReturnValues Update();
 private:
-  void LogUser();
 
-  void CreateInputTextAreas();
-
-  std::string _currentUser;
   Square* _bg;
-
-  LevelEditor* _edit;//the level editor
+  LevelEditor* _edit;
   GameWorld* _world;
-
-  InputText** _inText;
-  ChooseNumber* cn;
-
-  bool _logUser;
-  bool _choosingLevel;
-  std::string _username;
+  ChooseNumber* _cn;
 };

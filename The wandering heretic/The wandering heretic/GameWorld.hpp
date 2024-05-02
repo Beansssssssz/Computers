@@ -3,6 +3,7 @@
 #include "GamePlayer.hpp"
 #include "Entity.hpp"
 #include "Button.hpp"
+#include "Utils.hpp"
 
 #include <vector>
 #include <nlohmann/json.hpp>
@@ -15,12 +16,12 @@ public:
   GameWorld(json* data, std::string path);
   ~GameWorld();
 
-  bool Update();
+  GameReturnValues Update();
 private:
   void UpdateWorldOffset();
   void OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst);
   void UpdateWorldEntities();
-  bool KeyboardUpdater();
+  GameReturnValues KeyboardUpdater();
 
   json* _data;
   std::string _path;

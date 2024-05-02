@@ -46,7 +46,7 @@ LevelEditor::~LevelEditor()
   delete _sideButtons;
 }
 
-int LevelEditor::Update()
+GameReturnValues LevelEditor::Update()
 {
   UpdateButtons();
   AddButtons();
@@ -185,9 +185,10 @@ void LevelEditor::HandleInput()
 
 /// <summary>
 /// updates all the none main function buttons
+/// returns true if to open up settings otherwise returns false
 /// </summary>
 /// <returns></returns>
-bool LevelEditor::UpdateSideButtons()
+GameReturnValues LevelEditor::UpdateSideButtons()
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
@@ -223,10 +224,10 @@ bool LevelEditor::UpdateSideButtons()
 
   else if (_sideButtons[2]) {
     _sideButtons[2] = false;
-    return true;
+    return GameReturnValues::Settings;
   }
 
-  return false;
+  return GameReturnValues::None;
 }
 
 /// <summary>

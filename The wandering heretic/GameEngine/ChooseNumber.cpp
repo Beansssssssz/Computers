@@ -30,6 +30,23 @@ char ChooseNumber::Update()
 }
 
 /// <summary>
+/// returns true if the tab is currently open
+/// </summary>
+/// <returns></returns>
+bool ChooseNumber::GetIsOpen() {
+  return this->_tab->GetTabOpen();
+}
+
+/// <summary>
+/// Sets the tab
+/// if it's closed or open
+/// </summary>
+/// <returns></returns>
+void ChooseNumber::SetOpen(bool state) {
+  this->_tab->SetTabOpen(false);
+}
+
+/// <summary>
 /// updates the window and checks if the window was closed
 /// if window was closed then returns false
 /// otherwise returns true.

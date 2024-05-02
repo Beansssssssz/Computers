@@ -14,7 +14,9 @@ Button::Button(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool delete
   {}
 
 Button::~Button()
-{};
+{
+  Square::~Square();
+};
 
 void Button::Update(MouseButtons btn, bool settingOpen)
 {

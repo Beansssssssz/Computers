@@ -3,6 +3,7 @@
 #include "RenderWindow.hpp"
 #include "Keyboard.hpp"
 #include "JsonParser.hpp"
+#include "Utils.hpp"
 
 GameWorld::GameWorld(json* data, std::string path)
   :_data(data), _path(path),
@@ -26,11 +27,11 @@ GameWorld::~GameWorld()
   delete _settingsBtn;
 }
 
-bool GameWorld::Update()
+GameReturnValues GameWorld::Update()
 {
-  this->UpdateWorldOffset();
-  this->UpdateWorldEntities();
-  return this->KeyboardUpdater();
+  UpdateWorldOffset();
+  UpdateWorldEntities();
+  return KeyboardUpdater();
 }
 
 void GameWorld::UpdateWorldOffset()
@@ -111,13 +112,14 @@ void GameWorld::UpdateWorldEntities()
 /// <summary>
 /// updates all the world entities
 /// </summary>
-bool GameWorld::KeyboardUpdater()
+GameReturnValues GameWorld::KeyboardUpdater()
 {
   Keyboard* key = Keyboard::GetKeyboardInstance();
 
   Uint8* keyarr = key->GetKeyArray();
 
   if (keyarr[SDL_SCANCODE_ESCAPE])
-    return true;
-  return false;
+    return GameReturnValues::Settings;
+
+  return GameReturnValues::None;
 }

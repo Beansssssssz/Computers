@@ -11,6 +11,8 @@ public:
   ~ChooseNumber();
 
   char Update();
+  bool GetIsOpen();
+  void SetOpen(bool state);
 private:
   bool UpdateWindow();
   char UpdateButtons();
