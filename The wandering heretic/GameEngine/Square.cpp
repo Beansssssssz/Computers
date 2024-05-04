@@ -37,20 +37,11 @@ bool Square::IsColliding(SDL_Rect rect)
   return SDL_HasIntersection(&_dst, &rect);
 }
 
-/// <summary>
-/// returns texture of the rect
-/// </summary>
-/// <returns></returns>
 SDL_Texture* Square::GetTexture()
 {
   return _tex;
 }
 
-/// <summary>
-/// sets the texture of the rect to the provided texture
-/// if u want the src rect to stay the then dont input the src param
-/// </summary>
-/// <param name="texture"></param>
 void Square::SetTexture(const char* path, SDL_Rect src)
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -65,7 +56,6 @@ void Square::SetTexture(const char* path, SDL_Rect src)
 
 void Square::SetTexture(SDL_Texture* tex, SDL_Rect src)
 {
-
   SDL_DestroyTexture(_tex);
   _path = "";
   _tex = tex;
@@ -74,47 +64,26 @@ void Square::SetTexture(SDL_Texture* tex, SDL_Rect src)
     _src = src;
 };
 
-/// <summary>
-/// Returns the path of the Texture.
-/// returns an empty string if there is no path
-/// </summary>
-/// <returns></returns>
 std::string Square::GetPath()
 {
   return _path;
 };
 
-/// <summary>
-/// Sets the source rect of the rect to the provided rect.
-/// </summary>
-/// <param name="rect">SDL_Rect type</param>
 void Square::SetSrcRect(SDL_Rect rect)
 {
   _src = rect;
 }
 
-/// <summary>
-/// sets the dest rect of the rect to the provided rect
-/// </summary>
-/// <param name="rect"></param>
 void Square::SetDstRect(SDL_Rect rect)
 {
   _dst = rect;
 };
 
-/// <summary>
-/// returns the source rect
-/// </summary>
-/// <returns></returns>
 SDL_Rect* Square::GetSrcRect()
 {
   return &_src;
 };
 
-/// <summary>
-/// returns the dest rect
-/// </summary>
-/// <returns></returns>
 SDL_Rect* Square::GetDstRect()
 {
   return &_dst;

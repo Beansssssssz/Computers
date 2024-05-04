@@ -6,8 +6,6 @@
 enum class GifTypes
 {
   idle,
-  walking,
-  running,
   attacking,
   death
 };
@@ -28,7 +26,7 @@ private:
 
   void GetInput();
 
-private: //private members
+protected: //private members
   std::vector<GIF*> _gifs;
   GifTypes _currentType;
 
@@ -36,6 +34,8 @@ private: //private members
   bool _isJumping;
 
   Vector2f _speed;
+
+private:
   constexpr static int MAX_SPEED = 10;
   constexpr static int MAX_JUMP = -10;
   constexpr static float MAX_GRAVITY = 10.0f;

@@ -31,6 +31,12 @@ RenderWindow::~RenderWindow() {
   SDL_DestroyWindow(window);
 };
 
+/// <summary>
+/// returns the instance to the static object of this class
+/// this is the only way to get an object of this class
+/// this always returns the same object
+/// </summary>
+/// <returns></returns>
 RenderWindow* RenderWindow::GetRenderWindowInstance() {
   if (_windowPtr == nullptr)
     _windowPtr = new RenderWindow("Game");
@@ -40,7 +46,7 @@ RenderWindow* RenderWindow::GetRenderWindowInstance() {
 /// <summary>
 /// gets the path and turns it into a sdl texture
 /// </summary>
-/// <param name="filepath">thr path of an img to turn into an sdl_texture</param>
+/// <param name="filepath">the path of an image to turn into an sdl_texture</param>
 /// <returns>an sdl texture from the path</returns>
 SDL_Texture* RenderWindow::LoadTexture(const char* filepath) {
    SDL_Texture* texture = IMG_LoadTexture(renderer, filepath);
@@ -58,7 +64,7 @@ void RenderWindow::Display() {
 };
 
 /// <summary>
-/// copies the texture onto the renderer
+/// copies the texture onto the renderer buffer
 /// </summary>
 /// <param name="sqr">the root class sqaure</param>
 void RenderWindow::Render(Square* sqr)
@@ -68,12 +74,22 @@ void RenderWindow::Render(Square* sqr)
       , SDL_GetError());
 };
 
+/// <summary>
+/// returns the width and the height if the windows
+/// becuase its a static program so it is always 1920x1080
+/// </summary>
+/// <param name="w"></param>
+/// <param name="h"></param>
 void RenderWindow::GetWidthHeight(int& w, int& h)
 {
   w = 1920;
   h = 1080;
 };
 
+/// <summary>
+/// retgurns true if the game windows is the current one focused
+/// </summary>
+/// <returns></returns>
 bool RenderWindow::IsWindowFocused()
 {
   Uint32 flags = SDL_GetWindowFlags(window);
@@ -88,16 +104,21 @@ void RenderWindow::Clear() {
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,"Failed to clean renderer");
 };
 
-SDL_Window* RenderWindow::GetWindow()
-{
-  return window;
-};
-
+/// <summary>
+/// returns the renderer struct
+/// needed for a few things such as fonts
+/// </summary>
+/// <returns></returns>
 SDL_Renderer* RenderWindow::GetRenderer()
 {
   return renderer;
 };
 
+/// <summary>
+/// displays a solid color rect using the given parameter
+/// </summary>
+/// <param name="rect">where to display the rect</param>
+/// <param name="color">what color to use while displaying</param>
 void RenderWindow::DisplayRect(SDL_Rect* rect, SDL_Color color)
 {
   SDL_Color oldColor;
@@ -116,9 +137,14 @@ void RenderWindow::DisplayRect(SDL_Rect* rect, SDL_Color color)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL failed to render a rect %s", SDL_GetError());
 }
 
-
+/// <summary>
+/// copies the flipped texture onto the screen
+/// </summary>
+/// <param name="tex">the texture to display fipped</param>
+/// <param name="src"></param>
+/// <param name="dst"></param>
+/// <param name="flip">is true then it flips the texture otherwise it just displays it</param>
 void RenderWindow::FlipAndPrintTexture(SDL_Texture* tex, SDL_Rect src, SDL_Rect dst, bool flip)
 {
   SDL_RenderCopyEx(renderer, tex, &src, &dst, 0, NULL, (SDL_RendererFlip)flip);
-  //SDL_RenderPresent(renderer); // Present the rendered texture
 }

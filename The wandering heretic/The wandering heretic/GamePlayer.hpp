@@ -9,5 +9,6 @@ public:
   void Update(std::vector<Entity*> vec);
 
 private:
+  //void CheckGifType();
 };
 

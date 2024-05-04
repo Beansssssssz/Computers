@@ -30,8 +30,6 @@ public:
   int GetScrollY();
 
   void MouseIsSelecting();
-  void FreezeAutomaticSelecting(bool isFrozen, SDL_SystemCursor cursor
-    = SDL_SYSTEM_CURSOR_ARROW);
   void ShowMouse(bool show);
 
   bool IsMouseColliding(SDL_Rect rect);
@@ -45,8 +43,6 @@ private:
   int _isScrolling;
 
   SDL_Cursor* _cursor; // the cursor
-  SDL_SystemCursor _current; // current cursor
+  SDL_SystemCursor _current; // current cursor type
   bool _mouseSelecting; // if the mouse is currently selecting smth
-
-  bool _isFrozen;// if mouse is frozen.
 };

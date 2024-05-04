@@ -11,10 +11,21 @@ GameWorld::GameWorld(json* data, std::string path)
 {
   _vec = jsonParser::FromJsonToVector<Entity>(*data);
 
+  /* player creating */
   SDL_Rect src{ 60, 60, 178, 216 };
   SDL_Rect dst{ 65 + 200, 65, 178 / 2 , 216 / 2 };
   GIF* gif = new GIF("Assets\\Character\\FrogIdle\\FrogIdle_", 12, src, dst, 180);
   _player = new GamePlayer({ gif });
+
+  /* enemy creating */
+  src = SDL_Rect{ 0, 0, 50, 54 };
+  dst = SDL_Rect{ 200, 200, 53 * 2, 55 * 2 };
+  GIF* enemyGifIdle = new GIF("Assets\\Character\\Bringer_Of_Death\\Walk\\bringer_", 8, src, dst, 180);
+  GIF* enemyGifAttack = new GIF("Assets\\Character\\Bringer_Of_Death\\Attack\\bringer_", 10, src, dst, 150);
+
+ 
+
+  _enemyVec.push_back(new Enemy({enemyGifIdle, enemyGifAttack}, src, dst));
 }
 
 GameWorld::~GameWorld()
@@ -27,6 +38,12 @@ GameWorld::~GameWorld()
   delete _settingsBtn;
 }
 
+/// <summary>
+/// updates the game world entities,
+/// offsets the if needed
+/// and checks whether or not to open settings
+/// </summary>
+/// <returns>returns none or settings</returns>
 GameReturnValues GameWorld::Update()
 {
   UpdateWorldOffset();
@@ -34,6 +51,9 @@ GameReturnValues GameWorld::Update()
   return KeyboardUpdater();
 }
 
+/// <summary>
+/// updates the world using an offest saved by the player speed
+/// </summary>
 void GameWorld::UpdateWorldOffset()
 {
   Vector2f* speed = _player->GetSpeed();
@@ -87,6 +107,12 @@ void GameWorld::OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst)
     rect->y -= offsetY;
   }
 
+  for (Enemy* enemy : _enemyVec) {
+    rect = enemy->GetDstRect();
+    rect->x -= offsetX;
+    rect->y -= offsetY;
+  }
+
   if (dst == nullptr)
     return;
 
@@ -102,11 +128,16 @@ void GameWorld::UpdateWorldEntities()
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
 
   _player->Update(_vec);
+
   for (Entity* entity : _vec)
   {
     entity->Update();
     window->Render((Square*)entity);
   }
+
+  for (Enemy* enemy : _enemyVec)
+    enemy->Update(_vec, (BasePlayer*)_player);
+
 }
 
 /// <summary>

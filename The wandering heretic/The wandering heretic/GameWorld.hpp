@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GamePlayer.hpp"
+#include "Enemy.hpp"
 #include "Entity.hpp"
 #include "Button.hpp"
 #include "Utils.hpp"
@@ -29,5 +30,6 @@ private:
   GamePlayer* _player;
   Button* _settingsBtn;
   std::vector<Entity*> _vec;
+  std::vector<Enemy*> _enemyVec;;
 };
 

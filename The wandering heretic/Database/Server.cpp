@@ -16,6 +16,12 @@ Server::Server()
   CreateTables();
 }
 
+/// <summary>
+/// returns the instance to the static object of this class
+/// this is the only way to get an object of this class
+/// this always returns the same object
+/// </summary>
+/// <returns></returns>
 Server* Server::GetServerInstance()
 {
   if (_serverPtr == NULL)
@@ -356,6 +362,10 @@ int Server::GetLastPrimaryKey() {
   return lastPrimaryKey;
 }
 
+/// <summary>
+/// prints out all the users and there data(email, username and passowrd) out into the
+/// standard console output
+/// </summary>
 void Server::DisplayAllUsers() {
   std::vector<UserData> vec = this->GetUserData();
   int PM = 1;

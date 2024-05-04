@@ -19,10 +19,12 @@ GameManager::~GameManager()
 };
 
 /// <summary>
+/// updates the current Scene of the window(welcome, home and game)
+/// </summary>
+/// <returns>
 /// returns true if the game is still running.
 /// otherwise returns false
-/// </summary>
-/// <returns></returns>
+/// </returns>
 bool GameManager::Update()
 {
   int ret = 0;
@@ -52,8 +54,9 @@ bool GameManager::Update()
 };
 
 /// <summary>
-/// checks if a u need to go into
-/// the home Scene
+/// checks if a u need to go the HomeScene
+/// if yes then it deleted the WelcomeScne
+/// then create a new object of the HomeScene
 /// </summary>
 void GameManager::UpdateWelcomeScene()
 {
@@ -64,9 +67,15 @@ void GameManager::UpdateWelcomeScene()
 }
 
 /// <summary>
-/// Updates the Home Scene with the correct happings
+/// Updates the HomeScene
+/// can open up settings
+/// when switched to the game it delete homeScene object
+/// and creates a new GameScene object
 /// </summary>
-/// <returns></returns>
+/// <returns>
+/// true if the user has not tried quitting the window
+/// otherwise returns false
+/// </returns>
 bool GameManager::UpdateHomeScene()
 {
   HomeButtons ret = (HomeButtons)_homeScene->Update();
@@ -94,7 +103,10 @@ bool GameManager::UpdateHomeScene()
 };
 
 /// <summary>
-/// runs the games(nothing more really)
+/// Updates the GameScene
+/// can open up settings
+/// when switched to the home it delete homeScene object
+/// and creates a new HomeScene object
 /// </summary>
 void GameManager::UpdateGameScene()
 {

@@ -17,7 +17,7 @@ ChooseNumber::~ChooseNumber()
 }
 
 /// <summary>
-/// returns a number between 1 - 128 if the user chose a button.
+/// returns a number between 1 - 10 if the user chose a button.
 /// if no number was chossen then returns 0.
 /// if the window was closed then returns a -1;
 /// </summary>
@@ -104,6 +104,9 @@ void ChooseNumber::WriteOnButtons()
   }
 }
 
+/// <summary>
+/// creates all the buttons that were specifed in the build function
+/// </summary>
 void ChooseNumber::CreateButtons()
 {
   _btns = new Button * [_len];
@@ -155,6 +158,9 @@ void ChooseNumber::CreateButtons()
   }
 }
 
+/// <summary>
+/// creates the background window
+/// </summary>
 void ChooseNumber::CreateWindow()
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -176,6 +182,9 @@ void ChooseNumber::CreateWindow()
   _tab = new PopUpWindow(btn, rect, _color, true);
 }
 
+/// <summary>
+/// creates the Window text used to render text
+/// </summary>
 void ChooseNumber::CreateWindowText()
 {
   _text = new WindowText();

@@ -87,29 +87,19 @@ int main(int argc, char* argv[]) {
 
 /* 
 ========NOW========:
-//Add enemy to the world
- add an enemy vector from the json
-
-//create the actuall Player Class(not gameEngine one)
-  actuall player creation
-  actuall gifs
-  attacks and health
+//in gamePlayer make him die when hit
 
 //when u reach a certin point in the world then u finish the level mario style,
 then sends u back into the level choosing
 
 ========TRY========:
-0.bug -> when pressing done button in signIn it also presses settings
+0. bug -> when pressing done button in signIn it also presses settings
+
+1. bug -> audio when pressing the on button it takes 2 presses to start
+
+2. bug -> when u go too left u r stuck too left
+
+3. bug ->idk smth with the enemy
 
 3.fix the save game function in editing
-
-4.search for UB and fix bugs -> just play the game
 */
-
-
-/*
-  roadmap to finish everything:
-  1.  add a finish line and an animation for it
-
-  2. add in the hub a shop
-*/ 

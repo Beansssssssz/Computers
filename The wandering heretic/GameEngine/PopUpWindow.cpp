@@ -4,7 +4,6 @@
 #include "PopUpWindow.hpp"
 #include "Square.hpp"
 
-
 PopUpWindow::PopUpWindow(Button* btnExit, SDL_Rect rect, SDL_Color color, bool open)
   :_btnExit(btnExit), _tab(rect), _color(color), _tabOpen(open)
 {
@@ -16,6 +15,11 @@ PopUpWindow::~PopUpWindow()
   delete _btnExit;
 };
 
+/// <summary>
+/// renders the background and the button exit if it's not null
+/// it also checks if the button exit was pressed
+/// if yes then it cloeses the tab
+/// </summary>
 void PopUpWindow::Update()
 {
    if (!_tabOpen)
@@ -26,7 +30,7 @@ void PopUpWindow::Update()
 
   window->DisplayRect(&_tab, _color);
 
-  if (_btnExit == NULL)
+  if (_btnExit == nullptr)
     return;
 
   window->Render((Square*)_btnExit);
@@ -86,6 +90,7 @@ bool PopUpWindow::GetTabOpen()
 
 /// <summary>
 /// corrects the placement of the button in "tab" that opens
+/// however if the button is null then it does nothing
 /// </summary>
 void PopUpWindow::_CorrectButton()
 {

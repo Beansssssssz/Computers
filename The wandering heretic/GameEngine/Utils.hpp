@@ -77,19 +77,11 @@ namespace utils {
     if (val < min)
       val = min;
   }
-
-  /// <summary>
-  /// returns true if the two rects are equale
-  /// </summary>
-  /// <param name="rect1"></param>
-  /// <param name="rect2"></param>
-  /// <returns></returns>
-  inline bool CmpRects(SDL_Rect rect1, SDL_Rect rect2) {
-    return rect1.x == rect2.x && rect1.y == rect2.y
-      && rect1.w == rect2.w && rect1.h == rect2.h;
-  }
 };
 
+/// <summary>
+/// the standard return values of the GameScene
+/// </summary>
 enum class GameReturnValues {
   None = 0,
   Settings = 1,

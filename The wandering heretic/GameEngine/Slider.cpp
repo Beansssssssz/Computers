@@ -6,19 +6,20 @@
 #include "Mouse.hpp"
 #include "Utils.hpp"
 
-Slider::Slider(SDL_Rect rect, int pos1, int pos2, SDL_Color color, int height)
-  :_rect(rect), _pos1(pos1), _pos2(pos2), _color(color), _height(height)
+Slider::Slider(SDL_Rect rect, int minSliderPos, int maxSliderPos, SDL_Color color, int height)
+  :_rect(rect), _min(minSliderPos), _max(maxSliderPos), _color(color), _height(height)
 {
   _oldPos.x = rect.x, _oldPos.y = rect.y;
 };
 
 /// <summary>
-/// the update function of the slider
+/// updates the slider rect using the mouse
+/// displays the path of the slider and the slider itselfs
 /// </summary>
 void Slider::Update()
 {
   MoveRectByMouse();
-  utils::Clamp(_rect.x, _pos2 - _rect.w, _pos1);
+  utils::Clamp(_rect.x, _max - _rect.w, _min);
   CreateSliderPath();
 
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
@@ -33,9 +34,9 @@ void Slider::CreateSliderPath()
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   SDL_Rect rect;
 
-  rect.x = _pos1;
+  rect.x = _min;
   rect.y = _rect.y + _rect.h / 2 - _height / 2;
-  rect.w = _pos2 - _pos1;
+  rect.w = _max - _min;
   rect.h = _height;
 
   SDL_Color color{ 230, 230, 230, 255 };
@@ -65,14 +66,14 @@ void Slider::MoveRectByMouse()
 /// <returns>pso of the slider</returns>
 int Slider::GetValue()
 {
-  float width = (_pos2 - _pos1 - _rect.w)
+  float width = (_max - _min - _rect.w)
     / 128.0f; // gets the amout of pixels you have to move so it will register 
-  int x = _rect.x - _pos1; // your pos relitave to the start point
+  int x = _rect.x - _min; // your pos relitave to the start point
   return int(x / width); // diving and finding your value
 };
 
 /// <summary>
-/// retusn the rect of the slider
+/// returns the rect of the slider
 /// </summary>
 /// <returns></returns>
 SDL_Rect Slider::GetRect() {

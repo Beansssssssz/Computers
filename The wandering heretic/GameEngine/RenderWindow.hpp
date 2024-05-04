@@ -20,7 +20,6 @@ public:
   static void GetWidthHeight(int& width, int& height);
   bool IsWindowFocused();
 
-  SDL_Window* GetWindow();
   SDL_Renderer* GetRenderer();
 
   void FlipAndPrintTexture(SDL_Texture* tex, SDL_Rect src, SDL_Rect dst, bool flip);

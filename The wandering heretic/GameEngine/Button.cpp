@@ -8,7 +8,6 @@ Button::Button(SDL_Texture* tex, SDL_Rect srcrect, SDL_Rect dstrect, bool delete
   :Button::Square(tex, srcrect, dstrect, deleteTex), _isPressed(false), _isSelected(false)
   {}
 
-
 Button::Button(std::string path, SDL_Rect srcrect, SDL_Rect dstrect, bool deleteTex)
   :Button::Square(path, srcrect, dstrect, deleteTex), _isPressed(true), _isSelected(false)
   {}
@@ -18,6 +17,13 @@ Button::~Button()
   Square::~Square();
 };
 
+/// <summary>
+/// checks if the button was pressed by mouse using the
+/// mouse button specified. if settings is open then the button
+/// just ignore the mouse entirely
+/// </summary>
+/// <param name="btn"></param>
+/// <param name="settingOpen"></param>
 void Button::Update(MouseButtons btn, bool settingOpen)
 {
   Mouse* mouse = Mouse::GetMouseInstance();
@@ -45,11 +51,6 @@ bool Button::GetIsPressed()
   return _isPressed;
 };
 
-/// <summary>
-/// returns whether or not the mouse
-/// button is released
-/// </summary>
-/// <returns></returns>
 bool Button::GetIsReleased(MouseButtons state)
 {
   Mouse* mouse = Mouse::GetMouseInstance();

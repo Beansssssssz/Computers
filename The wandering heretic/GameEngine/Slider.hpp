@@ -5,7 +5,7 @@
 class Slider
 {
 public:
-  Slider(SDL_Rect rect, int pos1, int pos2, SDL_Color color, int height);
+  Slider(SDL_Rect rect, int minSliderPos, int maxSliderPos, SDL_Color color, int height);
   void Update();
   void CreateSliderPath();
   void MoveRectByMouse();
@@ -14,12 +14,12 @@ public:
   SDL_Rect GetRect();
 
 private:
-  SDL_Rect _rect;
+  SDL_Rect _rect; //the slider button
   Vector2i _oldPos;
-  SDL_Color _color;
+  SDL_Color _color; //the slider color
 
-  int _pos1;
-  int _pos2;
+  int _min;
+  int _max;
   int _height;
 
 };

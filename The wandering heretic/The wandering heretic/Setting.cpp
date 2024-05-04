@@ -58,8 +58,8 @@ void Settings::UpdateMusic()
   //checking if buttons are released(pressed the not pressed)
   if (_btnMusic->GetIsReleased())
   {
-    _musicOn = !_musicOn;
     audio->SetMusicState(_musicOn, 0);
+     _musicOn = !_musicOn;
 
     //change image
     std::string path = "Assets/GUI/";
@@ -75,7 +75,7 @@ void Settings::UpdateMusic()
   if (_btnEffect->GetIsReleased())
   {
     _effectOn = !_effectOn;
-    audio->SetMusicState(_effectOn, 0);
+    //audio->SetMusicState(_effectOn, 1);
 
     //change image
     std::string path = "Assets/GUI/";

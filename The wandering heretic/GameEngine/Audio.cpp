@@ -17,8 +17,9 @@ Audio::Audio()
 };
 
 /// <summary>
-/// returns an Instance of the Audio
-/// (no static class so singleton works fine)
+/// returns the instance to the static object of this class
+/// this is the only way to get an object of this class
+/// this always returns the same object
 /// </summary>
 /// <returns></returns>
 Audio* Audio::GetAudioInstance()
@@ -122,6 +123,7 @@ void Audio::PauseMusic(int channel)
   else
     for (char i = 0; i < CHANNELS_COUNT; i++)
       _paused[channel] = true;
+
   Mix_Pause(channel);
 };
 

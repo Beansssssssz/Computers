@@ -126,7 +126,8 @@ void InputText::DisplayText(bool input)
 };
 
 /// <summary>
-/// displays the a flashing cursor onto the postion of the last character
+/// displays the a flashing cursor onto the
+/// postion of the last character
 /// </summary>
 void InputText::DisplayFlashingCursor()
 {

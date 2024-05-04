@@ -6,6 +6,7 @@
 #include "JsonParser.hpp"
 #include "Utils.hpp"
 
+//rounds out the x var to the nearest multiple of multiple
 #define ROUND(x, multiple) (((x) + (multiple) / 2) / (multiple) * (multiple))
 
 LevelEditor::LevelEditor(json* data, std::string path)
@@ -46,6 +47,11 @@ LevelEditor::~LevelEditor()
   delete _sideButtons;
 }
 
+/// <summary>
+/// updates the all the levelEditor functions as
+/// needed and check for input from the user
+/// </summary>
+/// <returns></returns>
 GameReturnValues LevelEditor::Update()
 {
   UpdateButtons();
@@ -231,7 +237,11 @@ GameReturnValues LevelEditor::UpdateSideButtons()
 }
 
 /// <summary>
-/// moves the vector world if is needed
+/// offset the world vector as needed
+/// is the mouse wheel has changed
+/// it moves the y as the mouse wheel
+/// however if there is a shift detected
+/// also it moves the x
 /// </summary>
 void LevelEditor::MoveVectorWorld()
 {
@@ -271,12 +281,12 @@ void LevelEditor::PlaceCurrentButton()
 {
   for (Button* btn : _btnVec)
   {
-    SDL_Rect current = *_currentBtn->GetDstRect(),
-      temp = *btn->GetDstRect();
-    if (utils::CmpRects(current, temp)) {
+    SDL_Rect current = *_currentBtn->GetDstRect(), temp = *btn->GetDstRect();
+
+    if (SDL_HasIntersection(&current, &temp)) 
       return;
-    }
   }
+
   _btnVec.push_back(_currentBtn);
 }
 

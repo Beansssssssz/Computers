@@ -5,7 +5,7 @@
 #include <iostream>
 
 BasePlayer::BasePlayer(std::vector<GIF*> gifs, bool _collisionEnabled)
-  :BasePlayer::Entity((GIF*)nullptr, gifs[0]->GetSrcRect(), gifs[0]->GetDstRect()),
+  :BasePlayer::Entity((GIF*)nullptr, *gifs[0]->GetSrcRect(), *gifs[0]->GetDstRect()),
   _gifs(gifs), _currentType(GifTypes::idle), _canJump(true), _isJumping(false)
 {
 }
@@ -19,12 +19,13 @@ BasePlayer::~BasePlayer()
 }
 
 /// <summary>
-/// Updates and renders the Player class
+/// renders the current gif state,
+/// checks if the player can jump,
+/// checks for keboard input in order to move the player
+/// and then it updates the players velocity
 /// </summary>
 void BasePlayer::Update(std::vector<Entity*> vec)
 {
-  Entity::Update();
-
   this->UpdateCurrentGif();
   this->CheckJump(vec);
   this->GetInput();
@@ -71,7 +72,9 @@ void BasePlayer::GetInput()
 }
 
 /// <summary>
-/// updtates the current gif and renders it
+/// checks what state the gif is currenly in and updates that state
+/// then it updates the gif position in the world
+/// then it dispalays the gif
 /// </summary>
 void BasePlayer::UpdateCurrentGif()
 {
@@ -84,6 +87,8 @@ void BasePlayer::UpdateCurrentGif()
 
 /// <summary>
 /// updates the player velocity including moving the player
+/// and checks if the player cannot move
+/// if he connot move it resets his velocity
 /// </summary>
 /// <param name="vec"></param>
 void BasePlayer::UpdateVelocity(std::vector<Entity*> vec)

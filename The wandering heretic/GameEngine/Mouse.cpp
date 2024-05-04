@@ -6,7 +6,7 @@
 #include "Utils.hpp"
 
 Mouse::Mouse(Vector2i _pos)
-  :_current(SDL_SYSTEM_CURSOR_ARROW), _isFrozen(false), _mouseSelecting(false),
+  :_current(SDL_SYSTEM_CURSOR_ARROW), _mouseSelecting(false),
   _scrollY(0) , _isScrolling(false)
 {
   _cursor = SDL_CreateSystemCursor(_current);
@@ -20,6 +20,12 @@ Mouse::~Mouse()
   SDL_FreeCursor(_cursor);
 };
 
+/// <summary>
+/// returns the instance to the static object of this class
+/// this is the only way to get an object of this class
+/// this always returns the same object
+/// </summary>
+/// <returns></returns>
 Mouse* Mouse::GetMouseInstance()
 {
   if (_mousePtr == nullptr)
@@ -56,11 +62,12 @@ void Mouse::Update()
   _isScrolling = false;
 };
 
+/// <summary>
+/// changes the cursor type to the the hand or the arrow
+/// hand is when selecting and arrow is the normal
+/// </summary>
 void Mouse::ChangeCursorType()
 {
-  if (_isFrozen)
-    return;
-
   SDL_SystemCursor old = _current;
 
   if (_mouseSelecting)
@@ -76,7 +83,7 @@ void Mouse::ChangeCursorType()
 };
 
 /// <summary>
-/// using the events tab it checks if the event is a mouse scroll wheel
+/// using the events it checks if the event is a mouse scroll wheel
 /// if yes then adds the y to the var
 /// </summary>
 /// <param name="ev"></param>
@@ -87,25 +94,32 @@ void Mouse::SetScrollYFromEvent(SDL_Event ev) {
   }
 }
 
+/// <summary>
+/// returns the current scroll y
+/// meaning it will be positive negative or no(0)
+/// </summary>
+/// <returns></returns>
 int Mouse::GetScrollY() {
   return _scrollY;
 }
 
+/// <summary>
+/// makes the mouse switch to the selecting type of
+/// cursor
+/// </summary>
 void Mouse::MouseIsSelecting()
 {
   this->_mouseSelecting = true;
 }
 
-void Mouse::FreezeAutomaticSelecting(bool isFrozen, SDL_SystemCursor cursor)
-{
-  _current = cursor;
-  _isFrozen = isFrozen;
-}
-
+/// <summary>
+/// if true then the mouse is showing
+/// otherwise it isnt showing
+/// </summary>
+/// <param name="show"></param>
 void Mouse::ShowMouse(bool show) {
   SDL_ShowCursor(show ? SDL_ENABLE : SDL_DISABLE);
 }
-
 
 /// <summary>
 /// checks if the mouse is collising with a rect
@@ -120,6 +134,3 @@ bool Mouse::IsMouseColliding(SDL_Rect rect)
 
   return IsY && IsX;
 };
-
-
-
