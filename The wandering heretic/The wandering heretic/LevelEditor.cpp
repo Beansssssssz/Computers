@@ -15,7 +15,7 @@ LevelEditor::LevelEditor(json* data, std::string path)
   _settingBtn(NULL), _saveBtn(NULL), _resetBtn(NULL), _path(path)
   , _offsetY(0), _offsetX(0)
 {
-  _btnVec = jsonParser::FromJsonToVector<Button>(*data);
+  _btnVec = jsonParser::FromJsonToVector<Button>(*data, nullptr, nullptr);
 
   CreateTabAndButtons();
   CreateSideButtons();

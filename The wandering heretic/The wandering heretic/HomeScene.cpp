@@ -14,7 +14,7 @@ HomeScene::HomeScene()
 {
   //creating the background image for the current sence
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  SDL_Texture* tex = window->LoadTexture("Assets/backround_pic.png");
+  SDL_Texture* tex = window->LoadTexture("Assets/Backgrounds/home_background.png");
 
   SDL_Rect rect;
   rect.x = 0; rect.y = 0;

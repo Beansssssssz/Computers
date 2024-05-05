@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
     mouse->Update();
     keyboard->Update();
 
-    if (running && !gm->Update())//if the game is not going to be closed from events
+    if (running && !gm->Update())
       running = false;
 
     window->Display();
@@ -89,17 +89,18 @@ int main(int argc, char* argv[]) {
 ========NOW========:
 //in gamePlayer make him die when hit
 
-//when u reach a certin point in the world then u finish the level mario style,
-then sends u back into the level choosing
+//add a "finishLine", when the player touches the finish line the player will be taken to the home screen
+today: when player touches the finishLine take him to the home
+-> add animation
+-> add lock to levels based on user
+-> add more levels
 
 ========TRY========:
 0. bug -> when pressing done button in signIn it also presses settings
 
-1. bug -> audio when pressing the on button it takes 2 presses to start
+3. bug -> idk smth with the enemy attack gif
 
-2. bug -> when u go too left u r stuck too left
+4. bug -> when enemy attack in corner he is stuck attacking
 
-3. bug ->idk smth with the enemy
-
-3.fix the save game function in editing
+3. bug -> fix the save game function in editing
 */

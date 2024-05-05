@@ -7,35 +7,31 @@
 
 GameWorld::GameWorld(json* data, std::string path)
   :_data(data), _path(path),
-  _player(nullptr), _settingsBtn(nullptr)
+  _player(nullptr)
 {
-  _vec = jsonParser::FromJsonToVector<Entity>(*data);
+  _vec = jsonParser::FromJsonToVector<Entity>(*data, &_enemyVec, &_finishLine);
 
   /* player creating */
   SDL_Rect src{ 60, 60, 178, 216 };
   SDL_Rect dst{ 65 + 200, 65, 178 / 2 , 216 / 2 };
-  GIF* gif = new GIF("Assets\\Character\\FrogIdle\\FrogIdle_", 12, src, dst, 180);
+  GIF* gif = new GIF("Assets\\Character\\FrogIdle\\FrogIdle_", 12, src, dst, 150);
   _player = new GamePlayer({ gif });
 
-  /* enemy creating */
-  src = SDL_Rect{ 0, 0, 50, 54 };
-  dst = SDL_Rect{ 200, 200, 53 * 2, 55 * 2 };
-  GIF* enemyGifIdle = new GIF("Assets\\Character\\Bringer_Of_Death\\Walk\\bringer_", 8, src, dst, 180);
-  GIF* enemyGifAttack = new GIF("Assets\\Character\\Bringer_Of_Death\\Attack\\bringer_", 10, src, dst, 150);
-
- 
-
-  _enemyVec.push_back(new Enemy({enemyGifIdle, enemyGifAttack}, src, dst));
+  _finishLine = SDL_Rect{500, 500 , 100, 100};
 }
 
 GameWorld::~GameWorld()
 {
   for (Entity* entity: _vec)
     delete entity;
+
+  for (Enemy* enemy : _enemyVec)
+    delete enemy;
+
   _vec.clear();
+  _enemyVec.clear();
 
   delete _player;
-  delete _settingsBtn;
 }
 
 /// <summary>
@@ -48,6 +44,10 @@ GameReturnValues GameWorld::Update()
 {
   UpdateWorldOffset();
   UpdateWorldEntities();
+  if (TouchedFinishLine()) {
+    PlayCompletedLevel();
+    return GameReturnValues::Home;
+  }
   return KeyboardUpdater();
 }
 
@@ -68,21 +68,21 @@ void GameWorld::UpdateWorldOffset()
   constexpr int startEndY = 200;
 
   //check is the player is too far up
-  //if(dst->y <= startEndY)
+  //if(dst->y < startEndY)
   //  offsetY = (int)speed->y;
 
   //check is the player is too far down
-  if(dst->y + dst->h >= h - startEndY)
+  if (dst->y + dst->h > h - startEndY) 
     offsetY = (int)speed->y;
-
+  
   //check is the player is too far left
-  if(dst->x <= startEndX)
+  if (dst->x < startEndX) 
      offsetX = (int)speed->x;
 
   //check is the player is too far right
-  if (dst->x + dst->w >= w - startEndX)
+  if (dst->x + dst->w > w - startEndX) 
     offsetX = (int)speed->x;
-
+  
   //updates vector
   this->OffestAllVector(offsetX, offsetY, dst);
 }
@@ -100,6 +100,8 @@ void GameWorld::OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst)
     return;
 
   SDL_Rect* rect = nullptr;
+
+  /* entities */
   for (Entity* entity : _vec)
   {
     rect = entity->GetDstRect();
@@ -107,11 +109,16 @@ void GameWorld::OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst)
     rect->y -= offsetY;
   }
 
+  /* enemies */
   for (Enemy* enemy : _enemyVec) {
     rect = enemy->GetDstRect();
     rect->x -= offsetX;
     rect->y -= offsetY;
   }
+
+  /* finish line */
+  _finishLine.x -= offsetX;
+  _finishLine.y -= offsetY;
 
   if (dst == nullptr)
     return;
@@ -137,7 +144,6 @@ void GameWorld::UpdateWorldEntities()
 
   for (Enemy* enemy : _enemyVec)
     enemy->Update(_vec, (BasePlayer*)_player);
-
 }
 
 /// <summary>
@@ -153,4 +159,17 @@ GameReturnValues GameWorld::KeyboardUpdater()
     return GameReturnValues::Settings;
 
   return GameReturnValues::None;
+}
+
+bool GameWorld::TouchedFinishLine()
+{
+  if(_player->IsColliding(_finishLine))
+    return true;
+  return false;
+}
+
+void GameWorld::PlayCompletedLevel()
+{
+  //play sound cue for finishing level
+  //play animation for finishng level
 }

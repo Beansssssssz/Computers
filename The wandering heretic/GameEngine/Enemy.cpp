@@ -66,7 +66,7 @@ void Enemy::UpdateMovment(std::vector<Entity*> vec, BasePlayer* player)
 
   /* move the enemy and check if he hit a wall
      if enemy hits the wall then rotate */
-  if(_currentType != GifTypes::attacking && !MoveTo(vec, currentSpeed, 0))
+  if (_currentType != GifTypes::attacking && !MoveTo(vec, currentSpeed, 0))
     _isRight = !_isRight;
 
   /* apply gravity */
@@ -85,15 +85,15 @@ bool Enemy::SearchForPlayer(std::vector<Entity*> vec, BasePlayer* player)
   SDL_Rect* playerDst = player->GetDstRect();
 
   //check if the player end enemy are close enough
-  if (playerDst->x - this->_dst.x > DISTANCE_MAX) 
+  if (abs(playerDst->x - this->_dst.x) > DISTANCE_MAX) 
     return false;
   
   //check if the enemy is looking at the player
-  if ((_isRight != this->_dst.x < playerDst->x) && foundPlayer)
+  if (_isRight != this->_dst.x < playerDst->x)
     return false;
 
   //check if the the enemy y and player diffrance is too big
-  if (playerDst->y - this->_dst.y > MAX_Y_DIFFRANCE)
+  if (abs(playerDst->y - this->_dst.y) > MAX_Y_DIFFRANCE)
     return false;
 
   return true;
@@ -110,8 +110,10 @@ void Enemy::AttackPlayer(BasePlayer* player)
   if (_resetNextFrame) {
     _dst.w = _originalDst.w;
     _dst.h = _originalDst.h;
+
     _src.w = _originalSrc.w;
     _src.h = _originalSrc.h;
+
     _currentType = GifTypes::idle;
   }
 
@@ -124,7 +126,6 @@ void Enemy::AttackPlayer(BasePlayer* player)
      the player then switch to attack */
   if (foundPlayer && (player->GetDstRect()->x - this->_dst.x < LARGEST_ATTACK_WIDTH - _dst.w)) 
     _currentType = GifTypes::attacking;
-  
 }
 
 /// <summary>
@@ -143,9 +144,11 @@ void Enemy::ReshapeGif()
 
   _src.w = w;
   _src.h = h;
-      
-  /*_dst.x -= w - dst->w;
-  _dst.y -= h - dst->h;*/
+
+
+
+  //_dst.x -= w - dst->w;
+  //_dst.y -= h - dst->h;
       
   _dst.w = w * 2;
   _dst.h = h * 2;

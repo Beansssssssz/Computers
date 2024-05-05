@@ -30,7 +30,11 @@ TextSquare::~TextSquare() {
   }
 }
 
-
+/// <summary>
+/// displays the text and the square
+/// </summary>
+/// <param name="inputOn"> if true then it checks for input made by the user</param>
+/// <param name="color">what color to display the text int </param>
 void TextSquare::Update(bool inputOn, SDL_Color color)
 {
   /* print out the rect and its outline */

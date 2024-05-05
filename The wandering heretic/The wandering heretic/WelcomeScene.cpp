@@ -6,7 +6,7 @@ WelcomeScene::WelcomeScene()
   :_bg(NULL), _winText(NULL), _keyPressed(false)
 {
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
-  SDL_Texture* tex = window->LoadTexture("Assets/backround_pic.png");
+  SDL_Texture* tex = window->LoadTexture("Assets/Backgrounds/home_background.png");
 
   SDL_Rect rect;
   rect.x = 0; rect.y = 0;

@@ -70,7 +70,6 @@ void  WindowText::DisplayText(Vector2i pos, SDL_Color color, bool display) {
   TTF_CloseFont(font);
 };
 
-
 /// <summary>
 /// changes the character size that the current program is using
 /// </summary>
@@ -166,6 +165,16 @@ int WindowText::GetMaxCharacters()
     return _maxLength;
 }
 
+/// <summary>
+/// a static function
+/// displays the inputed text onto to the screen with the dimension
+/// and position inputed into thsi function
+/// </summary>
+/// <param name="text"></param>
+/// <param name="pos"></param>
+/// <param name="color"></param>
+/// <param name="letterSize"></param>
+/// <param name="fontPath"></param>
 void WindowText::DisplayStaticText(std::string text, Vector2i pos, SDL_Color color, uint8_t letterSize, const char* fontPath)
 {
   if (text.empty())

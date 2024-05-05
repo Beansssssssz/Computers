@@ -13,7 +13,7 @@ GameScene::GameScene()
   int w, h;
   RenderWindow* window = RenderWindow::GetRenderWindowInstance();
   window->GetWidthHeight(w, h);
-  _bg = new Square("Assets/backround_pic.png", { 0,0,w,h }, { 0,0,w,h });
+  _bg = new Square("Assets/Backgrounds/game_background.png", { 0,0,w,h }, { 0,0,w,h });
 
   _cn = new ChooseNumber(10);
 };
@@ -64,7 +64,11 @@ GameReturnValues GameScene::Update()
     return GameReturnValues::None;
   }
 
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  window->Render(_bg);
+
+  if(_world != nullptr)
     return _world->Update();
 
-  //return _edit->Update();
+  return _edit->Update();
 };

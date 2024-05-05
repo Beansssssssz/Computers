@@ -6,6 +6,7 @@
 #include <nlohmann/json.hpp>
 
 #include "Square.hpp"
+#include "Enemy.hpp"
 
 using json = nlohmann::json;
 
@@ -250,17 +251,18 @@ namespace jsonParser {
   }
 
   /// <summary>
-  /// 
+  /// from the json data it returns an array of Entity
+  /// also an out variable of the enemy Vector
+  /// and an out Finishline
   /// </summary>
   /// <typeparam name="T">a square type</typeparam>
   /// <param name="data">a json data</param>
   /// <returns>a vector with all the objects</returns>
   template<typename T>
-  inline std::vector<T*> FromJsonToVector(json data) {
+  inline std::vector<T*> FromJsonToVector(json data, std::vector<Enemy*>* outEnemyVec, SDL_Rect* OutFinishLine) {
     SDL_Rect src = { 0, 0, 64, 64 };
     SDL_Rect dst = { 0, 0, 64, 64 };
 
-    
     std::vector<int> arr = data["data"];
     int width = data["width"];
     int height = data["height"];
@@ -280,7 +282,30 @@ namespace jsonParser {
          
         dst.y = i * 64;
         dst.x = j * 64;
-        path[path.size() - 5] = arr[loc] + '0';
+
+        /* enemy */
+        if (arr[loc] == 9) {
+          SDL_Rect enemySrc = SDL_Rect{ 0, 0, 50, 54 };
+          SDL_Rect enemyDst = SDL_Rect{ dst.x, dst.y, 53 * 2, 55 * 2 };
+
+          GIF* enemyGifIdle = new GIF("Assets\\Character\\Bringer_Of_Death\\Walk\\bringer_",
+            8, enemySrc, enemyDst, 150);
+
+          GIF* enemyGifAttack = new GIF("Assets\\Character\\Bringer_Of_Death\\Attack\\bringer_",
+            10, enemySrc, enemyDst, 120);
+
+          outEnemyVec->push_back(new Enemy({ enemyGifIdle, enemyGifAttack }, enemySrc, enemyDst));
+          continue;
+        }
+
+        /* finish line */
+        if (arr[loc] == 8) {
+          
+          continue;
+        }
+
+        //if its a single digit number u can cahnge it into a char by adding a '0'
+        path[path.size() - 5] = (char)(arr[loc] + '0'); 
 
         tex = win->LoadTexture(path.c_str());
         vec.push_back(new T(tex, src, dst));

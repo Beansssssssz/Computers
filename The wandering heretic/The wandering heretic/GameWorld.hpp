@@ -23,13 +23,15 @@ private:
   void OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst);
   void UpdateWorldEntities();
   GameReturnValues KeyboardUpdater();
+  bool TouchedFinishLine();
+  void PlayCompletedLevel();
 
   json* _data;
   std::string _path;
 
   GamePlayer* _player;
-  Button* _settingsBtn;
   std::vector<Entity*> _vec;
   std::vector<Enemy*> _enemyVec;;
+  SDL_Rect _finishLine;
 };
 
