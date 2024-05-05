@@ -6,10 +6,11 @@
 #include "Utils.hpp"
 
 GameWorld::GameWorld(json* data, std::string path)
-  :_data(data), _path(path),
+  :_data(data), _path(path), _finishLine(nullptr),
   _player(nullptr)
 {
-  _vec = jsonParser::FromJsonToVector<Entity>(*data, &_enemyVec, &_finishLine);
+  _finishLine = new Square((SDL_Texture*)NULL, { 0,0,0,0 }, { 0,0,0,0 });
+  _vec = jsonParser::FromJsonToVector<Entity>(*data, &_enemyVec, _finishLine);
 
   /* player creating */
   SDL_Rect src{ 60, 60, 178, 216 };
@@ -30,6 +31,7 @@ GameWorld::~GameWorld()
   _enemyVec.clear();
 
   delete _player;
+  delete _finishLine;
 }
 
 /// <summary>
@@ -46,6 +48,7 @@ GameReturnValues GameWorld::Update()
     PlayCompletedLevel();
     return GameReturnValues::Home;
   }
+
   return KeyboardUpdater();
 }
 
@@ -115,8 +118,9 @@ void GameWorld::OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst)
   }
 
   /* finish line */
-  _finishLine.x -= offsetX;
-  _finishLine.y -= offsetY;
+  rect = _finishLine->GetDstRect();
+  rect->x -= offsetX;
+  rect->y -= offsetY;
 
   if (dst == nullptr)
     return;
@@ -142,6 +146,8 @@ void GameWorld::UpdateWorldEntities()
 
   for (Enemy* enemy : _enemyVec)
     enemy->Update(_vec, (BasePlayer*)_player);
+
+  window->Render(_finishLine);
 }
 
 /// <summary>
@@ -159,15 +165,30 @@ GameReturnValues GameWorld::KeyboardUpdater()
   return GameReturnValues::None;
 }
 
+/// <summary>
+/// checks if the player has touched the finish line
+/// </summary>
+/// <returns></returns>
 bool GameWorld::TouchedFinishLine()
 {
-  if(_player->IsColliding(_finishLine))
+  if(_player->IsColliding(*_finishLine->GetDstRect()))
     return true;
+
   return false;
 }
 
+/// <summary>
+/// plays the completed Level sound cue
+/// plays an animation singaling u finished the level
+/// unlockes the next level
+/// </summary>
 void GameWorld::PlayCompletedLevel()
 {
+  UserData newData = _player->GetUserData();
+  newData.gameData->MaxLevel += 1;
+  _player->SetUserData(newData);
+
   //play sound cue for finishing level
+   
   //play animation for finishng level
 }

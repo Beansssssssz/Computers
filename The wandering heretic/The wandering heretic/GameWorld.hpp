@@ -32,6 +32,6 @@ private:
   GamePlayer* _player;
   std::vector<Entity*> _vec;
   std::vector<Enemy*> _enemyVec;;
-  SDL_Rect _finishLine;
+  Square* _finishLine;
 };
 

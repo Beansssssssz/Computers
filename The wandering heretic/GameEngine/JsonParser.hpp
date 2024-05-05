@@ -73,6 +73,12 @@ namespace jsonParser {
     file.close();
   }
 
+  /// <summary>
+  /// reads the json data from a json file
+  /// returns the json data
+  /// </summary>
+  /// <param name="path"></param>
+  /// <returns></returns>
   inline json ReadFromFile(const char* path) {
     std::ifstream file(path);
     if (!file.is_open()) {
@@ -256,10 +262,17 @@ namespace jsonParser {
   /// and an out Finishline
   /// </summary>
   /// <typeparam name="T">a square type</typeparam>
-  /// <param name="data">a json data</param>
-  /// <returns>a vector with all the objects</returns>
+  /// <param name="data"></param>
+  /// <param name="outEnemyVec">an out variable, if nullptr then  is ignored
+  /// however if it isnt null it fills the vector where there is 9</param></param>
+  /// <param name="OutFinishLine">an out variable, if nullptr then  is ignored
+  /// however if it isnt null then it sets the tuxture and the rects </param>
+  /// <returns>
+  /// a vector with all the objects of T where in the json where a
+  /// number appropriate to the texture's name
+  /// </returns>
   template<typename T>
-  inline std::vector<T*> FromJsonToVector(json data, std::vector<Enemy*>* outEnemyVec, SDL_Rect* OutFinishLine) {
+  inline std::vector<T*> FromJsonToVector(json data, std::vector<Enemy*>* outEnemyVec, Square* OutFinishLine) {
     SDL_Rect src = { 0, 0, 64, 64 };
     SDL_Rect dst = { 0, 0, 64, 64 };
 
@@ -300,7 +313,11 @@ namespace jsonParser {
 
         /* finish line */
         if (arr[loc] == 8 && OutFinishLine != nullptr) {
-          *OutFinishLine = SDL_Rect{ dst.x, dst.y, dst.w * 3, dst.h * 3 };
+          SDL_Rect finishLineSrc{0, 0, 41, 64 };
+          SDL_Rect finishLineDst{dst.x, dst.y, 82, 128};
+          OutFinishLine->SetTexture("Assets\\Blocks\\finishLine.png", finishLineSrc);
+          OutFinishLine->SetDstRect(finishLineDst);
+
           continue;
         }
 

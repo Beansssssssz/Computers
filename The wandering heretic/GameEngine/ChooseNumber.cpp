@@ -21,12 +21,12 @@ ChooseNumber::~ChooseNumber()
 /// if no number was chossen then returns 0.
 /// if the window was closed then returns a -1;
 /// </summary>
-char ChooseNumber::Update()
+char ChooseNumber::Update(int unlocked)
 {
   if (!UpdateWindow())
     return -1;
 
-  return UpdateButtons();
+  return UpdateButtons(unlocked);
 }
 
 /// <summary>
@@ -64,9 +64,12 @@ bool ChooseNumber::UpdateWindow()
 /// if yes the returns the last button pressed.
 /// if a buttons was pressed then it returns the pressed numbers number
 /// otherwise returns 0;
+///
+/// only updates the numbers which r bellow the unlocked
+/// if the unlocked is -1 then all buttons are updated
 /// </summary>
 /// <returns></returns>
-char ChooseNumber::UpdateButtons()
+char ChooseNumber::UpdateButtons(int unlocked)
 {
   int ret = 0;
 
@@ -76,19 +79,27 @@ char ChooseNumber::UpdateButtons()
       ret = i + 1;
 
     window->Render(_btns[i]);
+    if (unlocked != -1 && i >= unlocked) {
+      _lockedBtn->SetDstRect(*_btns[i]->GetDstRect());
+      window->Render(_lockedBtn);
+
+      continue;
+    }
+
     _btns[i]->Update();
   }
 
-  WriteOnButtons();
+  WriteOnButtons(unlocked);
   return ret;
 }
 
 /// <summary>
 /// Displays the Text on the button
+/// onlym on the unlocked button
 /// </summary>
-void ChooseNumber::WriteOnButtons()
+void ChooseNumber::WriteOnButtons(int unlocked)
 {
-  for (int i = 1; i < _len + 1; i++)
+  for (int i = 1; i <= unlocked; i++)
   {
     _text->SetText(std::to_string(i));
 
@@ -156,6 +167,11 @@ void ChooseNumber::CreateButtons()
     dst.x += marginX;
     counter++;
   }
+
+  /* creating the locked animation */
+  dst = SDL_Rect{};
+  src = SDL_Rect{0, 0, 25 , 25};
+  _lockedBtn = new Button("Assets\\GUI\\Xbtn.png", src, dst);
 }
 
 /// <summary>

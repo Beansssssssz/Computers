@@ -24,7 +24,8 @@ WelcomeScene::~WelcomeScene()
 };
 
 /// <summary>
-/// the update function
+/// checks if the player has pressed any key
+/// if yes then it moves to the homeScene
 /// </summary>
 bool WelcomeScene::Update() {
   Keyboard* keyboard = Keyboard::GetKeyboardInstance();
@@ -50,12 +51,3 @@ bool WelcomeScene::Update() {
 
   return ret;
 }
-
-/// <summary>
-/// sets the key pressed var to value recived
-/// </summary>
-/// <param name="keyPressed">booo value</param>
-void WelcomeScene::SetKeyPressed(bool keyPressed)
-{
-  _keyPressed = keyPressed;
-};

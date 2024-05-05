@@ -10,7 +10,6 @@ public:
   WelcomeScene();
   ~WelcomeScene();
   bool Update();
-  void SetKeyPressed(bool keyPressed);
 
 private:
   Square* _bg;

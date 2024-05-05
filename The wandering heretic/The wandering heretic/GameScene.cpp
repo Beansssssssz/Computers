@@ -38,9 +38,17 @@ GameScene::~GameScene()
 /// <returns></returns>
 GameReturnValues GameScene::Update()
 {
+
   if (_cn != nullptr)
   {
-    int num = _cn->Update();
+    Server* server = Server::GetServerInstance();
+    int unlockedLevels = 1;
+
+    GameData* data = server->GetLastUserData().gameData;
+    if (data != nullptr)
+      unlockedLevels = data->MaxLevel;
+
+    int num = _cn->Update(unlockedLevels);
     if (num > 0) //if u chose a level
     {
       std::string path = "Assets/Levels/Level_" + std::to_string(num) + ".json";

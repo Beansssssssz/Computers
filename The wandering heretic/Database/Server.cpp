@@ -3,7 +3,7 @@
 #include <string>
 
 Server::Server()
-  :_db(nullptr)
+  :_db(nullptr), _lastUserData({})
 {
   int rc = sqlite3_open("Assets/DataBases/database.db", &_db); // Use a file name for disk-based database
 
@@ -75,6 +75,44 @@ int Server::InsertData(UserData data)
     return 1;
   }
 
+  _lastUserData = data; //if this worked then the last inputed data was the inserted one
+  return 0;
+}
+
+/// <summary>
+/// updates the userData and the gameData
+/// if it worked then it returns 0
+/// otherwirse return an error code of 1
+/// </summary>
+/// <param name="data"></param>
+/// <returns></returns>
+int Server::UpdateUserData(UserData data)
+{
+  char* errMsg = nullptr;
+  int rc;
+  std::string PM = std::to_string(this->GetLastPrimaryKey() + 1);
+  if (PM == "0") {
+    _lastUserData = data;
+    return 1;
+  }
+
+  GameData gameData = { 0,0,1 };
+  if (data.gameData != nullptr)
+    gameData = *data.gameData;
+
+  std::string GameDataUpdate = "UPDATE GameData SET Money = '" + std::to_string(gameData.money) +
+    "', Items = '" + std::to_string(gameData.items) + "', MaxLevel = '" + std::to_string(gameData.MaxLevel) +
+    "' WHERE UserId = '" + PM + "';";
+
+  /* updating user game data in the GameData table */
+  rc = sqlite3_exec(_db, GameDataUpdate.c_str(), nullptr, nullptr, &errMsg);
+  if (rc != SQLITE_OK) {
+    std::cerr << "Failed in updating data in GameData. SQL error: " << errMsg << std::endl;
+    sqlite3_free(errMsg);
+    return 1;
+  }
+
+  _lastUserData = data; //if this worked then the last inputed data was the updated one
   return 0;
 }
 
@@ -179,6 +217,9 @@ bool Server::DoesUserExist(UserData data)
   if (sqlite3_step(stmt) == SQLITE_DONE) 
     return false;
 
+
+  _lastUserData = data;
+  _lastUserData.gameData = new GameData{this->GetGameData(data)};
   return true;
 }
 
@@ -360,6 +401,11 @@ int Server::GetLastPrimaryKey() {
   sqlite3_finalize(stmt);
 
   return lastPrimaryKey;
+}
+
+UserData Server::GetLastUserData()
+{
+  return _lastUserData;
 }
 
 /// <summary>

@@ -98,9 +98,9 @@ today: when player touches the finishLine take him to the home
 ========TRY========:
 0. bug -> when pressing done button in signIn it also presses settings
 
-3. bug -> idk smth with the enemy attack gif
+1. bug -> idk smth with the enemy attack gif
 
-4. bug -> when enemy attack in corner he is stuck attacking
+2. bug -> when enemy attack in corner he is stuck attacking
 
 3. bug -> fix the save game function in editing
 */

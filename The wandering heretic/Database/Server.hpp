@@ -26,14 +26,20 @@ public:
   ~Server();
 
   int InsertData(UserData data);
+  int UpdateUserData(UserData data);
+
   std::vector<UserData> GetUserData();
   GameData GetGameData(int PM);
   GameData GetGameData(UserData data);
+
   bool DoesUserExist(UserData data);
   bool DoesUsernameExist(std::string username);
+
   void DisplayAllUsers();
   int GetLastPrimaryKey();
-  
+
+  UserData GetLastUserData();
+
 private:
   static Server* _serverPtr;
   Server();
@@ -42,5 +48,7 @@ private:
   int DeleteTablesData();
 
   sqlite3* _db;
+
+  UserData _lastUserData;
 };
 

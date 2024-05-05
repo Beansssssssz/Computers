@@ -145,6 +145,9 @@ void HomeScene::UpdateLogins()
 
     delete _signUp;
     _signUp = nullptr;
+
+    /* input this data into user */
+
   }
 };
 

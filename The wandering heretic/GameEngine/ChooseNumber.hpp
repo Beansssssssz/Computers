@@ -10,13 +10,13 @@ public:
   ChooseNumber(char buttons_number);
   ~ChooseNumber();
 
-  char Update();
+  char Update(int unlocked = -1);
   bool GetIsOpen();
   void SetOpen(bool state);
 private:
   bool UpdateWindow();
-  char UpdateButtons();
-  void WriteOnButtons();
+  char UpdateButtons(int unlocked);
+  void WriteOnButtons(int unlocked);
 
   void CreateButtons();
   void CreateWindow();
@@ -24,6 +24,8 @@ private:
 
   Button** _btns;
   char _len;
+
+  Square* _lockedBtn;
 
   PopUpWindow* _tab;
   WindowText* _text;
