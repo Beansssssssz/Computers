@@ -284,7 +284,7 @@ namespace jsonParser {
         dst.x = j * 64;
 
         /* enemy */
-        if (arr[loc] == 9) {
+        if (arr[loc] == 9 && outEnemyVec != nullptr) {
           SDL_Rect enemySrc = SDL_Rect{ 0, 0, 50, 54 };
           SDL_Rect enemyDst = SDL_Rect{ dst.x, dst.y, 53 * 2, 55 * 2 };
 
@@ -299,8 +299,8 @@ namespace jsonParser {
         }
 
         /* finish line */
-        if (arr[loc] == 8) {
-          
+        if (arr[loc] == 8 && OutFinishLine != nullptr) {
+          *OutFinishLine = SDL_Rect{ dst.x, dst.y, dst.w * 3, dst.h * 3 };
           continue;
         }
 

@@ -16,8 +16,6 @@ GameWorld::GameWorld(json* data, std::string path)
   SDL_Rect dst{ 65 + 200, 65, 178 / 2 , 216 / 2 };
   GIF* gif = new GIF("Assets\\Character\\FrogIdle\\FrogIdle_", 12, src, dst, 150);
   _player = new GamePlayer({ gif });
-
-  _finishLine = SDL_Rect{500, 500 , 100, 100};
 }
 
 GameWorld::~GameWorld()
