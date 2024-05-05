@@ -12,9 +12,15 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
-  delete _wcScene;
-  delete _gameScene;
-  delete _homeScene;
+  if(_wcScene != nullptr)
+    delete _wcScene;
+
+  if(_homeScene != nullptr)
+    delete _homeScene;
+
+  if(_gameScene != nullptr)
+    delete _gameScene;
+
   delete _settings;
 };
 
@@ -61,6 +67,9 @@ bool GameManager::Update()
 void GameManager::UpdateWelcomeScene()
 {
   if (_wcScene->Update()) {
+    delete _wcScene;
+    _wcScene = nullptr;
+
     _currentScene = Scenes::home;
     _homeScene = new HomeScene;
   }
@@ -122,6 +131,7 @@ void GameManager::UpdateGameScene()
     _currentScene = Scenes::home;
 
     delete _gameScene;
+    _gameScene = nullptr;
     _homeScene = new HomeScene();
     break;
 

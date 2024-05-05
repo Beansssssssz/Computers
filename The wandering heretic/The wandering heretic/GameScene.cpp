@@ -20,7 +20,7 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-  if (_edit != nullptr) {}
+  if (_edit != nullptr)
     delete _edit;
   if (_world != nullptr)
     delete _world;

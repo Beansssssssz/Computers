@@ -32,6 +32,7 @@ Server* Server::GetServerInstance()
 Server::~Server()
 {
   sqlite3_close(_db);
+  delete _lastUserData.gameData;
 }
 
 /// <summary>

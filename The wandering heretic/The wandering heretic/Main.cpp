@@ -92,7 +92,6 @@ int main(int argc, char* argv[]) {
 //add a "finishLine", when the player touches the finish line the player will be taken to the home screen
 today: when player touches the finishLine take him to the home
 -> add animation
--> add lock to levels based on user
 -> add more levels
 
 ========TRY========:
