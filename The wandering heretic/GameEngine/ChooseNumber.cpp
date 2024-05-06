@@ -64,7 +64,6 @@ bool ChooseNumber::UpdateWindow()
 /// if yes the returns the last button pressed.
 /// if a buttons was pressed then it returns the pressed numbers number
 /// otherwise returns 0;
-///
 /// only updates the numbers which r bellow the unlocked
 /// if the unlocked is -1 then all buttons are updated
 /// </summary>

@@ -148,7 +148,6 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GIF.cpp" />
-    <ClCompile Include="InputText.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
@@ -166,7 +165,6 @@
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="GIF.hpp" />
-    <ClInclude Include="InputText.hpp" />
     <ClInclude Include="JsonParser.hpp" />
     <ClInclude Include="Keyboard.hpp" />
     <ClInclude Include="Math.hpp" />
@@ -180,6 +178,8 @@
     <ClInclude Include="WindowText.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

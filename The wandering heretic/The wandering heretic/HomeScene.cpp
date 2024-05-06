@@ -234,7 +234,7 @@ void HomeScene::ButtonResized()
     speed *= -1;
 
   for (int i = 0; i < BUTTON_ARR_SIZE; i++) 
-    if (_buttons[i]->GetIsSelected())
+    if (_buttons[i]->GetIsSelected() && !RenderWindow::GLOBAL_SETTING_OPEN)
     {
       //left arrow
       SDL_Rect* rect = _arrows[i]->GetDstRect();

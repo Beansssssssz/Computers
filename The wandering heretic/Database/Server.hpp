@@ -16,7 +16,7 @@ struct UserData {
   std::string email;
   std::string username;
   std::string password;
-  GameData* gameData = nullptr;;
+  GameData* gameData = nullptr;
 };
 
 class Server
@@ -47,8 +47,7 @@ private:
   int CreateTables();
   int DeleteTablesData();
 
-  sqlite3* _db;
-
-  UserData _lastUserData;
+  sqlite3* _db; //the database handler
+  UserData _lastUserData; //the last data inputed
 };
 

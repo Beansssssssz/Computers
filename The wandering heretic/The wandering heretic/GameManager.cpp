@@ -51,6 +51,10 @@ bool GameManager::Update()
 
   //settings is a universal thing so in game manager
   if (_settings->Update(_currentScene != Scenes::home)) {
+    delete _gameScene;
+    _gameScene = nullptr; //only from the game can you quit
+    _wcScene = new WelcomeScene();
+
     _currentScene = Scenes::welcome;
     _settings->SetTabOpen(false);
     RenderWindow::GLOBAL_SETTING_OPEN = false;

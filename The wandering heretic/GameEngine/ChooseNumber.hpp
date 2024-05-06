@@ -22,13 +22,13 @@ private:
   void CreateWindow();
   void CreateWindowText();
 
-  Button** _btns;
-  char _len;
+  Button** _btns; //the buttons array(dynamic depends on what number recived in the build function)
+  char _len; //the amount of buttons
 
-  Square* _lockedBtn;
+  Square* _lockedBtn; //the locked button texture to display out
 
-  PopUpWindow* _tab;
-  WindowText* _text;
+  PopUpWindow* _tab; // the background of this
+  WindowText* _text; //the text
 
   const char MAX_PER_ROW = 5;
 };

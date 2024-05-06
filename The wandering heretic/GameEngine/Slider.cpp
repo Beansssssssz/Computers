@@ -63,7 +63,7 @@ void Slider::MoveRectByMouse()
 /// <summary>
 /// returns the value of the slider
 /// </summary>
-/// <returns>pso of the slider</returns>
+/// <returns>pos of the slider</returns>
 int Slider::GetValue()
 {
   float width = (_max - _min - _rect.w)

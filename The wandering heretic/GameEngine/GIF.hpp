@@ -29,8 +29,8 @@ private:
   uint8_t _loc; //the current iterator of the tex array
 
   uint8_t _len; //the length of the array.
-  SDL_Rect _src;
-  SDL_Rect _dst;
+  SDL_Rect _src; //what to take from the texture array
+  SDL_Rect _dst; //where to display the texture
   uint16_t _delay; //The delay time in ms.
 
   uint32_t _lastUpdatedTime; //The current time

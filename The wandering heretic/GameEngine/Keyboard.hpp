@@ -27,8 +27,8 @@ private:
   Keyboard();
   static Keyboard* _keyboardPtr;
 
-  Uint8* _keysArray;//the key array given by sdl(deleted in SDL_Quit())
-  std::string text;
-  bool _input;
-  bool _keyPressed;
+  Uint8* _keysArray; //the key array given by sdl(deleted in SDL_Quit())
+  std::string text; //the build text buffer
+  bool _input; //true if input is turned on
+  bool _keyPressed; //true if any key is pressed
 };

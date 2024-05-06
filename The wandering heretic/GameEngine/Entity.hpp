@@ -23,9 +23,9 @@ public:
   void SetIsRight(bool isRight);
 
 protected:
-  GIF* _gif; //the currently displayed gif
+  GIF* _gif; //if you wanted to use a gif instead of a single texture.
   bool _isRight; //a var that dipicts if the Entity if facing right(defualt)
 
 private:
-  bool _collisionEnabled; //a var that dipicits of the Entity is allowed to collide
+  bool _collisionEnabled; //a bool var, if false then when moving it ignores collision
 };

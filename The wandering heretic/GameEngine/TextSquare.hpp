@@ -19,10 +19,10 @@ private:
   constexpr static SDL_Color WHITE{ 255, 255, 255, 255 };
   constexpr static SDL_Color BLACK{ 0, 0, 255, 255 };
 
-  SDL_Rect _dst;
-  uint8_t _outlineSize;
+  SDL_Rect _dst; //where to print out the background rect
+  uint8_t _outlineSize; //the size of the outline
 
-  WindowText* _winText;
+  WindowText* _winText; //the window text object
 
-  bool _stopBuildText;
+  bool _stopBuildText; //if true then tells the keyboard to stop building text
 };

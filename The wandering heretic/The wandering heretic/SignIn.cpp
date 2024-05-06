@@ -6,6 +6,9 @@
 #define EMAIL_GRAY_TEXT "Enter email or username here"
 #define PASSWORD_GRAY_TEXT "Enter your password here"
 
+#define MISSING_FIELDS "one or more fields is missing."
+#define INCORRECT_DATA "password or login is incorrect."
+
 SignIn::SignIn(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
   :_background(nullptr), _email(nullptr), _pass(nullptr), _doneBtn(nullptr)
   , _currentSquare(Squares::none), _currentTimer(0),
@@ -72,13 +75,6 @@ bool SignIn::IsOpen()
 {
 	return _background->GetTabOpen();
 }
-
-/// <summary>
-
-/// </summary>
-/// <param name="email">OUT the passsword the user inputed</param>
-/// <param name="password">OUT the email or usernames the user inputed</param>
-
 
 /// <summary>
 /// dispalyes the names of the squares and what to do in each one
@@ -220,7 +216,7 @@ bool SignIn::UpdatedDoneButton()
 
   /* check if all fields are full */
   if (_pass->GetWinText()->GetText().empty() || _email->GetWinText()->GetText().empty()) {
-    _errorMsg = "one or more fields is missing.";
+    _errorMsg = MISSING_FIELDS;
     return false;
   }
 
@@ -228,7 +224,7 @@ bool SignIn::UpdatedDoneButton()
     return true;
 
   /* display bad message */
-  _errorMsg = "password or login is incorrect.";
+  _errorMsg = INCORRECT_DATA;
   return false;
 }
 
@@ -302,3 +298,9 @@ void SignIn::CreateDoneButton()
 
   _doneBtn = new Button(path, src, dst);
 }
+
+#undef EMAIL_GRAY_TEXT
+#undef PASSWORD_GRAY_TEXT
+
+#undef MISSING_FIELDS
+#undef INCORRECT_DATA

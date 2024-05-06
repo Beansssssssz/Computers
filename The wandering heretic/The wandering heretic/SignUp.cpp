@@ -6,10 +6,13 @@
 #define PASSWORD_GRAY_TEXT "enter password;"
 #define PASSWORD_CONFIRM_GRAY_TEXT "enter confirm password:"
 
-#define MISSING_DATA "There is one or more missing data"
-#define USERNAME_EXIST "USername is already taken"
-#define PASSWORD_WEAK "Password is too weak"
-#define EMAIL_INVALID "your email is invalid"
+#define MISSING_DATA "There is one or more missing data."
+#define USERNAME_EXIST "Username is already taken."
+#define USERNAME_INVALID "USername is invalid."
+#define PASSWORD_WEAK "Password is too weak."
+#define PASSWORD_DO_NOT_MATCH "password and confirm password are not the same."
+#define EMAIL_INVALID "your email is invalid."
+#define USER_EXISTS "user already exists in the server."
 
 SignUp::SignUp(Vector2i backgroundPos, Vector2i emailStartPos, int margin)
   :_email(nullptr), _username(nullptr), _password(nullptr), _passwordConfirm(nullptr)
@@ -272,44 +275,44 @@ bool SignUp::UpdatedDoneButton()
   std::string passwordConfirm = _passwordConfirm->GetWinText()->GetText();
 
   if (email.empty() || username.empty() || password.empty() || passwordConfirm.empty()) {
-    _errorMsg = "one or more fields is missing.";
+    _errorMsg = MISSING_DATA;
     return false;
   }
 
   /* check if password and confirm password are the same */
   if (password != passwordConfirm) {
-    _errorMsg = "password and confirm password are not the same.";
+    _errorMsg = PASSWORD_DO_NOT_MATCH;
     return false;
   }
 
   /* iis email valid */
   if (!this->IsMailValid(email)) {
-    _errorMsg = "email isnt a valid email address.";
+    _errorMsg = EMAIL_INVALID;
     return false;
   }
 
   /* is username taken */
   if(server->DoesUsernameExist(username)){
-    _errorMsg = "user name already exist in the database";
+    _errorMsg = USERNAME_EXIST;
     return false;
   }
 
   /* is username valid */
   if (!this->IsUserNameValid(username)) {
-    _errorMsg = "username isnt a valid username";
+    _errorMsg = USERNAME_INVALID;
     return false;
   }
 
   /* is password strong enough */
   if (!this->IsPasswordStrong(password)) {
-    _errorMsg = "password inst strong enough.";
+    _errorMsg = PASSWORD_WEAK;
     return false;
   }
 
   UserData data{ email, username, password, nullptr};
 
   if (server->DoesUserExist(data)) {
-    _errorMsg = "user already exists.";
+    _errorMsg = USER_EXISTS;
     return false;
   }
 
@@ -479,6 +482,9 @@ bool SignUp::IsLetterSpecial(const char& letter)
 #undef PASSWORD_CONFIRM_GRAY_TEXT
 
 #undef MISSING_DATA 
-#undef USERNAME_EXIST
+#undef USERNAME_EXIST 
+#undef USERNAME_INVALID 
 #undef PASSWORD_WEAK 
+#undef PASSWORD_DO_NOT_MATCH
 #undef EMAIL_INVALID 
+#undef USER_EXISTS

@@ -130,10 +130,6 @@ void WindowText::ClearText() {
   text.clear();
 };
 
-/// <summary>
-/// returns the text width
-/// </summary>
-/// <returns></returns>
 int WindowText::GetTextWidth()
 {
   if (text.size() <= 0)
@@ -147,10 +143,6 @@ int WindowText::GetTextWidth()
   return _width;
 }
 
-/// <summary>
-/// returns the text height which is the same as the character size
-/// </summary>
-/// <returns></returns>
 int WindowText::GetTextHeight()
 {
   return _characterSize;

@@ -5,7 +5,6 @@
 
 #include "Button.hpp"
 #include "WindowText.hpp"
-#include "InputText.hpp"
 #include "ChooseNumber.hpp"
 
 #include <string>

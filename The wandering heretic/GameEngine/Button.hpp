@@ -23,6 +23,6 @@ public:
   void SetIsPressed(bool val);
 
 private:
-  bool _isSelected;
-  bool _isPressed;
+  bool _isSelected; //true if the mouse is currenly hovering above the button
+  bool _isPressed; //true if the mouse has pressed the button this frame
 };

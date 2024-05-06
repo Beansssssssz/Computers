@@ -25,7 +25,8 @@ public:
 private:
   static Audio* _audioInstance;
   Audio();
-  Mix_Chunk** _sound;
 
-  bool* _paused;
+  //the mix chunk is an sdl struct which is respinsible for doing audio
+  Mix_Chunk** _sound; //there are 2 paths(music and effects)
+  bool* _paused; //there are 2 bools(music and effect)
 };

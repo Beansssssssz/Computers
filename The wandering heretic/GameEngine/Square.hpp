@@ -24,11 +24,12 @@ public:
 
   bool IsColliding(SDL_Rect rect);
 protected:
-  SDL_Texture* _tex;
-  std::string _path;
+  SDL_Texture* _tex; //the texture itself
+  std::string _path; //the path to the texture(can be none)
 
-  SDL_Rect _src;
-  SDL_Rect _dst;
+  SDL_Rect _src; //where from the texture to take the buffer from
+  SDL_Rect _dst; //where to print out the texture taken using the src
 
+  //a bool variable that saves whether or not to delete the texture when class is deleted
   bool _destroytex;
 };

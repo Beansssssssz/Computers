@@ -89,10 +89,9 @@ int main(int argc, char* argv[]) {
 ========NOW========:
 //in gamePlayer make him die when hit
 
-//add a "finishLine", when the player touches the finish line the player will be taken to the home screen
-today: when player touches the finishLine take him to the home
--> add animation
--> add more levels
+//add animation to the finish line
+
+//add more levels
 
 ========TRY========:
 0. bug -> when pressing done button in signIn it also presses settings

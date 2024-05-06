@@ -33,6 +33,6 @@ private:
   static RenderWindow* _windowPtr;
 
   SDL_Window* window; //the window "tab" it self
-  SDL_Renderer* renderer;//the way you communicate with the window :)
+  SDL_Renderer* renderer;//the way you communicate with the window
 };
 

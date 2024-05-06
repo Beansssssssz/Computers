@@ -26,14 +26,14 @@ private:
 
   void GetInput();
 
-protected: //private members
-  std::vector<GIF*> _gifs;
-  GifTypes _currentType;
+protected:
+  std::vector<GIF*> _gifs; //the number of gifs
+  GifTypes _currentType; //the current gif of the player
 
-  bool _canJump;
-  bool _isJumping;
+  bool _canJump; //true if the player can jump
+  bool _isJumping; //true if the player is currenly jump
 
-  Vector2f _speed;
+  Vector2f _speed; //the current speed of the player
 
 private:
   constexpr static int MAX_SPEED = 10;

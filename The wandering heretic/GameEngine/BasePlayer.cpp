@@ -6,7 +6,7 @@
 
 BasePlayer::BasePlayer(std::vector<GIF*> gifs, bool _collisionEnabled)
   :BasePlayer::Entity((GIF*)nullptr, *gifs[0]->GetSrcRect(), *gifs[0]->GetDstRect()),
-  _gifs(gifs), _currentType(GifTypes::idle), _canJump(true), _isJumping(false)
+  _gifs(gifs), _currentType(GifTypes::idle), _canJump(false), _isJumping(false)
 {
 }
 

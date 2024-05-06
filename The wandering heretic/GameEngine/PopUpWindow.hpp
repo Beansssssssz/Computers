@@ -19,9 +19,9 @@ public:
 private:
   Button* _btnExit;
   SDL_Rect _tab;//the tab that the buttons are displayed on
-  SDL_Color _color;
+  SDL_Color _color; //the color of the pop up window
 
 protected:
   void _CorrectButton();
-  bool _tabOpen;
+  bool _tabOpen; //true if the current tab is open
 };

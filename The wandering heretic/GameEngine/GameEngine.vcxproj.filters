@@ -45,9 +45,6 @@
     <ClCompile Include="Slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InputText.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ChooseNumber.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -104,9 +101,6 @@
     <ClInclude Include="JsonParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputText.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ChooseNumber.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -125,5 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>
