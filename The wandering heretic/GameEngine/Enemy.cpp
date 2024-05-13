@@ -1,11 +1,21 @@
 #include "Enemy.hpp"
+#include <iostream>
 
 
 Enemy::Enemy(std::vector<GIF*> gifs, SDL_Rect srcrect, SDL_Rect dstrect)
   :Entity((GIF*)nullptr, srcrect, dstrect), _gifs(gifs),
-  _originalDst(dstrect), _originalSrc(srcrect), _resetNextFrame(false),
-  foundPlayer(false), _currentType(GifTypes::idle)
+  _resetNextFrame(false), foundPlayer(false),
+  _currentType(GifTypes::idle), _lastAttackTime(0),
+  _startAttackY(0), _startAttackX(0)
 {
+}
+
+Enemy::~Enemy()
+{
+  for (GIF* gif : _gifs)
+    delete gif;
+
+  Entity::~Entity();
 }
 
 /// <summary>
@@ -16,7 +26,7 @@ Enemy::Enemy(std::vector<GIF*> gifs, SDL_Rect srcrect, SDL_Rect dstrect)
 /// </summary>
 /// <param name="vec"></param>
 /// <param name="player"></param>
-void Enemy::Update(std::vector<Entity*> vec, BasePlayer* player)
+void Enemy::Update(std::vector<Entity*>& vec, BasePlayer* player)
 {
   UpdateCurrentGif();
 
@@ -44,29 +54,29 @@ void Enemy::UpdateCurrentGif()
 /// </summary>
 /// <param name="vec"></param>
 /// <param name="player"></param>
-void Enemy::UpdateMovment(std::vector<Entity*> vec, BasePlayer* player)
+void Enemy::UpdateMovment(std::vector<Entity*>& vec, BasePlayer* player)
 {
+  /* dont move the update the enemy movment during attack */
+  if (_currentType == GifTypes::attacking)
+    return;
+
+  /* check if this enemy is going right or left */
+  int currentSpeed = SPEED;
+  if(!_isRight)
+    currentSpeed *= -1;
+
   /* resting the value */
   foundPlayer = false;
 
-  /* check if this enemy is going right or left */
-  int currentSpeed = _isRight ? SPEED : SPEED * -1;
-
-  /* check if u can see the player
-    if yes then go to him */
-  if (SearchForPlayer(vec, player)) {
+  /* check if u can see the if yes then try to attack him */
+  if (_currentType != GifTypes::attacking && SearchForPlayer(vec, player)) 
     foundPlayer = true;
 
-    currentSpeed = player->GetDstRect()->x > this->_dst.x ? SPEED : -SPEED;
-    if (currentSpeed > 0)
-      _isRight = true;
-    else
-      _isRight = false;
-  }
-
-  /* move the enemy and check if he hit a wall
-     if enemy hits the wall then rotate */
-  if (_currentType != GifTypes::attacking && !MoveTo(vec, currentSpeed, 0))
+  /*
+  if attacking dont move otherwise
+  move the enemy and check if he hit a, if enemy hits the wall then rotate
+  */
+  if (!MoveTo(vec, currentSpeed, 0))
     _isRight = !_isRight;
 
   /* apply gravity */
@@ -80,12 +90,12 @@ void Enemy::UpdateMovment(std::vector<Entity*> vec, BasePlayer* player)
 /// <param name="vec"></param>
 /// <param name="player"></param>
 /// <returns></returns>
-bool Enemy::SearchForPlayer(std::vector<Entity*> vec, BasePlayer* player)
+bool Enemy::SearchForPlayer(std::vector<Entity*>& vec, BasePlayer* player)
 {
   SDL_Rect* playerDst = player->GetDstRect();
 
   //check if the player end enemy are close enough
-  if (abs(playerDst->x - this->_dst.x) > DISTANCE_MAX) 
+  if (abs(playerDst->x - this->_dst.x) > ATTACK_SWING_WIDTH)
     return false;
   
   //check if the enemy is looking at the player
@@ -108,24 +118,44 @@ bool Enemy::SearchForPlayer(std::vector<Entity*> vec, BasePlayer* player)
 void Enemy::AttackPlayer(BasePlayer* player)
 {
   if (_resetNextFrame) {
-    _dst.w = _originalDst.w;
-    _dst.h = _originalDst.h;
+    GIF* currentGif = _gifs[(int)GifTypes::idle];
+    int currentTexLoc = currentGif->GetCurrentTexCount();
+    SDL_Texture* currentTex = currentGif->operator[](currentTexLoc);
 
-    _src.w = _originalSrc.w;
-    _src.h = _originalSrc.h;
+    int w, h;
+    SDL_QueryTexture(currentTex, NULL, NULL, &w, &h);
+
+    _src.w = w;
+    _src.h = h;
+
+    /* since enemy png is too small so i doubled it in size */
+    _dst.w = w * 2;
+    _dst.h = h * 2;
+
+    /* resting the x, y pos*/
+    _dst.x = _startAttackX;
+    _dst.y = _startAttackY;
 
     _currentType = GifTypes::idle;
+    _lastAttackTime = SDL_GetTicks();
+    _resetNextFrame = false;
   }
 
   /* if he is currently attacking then alter the dst and src rects */
   if (_currentType == GifTypes::attacking) {
     ReshapeGif();
+    return; /* no nned to check the if enemy needs to attack if he currently attacking*/
   }
 
-  /* check player distance from enemy or if the enemy didnt find 
-     the player then switch to attack */
-  if (foundPlayer && (player->GetDstRect()->x - this->_dst.x < LARGEST_ATTACK_WIDTH - _dst.w)) 
+  /* check player distance from enemy and if the enemy didnt find 
+     the player then switch to attack and if the cooldown ended*/
+  uint32_t currentTime = SDL_GetTicks();
+  if (foundPlayer && currentTime - _lastAttackTime > ATTACK_COOLDOWN_TIMER) {
     _currentType = GifTypes::attacking;
+
+    _startAttackY = _dst.y;
+    _startAttackX = _dst.x;
+  }
 }
 
 /// <summary>
@@ -133,7 +163,6 @@ void Enemy::AttackPlayer(BasePlayer* player)
 /// </summary>
 void Enemy::ReshapeGif()
 {
-  _resetNextFrame = false;
   GIF* currentGif = _gifs[(int)_currentType];
   int currentTexLoc = currentGif->GetCurrentTexCount();
   SDL_Rect* dst = currentGif->GetDstRect(), * src = currentGif->GetSrcRect();
@@ -142,17 +171,22 @@ void Enemy::ReshapeGif()
   int w, h;
   SDL_QueryTexture(currentTex, NULL, NULL, &w, &h);
 
+  if (_isRight) { /* if the enemy is looking right */
+    _dst.y -= h * 2 - dst->h;
+  }
+
+  else { /* if the enemy is looking left*/
+    _dst.y -= h * 2 - dst->h;
+    _dst.x -= w * 2 - _dst.w;
+  } 
+
   _src.w = w;
   _src.h = h;
 
-
-
-  //_dst.x -= w - dst->w;
-  //_dst.y -= h - dst->h;
-      
+  /* since enemy png is too small so i doubled it in size */
   _dst.w = w * 2;
   _dst.h = h * 2;
-   
+
   if (currentTexLoc == currentGif->GetTextureCount() - 1)
     _resetNextFrame = true;
 }

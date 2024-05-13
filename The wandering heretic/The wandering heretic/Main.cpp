@@ -93,12 +93,10 @@ int main(int argc, char* argv[]) {
 
 //add more levels
 
+// add a chart of each levels and the time it took to complete
+
 ========TRY========:
 0. bug -> when pressing done button in signIn it also presses settings
-
-1. bug -> idk smth with the enemy attack gif
-
-2. bug -> when enemy attack in corner he is stuck attacking
 
 3. bug -> fix the save game function in editing
 */

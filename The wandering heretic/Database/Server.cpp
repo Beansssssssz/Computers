@@ -314,6 +314,17 @@ int Server::CreateTables() {
       Purpose INT NOT NULL\
     );";
 
+  const char* createLevelTable =
+    "CREATE TABLE IF NOT EXISTS LevelTimes(\
+      UserId INTEGER AUTO_INCREMENT PRIMARY KEY,\
+      Level1 UNSIGNED INT NOT NULL,\
+      Level2 UNSIGNED INT NOT NULL,\
+      Level3 UNSIGNED INT NOT NULL,\
+      Level4 UNSIGNED INT NOT NULL,\
+      Level5 UNSIGNED INT NOT NULL,\
+      FOREIGN KEY(UserId) REFERENCES Users(UserID)\
+    );";
+
   rc = sqlite3_exec(_db, createUsersTable, nullptr, nullptr, &errMsg);
   if (rc != SQLITE_OK) {
     std::cerr << "Failed in creating Users table. SQL error: " << errMsg << std::endl;
@@ -333,6 +344,14 @@ int Server::CreateTables() {
   rc = sqlite3_exec(_db, createShopTable, nullptr, nullptr, &errMsg);
   if (rc != SQLITE_OK) {
     std::cerr << "Failed in creating Shop table. SQL error: " << errMsg << std::endl;
+    sqlite3_free(errMsg);
+    sqlite3_close(_db);
+    return 1; // Return an error code indicating failure
+  }
+
+  rc = sqlite3_exec(_db, createLevelTable, nullptr, nullptr, &errMsg);
+  if (rc != SQLITE_OK) {
+    std::cerr << "Failed in creating levels table. SQL error: " << errMsg << std::endl;
     sqlite3_free(errMsg);
     sqlite3_close(_db);
     return 1; // Return an error code indicating failure

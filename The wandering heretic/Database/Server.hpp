@@ -19,6 +19,14 @@ struct UserData {
   GameData* gameData = nullptr;
 };
 
+struct LevelTimes {
+  uint32_t level1_time;
+  uint32_t level2_time;
+  uint32_t level3_time;
+  uint32_t level4_time;
+  uint32_t level5_time;
+};
+
 class Server
 {
 public:
