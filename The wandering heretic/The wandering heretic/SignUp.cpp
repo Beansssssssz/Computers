@@ -60,10 +60,6 @@ bool SignUp::Update()
   return UpdatedDoneButton();
 }
 
-/// <summary>
-/// returns the user data
-/// </summary>
-/// <returns></returns>
 UserData SignUp::GetData()
 {
   UserData data{"", "", "", nullptr};

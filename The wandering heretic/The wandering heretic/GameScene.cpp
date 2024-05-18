@@ -35,7 +35,10 @@ GameScene::~GameScene()
 /// an editing world
 /// or an player world
 /// </summary>
-/// <returns></returns>
+/// <returns>
+/// if returned 1 then open settings, if returned 2 then return to home
+/// if returned 0 then do noting
+/// </returns>
 GameReturnValues GameScene::Update()
 {
 

@@ -11,9 +11,6 @@ enum class Scenes {
   game
 };
 
-/// <summary>
-/// the class that manages the game
-/// </summary>
  class GameManager {
 public:
   GameManager();

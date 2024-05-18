@@ -1,98 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="GamePlayer" Collapsed="true">
+  <Class Name="GamePlayer">
     <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAABAAAAAAAAgAAAAAAAAAIAAAAAAAAAAAgIAA=</HashCode>
       <FileName>GamePlayer.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameScene" Collapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
+  <Class Name="GameScene">
+    <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAJAAAAIAAAgAAAAAAAAABAEA=</HashCode>
       <FileName>GameScene.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameManager" Collapsed="true">
+  <Class Name="GameManager">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAQQAAAAAAgAEAAAAAQAAAAAgAAAAAAIBQAAA=</HashCode>
       <FileName>GameManager.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameWorld" Collapsed="true">
-    <Position X="5.75" Y="0.5" Width="1.5" />
+  <Class Name="GameWorld">
+    <Position X="9.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAgAAABAQCAACAgAEBCEBAAAAABAAAAIAAAAAAEAA=</HashCode>
       <FileName>GameWorld.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="HomeScene" Collapsed="true">
-    <Position X="0.5" Y="1.5" Width="1.5" />
+  <Class Name="HomeScene">
+    <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEQAAACABAgAAAAAJABAIAAAoAsBE0AAAAARDgKQIhA=</HashCode>
       <FileName>HomeScene.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="LevelEditor" Collapsed="true">
-    <Position X="2.25" Y="1.5" Width="1.5" />
+  <Class Name="LevelEditor">
+    <Position X="11" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAChjEgCAAEgAgMASEAAQAAAAEAAABAICBCIAJE=</HashCode>
       <FileName>LevelEditor.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Settings" Collapsed="true">
-    <Position X="4" Y="1.5" Width="1.5" />
+  <Class Name="Settings">
+    <Position X="0.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAYKAAAAAAiAAQABAAAAAAADEAQIAABAoIAAAEIEAAA=</HashCode>
       <FileName>Setting.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SignIn" Collapsed="true">
-    <Position X="5.75" Y="1.5" Width="1.5" />
+  <Class Name="SignIn">
+    <Position X="14.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IDUAAACAMAgIAAAAAAAAEEjAAECAQIAgCAACAwQEAAU=</HashCode>
       <FileName>SignIn.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SignUp" Collapsed="true">
-    <Position X="0.5" Y="2.5" Width="1.5" />
+  <Class Name="SignUp">
+    <Position X="12.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ICUAAACAMAoICAADAAAAEEjQAEAAQIAiCAICAxQAAAU=</HashCode>
       <FileName>SignUp.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WelcomeScene" Collapsed="true">
-    <Position X="2.25" Y="2.5" Width="1.5" />
+  <Class Name="WelcomeScene">
+    <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAACAAAIAAIAAAAABAAAAAAAABAAAAAAA=</HashCode>
       <FileName>WelcomeScene.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="Scenes" Collapsed="true">
-    <Position X="2.25" Y="3.75" Width="1.5" />
+  <Enum Name="Scenes">
+    <Position X="4" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAIA=</HashCode>
       <FileName>GameManager.hpp</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="HomeButtons" Collapsed="true">
-    <Position X="0.5" Y="3.75" Width="1.5" />
+  <Enum Name="HomeButtons">
+    <Position X="2.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAgAAAAAEAAQA=</HashCode>
       <FileName>HomeScene.hpp</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="Squares" Collapsed="true">
-    <Position X="5.75" Y="3.75" Width="1.5" />
+  <Enum Name="SignInSquares">
+    <Position X="2.25" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>SignIn.hpp</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="SignUpSquares" Collapsed="true">
-    <Position X="4" Y="3.75" Width="1.5" />
+  <Enum Name="SignUpSquares">
+    <Position X="4" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAAgAAAAAAEAAAAAAIAAAAAAAgAAAAA=</HashCode>
       <FileName>SignUp.hpp</FileName>

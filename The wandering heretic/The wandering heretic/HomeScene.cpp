@@ -391,6 +391,9 @@ void HomeScene::CreateAboutWindow()
   _aboutExit = new Button(tex, src, dst);
 }
 
+/// <summary>
+/// creates the login windows in each of its own postion
+/// </summary>
 void HomeScene::CreateLoginsWindows()
 {
   Vector2i backgroundStart{ 400, 220 };

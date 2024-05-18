@@ -50,8 +50,8 @@ private:
 
   bool* _keyPressed;
 
-  const char ARROWWIDTH = 56, ARROWHEIGHT = 36;
-  const char MAX_SIZE = 80, MIN_SIZ = 20;
+  const char ARROWWIDTH = 56, ARROWHEIGHT = 36; //the orignial width and height
+  const char MAX_SIZE = 80, MIN_SIZ = 20; //the max size and the min size of the arrows
   bool _isIncrease;
 
   const char MARGINY = 100;//the margin between the buttons

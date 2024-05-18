@@ -26,6 +26,7 @@ GameManager::~GameManager()
 
 /// <summary>
 /// updates the current Scene of the window(welcome, home and game)
+/// also updates the settings window if needed
 /// </summary>
 /// <returns>
 /// returns true if the game is still running.
@@ -143,4 +144,3 @@ void GameManager::UpdateGameScene()
     break;
   }
 }
-

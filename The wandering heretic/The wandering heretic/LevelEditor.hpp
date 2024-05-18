@@ -12,7 +12,6 @@ using json = nlohmann::json;
 
 #define GRID_WIDTH 64
 #define GRID_HEIGHT 64
-
 //the counter of the amount of example blocks to use
 #define BUTTONS_COUNT 9
 

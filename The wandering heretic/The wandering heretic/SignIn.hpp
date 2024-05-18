@@ -4,7 +4,7 @@
 #include "PopUpWindow.hpp"
 #include "Server.hpp"
 
-enum class Squares
+enum class SignInSquares
 {
   none = 0,
   email = 1,
@@ -33,7 +33,7 @@ private:
   void CreateBackground(Vector2i backgroundPos, int margin);
   void CreateDoneButton();
 
-  Squares _currentSquare;
+  SignInSquares _currentSquare;
   TextSquare* _email; //can be or email or username
   TextSquare* _pass;
   Button* _doneBtn;
