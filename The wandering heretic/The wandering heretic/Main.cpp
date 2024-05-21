@@ -87,13 +87,14 @@ int main(int argc, char* argv[]) {
 
 /* 
 ========NOW========:
-//in gamePlayer make him die when hit
+//in gamePlayer make him die when hit.
+  check when player is touching enemy only if enemy is in attack gif state
+  if colliding then kill player
+  and play sound cue
 
-//add animation to the finish line
+//add more levels.
 
-//add more levels
-
-// add a chart of each levels and the time it took to complete
+//add sound cue for finishing level
 
 ========TRY========:
 0. bug -> when pressing done button in signIn it also presses settings

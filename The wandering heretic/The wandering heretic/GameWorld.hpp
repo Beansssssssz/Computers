@@ -25,6 +25,7 @@ private:
   GameReturnValues KeyboardUpdater();
   bool TouchedFinishLine();
   void PlayCompletedLevel();
+  void PlayerFell();
 
   json* _data;
   std::string _path;
@@ -33,5 +34,9 @@ private:
   std::vector<Entity*> _vec;
   std::vector<Enemy*> _enemyVec;;
   Square* _finishLine;
+
+  Uint32 _startTime;
+  int _highestYBlock;
+  bool _playerDead;
 };
 

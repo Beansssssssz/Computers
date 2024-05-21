@@ -7,7 +7,8 @@
 
 GameWorld::GameWorld(json* data, std::string path)
   :_data(data), _path(path), _finishLine(nullptr),
-  _player(nullptr)
+  _player(nullptr), _startTime(SDL_GetTicks()), _highestYBlock(0)
+  ,_playerDead(false)
 {
   _finishLine = new Square((SDL_Texture*)NULL, { 0,0,0,0 }, { 0,0,0,0 });
   _vec = jsonParser::FromJsonToVector<Entity>(*data, &_enemyVec, _finishLine);
@@ -44,6 +45,7 @@ GameReturnValues GameWorld::Update()
 {
   UpdateWorldOffset();
   UpdateWorldEntities();
+  PlayerFell();
   if (TouchedFinishLine()) {
     PlayCompletedLevel();
     return GameReturnValues::Home;
@@ -122,6 +124,9 @@ void GameWorld::OffestAllVector(int offsetX, int offsetY, SDL_Rect* dst)
   rect->x -= offsetX;
   rect->y -= offsetY;
 
+  /* lowest block y position */
+  _highestYBlock -= offsetY;
+
   if (dst == nullptr)
     return;
 
@@ -148,6 +153,7 @@ void GameWorld::UpdateWorldEntities()
     enemy->Update(_vec, (BasePlayer*)_player);
 
   window->Render(_finishLine);
+
 }
 
 /// <summary>
@@ -184,11 +190,39 @@ bool GameWorld::TouchedFinishLine()
 /// </summary>
 void GameWorld::PlayCompletedLevel()
 {
-  UserData newData = _player->GetUserData();
-  newData.gameData->MaxLevel += 1;
-  _player->SetUserData(newData);
+  if (!_playerDead) {
+    UserData newData = _player->GetUserData();
+    newData.gameData->MaxLevel += 1;
+    _player->SetUserData(newData);
+  }
 
   //play sound cue for finishing level
    
   //play animation for finishng level
+
+  //add time to player data
+  Uint32 completionTime = SDL_GetTicks() - _startTime;
+
+}
+
+/// <summary>
+/// checks if the player fell more than 1 block down then the most down block
+/// </summary>
+void GameWorld::PlayerFell()
+{
+  if (_highestYBlock == 0)
+  {
+    for (Entity* entity : _vec) {
+      int currentEntityY = entity->GetDstRect()->y;
+      _highestYBlock = (currentEntityY > _highestYBlock) ? currentEntityY : _highestYBlock;
+    }
+  }
+
+  if (_player->GetDstRect()->y + 64 >= _highestYBlock) {
+    SDL_Rect playerNewPos = *_finishLine->GetDstRect();
+    playerNewPos.w = _player->GetDstRect()->w;
+    playerNewPos.h = _player->GetDstRect()->h;
+    _player->SetDstRect(playerNewPos);
+    _playerDead = true;
+  }
 }
