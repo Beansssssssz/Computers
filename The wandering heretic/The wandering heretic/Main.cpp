@@ -87,10 +87,8 @@ int main(int argc, char* argv[]) {
 
 /* 
 ========NOW========:
-//in gamePlayer make him die when hit.
-  check when player is touching enemy only if enemy is in attack gif state
-  if colliding then kill player
-  and play sound cue
+//add a game over screen
+  like dark souls game over
 
 //add more levels.
 

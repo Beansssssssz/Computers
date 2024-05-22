@@ -4,11 +4,12 @@
 #include "Keyboard.hpp"
 #include "JsonParser.hpp"
 #include "Utils.hpp"
+#include "WindowText.hpp"
 
 GameWorld::GameWorld(json* data, std::string path)
   :_data(data), _path(path), _finishLine(nullptr),
   _player(nullptr), _startTime(SDL_GetTicks()), _highestYBlock(0)
-  ,_playerDead(false)
+  ,_showDeadWindow(false)
 {
   _finishLine = new Square((SDL_Texture*)NULL, { 0,0,0,0 }, { 0,0,0,0 });
   _vec = jsonParser::FromJsonToVector<Entity>(*data, &_enemyVec, _finishLine);
@@ -46,6 +47,11 @@ GameReturnValues GameWorld::Update()
   UpdateWorldOffset();
   UpdateWorldEntities();
   PlayerFell();
+  PlayerWasHit();
+
+  if (_showDeadWindow != 0) 
+    return DisplayDeadWindow();
+
   if (TouchedFinishLine()) {
     PlayCompletedLevel();
     return GameReturnValues::Home;
@@ -190,7 +196,7 @@ bool GameWorld::TouchedFinishLine()
 /// </summary>
 void GameWorld::PlayCompletedLevel()
 {
-  if (!_playerDead) {
+  if (!_showDeadWindow) {
     UserData newData = _player->GetUserData();
     newData.gameData->MaxLevel += 1;
     _player->SetUserData(newData);
@@ -218,11 +224,43 @@ void GameWorld::PlayerFell()
     }
   }
 
-  if (_player->GetDstRect()->y + 64 >= _highestYBlock) {
-    SDL_Rect playerNewPos = *_finishLine->GetDstRect();
-    playerNewPos.w = _player->GetDstRect()->w;
-    playerNewPos.h = _player->GetDstRect()->h;
-    _player->SetDstRect(playerNewPos);
-    _playerDead = true;
+  if (_player->GetDstRect()->y + 64 >= _highestYBlock && _showDeadWindow == 0)
+    _showDeadWindow = SDL_GetTicks();
+}
+
+/// <summary>
+/// checks if the player was hit by an enemy while the enemy is in an attack state
+/// </summary>
+void GameWorld::PlayerWasHit()
+{
+  for (Enemy* enemy : _enemyVec) {
+    if (enemy->AttackWorked(_player))
+    {
+      _showDeadWindow = SDL_GetTicks();
+      return;
+    }
   }
+}
+
+/// <summary>
+/// displays the dead window for a set amount of time then returns
+/// </summary>
+/// <returns></returns>
+GameReturnValues GameWorld::DisplayDeadWindow()
+{
+  /* if timer finished */
+  Uint32 currentTime = SDL_GetTicks();
+  if(currentTime > GAME_OVER_TIMER + _showDeadWindow)
+    return GameReturnValues::Home;
+
+  /* displaying the overlay rect */
+  RenderWindow* window = RenderWindow::GetRenderWindowInstance();
+  SDL_Rect windowRect{ 0, 0, 0, 0 };
+  RenderWindow::GetWidthHeight(windowRect.w, windowRect.h);
+  window->DisplayRect(&windowRect, GAME_OVER_RECT_COLOR);
+
+  /* dispalying the text */
+  Vector2i textPos{ windowRect.w / 2, windowRect.h / 2 };
+  WindowText::DisplayStaticText("GAME OVER", textPos, GAME_OVER_TEXT_COLOR, GAME_OVER_TEXT_SIZE, true);
+  return GameReturnValues::None;
 }

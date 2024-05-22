@@ -167,7 +167,7 @@ int WindowText::GetMaxCharacters()
 /// <param name="color"></param>
 /// <param name="letterSize"></param>
 /// <param name="fontPath"></param>
-void WindowText::DisplayStaticText(std::string text, Vector2i pos, SDL_Color color, uint8_t letterSize, const char* fontPath)
+void WindowText::DisplayStaticText(std::string text, Vector2i pos, SDL_Color color, uint8_t letterSize, bool inMiddle ,const char* fontPath)
 {
   if (text.empty())
     return;
@@ -206,6 +206,11 @@ void WindowText::DisplayStaticText(std::string text, Vector2i pos, SDL_Color col
   dst.y = pos.y;
   dst.w = src.w;
   dst.h = src.h;
+
+  if (inMiddle) {
+    dst.x -= dst.w / 2;
+    dst.y -= dst.h / 2;
+  }
 
   Square temp(message, src, dst);
   window->Render(&temp);

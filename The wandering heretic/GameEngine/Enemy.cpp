@@ -4,10 +4,11 @@
 
 Enemy::Enemy(std::vector<GIF*> gifs, SDL_Rect srcrect, SDL_Rect dstrect)
   :Entity((GIF*)nullptr, srcrect, dstrect), _gifs(gifs),
-  _resetNextFrame(false), foundPlayer(false),
+  _resetNextFrame(false), foundPlayer(false), _canDamage(6),
   _currentType(GifTypes::idle), _lastAttackTime(0),
-  _startAttackY(0), _startAttackX(0)
+  _startAttackY(0), _startAttackX(0), _originalW(dstrect.w)
 {
+  
 }
 
 Enemy::~Enemy()
@@ -33,6 +34,37 @@ void Enemy::Update(std::vector<Entity*>& vec, BasePlayer* player)
   //move to right or left
   UpdateMovment(vec, player);
   AttackPlayer(player);
+}
+
+/// <summary>
+/// returns true if the enemy hit the player
+/// otherwise returns false
+/// </summary>
+/// <param name="player"></param>
+/// <returns></returns>
+bool Enemy::AttackWorked(BasePlayer* player)
+{
+  /* check if enemy is attacking */
+  if (_currentType != GifTypes::attacking)
+    return false;
+
+  /* if the gif state is too early */
+  if (_gifs[(int)_currentType]->GetCurrentTexCount() < _canDamage)
+    return false;
+
+  /* check if player is colliding with the sword */
+  SDL_Rect SwordRect{_dst.x, _dst.x, _dst.w, _dst.h };
+  if (_isRight) {
+    SwordRect.x += _originalW;
+  }
+  else {
+    SwordRect.w -= _originalW;
+  }
+
+  if (!player->IsColliding(SwordRect))
+    return false;
+
+  return true;
 }
 
 /// <summary>
@@ -171,11 +203,12 @@ void Enemy::ReshapeGif()
   int w, h;
   SDL_QueryTexture(currentTex, NULL, NULL, &w, &h);
 
+
   if (_isRight) { /* if the enemy is looking right */
     _dst.y -= h * 2 - dst->h;
   }
 
-  else { /* if the enemy is looking left*/
+  else { /* if the enemy is looking left */
     _dst.y -= h * 2 - dst->h;
     _dst.x -= w * 2 - _dst.w;
   } 

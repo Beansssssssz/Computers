@@ -28,7 +28,7 @@ public:
 
 public:
   static void DisplayStaticText(std::string text, Vector2i pos, SDL_Color color,
-    uint8_t letterSize, const char* fontPath = "Assets/Fonts/font.otf");
+    uint8_t letterSize, bool inMiddle = false ,const char* fontPath = "Assets/Fonts/font.otf");
 
 private:
   std::string text; //the text to display
