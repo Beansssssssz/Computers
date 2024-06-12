@@ -33,6 +33,10 @@ Audio* Audio::GetAudioInstance()
 Audio::~Audio()
 {
   Mix_CloseAudio();
+  delete _sound[0];
+  if (_sound[1] != nullptr)
+    delete _sound[1];
+
   delete _sound;
 }
 
@@ -83,7 +87,7 @@ void Audio::SetVolume(int vol, int channel)
 /// in an infinite loop</param>
 void Audio::SetMusic(const char* path, int channel, int loops, bool startPlayin)
 {
-  _sound[channel] = Mix_LoadWAV("Assets/Sounds/ahem_x.wav");
+  _sound[channel] = Mix_LoadWAV(path);
   if (_sound == NULL)
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
       "Error _sound failed to load: %s", Mix_GetError());
@@ -91,7 +95,7 @@ void Audio::SetMusic(const char* path, int channel, int loops, bool startPlayin)
   if (!startPlayin)
     return;
 
-  if (Mix_PlayChannel(-1, _sound[0], loops))
+  if (Mix_PlayChannel(channel, _sound[channel], loops))
     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
       "Error _sound failed to play: %s", Mix_GetError());
 

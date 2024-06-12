@@ -61,7 +61,7 @@ bool Enemy::AttackWorked(BasePlayer* player)
     SwordRect.w -= _originalW;
   }
 
-  if (!player->IsColliding(SwordRect))
+  if (!player->IsColliding(*this->GetDstRect()))
     return false;
 
   return true;

@@ -5,6 +5,7 @@
 #include "JsonParser.hpp"
 #include "Utils.hpp"
 #include "WindowText.hpp"
+#include <Audio.hpp>
 
 GameWorld::GameWorld(json* data, std::string path)
   :_data(data), _path(path), _finishLine(nullptr),
@@ -203,12 +204,8 @@ void GameWorld::PlayCompletedLevel()
   }
 
   //play sound cue for finishing level
-   
-  //play animation for finishng level
-
-  //add time to player data
-  Uint32 completionTime = SDL_GetTicks() - _startTime;
-
+  Audio* audio = Audio::GetAudioInstance();
+  audio->SetMusic("Assets/Sounds/FinishLevel.mp3", 1, 1, true);
 }
 
 /// <summary>
@@ -250,7 +247,7 @@ GameReturnValues GameWorld::DisplayDeadWindow()
 {
   /* if timer finished */
   Uint32 currentTime = SDL_GetTicks();
-  if(currentTime > GAME_OVER_TIMER + _showDeadWindow)
+  if(currentTime >= GAME_OVER_TIMER + _showDeadWindow)
     return GameReturnValues::Home;
 
   /* displaying the overlay rect */

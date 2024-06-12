@@ -84,18 +84,3 @@ int main(int argc, char* argv[]) {
 
   return 0;
 };
-
-/* 
-========NOW========:
-//add a game over screen
-  like dark souls game over
-
-//add more levels.
-
-//add sound cue for finishing level
-
-========TRY========:
-0. bug -> when pressing done button in signIn it also presses settings
-
-3. bug -> fix the save game function in editing
-*/
